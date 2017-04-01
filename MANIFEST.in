@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include wharf_management *.css
+recursive-include wharf_management *.csv
+recursive-include wharf_management *.html
+recursive-include wharf_management *.ico
+recursive-include wharf_management *.js
+recursive-include wharf_management *.json
+recursive-include wharf_management *.md
+recursive-include wharf_management *.png
+recursive-include wharf_management *.py
+recursive-include wharf_management *.svg
+recursive-include wharf_management *.txt
+recursive-exclude wharf_management *.pyc
