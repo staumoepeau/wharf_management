@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2015, Caitlah Technology and contributors
+# Copyright (c) 2017, Caitlah Technology and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class CargoOperation(Document):
+class Container(Document):
 	
 	def validate(self):
 
@@ -15,8 +15,5 @@ class CargoOperation(Document):
 						
 		
 	def get_title(self):
-		if self.cargo_type in ("Container","Vehicles"):
-			self.name = self.container_no
-			return self.container_no
-		if self.cargo_type not in ("Container","Vehicles"):
-			return self.name
+		self.name = self.container_no
+		return self.container_no
