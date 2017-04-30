@@ -2,20 +2,28 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Cargo Operation', {
-		
+
 	refresh: function(frm) {
 		cur_frm.add_fetch('voyage_no','vessel','vessel');
 		cur_frm.add_fetch('voyage_no','vessel_arrival_date','vessel_arrival_date');
-		
-		
-		
+
+
+		if (frm.doc.inspection_status != "Closed"){
+			frm.add_custom_button(__('Inspection'), function() {
+				frappe.route_options = {
+										"container_no": frm.doc.name
+										}
+				frappe.new_doc("Inspection");
+				frappe.set_route("Form", "Inspection", doc.name);
+			});
+		}
 		if (frm.doc.yard_status != "Closed"){
 			frm.add_custom_button(__('Yard'), function() {
 				frappe.route_options = {
 										"container_no": frm.doc.name
 										}
 				frappe.new_doc("Yard");
-				frappe.set_route("Form", "Yard Operation", doc.name);
+				frappe.set_route("Form", "Yard", doc.name);
 			});
 		}
 		if (frm.doc.payment_status != "Closed"){
@@ -43,8 +51,8 @@ frappe.ui.form.on('Cargo Operation', {
 //			frappe.new_doc("Received Money");
 //			frappe.set_route("Form", "Received Money", doc.name);
 		});
-		
-		
+
+
 	}
-	
+
 });

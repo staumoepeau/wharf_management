@@ -8,11 +8,11 @@ from frappe import throw, _
 from frappe.model.document import Document
 
 class Yard(Document):
-	
-	
+
+
 	def on_submit(self):
 		self.update_yard_slot()
-		
-	
+
+
 	def update_yard_slot(self):
-		frappe.db.sql("""Update `tabCargo Operation` set yard_slot=%s, yard_status="Closed", container_arrival_date=%s, status='Yard' where name=%s""", (self.yard_slot,self.container_arrival_date, self.container_no))
+		frappe.db.sql("""Update `tabCargo Operation` set yard_slot=%s, yard_status="Closed", status='Yard' where name=%s""", (self.yard_slot, self.container_no))
