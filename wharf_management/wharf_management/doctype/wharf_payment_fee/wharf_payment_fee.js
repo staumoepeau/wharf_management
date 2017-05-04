@@ -5,17 +5,17 @@ frappe.ui.form.on('Wharf Payment Fee', {
 	refresh: function(frm) {
 
 	},
-	
+
 	onload: function(frm) {
-		
+
 		frappe.call({
 			"method": "frappe.client.get",
 						args: {
-							doctype: "Cargo Operation",
+							doctype: "Cargo",
 							name: frm.doc.container_no,
 							filters: {
 								'docstatus' : 1
-							},	
+							},
 						},
 						callback: function (data) {
 								cur_frm.set_value("voyage_no", data.message["voyage_no"]);
@@ -28,7 +28,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
 								cur_frm.set_value("container_type", data.message["container_type"]);
 								cur_frm.set_value("container_size", data.message["container_size"]);
 								cur_frm.set_value("container_contents", data.message["container_contents"]);
-								
+
 								cur_frm.set_df_property("voyage_no", "read_only", 1);
 								cur_frm.set_df_property("vessel", "read_only", 1);
 								cur_frm.set_df_property("vessel_arrival_date", "read_only", 1);
@@ -40,9 +40,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
 								cur_frm.set_df_property("container_type", "read_only", 1);
 								cur_frm.set_df_property("container_size", "read_only", 1);
 								cur_frm.set_df_property("container_contents", "read_only", 1);
-								
-							}								
+
+							}
 			})
-				
+
 	}
 });

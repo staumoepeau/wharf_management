@@ -14,17 +14,22 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Wharf Operation"),
+			"label": _("Cargo Operation"),
 			"items": [
 				{
 					"type": "doctype",
-					"name": "Cargo Operation",
-					"description": _("Cargo Operation."),
+					"name": "Cargo",
+					"description": _("Cargo."),
 				},
 				{
 					"type": "doctype",
-					"name": "Wharf Operations Booking",
-					"description": _("Wharf Operations Booking."),
+					"name": "Cargo Manifest",
+					"description": _("Cargo Manifest."),
+				},
+				{
+					"type": "doctype",
+					"name": "Cargo Operation Booking",
+					"description": _("Cargo Operation Booking."),
 				},
 				{
 					"type": "doctype",
@@ -73,8 +78,8 @@ def get_data():
 				},
 				{
 					"type": "doctype",
-					"name": "Cargo Size",
-					"description": _("Cargo Size.")
+					"name": "Cargo Content",
+					"description": _("Cargo Content.")
 				},
 				{
 					"type": "doctype",

@@ -10,7 +10,7 @@ frappe.ui.form.on('Inspection', {
 		frappe.call({
 			"method": "frappe.client.get",
 						args: {
-							doctype: "Cargo Operation",
+							doctype: "Cargo",
 							name: frm.doc.container_no,
 							filters: {
 								'docstatus' : 1
@@ -19,11 +19,11 @@ frappe.ui.form.on('Inspection', {
 						callback: function (data) {
 								cur_frm.set_value("voyage_no", data.message["voyage_no"]);
 								cur_frm.set_value("vessel", data.message["vessel"]);
-								cur_frm.set_value("vessel_arrival_date", data.message["vessel_arrival_date"]);
+//								cur_frm.set_value("vessel_arrival_date", data.message["vessel_arrival_date"]);
 								cur_frm.set_value("bol", data.message["bol"]);
-								if (frm.docstatus != 1){
-									cur_frm.set_value("container_arrival_date", get_today());
-								}
+//								if (frm.docstatus != 1){
+//									cur_frm.set_value("container_arrival_date", get_today());
+	//							}
 
 								cur_frm.set_df_property("voyage_no", "read_only", 1);
 								cur_frm.set_df_property("vessel", "read_only", 1);
