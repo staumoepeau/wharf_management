@@ -15,4 +15,4 @@ class Yard(Document):
 
 
 	def update_yard_slot(self):
-		frappe.db.sql("""Update `tabCargo Operation` set yard_slot=%s, yard_status="Closed", status='Yard' where name=%s""", (self.yard_slot, self.container_no))
+		frappe.db.sql("""Update `tabCargo` set yard_slot=%s, yard_status="Closed", status='Yard' where name=%s""", (self.yard_slot, self.cargo_ref))

@@ -28,8 +28,8 @@ def get_data():
 				},
 				{
 					"type": "doctype",
-					"name": "Cargo Operation Booking",
-					"description": _("Cargo Operation Booking."),
+					"name": "Cargo Operation Planning",
+					"description": _("Cargo Operation Planning."),
 				},
 				{
 					"type": "doctype",
@@ -60,6 +60,19 @@ def get_data():
 					"type": "doctype",
 					"name": "Gate1",
 					"description": _("Security Gate 1."),
+				},
+			]
+		},
+		{
+			"label": _("Fleet Management"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Vehicle"
+				},
+				{
+					"type": "doctype",
+					"name": "Vehicle Log"
 				},
 			]
 		},

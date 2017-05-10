@@ -12,6 +12,6 @@ class Inspection(Document):
 		self.update_inspection_status()
 
 	def update_inspection_status(self):
-		frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", status='Inspection' where name=%s""", (self.container_no))
+		frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", status='Inspection' where name=%s""", (self.cargo_ref))
 
 	pass

@@ -5,8 +5,8 @@ frappe.listview_settings['Cargo'] = {
 	add_fields: ["status"],
 	get_indicator: function(doc) {
 
-		if(doc.status=== "Unknown"){
-					return [__("Unknown"), "red", "status,=,Unknown"];
+		if(doc.status=== ""){
+			return [__("Unknown"), "red", "status,=,"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
@@ -19,6 +19,9 @@ frappe.listview_settings['Cargo'] = {
 
 		} else if (doc.status === "Gate1"){
 			return [__("Passed Gate1"), "blue", "status,=,Gate1"];
+
+		}else if (doc.status === "Gate2"){
+			return [__("Outward"), "blue", "status,=,Gate2"];
 		}
 	}
 };

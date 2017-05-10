@@ -9,12 +9,20 @@ frappe.ui.form.on('Cargo Operation Booking', {
 			{fieldname: 'cargo_content', columns: 1},
 			{fieldname: 'dis_charging', columns: 1},
 			{fieldname: 'loading', columns: 1},
-			{fieldname: 'total_weight', columns: 1}
+			{fieldname: 'total_weight', columns: 4}
 		];
 
 		frm.get_field('forklift_table').grid.editable_fields = [
 			{fieldname: 'forklift_require', columns: 1},
 			{fieldname: 'forklift_qty', columns: 1}
+		];
+
+		frm.get_field('employee_working_table').grid.editable_fields = [
+			{fieldname: 'employee', columns: 2},
+			{fieldname: 'pick_up_time', columns: 2},
+			{fieldname: 'drop_off_time', columns:2},
+			{fieldname: 'pickup_place', columns: 2},
+			{fieldname: 'drop_off_place', columns: 2}
 		];
 
 	},
