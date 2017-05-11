@@ -61,6 +61,11 @@ def get_data():
 					"name": "Gate1",
 					"description": _("Security Gate 1."),
 				},
+				{
+					"type": "doctype",
+					"name": "Gate2",
+					"description": _("Security Gate 2."),
+				},
 			]
 		},
 		{

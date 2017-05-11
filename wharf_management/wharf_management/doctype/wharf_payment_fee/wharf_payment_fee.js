@@ -45,5 +45,16 @@ frappe.ui.form.on('Wharf Payment Fee', {
 							}
 			})
 
+	},
+	custom_code: function(frm) {
+		if (frm.doc.custom_code == "DDL"){
+			frm.set_value("delivery_code", "DIRECT DELIVERY")
+		}else if (frm.doc.custom_code == "DDLW"){
+			frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
+		}else if (frm.doc.custom_code == "IDL"){
+			frm.set_value("delivery_code", "INSPECTION DELIVERY")
+		}else if (frm.doc.custom_code == "IDLW"){
+			frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
+		}
 	}
 });

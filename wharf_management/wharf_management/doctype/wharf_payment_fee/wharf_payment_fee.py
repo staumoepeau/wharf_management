@@ -14,4 +14,4 @@ class WharfPaymentFee(Document):
 
 
 	def update_payment_status(self):
-		frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.cargo_ref))
+		frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))

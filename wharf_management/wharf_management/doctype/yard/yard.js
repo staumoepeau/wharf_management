@@ -13,7 +13,7 @@ frappe.ui.form.on('Yard', {
 			"method": "frappe.client.get",
 						args: {
 							doctype: "Cargo",
-							name: frm.booking_ref,
+							name: frm.doc.booking_ref,
 							filters: {
 								'docstatus' : 1
 							},
@@ -31,7 +31,6 @@ frappe.ui.form.on('Yard', {
 								cur_frm.set_df_property("vessel", "read_only", 1);
 								cur_frm.set_df_property("eta_date", "read_only", 1);
 								cur_frm.set_df_property("bol", "read_only", 1);
-								cur_frm.set_df_property("container_no", "read_only", 1);
 								cur_frm.set_df_property("consignee", "read_only", 1);
 
 							}

@@ -1,0 +1,29 @@
+{
+ "attach_print": 0, 
+ "condition": "doc.status == \"Booked\"", 
+ "creation": "2017-04-01 05:50:51.841468", 
+ "date_changed": "exp_end_date", 
+ "days_in_advance": 0, 
+ "docstatus": 0, 
+ "doctype": "Email Alert", 
+ "document_type": "Vessel Booking", 
+ "enabled": 1, 
+ "event": "Save", 
+ "idx": 0, 
+ "is_standard": 1, 
+ "message": "<p>Booking Created:</p>\n\n<div>\nBooking Ref : {{ doc.name }}\n</div>\n\n<hr>\n<p style=\"font-size: 85%\">\nThis is a notification for a Booking that was created today, and a sample <b>Email Alert</b>. In ERPNext you can setup email alerts on anything, Invoices, Orders, Leads, Opportunities, so you never miss a thing.\n<br>To edit this, and setup other alerts, just type <b>Email Alert</b> in the search bar.</p>", 
+ "modified": "2017-05-10 22:49:51.756570", 
+ "modified_by": "Administrator", 
+ "module": "Wharf Management", 
+ "name": "Task Due Alert", 
+ "owner": "sione.taumoepeau@gmail.com", 
+ "recipients": [
+  {
+   "cc": "sione@picbtonga.to", 
+   "email_by_document_field": "owner", 
+   "email_by_role": "Pilot Operation User"
+  }, 
+  {}
+ ], 
+ "subject": "{{ doc.name }}"
+}
