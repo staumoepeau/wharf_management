@@ -15,4 +15,4 @@ class Gate1(Document):
 	
 	
 	def update_gate1_status(self):
-		frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.booking_ref))
+		frappe.db.sql("""Update `tabCargo` set yard_slot=%s, gate1_status="Closed", status='Gate1' where name=%s""", (self.cutom_code, self.booking_ref))

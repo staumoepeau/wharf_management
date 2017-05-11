@@ -4,12 +4,12 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"label": _("Pilot Operation"),
+			"label": _("Agent"),
 			"items": [
 				{
 					"type": "doctype",
-					"name": "Vessel Booking",
-					"description": _("Booking Vessel."),
+					"name": "Booking Request",
+					"description": _("Booking Request."),
 				},
 			]
 		},
