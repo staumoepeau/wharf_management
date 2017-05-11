@@ -1,7 +1,7 @@
 {
  "allow_copy": 0, 
  "allow_guest_to_view": 0, 
- "allow_import": 0, 
+ "allow_import": 1, 
  "allow_rename": 0, 
  "autoname": "field:work_type", 
  "beta": 0, 
@@ -84,7 +84,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-05-10 20:04:35.327623", 
+ "modified": "2017-05-11 21:09:54.816386", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Work Type", 
