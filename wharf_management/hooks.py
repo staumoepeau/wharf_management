@@ -11,6 +11,9 @@ app_color = "blue"
 app_email = "sione.taumoepeau@gmail.com"
 app_license = "MIT"
 
+
+fixtures = ["Custom Field", "Custom Script", "Print Format"]
+
 # Includes in <head>
 # ------------------
 
