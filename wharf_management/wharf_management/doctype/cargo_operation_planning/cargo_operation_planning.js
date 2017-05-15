@@ -34,24 +34,16 @@ frappe.ui.form.on('Cargo Operation Planning', {
 	},
 	onload: function(frm){
 
-		frm.set_query("booking_ref", function() {
-			return {
-				"filters": {
-						"docstatus": ["=", 1],
-				}
-			};
-		});
+	//	frm.set_query("booking_ref", function() {
+	//		return {
+	//			"filters": {
+	//					"docstatus": ["=", 1],
+	//			}
+	//		};
+	//	});
 	},
 
 	booking_ref: function(frm){
-		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
-		cur_frm.add_fetch('booking_ref','vessel','vessel');
-		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
-		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
-		cur_frm.add_fetch('booking_ref','labour_requirements','labour_requirements');
-		cur_frm.add_fetch('booking_ref','gear_requirements','gear_requirements');
-		cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');
-
 
 		frappe.call({
 			method: "get_operation_list",
@@ -76,6 +68,13 @@ frappe.ui.form.on('Cargo Operation Planning', {
 	},
 
 	refresh: function(frm) {
+		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
+		cur_frm.add_fetch('booking_ref','vessel','vessel');
+		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
+		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
+		cur_frm.add_fetch('booking_ref','labour_requirements','labour_requirements');
+		cur_frm.add_fetch('booking_ref','gear_requirements','gear_requirements');
+		cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');
 
 	},
 

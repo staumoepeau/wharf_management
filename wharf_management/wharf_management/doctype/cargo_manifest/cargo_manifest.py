@@ -60,3 +60,14 @@ class CargoManifest(Document):
 
 			for d in entries:
 				row = self.append('manifest_summary_table', {})
+
+#@frappe.whitelist()
+#def get_child_table(doc):
+#	doc_a = frappe.get_doc("Cargo",doc)
+#	list1 = []
+#	for t in doc_a.get("manifest_table"):
+#		list1.append({
+#					'cargo_refrence':t.cargo_refrence,
+#					'container_no':t.container_no
+#					})
+#	return list1

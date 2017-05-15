@@ -9,7 +9,7 @@
  "docstatus": 0, 
  "doctype": "DocType", 
  "document_type": "", 
- "editable_grid": 1, 
+ "editable_grid": 0, 
  "engine": "InnoDB", 
  "fields": [
   {
@@ -294,7 +294,7 @@
  "issingle": 0, 
  "istable": 1, 
  "max_attachments": 0, 
- "modified": "2017-05-09 14:25:11.192455", 
+ "modified": "2017-05-15 13:05:11.081140", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo Table", 

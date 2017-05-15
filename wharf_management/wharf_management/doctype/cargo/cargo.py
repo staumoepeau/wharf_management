@@ -12,8 +12,9 @@ from frappe.utils import cstr, flt, fmt_money, formatdate
 class Cargo(Document):
 
 	def on_submit(self):
-		self.check_update()
+		self.check_validate()
 
-	def check_update(self):
-		if self.work_type == 'Discharged':
-			self.status = "Unknown"
+	def check_validate(self):
+		if not self.booking_ref:
+			msgprint(_("Booking Ref # is Manadory").format(self.booking_ref),
+					raise_exception=1)

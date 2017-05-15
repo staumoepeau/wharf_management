@@ -12,7 +12,7 @@ frappe.ui.form.on('Gate2', {
 			"method": "frappe.client.get",
 						args: {
 							doctype: "Cargo",
-							name: frm.doc.booking_ref,
+							name: frm.doc.cargo_ref,
 							filters: {
 								'docstatus' : 1
 							},	

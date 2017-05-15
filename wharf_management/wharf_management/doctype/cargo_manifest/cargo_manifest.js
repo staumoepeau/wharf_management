@@ -22,25 +22,45 @@ frappe.ui.form.on('Cargo Manifest', {
 	},
 
 	refresh: function(frm) {
-		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
-		cur_frm.add_fetch('booking_ref','vessel','vessel');
-		cur_frm.add_fetch('booking_ref','agents','agents');
-		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
-		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
-		cur_frm.add_fetch('booking_ref','pod','pod');
-		cur_frm.add_fetch('booking_ref','pol','pol');
-		cur_frm.add_fetch('booking_ref','final_dest_port','final_dest_port');
+//		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
+//		cur_frm.add_fetch('booking_ref','vessel','vessel');
+//		cur_frm.add_fetch('booking_ref','agents','agents');
+//		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
+//		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
+//		cur_frm.add_fetch('booking_ref','pod','pod');
+//		cur_frm.add_fetch('booking_ref','pol','pol');
+//		cur_frm.add_fetch('booking_ref','final_dest_port','final_dest_port');
 
-		frappe.call({
-			method: "create_manifest_summary_list",
-			doc: frm.doc,
-			callback: function(r, rt) {
-				console.log(r)
-				frm.refresh_field("manifest_summary_table");
-				frm.refresh_fields();
-			}
-		});
+//		frappe.call({
+//			method: "create_manifest_summary_list",
+//			doc: frm.doc,
+//			callback: function(r, rt) {
+//				console.log(r)
+//				frm.refresh_field("manifest_summary_table");
+//				frm.refresh_fields();
+//			}
+//		});
 
 	},
-
 });
+	
+//frappe.ui.form.on("Cargo Manifest","booking_ref",function(frm){
+//		return frappe.call({
+ //       	method: "get_child_table",
+ //      		args:{
+ //       		"doc":frm.doc.booking_ref
+ //       			},
+  //      			callback: function(r) {
+//						console.log(r);
+//        				$.each(r.message, function(i, d) {
+//							var row = frappe.model.add_child(frm.doc, "Cargo Table", "manifest_table");
+//							row.cargo_refrence = d.cargo_refrence;
+//							row.container_no = d.container_no;
+//							refresh_field("manifest_table");
+  //      				});	
+  //      			}
+//        		})
+	
+//});
+
+

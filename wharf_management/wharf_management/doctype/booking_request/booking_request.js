@@ -27,15 +27,43 @@ frappe.ui.form.on('Booking Request', {
 
 	refresh: function(frm) {
 		
+		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
+		cur_frm.add_fetch('booking_ref','vessel','vessel');
+		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
+		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
+		
+		
 		
 	},
 	
-	create_payment: function(frm){
-		frappe.route_options = { "payment_ref": frm.doc.name }
-		frappe.new_doc("Sales Invoice");
-		frappe.set_route("Form", "Sales Invoice", doc.name);
-	}
+//	create_payment: function(frm){
+//		frappe.call({
+//			"method": "frappe.client.get",
+//				args: {
+//					doctype: "Payment Entry",
+//					filters: {'payment_ref': frm.doc.booking_ref},
+				//	name: frm.doc.booking_ref
+//					},
+//				callback: function (data) {
+//					console.log(data);
+//					var booking_refrence = (data.message["payment_ref"]);
+//					if (booking_refrence = ""){
+//						frappe.route_options = { "payment_ref": frm.doc.name }
+//						frappe.new_doc("Payment Entry");
+//						frappe.set_route("Form", "Payment Entry", doc.name);
+//					} 
+				//	else
+				//	{
+					//	msgprint("Payment already created for this transaction");
+				//	}
+//				}
+//		})				
+//	},
 	
+//	total_weight_amount: function(frm) {
+//		var totalamount = flt(frm.doc.total_weight_amount * 0.5);
+//		frm.set_value("");	
+//	}
 	
 	
 });
@@ -45,8 +73,9 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
   frappe.model.set_value(d.doctype, d.name, "total_weight", flt(d.weight));
 
   var total_weight_amount = 0;
+  var totalamount = 0;
   frm.doc.cargo_booking_manifest_table.forEach(function(d) { flt(total_weight_amount += flt(d.weight)); });
-
+	
   frm.set_value("total_weight_amount", total_weight_amount);
 
 });

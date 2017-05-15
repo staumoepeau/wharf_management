@@ -102,6 +102,12 @@ fixtures = ["Custom Field", "Custom Script", "Print Format"]
 # 	]
 # }
 
+default_mail_footer = """<div style="text-align: center;">
+	<a href="http://www.tongaports.to?source=via_email_footer" target="_blank" style="color: #8d99a6;">
+		Sent via Ports Authority Tonga - PMS
+	</a>
+</div>"""
+
 # Testing
 # -------
 

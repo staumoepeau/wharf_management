@@ -9,14 +9,15 @@ frappe.ui.form.on('Inspection', {
 
 		frappe.call({
 			"method": "frappe.client.get",
-						args: {
-							doctype: "Cargo",
-							name: frm.doc.booking_ref,
+				args: {
+					doctype: "Cargo",
+							name: frm.doc.cargo_ref,
 							filters: {
 								'docstatus' : 1
 							},
 						},
 						callback: function (data) {
+								console.log(data);
 								cur_frm.set_value("cargo_ref", data.message["name"]);
 								cur_frm.set_value("container_no", data.message["container_no"]);
 								cur_frm.set_value("voyage_no", data.message["voyage_no"]);

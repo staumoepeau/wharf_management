@@ -7,6 +7,9 @@ frappe.listview_settings['Cargo'] = {
 
 		if(doc.status=== ""){
 			return [__("Unknown"), "red", "status,=,"];
+			
+		} else if (doc.status === "Inward"){
+			return [__("Inward"), "black", "status,=,Inward"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
