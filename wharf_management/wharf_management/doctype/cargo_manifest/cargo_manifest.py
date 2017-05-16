@@ -25,31 +25,29 @@ class CargoManifest(Document):
 #			frappe.db.sql("""Update `tabCargo` set status='Unknown' where parent = %s""", (self.name))
 
 
-		def create_manifest_list(self):
-			self.create_list()
+		def get_manifest(self):
 			condition = ""
-			cargo_list = frappe.db.sql("""select cargo_refrence, container_no, bol, cargo_type, work_type, container_content, status, voyage_no, booking_ref
-				from `tabCargo Table` where parent = %s {0}""".format(condition), (self.name), as_dict=1)
+			manifest_list = frappe.db.sql("""select name as cargo_refrence, container_no, bol, cargo_type,
+			work_type, container_content, status, voyage_no, booking_ref from `tabCargo` where booking_ref = %s""",(self.booking_ref), as_dict=1)
 
-			entries = sorted(list(cargo_list),
-				key=lambda k: k['booking_ref'])
+			entries = sorted(list(manifest_list))
 
-			self.set('cagro_list', [])
+			self.set('manifest_list', [])
 
 			for d in entries:
-				row = self.append('cargo_list', {})
+				row = self.append('manifest_table', {
+					'cargo_refrence':d.cargo_refrence,
+					'container_no':d.container_no,
+					'cargo_type':d.cargo_type,
+					'work_type':d.work_type,
+					'container_content':d.container_content,
+					'status':d.status,
+					'voyage_no':d.voyage_no,
+					'booking_ref':d.booking_ref
+				})
 
 
-
-		def create_list(self):
-			frappe.db.sql("""Insert into `tabCargo Table` (name, parent, parentfield, parenttype, cargo_refrence, container_no, bol, cargo_type,
-			work_type, container_content, status, voyage_no, booking_ref) select
-			concat(container_no, '-',booking_ref), %s, %s, %s, name, container_no, bol, cargo_type,
-			work_type, container_contents, status, voyage_no, booking_ref
-			from `tabCargo` where booking_ref = %s""",(self.name, "cargo_list", "Cargo Manifest", self.booking_ref))
-
-
-		def create_manifest_summary_list(self):
+		def get_manifest_summary_list(self):
 			condition = ""
 			manifest_summary_table = frappe.db.sql("""select count(*)
 				from `tabCargo` where booking_ref = %s group by pat_code""", (self.booking_ref))
@@ -60,14 +58,3 @@ class CargoManifest(Document):
 
 			for d in entries:
 				row = self.append('manifest_summary_table', {})
-
-#@frappe.whitelist()
-#def get_child_table(doc):
-#	doc_a = frappe.get_doc("Cargo",doc)
-#	list1 = []
-#	for t in doc_a.get("manifest_table"):
-#		list1.append({
-#					'cargo_refrence':t.cargo_refrence,
-#					'container_no':t.container_no
-#					})
-#	return list1

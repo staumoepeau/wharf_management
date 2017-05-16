@@ -9,11 +9,11 @@ from frappe.model.document import Document
 from frappe.utils import cstr, flt, fmt_money, formatdate
 from frappe import msgprint, _, scrub
 
-class Gate1(Document):
+class Gate2(Document):
 	
 	def on_submit(self):
 		self.update_gate2_status()
 	
 	
 	def update_gate2_status(self):
-		frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate2' where name=%s""", (self.booking_ref))
+		frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate2' where name=%s""", (self.cargo_ref))

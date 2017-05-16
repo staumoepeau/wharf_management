@@ -6,10 +6,13 @@ frappe.listview_settings['Cargo'] = {
 	get_indicator: function(doc) {
 
 		if(doc.status=== ""){
-			return [__("Unknown"), "red", "status,=,"];
+			return [__("Uploaded"), "purple", "status,=,"];
 			
 		} else if (doc.status === "Inward"){
-			return [__("Inward"), "black", "status,=,Inward"];
+			return [__("Inward"), "orange", "status,=,Inward"];
+		
+		} else if (doc.status === "Outbound"){
+			return [__("Outbound"), "black", "status,=,Outbound"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
@@ -24,7 +27,7 @@ frappe.listview_settings['Cargo'] = {
 			return [__("Passed Gate1"), "blue", "status,=,Gate1"];
 
 		}else if (doc.status === "Gate2"){
-			return [__("Outward"), "blue", "status,=,Gate2"];
+			return [__("Outward"), "green", "status,=,Gate2"];
 		}
 	}
 };
