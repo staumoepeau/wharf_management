@@ -24,6 +24,8 @@ frappe.ui.form.on('Wharf Payment Fee', {
 				cur_frm.set_value("vessel", data.message["vessel"]);
 				cur_frm.set_value("eta_date", data.message["eta_date"]);
 				cur_frm.set_value("cargo_type", data.message["cargo_type"]);
+				cur_frm.set_value("work_type", data.message["work_type"]);
+				
 				cur_frm.set_value("yard_slot", data.message["yard_slot"]);
 				cur_frm.set_value("consignee", data.message["consignee"]);
 				cur_frm.set_value("container_type", data.message["container_type"]);
@@ -52,12 +54,48 @@ frappe.ui.form.on('Wharf Payment Fee', {
 
 	},
 	posting_date: function(frm){
-		
-		var storagedays = frappe.datetime.get_day_diff( frm.doc.posting_date, frm.doc.eta_date );
-//		var storagedays = (frm.doc.posting_date, frm.doc.eta_date);
-		frm.set_value("storage_days", storagedays);
-//		calculate_storage_fee(frm);
+		frappe.call({
+			method: "get_working_days",
+			doc: frm.doc,
+			callback: function(r) {
+				frm.set_value("storage_days", r.message);
+				
+				if (frm.doc.free_storage_days < frm.doc.storage_days){
+					frm.set_value("storage_days_charged", ( frm.doc.storage_days - frm.doc.free_storage_days));
+				} else if (frm.doc.free_storage_days >= frm.doc.storage_days){
+					frm.set_value("storage_days_charged", 0.00);
+				}
+				frappe.call({
+					method: "get_storage_fee",
+					doc: frm.doc,
+					callback: function(s) {
+					
+							var sfee = flt((s.message) * frm.doc.storage_days_charged);
+							frm.set_value("storage_fee", sfee);
+					}
+				});
+				frappe.call({
+					method: "get_handling_fee",
+					doc: frm.doc,
+					callback: function(h) {
+						
+							var hfee = flt((h.message));
+							frm.set_value("wharf_handling_fee", hfee);
+					}
+				});
+				frappe.call({
+					method: "get_wharfage_fee",
+					doc: frm.doc,
+					callback: function(w) {
+						console.log(w.message);
+							var wfee = flt((w.message));
+							frm.set_value("wharf_fee", wfee);
+					}
+				});
+			}
 			
+		});
+
 	
 	},
 	
@@ -74,10 +112,4 @@ frappe.ui.form.on('Wharf Payment Fee', {
 	}
 });
 
-var calculate_storage_fee = function(frm){
 
-	
-
-//	frm.set_value("total_amount_paid", total_amount);
-		
-}

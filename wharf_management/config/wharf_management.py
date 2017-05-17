@@ -131,13 +131,30 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Work Type",
+					"description": _("Work Type"),
+				},
+			]
+		},
+		{
+			"label": _("Fees"),
+			"items": [
+				
+				{
+					"type": "doctype",
 					"name": "Wharf Handling Fee",
 					"description": _("Wharf Handling Fee"),
 				},
 				{
 					"type": "doctype",
-					"name": "Work Type",
-					"description": _("Work Type"),
+					"name": "Storage Fee",
+					"description": _("Storage Fee"),
+				},
+			
+				{
+					"type": "doctype",
+					"name": "Wharfage Fee",
+					"description": _("Wharfage Fee"),
 				},
 			]
 		},
