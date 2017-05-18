@@ -7,8 +7,15 @@ def get_data():
 		{
 			"module_name": "Wharf Management",
 			"color": "blue",
-			"icon": "octicon octicon-package",
+			"icon": "fa fa-gear",
 			"type": "module",
-			"label": _("Wharf Management")
-		}
+			"label": _("PMS")
+		},
+		{
+			"module_name": "Agency",
+			"color": "blue",
+			"icon": "fa fa-ship",
+			"type": "module",
+			"label": _("Agency")
+		},
 	]

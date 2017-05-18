@@ -48,12 +48,7 @@ class WharfPaymentFee(Document):
 		sfee = frappe.db.sql("""Select fee_amount from `tabStorage Fee` 
 			where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
 		return sfee
-	
-	def get_handling_fee(self):
 
-		hfee = frappe.db.sql("""Select fee_amount from `tabWharf Handling Fee` 
-			where cargo_type=%s and work_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.work_type, self.container_size, self.container_content))
-		return hfee
 	
 	def get_wharfage_fee(self):
 

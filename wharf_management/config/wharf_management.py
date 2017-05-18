@@ -4,16 +4,6 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"label": _("Agent"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Booking Request",
-					"description": _("Booking Request."),
-				},
-			]
-		},
-		{
 			"label": _("Cargo Operation"),
 			"items": [
 				{

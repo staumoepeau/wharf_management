@@ -27,12 +27,22 @@ frappe.ui.form.on('Booking Request', {
 
 	refresh: function(frm) {
 		
-		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
-		cur_frm.add_fetch('booking_ref','vessel','vessel');
-		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
-		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
 		
-		
+		if(!frm.doc.__islocal){
+			cur_frm.set_df_property("agents", "read_only", 1);
+			cur_frm.set_df_property("voyage_no", "read_only", 1);
+			cur_frm.set_df_property("vessel", "read_only", 1);
+			cur_frm.set_df_property("vessel_type", "read_only", 1);
+
+		}
+			
+		if(frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Wharf Operation Manager")){
+			frm.add_custom_button(__('Create Payment'), function() {
+			});
+			
+			cur_frm.set_df_property("mode_of_repayment", "hidden", 1);
+			cur_frm.set_df_property("require_amount", "hidden", 1);
+		}
 		
 	},
 	

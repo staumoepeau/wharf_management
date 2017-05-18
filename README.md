@@ -1,6 +1,6 @@
 ## Wharf Management
 
-App to Manage Wharf Operations
+Application to Manage Wharf Operations
 
 #### License
 

@@ -2,12 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Wharf Payment Fee', {
-	refresh: function(frm) {
-
-	},
-
+	
 	onload: function(frm) {
-
+		
 		frappe.call({
 			"method": "frappe.client.get",
 			args: {
@@ -53,50 +50,30 @@ frappe.ui.form.on('Wharf Payment Fee', {
 		})
 
 	},
+	
+	
+	refresh: function(frm) {
+		
+	},
 	posting_date: function(frm){
 		frappe.call({
 			method: "get_working_days",
 			doc: frm.doc,
 			callback: function(r) {
 				frm.set_value("storage_days", r.message);
-				
-				if (frm.doc.free_storage_days < frm.doc.storage_days){
-					frm.set_value("storage_days_charged", ( frm.doc.storage_days - frm.doc.free_storage_days));
-				} else if (frm.doc.free_storage_days >= frm.doc.storage_days){
-					frm.set_value("storage_days_charged", 0.00);
-				}
-				frappe.call({
-					method: "get_storage_fee",
-					doc: frm.doc,
-					callback: function(s) {
-					
-							var sfee = flt((s.message) * frm.doc.storage_days_charged);
-							frm.set_value("storage_fee", sfee);
+					if (frm.doc.free_storage_days < frm.doc.storage_days){
+						var sdays = flt(frm.doc.storage_days - frm.doc.free_storage_days);
+						frm.set_value("storage_days_charged", sdays);
+					} else if (frm.doc.free_storage_days >= frm.doc.storage_days){
+						var sdays = 0.00;
+						frm.set_value("storage_days_charged", sdays);
+//						frm.refresh_fields("storage_days_charged");
 					}
-				});
-				frappe.call({
-					method: "get_handling_fee",
-					doc: frm.doc,
-					callback: function(h) {
-						
-							var hfee = flt((h.message));
-							frm.set_value("wharf_handling_fee", hfee);
-					}
-				});
-				frappe.call({
-					method: "get_wharfage_fee",
-					doc: frm.doc,
-					callback: function(w) {
-						console.log(w.message);
-							var wfee = flt((w.message));
-							frm.set_value("wharf_fee", wfee);
-					}
-				});
+				//frm.trigger("calculate_fees")
 			}
-			
-		});
 
-	
+		})
+
 	},
 	
 	custom_code: function(frm) {
@@ -109,7 +86,38 @@ frappe.ui.form.on('Wharf Payment Fee', {
 		} else if (frm.doc.custom_code == "IDLW"){
 			frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
 		}
+	},
+	
+	devanning: function(frm){
+		if (frm.doc.devanning == "Yes"){
+			
+		}
 	}
+
+	calculate_fees: function(frm){
+
+		frappe.call({
+			method: "get_storage_fee",
+			doc: frm.doc,
+			callback: function(s) {
+				console.log(s.message)
+				var sfee = flt((s.message) * frm.doc.storage_days_charged);
+					frm.set_value("storage_fee", sfee);
+				}
+			});
+		frappe.call({
+			method: "get_wharfage_fee",
+			doc: frm.doc,
+			callback: function(w) {
+				var wfee = flt((w.message));
+				frm.set_value("wharf_fee", wfee);
+			}
+		});
+		
+		
+
+	},
+
+	
+
 });
-
-

@@ -6,13 +6,15 @@ app_name = "wharf_management"
 app_title = "Wharf Management"
 app_publisher = "Caitlah Technology"
 app_description = "App to Manage Wharf Operations"
-app_icon = "octicon octicon-package"
+app_icon = "octicon octicon-gear"
 app_color = "blue"
 app_email = "sione.taumoepeau@gmail.com"
 app_license = "MIT"
 
 
 fixtures = ["Custom Field", "Custom Script", "Print Format"]
+
+error_report_email = "support@tongaports.to"
 
 # Includes in <head>
 # ------------------
