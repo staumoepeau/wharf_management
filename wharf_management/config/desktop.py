@@ -12,13 +12,6 @@ def get_data():
 			"label": _("PMS")
 		},
 		{
-			"doctype_name": "Cargo",
-			"color": "red",
-			"icon": "fa fa-package",
-			"type": "doctype",
-			"label": _("Cargo")
-		},
-		{
 			"module_name": "Agency",
 			"color": "blue",
 			"icon": "fa fa-ship",
