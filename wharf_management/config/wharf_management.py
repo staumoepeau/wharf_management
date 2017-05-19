@@ -146,6 +146,11 @@ def get_data():
 					"name": "Wharfage Fee",
 					"description": _("Wharfage Fee"),
 				},
+				{
+					"type": "doctype",
+					"name": "Devanning Fee",
+					"description": _("Devanning Fee"),
+				},
 			]
 		},
 		{

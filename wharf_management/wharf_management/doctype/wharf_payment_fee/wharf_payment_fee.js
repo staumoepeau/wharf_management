@@ -3,6 +3,16 @@
 
 frappe.ui.form.on('Wharf Payment Fee', {
 	
+	setup: function(frm) {
+		frm.get_field('wharf_fee_item').grid.editable_fields = [
+			{fieldname: 'item', columns: 1},
+			{fieldname: 'description', columns: 1},
+			{fieldname: 'price', columns: 1},
+			{fieldname: 'qty', columns: 1},
+			{fieldname: 'total', columns: 1}
+		];
+	},
+	
 	onload: function(frm) {
 		
 		frappe.call({
@@ -69,7 +79,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
 						frm.set_value("storage_days_charged", sdays);
 //						frm.refresh_fields("storage_days_charged");
 					}
-				//frm.trigger("calculate_fees")
+				
 			}
 
 		})
@@ -89,10 +99,11 @@ frappe.ui.form.on('Wharf Payment Fee', {
 	},
 	
 	devanning: function(frm){
-		if (frm.doc.devanning == "Yes"){
+		if (frm.doc.devanning == "Yes" & frm.doc.container_size){
 			
 		}
-	}
+		frm.trigger("calculate_fees")
+	},
 
 	calculate_fees: function(frm){
 
