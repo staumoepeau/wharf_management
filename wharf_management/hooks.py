@@ -16,12 +16,15 @@ fixtures = ["Custom Field", "Custom Script", "Print Format"]
 
 error_report_email = "support@tongaports.to"
 
+app_include_js = "assets/js/wharf_management.min.js"
+
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/wharf_management/css/wharf_management.css"
-# app_include_js = "/assets/wharf_management/js/wharf_management.js"
+#app_include_js = "/assets/wharf_management/js/wharf_management.js"
+
 
 # include js, css files in header of web template
 # web_include_css = "/assets/wharf_management/css/wharf_management.css"
