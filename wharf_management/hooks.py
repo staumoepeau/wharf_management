@@ -18,6 +18,8 @@ error_report_email = "support@tongaports.to"
 
 app_include_js = "assets/js/wharf_management.min.js"
 
+app_include_css = "assets/css/wharf_management.css"
+
 # Includes in <head>
 # ------------------
 

@@ -37,11 +37,8 @@ frappe.ui.form.on('Booking Request', {
 		}
 			
 		if(frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Wharf Operation Manager")){
-			frm.add_custom_button(__('Create Payment'), function() {
+			frm.add_custom_button(__('Make Payment'), function() {
 			});
-			
-			cur_frm.set_df_property("mode_of_repayment", "hidden", 1);
-			cur_frm.set_df_property("require_amount", "hidden", 1);
 		}
 		
 	},

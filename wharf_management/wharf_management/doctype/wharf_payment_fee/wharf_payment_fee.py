@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 from frappe.utils import add_days, cint, cstr, flt, getdate, rounded, date_diff, money_in_words
 import frappe
-from frappe import throw, _
+from frappe import _, msgprint, throw
 from frappe.model.document import Document
 
 class WharfPaymentFee(Document):
@@ -55,6 +55,26 @@ class WharfPaymentFee(Document):
 		wfee = frappe.db.sql("""Select fee_amount from `tabWharfage Fee` 
 			where cargo_type=%s and container_size=%s""", (self.cargo_type, self.container_size))
 		return wfee
-		
-		
 	
+	def get_item_name(self):
+		
+		item_name = frappe.db.sql("""Select item_name from `tabStorage Fee` 
+			where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
+		
+		return item_name
+		
+	def insert_fees(self):
+			
+		item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, 
+												   "container_size" : self.container_size,
+												  "container_content" : self.container_content}, "item_name")
+		
+		vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
+
+
+		self.append("wharf_fee_item", { 
+			"item": item_name,
+			"description": vals.description,
+			"price": vals.standard_rate,
+			"qty": self.storage_days_charged
+		})

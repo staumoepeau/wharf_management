@@ -5,11 +5,11 @@ frappe.ui.form.on('Wharf Payment Fee', {
 	
 	setup: function(frm) {
 		frm.get_field('wharf_fee_item').grid.editable_fields = [
-			{fieldname: 'item', columns: 1},
-			{fieldname: 'description', columns: 1},
-			{fieldname: 'price', columns: 1},
-			{fieldname: 'qty', columns: 1},
-			{fieldname: 'total', columns: 1}
+			{fieldname: 'item', columns: 2},
+			{fieldname: 'description', columns: 2},
+			{fieldname: 'price', columns: 2},
+			{fieldname: 'qty', columns: 2},
+			{fieldname: 'total', columns: 2}
 		];
 	},
 	
@@ -128,7 +128,31 @@ frappe.ui.form.on('Wharf Payment Fee', {
 		
 
 	},
+	insert_fees_button: function(frm) {
+		return frappe.call({
+			method: "insert_fees",
+			doc: frm.doc,
+			callback: function(fees) {
+				
+				frm.refresh_fields();
+				console.log(fees);
+			}
+		});
+	},
+});
 
-	
-
+frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn){
+	var d = locals[cdt][cdn];
+	frappe.call({
+			"method": "frappe.client.get",
+			args: {
+					doctype: "Item",
+					filters: {'name': d.item
+								},
+				},
+				callback: function (data) {
+					frappe.model.set_value(d.doctype, d.name, "price",  data.message["standard_rate"]);
+					frappe.model.set_value(d.doctype, d.name, "description",  data.message["description"]);
+				}
+		})
 });
