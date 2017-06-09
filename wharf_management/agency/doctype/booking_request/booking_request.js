@@ -24,7 +24,8 @@ frappe.ui.form.on('Booking Request', {
 		];
 
 	},
-
+	
+	
 	refresh: function(frm) {
 		
 		
@@ -38,37 +39,37 @@ frappe.ui.form.on('Booking Request', {
 			
 		if(frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Wharf Operation Manager")){
 			frm.add_custom_button(__('Create Payment'), function() {
+				create_payment(frm);
 			});
 			
-			cur_frm.set_df_property("mode_of_repayment", "hidden", 1);
-			cur_frm.set_df_property("require_amount", "hidden", 1);
+		}
+		var Current_User = user
+		if(Current_User == frm.doc.owner){
+			frm.add_custom_button(__('Amend ETA'), function() {
+				create_payment(frm);
+			});
+			
 		}
 		
 	},
+	onload:function(frm){
+		var Current_User = user;
+//		if(frm.doc.__islocal){
+			if (Current_User != cur_frm.doc.owner & Current_User != "Administrator"){
+//				cur_frm.appframe.buttons.Print.remove();
+				
+				msgprint({title:__('Error'), indicator:'red',
+				message:__("You are not Authorise to view this transaction.")});
+				window.close();
+				
+			}
+//		}
+//		console.log(frm.doc.owner)
+		
+//		msgprint("Hello : %s", frm.doc.owner)
+
+	},
 	
-//	create_payment: function(frm){
-//		frappe.call({
-//			"method": "frappe.client.get",
-//				args: {
-//					doctype: "Payment Entry",
-//					filters: {'payment_ref': frm.doc.booking_ref},
-				//	name: frm.doc.booking_ref
-//					},
-//				callback: function (data) {
-//					console.log(data);
-//					var booking_refrence = (data.message["payment_ref"]);
-//					if (booking_refrence = ""){
-//						frappe.route_options = { "payment_ref": frm.doc.name }
-//						frappe.new_doc("Payment Entry");
-//						frappe.set_route("Form", "Payment Entry", doc.name);
-//					} 
-				//	else
-				//	{
-					//	msgprint("Payment already created for this transaction");
-				//	}
-//				}
-//		})				
-//	},
 	
 //	total_weight_amount: function(frm) {
 //		var totalamount = flt(frm.doc.total_weight_amount * 0.5);
@@ -89,3 +90,19 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
   frm.set_value("total_weight_amount", total_weight_amount);
 
 });
+
+var create_payment = function(frm){
+		frappe.call({
+			"method": "frappe.client.get",
+				args: {
+					doctype: "Payment Entry",
+					filters: {'payment_ref': frm.doc.booking_ref},
+				name: frm.doc.booking_ref
+					},
+				callback: function (data) {
+						frappe.route_options = { "payment_ref": frm.doc.name }
+						frappe.new_doc("Payment Entry");
+						frappe.set_route("Form", "Payment Entry", doc.name);
+				}
+		})				
+	}
