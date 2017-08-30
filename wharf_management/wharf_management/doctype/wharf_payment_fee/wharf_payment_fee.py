@@ -12,7 +12,7 @@ class WharfPaymentFee(Document):
 
 	def on_submit(self):
 		self.update_payment_status()
-		self.gl_entries()
+	#	self.gl_entries()
 
 	def update_payment_status(self):
 		frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
@@ -99,8 +99,7 @@ class WharfPaymentFee(Document):
 			})
 		if self.devanning=="No":
     			fees=0
-		  			
 
 		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(1 * val.standard_rate)+(1 * fees))
 
-	def gl_entries(self):
+	#def gl_entries(self):
