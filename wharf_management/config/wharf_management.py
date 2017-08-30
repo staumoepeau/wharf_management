@@ -23,6 +23,11 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Bulk Payment",
+					"description": _("Bulk Payment"),
+				},
+				{
+					"type": "doctype",
 					"name": "Wharf Payment Fee",
 					"description": _("Wharf Payment Fee"),
 				},
@@ -74,6 +79,11 @@ def get_data():
 		{
 			"label": _("Setup"),
 			"items": [
+				{
+					"type": "doctype",
+					"name": "Item",
+					"description": _("Item."),
+				},
 				{
 					"type": "doctype",
 					"name": "Agents",

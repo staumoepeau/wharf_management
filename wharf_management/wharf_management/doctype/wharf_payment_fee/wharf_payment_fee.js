@@ -99,10 +99,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
 	},
 	
 	devanning: function(frm){
-		if (frm.doc.devanning == "Yes" & frm.doc.container_size){
-			
-		}
-		frm.trigger("calculate_fees")
+		
 	},
 
 	calculate_fees: function(frm){
@@ -139,6 +136,28 @@ frappe.ui.form.on('Wharf Payment Fee', {
 			}
 		});
 	},
+	discount: function(frm){
+		if (frm.doc.discount == "No"){
+			frm.set_value("total_amount", frm.doc.total_fee);
+		} else if (frm.doc.discount == "Yes"){
+			frm.set_value("total_amount", frm.doc.total_fee - frm.doc.discount_amount);
+		}
+	},
+	discount_amount: function(frm){
+		frm.set_value("total_amount", frm.doc.total_fee - frm.doc.discount_amount);
+	},
+
+});
+
+frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn){
+	var d = locals[cdt][cdn];
+	frappe.model.set_value(d.doctype, d.name, "total_fee", d.total);
+  
+	var total_fees = 0;
+	frm.doc.wharf_fee_item.forEach(function(d) { total_fees += d.total; });
+  
+	frm.set_value("total_fee", total_fees);
+  
 });
 
 frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn){

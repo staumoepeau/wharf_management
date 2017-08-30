@@ -39,46 +39,33 @@ frappe.ui.form.on('Booking Request', {
 
         if (frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Wharf Operation Manager")) {
             frm.add_custom_button(__('Create Payment'), function() {
-                create_payment(frm);
+                frappe.route_options = {
+                    "payment_ref": frm.doc.name
+                       }
+                        frappe.new_doc("Payment Entry");
+                       frappe.set_route("Form", "Payment Entry", doc.name);
+                //create_payment(frm);
             });
 
         }
         var Current_User = user
         if (Current_User == frm.doc.owner) {
             frm.add_custom_button(__('Amend ETA'), function() {
-                create_payment(frm);
+             //   create_payment(frm);
+                frappe.route_options = {
+                 "payment_ref": frm.doc.name,
+                 "paid_to" : "Cash - PAT"
+                    }
+                     frappe.new_doc("Payment Entry");
+                    frappe.set_route("Form", "Payment Entry", doc.name);
+             
             });
-
         }
 
     },
     onload: function(frm) {
-        var Current_User = user;
-        //		if(frm.doc.__islocal){
-        if (Current_User != cur_frm.doc.owner & Current_User != "Administrator") {
-            //				cur_frm.appframe.buttons.Print.remove();
-
-            msgprint({
-                title: __('Error'),
-                indicator: 'red',
-                message: __("You are not Authorise to view this transaction.")
-            });
-            window.close();
-            window.closed;
-        }
-        //		}
-        //		console.log(frm.doc.owner)
-
-        //		msgprint("Hello : %s", frm.doc.owner)
 
     },
-
-
-    //	total_weight_amount: function(frm) {
-    //		var totalamount = flt(frm.doc.total_weight_amount * 0.5);
-    //		frm.set_value("");	
-    //	}
-
 
 });
 
@@ -99,8 +86,8 @@ var create_payment = function(frm) {
         "method": "frappe.client.get",
         args: {
             doctype: "Payment Entry",
-            filters: { 'payment_ref': frm.doc.booking_ref },
-            name: frm.doc.booking_ref
+            filters: { 'payment_ref': frm.doc.name }
+       //   name: frm.doc.name
         },
         callback: function(data) {
             frappe.route_options = { "payment_ref": frm.doc.name }

@@ -6,13 +6,21 @@ from __future__ import unicode_literals
 import frappe
 from frappe import throw, _
 from frappe.model.document import Document
+from frappe.utils import formatdate
+from datetime import datetime
 
 class Yard(Document):
 
 
 	def on_submit(self):
 		self.update_yard_slot()
+		self.update_yard_timestamp()
 
 
 	def update_yard_slot(self):
 		frappe.db.sql("""Update `tabCargo` set yard_slot=%s, yard_status="Closed", status='Yard' where name=%s""", (self.yard_slot, self.cargo_ref))
+
+	def update_yard_timestamp(self):
+		if not self.yard_time_stamp:
+			 yard_time_stamp = datetime.now()
+			
