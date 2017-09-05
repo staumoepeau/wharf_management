@@ -101,5 +101,3 @@ class WharfPaymentFee(Document):
     			fees=0
 
 		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(1 * val.standard_rate)+(1 * fees))
-
-	#def gl_entries(self):
