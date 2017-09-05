@@ -4,7 +4,7 @@ from . import __version__ as app_version
 
 app_name = "wharf_management"
 app_title = "Wharf Management"
-app_publisher = "Caitlah Technology"
+app_publisher = "Sione Taumoepeau"
 app_description = "App to Manage Wharf Operations"
 app_icon = "octicon octicon-gear"
 app_color = "blue"
