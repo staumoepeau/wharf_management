@@ -32,7 +32,7 @@ frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn){
 			args: {
                 doctype: "Cargo",
                 filters: {
-                        'booking_ref': d.booking_ref
+                        'cargo_ref': d.cargo_ref
 								},
 				},
 				callback: function (data) {
@@ -43,7 +43,7 @@ frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn){
                     frappe.model.set_value(d.doctype, d.name, "bol",  data.message["bol"]);
                     frappe.model.set_value(d.doctype, d.name, "status",  data.message["status"]);
                     frappe.model.set_value(d.doctype, d.name, "voyage_no",  data.message["voyage_no"]);
-                    frappe.model.set_value(d.doctype, d.name, "booking_ref",  data.message["booking_ref"]);
+                    frappe.model.set_value(d.doctype, d.name, "cargo_ref",  data.message["cargo_ref"]);
 				}
 		})
 });
