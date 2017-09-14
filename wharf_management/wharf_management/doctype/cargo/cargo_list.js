@@ -3,13 +3,20 @@
 
 frappe.listview_settings['Cargo'] = {
 	add_fields: ["status"],
+	has_indicator_for_draft: 1,
 	get_indicator: function(doc) {
 
-		if(doc.status=== ""){
+		if(doc.docstatus==0){
+			if(doc.status=="Inward"){
+				return [__("Inward"), "red", "status,=,Inward"];
+			} else{
+				return [__("Draft"), "red", "status,=,"];
+			}
+		} else if(doc.status=== ""){
 			return [__("Uploaded"), "purple", "status,=,"];
 			
 		} else if (doc.status === "Inward"){
-			return [__("Inward"), "orange", "status,=,Inward"];
+			return [__("Inward"), "red", "status,=,Inward"];
 		
 		} else if (doc.status === "Outbound"){
 			return [__("Outbound"), "black", "status,=,Outbound"];
