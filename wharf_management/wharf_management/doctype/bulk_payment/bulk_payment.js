@@ -22,6 +22,16 @@ frappe.ui.form.on('Bulk Payment', {
         //	cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');
 
 
+    },
+    insert_containers_button: function(frm) {
+        return frappe.call({
+            method: "insert_containers",
+            doc: frm.doc,
+            callback: function(r) {
+                frm.refresh_field("bulk_cargo_table");
+                frm.refresh_fields();
+            }
+        });
     }
 });
 
