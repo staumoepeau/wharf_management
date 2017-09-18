@@ -47,7 +47,7 @@
             {%- endfor -%}
         </div>
         <div class="col-xs-6">
-                {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta)), (_("Anget"), doc.agents)  ) -%}
+                {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta)), (_("Agent"), doc.agents)  ) -%}
                 <div class="row">
                     <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
                     <div class="col-xs-8">{{ value }}</div>
@@ -119,7 +119,7 @@
             <div class="col-xs-4">
             </div>
             <div class="col-xs-4">
-                    <div class="col-xs-6"><label class="text-left">{{ _("TOTAL FEE ") }}</label></div>
+                    <div class="col-xs-6"><label class="text-left">{{ _("NET TOTAL ") }}</label></div>
                     <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.total_fee) }}</div>
             </div>
     </div>
@@ -134,7 +134,7 @@
                 <div class="col-xs-6 text-right">{{ doc.tax_rate }}</div>
         </div>
         <div class="col-xs-4">
-                <div class="col-xs-6"><label class="text-left">{{ _("Tax Amount") }}</label></div>
+                <div class="col-xs-6"><label class="text-left">{{ _("Tax Amt") }}</label></div>
                 <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.tax_amount) }}</div>
         </div>
     </div>
@@ -205,21 +205,24 @@
     </div>
     <hr>
     <br>
+    <br>
     <div class="row">
             <div class="col-xs-6">
-                    <div class="col-xs-4"><label class="text-left">{{ _("Customer") }}</label></div>
+                    <div class="col-xs-4"><label class="text-right">{{ _("Customer") }}</label></div>
                     <div class="col-xs-8"><label class="text-left">{{ _("_____________________________") }}</label></div>
                     <div class="col-xs-4"><label class="text-left">{{ _("") }}</label></div>
-                    <div class="col-xs-8 text-left">{{ doc.consignee }}</div>
+                    <div class="col-xs-8 text-center">{{ doc.consignee }}</div>
                     
             </div>
             <div class="col-xs-6">
-                    <div class="col-xs-4"><label class="text-left">{{ _("User") }}</label></div>
+                    <div class="col-xs-4"><label class="text-right">{{ _("User") }}</label></div>
                     <div class="col-xs-8"><label class="text-left">{{ _("_____________________________") }}</label></div>
                     <div class="col-xs-4"><label class="text-left">{{ _("") }}</label></div>
-                    <div class="col-xs-8 text-left">{{ frappe.db.get_value("User", doc.owner, "full_name") }}</div>
+                    <div class="col-xs-8 text-center">{{ frappe.db.get_value("User", doc.owner, "full_name") }}</div>
             </div>
     </div>
+    <br>
+    <br>
     <br>
     <div class="row">
             <div class="col-xs-12">

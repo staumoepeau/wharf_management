@@ -35,6 +35,30 @@ frappe.ui.form.on('Gate1', {
 								
 							}								
 			})
+	
+		frappe.call({
+			"method": "frappe.client.get",
+						args: {
+							doctype: "Cargo",
+							name: frm.doc.cargo_ref,
+							filters: {
+								'docstatus' : 0
+							},	
+						},
+						callback: function (data) {
+								cur_frm.set_value("customer", data.message["consignee"]);
+								cur_frm.set_value("container_no", data.message["container_no"]);
+								cur_frm.set_value("status", data.message["status"]);
+								cur_frm.set_df_property("status", "read_only", 1);
+								cur_frm.set_df_property("cargo_ref", "read_only", 1);
+								cur_frm.set_df_property("delivery_code", "read_only", 1);
+								cur_frm.set_df_property("custom_code", "read_only", 1);
+								cur_frm.set_df_property("custom_warrant", "read_only", 1);
+								cur_frm.set_df_property("warrant_no", "read_only", 1);
+								cur_frm.set_df_property("custom_code_section", "hidden", 1);
+									
+								}								
+				})	
 				
 	}
 });

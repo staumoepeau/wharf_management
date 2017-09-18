@@ -5,6 +5,7 @@
 
 from __future__ import unicode_literals
 import frappe, json
+import frappe.defaults
 from frappe.model.document import Document
 from frappe.utils import cstr, flt, fmt_money, formatdate
 from frappe import msgprint, _, scrub
@@ -13,7 +14,13 @@ class Gate2(Document):
 	
 	def on_submit(self):
 		self.update_gate2_status()
-	
+		self.update_export_status()
 	
 	def update_gate2_status(self):
-		frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate2' where name=%s""", (self.cargo_ref))
+    		if self.status != "Export":
+    			frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', status='Gate2' where name=%s""", (self.cargo_ref))
+			
+	def update_export_status(self):		
+			if self.status == 'Export':
+    				frappe.db.sql("""Update `tabCargo` set export_status="Main Gate", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
+    				

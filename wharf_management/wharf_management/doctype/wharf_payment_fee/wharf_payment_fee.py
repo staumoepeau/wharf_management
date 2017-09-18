@@ -12,11 +12,17 @@ class WharfPaymentFee(Document):
 
 	def on_submit(self):
 		self.update_payment_status()
+		self.update_export_status()
 	#	self.gl_entries()
 
 	def update_payment_status(self):
-		frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
+    		if self.status != 'Export':
+    				frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
 	
+	def update_export_status(self):
+    		if self.status == 'Export':
+    				frappe.db.sql("""Update `tabCargo` set export_status="Paid" where name=%s""", (self.cargo_ref))
+
 	def get_working_days(self):
 
 		holidays = self.get_holidays(self.eta_date, self.posting_date)

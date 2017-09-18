@@ -7,16 +7,16 @@ frappe.listview_settings['Cargo'] = {
 	get_indicator: function(doc) {
 
 		if(doc.docstatus==0){
-			if(doc.status=="Inward"){
-				return [__("Inward"), "red", "status,=,Inward"];
+			if(doc.status=="Export"){
+				return [__("Export"), "red", "status,=,Export"];
 			} else{
 				return [__("Draft"), "red", "status,=,"];
 			}
 		} else if(doc.status=== ""){
 			return [__("Uploaded"), "purple", "status,=,"];
 			
-		} else if (doc.status === "Inward"){
-			return [__("Inward"), "red", "status,=,Inward"];
+		} else if (doc.status === "Export"){
+			return [__("Export"), "red", "status,=,Export"];
 		
 		} else if (doc.status === "Outbound"){
 			return [__("Outbound"), "black", "status,=,Outbound"];
