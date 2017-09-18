@@ -17,11 +17,11 @@ frappe.ui.form.on('Cargo', {
         cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-            frm.doc.gate2_status == "Closed" &&
-            frm.doc.gate1_status == "Closed" &&
-            frm.doc.payment_status == "Closed" &&
-            frm.doc.yard_status == "Closed" &&
-            frm.doc.inspection_status == "Closed" &&
+            frm.doc.gate2_status != "Closed" &&
+            frm.doc.gate1_status != "Closed" &&
+            frm.doc.payment_status != "Closed" &&
+            frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status != "Closed" &&
             frm.doc.status != "Export"
         ) {
             frm.add_custom_button(__('Inspection'), function() {
