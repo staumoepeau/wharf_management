@@ -3,9 +3,9 @@
 
 frappe.ui.form.on('ETA Changes', {
 
-	onload: function(frm){
+    onload: function(frm) {
 
-		frappe.call({
+        frappe.call({
             "method": "frappe.client.get",
             args: {
                 doctype: "Booking Request",
@@ -17,18 +17,22 @@ frappe.ui.form.on('ETA Changes', {
             callback: function(data) {
                 cur_frm.set_value("current_eta", data.message["eta_date"]);
                 cur_frm.set_value("current_etd", data.message["etd_date"]);
+                cur_frm.set_value("voyage_no", data.message["voyage_no"]);
+                cur_frm.set_value("agent", data.message["agents"]);
 
                 cur_frm.set_df_property("booking_ref", "hidden", 1);
                 cur_frm.set_df_property("current_eta", "read_only", 1);
                 cur_frm.set_df_property("current_etd", "read_only", 1);
+                cur_frm.set_df_property("voyage_no", "read_only", 1);
+                cur_frm.set_df_property("agent", "read_only", 1);
 
 
             }
         })
 
-	},
+    },
 
-	refresh: function(frm) {
+    refresh: function(frm) {
 
-	}
+    }
 });
