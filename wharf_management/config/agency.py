@@ -11,6 +11,11 @@ def get_data():
 					"name": "Booking Request",
 					"description": _("Booking Request."),
 				},
+				{
+					"type": "doctype",
+					"name": "ETA Changes",
+					"description": _("ETA Changes."),
+				},
 			]
 		}
 	]

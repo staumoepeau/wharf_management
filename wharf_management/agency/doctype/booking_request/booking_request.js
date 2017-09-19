@@ -37,7 +37,7 @@ frappe.ui.form.on('Booking Request', {
 
         }
 
-        if (frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Wharf Operation Manager")) {
+        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager")) {
             frm.add_custom_button(__('Create Payment'), function() {
                 frappe.route_options = {
                     "payment_ref": frm.doc.name
@@ -53,17 +53,35 @@ frappe.ui.form.on('Booking Request', {
             frm.add_custom_button(__('Amend ETA'), function() {
              //   create_payment(frm);
                 frappe.route_options = {
-                 "payment_ref": frm.doc.name,
-                 "paid_to" : "Cash - PAT"
-                    }
-                     frappe.new_doc("Payment Entry");
-                    frappe.set_route("Form", "Payment Entry", doc.name);
+                 "booking_ref": frm.doc.name
+                 }
+                    frappe.new_doc("ETA Changes");
+                    frappe.set_route("Form", "ETA Changes", doc.name);
              
             });
         }
 
     },
+    agents: function(frm){
+        var Current_User = user
+        
+
+    },
     onload: function(frm) {
+   
+    //    if (!frm.doc.__islocal){
+    //        frappe.call({
+    //            "method": "frappe.client.get",
+    //            args: {
+    //                doctype: "Agents",
+    //                filters: {'agent_user': Current_User }
+            //   name: frm.doc.name
+    //            },
+    //            callback: function(data) {                
+    //                cur_frm.set_value("agents", data.message["name"]);
+    //            }
+    //        })
+    //    }    
 
     },
 

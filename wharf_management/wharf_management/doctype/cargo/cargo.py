@@ -11,10 +11,23 @@ from frappe.utils import cstr, flt, fmt_money, formatdate
 
 class Cargo(Document):
 
-	def on_submit(self):
-		self.check_validate()
+#	def on_submit(self):
+#		self.check_validate()
+#		self.check_bulk_payment()
 
+	def validate(self):
+		self.check_validate()
+	
 	def check_validate(self):
 		if not self.booking_ref:
 			msgprint(_("Booking Ref # is Manadory").format(self.booking_ref),
 					raise_exception=1)
+		
+		if not self.tax:
+			msgprint(_("Tax is Manadory").format(self.booking_ref),
+					raise_exception=1)
+	
+		if not self.discount:
+			msgprint(_("Discount is Manadory").format(self.booking_ref),
+					raise_exception=1)
+

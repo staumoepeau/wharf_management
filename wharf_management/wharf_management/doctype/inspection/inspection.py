@@ -9,12 +9,19 @@ from frappe.model.document import Document
 class Inspection(Document):
 
 	def on_submit(self):
+		self.validate_work_type()
+
 		if self.work_type == "Discharged":
 			self.update_inspection_status()
 		if self.work_type in ("Loading"):
 			self.update_final_status()
 		if self.work_type in ("Re-stowing"):
 			self.update_final_status_re_stowing()
+
+	def validate_work_type(self):
+		if not self.work_type:
+			msgprint(_("Work Type is Manadory").format(self.booking_ref),
+					raise_exception=1)
 
 	def update_inspection_status(self):
 		frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Inbound", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
