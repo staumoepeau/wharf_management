@@ -14,20 +14,6 @@ class WharfPaymentFee(Document):
 		self.update_payment_status()
 		self.update_export_status()
 		
-	def validate(self):
-    		self.check_validate()
-
-
-
-
-	def check_validate(self):
-    		if not self.tax:
-    				msgprint(_("Tax is Manadory").format(self.booking_ref),
-						raise_exception=1)
-	
-			if not self.discount:
-				msgprint(_("Discount is Manadory").format(self.booking_ref),
-						raise_exception=1)
 
 	def update_payment_status(self):
     		if self.status != 'Export':
