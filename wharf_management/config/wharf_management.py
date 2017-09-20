@@ -59,7 +59,7 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Gate2",
-					"description": _("Security Gate 2."),
+					"description": _("Security Main Gate."),
 				},
 			]
 		},

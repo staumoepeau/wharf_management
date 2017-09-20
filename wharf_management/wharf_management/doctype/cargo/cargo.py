@@ -22,12 +22,4 @@ class Cargo(Document):
 		if not self.booking_ref:
 			msgprint(_("Booking Ref # is Manadory").format(self.booking_ref),
 					raise_exception=1)
-		
-		if not self.tax:
-			msgprint(_("Tax is Manadory").format(self.booking_ref),
-					raise_exception=1)
-	
-		if not self.discount:
-			msgprint(_("Discount is Manadory").format(self.booking_ref),
-					raise_exception=1)
 

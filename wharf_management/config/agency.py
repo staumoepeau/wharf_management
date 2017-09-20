@@ -13,6 +13,11 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Vessels",
+					"description": _("Vessels."),
+				},
+				{
+					"type": "doctype",
 					"name": "ETA Changes",
 					"description": _("ETA Changes."),
 				},
