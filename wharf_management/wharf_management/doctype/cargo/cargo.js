@@ -6,6 +6,7 @@ frappe.ui.form.on('Cargo', {
     refresh: function(frm) {
         cur_frm.add_fetch('container_type', 'size', 'container_size');
         cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
+        cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
 
         cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
         cur_frm.add_fetch('booking_ref', 'agents', 'agents');
@@ -16,6 +17,7 @@ frappe.ui.form.on('Cargo', {
         cur_frm.add_fetch('booking_ref', 'pod', 'pod');
         cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
 
+        
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.gate2_status != "Closed" &&
             frm.doc.gate1_status != "Closed" &&
@@ -198,6 +200,7 @@ frappe.ui.form.on('Cargo', {
 
 
     },
+
 
 
 

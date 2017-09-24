@@ -4,6 +4,26 @@ from frappe import _
 def get_data():
 	return [
 		{
+			"label": _("Payment"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Wharf Payment Entry",
+					"description": _("Wharf Payment Entry"),
+				},
+				{
+					"type": "doctype",
+					"name": "Bulk Payment",
+					"description": _("Bulk Payment"),
+				},
+				{
+					"type": "doctype",
+					"name": "Wharf Payment Fee",
+					"description": _("Wharf Payment Fee"),
+				},
+			]
+		},
+		{
 			"label": _("Cargo Operation"),
 			"items": [
 				{

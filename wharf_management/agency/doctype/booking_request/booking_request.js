@@ -40,10 +40,10 @@ frappe.ui.form.on('Booking Request', {
         if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager")) {
             frm.add_custom_button(__('Create Payment'), function() {
                 frappe.route_options = {
-                    "payment_ref": frm.doc.name
+                    "booking_ref": frm.doc.name
                        }
-                        frappe.new_doc("Payment Entry");
-                       frappe.set_route("Form", "Payment Entry", doc.name);
+                        frappe.new_doc("Wharf Payment Entry");
+                       frappe.set_route("Form", "Wharf Payment Entry", doc.name);
                 //create_payment(frm);
             });
 
