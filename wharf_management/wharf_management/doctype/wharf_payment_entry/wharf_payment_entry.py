@@ -14,7 +14,11 @@ from erpnext.accounts.party import get_party_account
 class WharfPaymentEntry(Document):
     	
     	def on_submit(self):
+			self.update_payment_status()
 			self.make_entries()
+		
+		def update_payment_status(self):
+			frappe.db.sql("""Update `tabBooking Request` set payment_status="Paid" where name=%s""", (self.booking_ref))
 
     	def make_entries(self, cancel=0, adv_adj=0):
 			from erpnext.accounts.general_ledger import make_gl_entries
