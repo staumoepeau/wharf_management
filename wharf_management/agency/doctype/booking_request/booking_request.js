@@ -28,7 +28,6 @@ frappe.ui.form.on('Booking Request', {
 
     refresh: function(frm) {
 
-
         if (!frm.doc.__islocal) {
             cur_frm.set_df_property("agents", "read_only", 1);
             cur_frm.set_df_property("voyage_no", "read_only", 1);
@@ -44,7 +43,6 @@ frappe.ui.form.on('Booking Request', {
                 }
                 frappe.new_doc("Wharf Payment Entry");
                 frappe.set_route("Form", "Wharf Payment Entry", doc.name);
-                //create_payment(frm);
             });
 
         }

@@ -3,6 +3,16 @@
 
 frappe.ui.form.on('Cargo', {
 
+
+    onload: function(frm){
+
+        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")){
+            cur_frm.set_df_property("custom_warrant", "hidden", 1);
+        } else{
+            cur_frm.set_df_property("custom_warrant", "hidden", 0);
+        }
+    },
+
     refresh: function(frm) {
         cur_frm.add_fetch('container_type', 'size', 'container_size');
         cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
@@ -68,6 +78,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
+            cur_frm.set_df_property("custom_warrant", "hidden", 1);
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name
@@ -75,6 +86,7 @@ frappe.ui.form.on('Cargo', {
                 frappe.new_doc("Gate1");
                 frappe.set_route("Form", "Gate1", doc.name);
             });
+            
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
@@ -99,7 +111,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status == "Open" &&
                 frm.doc.yard_status == "Open" &&
                 frm.doc.inspection_status == "Open" &&
-                frm.doc.status == "Export" &&
+                frm.doc.work_type == "Loading" &&
                 frm.doc.export_status != "Main Gate"
             )) {
 
@@ -119,7 +131,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status == "Open" &&
                 frm.doc.yard_status == "Open" &&
                 frm.doc.inspection_status == "Open" &&
-                frm.doc.status == "Export" &&
+                frm.doc.work_type == "Loading" &&
                 frm.doc.export_status == "Main Gate"
 
             )) {
@@ -140,7 +152,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status == "Open" &&
                 frm.doc.yard_status == "Open" &&
                 frm.doc.inspection_status == "Open" &&
-                frm.doc.status == "Export" &&
+                frm.doc.work_type == "Loading" &&
                 frm.doc.export_status == "Gate1"
 
             )) {
@@ -161,7 +173,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status == "Open" &&
                 frm.doc.yard_status == "Open" &&
                 frm.doc.inspection_status == "Open" &&
-                frm.doc.status == "Export" &&
+                frm.doc.work_type == "Loading" &&
                 frm.doc.export_status == "Yard"
 
             )) {
@@ -182,7 +194,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status == "Open" &&
                 frm.doc.yard_status == "Open" &&
                 frm.doc.inspection_status == "Open" &&
-                frm.doc.status == "Export" &&
+                frm.doc.work_type == "Loading" &&
                 frm.doc.export_status == "Paid"
 
             )) {

@@ -48,8 +48,8 @@ frappe.ui.form.on('Gate1', {
             callback: function(data) {
                 cur_frm.set_value("customer", data.message["consignee"]);
                 cur_frm.set_value("container_no", data.message["container_no"]);
-                cur_frm.set_value("status", data.message["status"]);
-                cur_frm.set_df_property("status", "read_only", 1);
+                cur_frm.set_value("work_type", data.message["work_type"]);
+                cur_frm.set_df_property("work_type", "read_only", 1);
                 cur_frm.set_df_property("cargo_ref", "read_only", 1);
                 cur_frm.set_df_property("delivery_code", "read_only", 1);
                 cur_frm.set_df_property("custom_code", "read_only", 1);

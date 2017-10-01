@@ -41,16 +41,6 @@ def get_data():
 					"name": "Cargo Operation Planning",
 					"description": _("Cargo Operation Planning."),
 				},
-				{
-					"type": "doctype",
-					"name": "Bulk Payment",
-					"description": _("Bulk Payment"),
-				},
-				{
-					"type": "doctype",
-					"name": "Wharf Payment Fee",
-					"description": _("Wharf Payment Fee"),
-				},
 			]
 		},
 		{
@@ -80,19 +70,6 @@ def get_data():
 					"type": "doctype",
 					"name": "Gate2",
 					"description": _("Security Main Gate."),
-				},
-			]
-		},
-		{
-			"label": _("Fleet Management"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Vehicle"
-				},
-				{
-					"type": "doctype",
-					"name": "Vehicle Log"
 				},
 			]
 		},
@@ -180,6 +157,19 @@ def get_data():
 					"type": "doctype",
 					"name": "Devanning Fee",
 					"description": _("Devanning Fee"),
+				},
+			]
+		},
+		{
+			"label": _("Fleet Management"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Vehicle"
+				},
+				{
+					"type": "doctype",
+					"name": "Vehicle Log"
 				},
 			]
 		},

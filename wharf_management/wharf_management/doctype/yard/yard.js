@@ -15,7 +15,7 @@ frappe.ui.form.on('Yard', {
 							doctype: "Cargo",
 							name: frm.doc.cargo_ref,
 							filters: {
-								'status': ["!=", "Export"]
+								'work_type': ["!=", "Loading"]
 							},
 						},
 						callback: function (data) {
@@ -43,7 +43,7 @@ frappe.ui.form.on('Yard', {
 							doctype: "Cargo",
 							name: frm.doc.cargo_ref,
 							filters: {
-								'status': ["=", "Export"]
+								'work_type': ["=", "Loading"]
 							},	
 						},
 						callback: function (data) {
@@ -54,8 +54,8 @@ frappe.ui.form.on('Yard', {
 							cur_frm.set_value("eta_date", data.message["eta_date"]);
 							cur_frm.set_value("bol", data.message["bol"]);
 							cur_frm.set_value("consignee", data.message["consignee"]);
-							cur_frm.set_value("status", data.message["status"]);
-							cur_frm.set_df_property("status", "read_only", 1);
+							cur_frm.set_value("work_type", data.message["work_type"]);
+							cur_frm.set_df_property("work_type", "read_only", 1);
 							cur_frm.set_df_property("container_no", "read_only", 1);
 							cur_frm.set_df_property("cargo_ref", "read_only", 1);
 							cur_frm.set_df_property("voyage_no", "read_only", 1);

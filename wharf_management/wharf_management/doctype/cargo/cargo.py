@@ -11,12 +11,12 @@ from frappe.utils import cstr, flt, fmt_money, formatdate
 
 class Cargo(Document):
 
-#	def on_submit(self):
-#		self.check_validate()
+	def on_submit(self):
+		self.check_validate()
 #		self.check_bulk_payment()
 
-	def validate(self):
-		self.check_validate()
+#	def validate(self):
+#		self.check_validate()
 	
 	def check_validate(self):
 		if not self.booking_ref:
