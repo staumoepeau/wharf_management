@@ -18,9 +18,11 @@ class Inspection(Document):
 	def on_submit(self):	
 		if self.final_work_type == "Discharged":
 			self.update_inspection_status()
-		if self.final_work_type in ("Loading"):
+		
+		if self.final_work_type == "Loading":
 			self.update_final_status()
-		if self.final_work_type in ("Re-stowing"):
+		
+		if self.final_work_type == "Re-stowing":
 			self.update_final_status_re_stowing()
 
 	def validate_work_type(self):
