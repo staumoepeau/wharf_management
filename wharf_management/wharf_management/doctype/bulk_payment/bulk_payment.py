@@ -5,19 +5,20 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from frappe.utils import cstr, cint, flt, fmt_money, formatdate
+from frappe import msgprint, _, scrub
+
 
 class BulkPayment(Document):
     	
 	def insert_containers(self):
-		container_list = frappe.db.sql("""select name as cargo_refrence, container_no, bol, cargo_type,
-		work_type, container_content, status, voyage_no, booking_ref from `tabCargo` where consignee = %s""",(self.consignee), as_dict=1)
+    		container_list = frappe.db.sql("""select t1.name as cargo_refrence, t1.container_type, t1.container_size, t1.container_no, t1.bol, t1.cargo_type, t1.work_type, t1.container_content, t1.status, t1.voyage_no, t1.booking_ref from `tabCargo` t1 where t1.bulk_payment='Yes' and t1.status = 'Paid' and t1.booking_ref = %s and t1.consignee = %s""",(self.booking_ref, self.consignee), as_dict=1)
 
 		entries = sorted(list(container_list))
 		self.set('container_list', [])
-
+#		msgprint(_(entries), raise_exception=1)
 		for d in entries:
 			row = self.append('bulk_cargo_table', {
-				'cargo_refrence':d.cargo_refrence,
 				'container_no':d.container_no,
 				'cargo_type':d.cargo_type,
 				'work_type':d.work_type,
@@ -25,7 +26,28 @@ class BulkPayment(Document):
 				'status':d.status,
 				'voyage_no':d.voyage_no,
 				'bol':d.bol,
-				'booking_ref':d.booking_ref
-			})
+				'booking_ref':d.booking_ref,
+				'cargo_refrence':d.cargo_refrence,
+				'container_type':d.container_type,
+				'container_size':d.container_size
+		})
 
-	pass
+
+	def insert_bulk_fees(self):
+    		
+    		fees_list = frappe.db.sql("""select docB.item, docB.price, Sum(docB.qty) as qty, docB.description
+    			from `tabWharf Payment Fee` as docA,`tabWharf Fee Item` as docB where docA.name = docB.parent and docA.voyage_no = %s and docA.consignee = %s group by docB.item""", 
+    			(self.voyage_no, self.consignee), as_dict=1 )
+
+	#	msgprint(_(fees_list), raise_exception=1)
+		fees_entries = sorted(list(fees_list))
+		self.set('fees_list', [])
+
+		for f in fees_entries:
+    			row = self.append('bulk_cargo_fees', { 
+					'item': f.item,
+					'description': f.description,
+					'price': f.price,
+					'qty': f.qty,
+					'total': float(f.qty * f.price)
+				})

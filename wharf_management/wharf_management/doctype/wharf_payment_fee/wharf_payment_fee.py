@@ -16,8 +16,12 @@ class WharfPaymentFee(Document):
 		self.change_status()
 	
 	def change_status(self):
-    		self.status = "Paid"
-	
+    		if self.bulk_payment == 'Yes':
+        				frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes" where name=%s""", (self.cargo_ref))
+
+    		if not self.status:
+    				self.status == 'Paid'
+		
 	def update_payment_status(self):
     		if self.status != 'Export':
     				frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))

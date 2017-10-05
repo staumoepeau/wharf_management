@@ -10,6 +10,14 @@ frappe.ui.form.on('Bulk Payment', {
             { fieldname: 'work_type', columns: 1 },
             { fieldname: 'container_content', columns: 1 }
         ];
+
+        frm.get_field('bulk_cargo_fees').grid.editable_fields = [
+            { fieldname: 'item', columns: 2 },
+            { fieldname: 'description', columns: 2 },
+            { fieldname: 'price', columns: 2 },
+            { fieldname: 'qty', columns: 2 },
+            { fieldname: 'total', columns: 2 }
+        ];
     },
     refresh: function(frm) {
 
@@ -32,7 +40,29 @@ frappe.ui.form.on('Bulk Payment', {
                 frm.refresh_fields();
             }
         });
-    }
+    },
+    insert_bulk_fees_button: function(frm) {
+        return frappe.call({
+            method: "insert_bulk_fees",
+            doc: frm.doc,
+            callback: function(r) {
+                frm.refresh_field("bulk_cargo_fees");
+                frm.refresh_fields();
+            }
+        });
+    },
+    custom_code: function(frm) {
+        if (frm.doc.custom_code == "DDL") {
+            frm.set_value("delivery_code", "DIRECT DELIVERY")
+        } else if (frm.doc.custom_code == "DDLW") {
+            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
+        } else if (frm.doc.custom_code == "IDL") {
+            frm.set_value("delivery_code", "INSPECTION DELIVERY")
+        } else if (frm.doc.custom_code == "IDLW") {
+            frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
+        }
+    },
+
 });
 
 frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn){
@@ -54,6 +84,7 @@ frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn){
                     frappe.model.set_value(d.doctype, d.name, "status",  data.message["status"]);
                     frappe.model.set_value(d.doctype, d.name, "voyage_no",  data.message["voyage_no"]);
                     frappe.model.set_value(d.doctype, d.name, "cargo_ref",  data.message["cargo_ref"]);
+                    
 				}
 		})
 });
