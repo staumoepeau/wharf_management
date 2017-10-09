@@ -77,15 +77,15 @@ class WharfPaymentFee(Document):
 		
 		return charge_days
 
-	def get_grace_days(self):
-		if self.cargo_type == 'Container':
-			free_days = frappe.db.sql("""Select grace_days from `tabStorage Fee` 
-				where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
+#	def get_grace_days(self):
+#		if self.cargo_type == 'Container':
+#			free_days = frappe.db.sql("""Select grace_days from `tabStorage Fee` 
+#				where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
 		
-		if self.cargo_type != 'Container':
-			free_days = frappe.db.sql("""Select grace_days from `tabStorage Fee` where cargo_type=%s""", (self.cargo_type))
+#		if self.cargo_type != 'Container':
+#			free_days = frappe.db.sql("""Select grace_days from `tabStorage Fee` where cargo_type=%s""", (self.cargo_type))
 
-		return free_days
+#		return free_days
 	
 	def get_storage_fee(self):
 		if self.cargo_type == 'Container':

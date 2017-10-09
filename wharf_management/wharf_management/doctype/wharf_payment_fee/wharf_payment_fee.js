@@ -125,14 +125,36 @@ frappe.ui.form.on('Wharf Payment Fee', {
             }
 
         })
-        frappe.call({
-            method: "get_grace_days",
-            doc: frm.doc,
-            callback: function(d) {
-                frm.set_value("free_storage_days", d.message);
-            }
 
-        })
+        if (frm.doc.cargo_type == "Container") {
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Storage Fee",
+                    filters: {
+                        cargo_type: frm.doc.cargo_type,
+                        container_size: frm.doc.container_size,
+                        container_content: frm.doc.container_content
+                    }
+                },
+                callback: function(data) {
+                    cur_frm.set_value("free_storage_days", data.message["grace_days"]);
+                }
+            })
+        } else if (frm.doc.cargo_type != "Container") {
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Storage Fee",
+                    filters: {
+                        cargo_type: frm.doc.cargo_type,
+                    }
+                },
+                callback: function(data) {
+                    cur_frm.set_value("free_storage_days", data.message["grace_days"]);
+                }
+            })
+        }
     },
 
     free_storage_days: function(frm) {
@@ -158,29 +180,26 @@ frappe.ui.form.on('Wharf Payment Fee', {
         }
     },
 
-    calculate_fees: function(frm) {
-
-        frappe.call({
-            method: "get_storage_fee",
-            doc: frm.doc,
-            callback: function(s) {
-                console.log(s.message)
-                var sfee = flt((s.message) * frm.doc.storage_days_charged);
-                frm.set_value("storage_fee", sfee);
-            }
-        });
-        frappe.call({
-            method: "get_wharfage_fee",
-            doc: frm.doc,
-            callback: function(w) {
-                var wfee = flt((w.message));
-                frm.set_value("wharf_fee", wfee);
-            }
-        });
-
-
-
-    },
+    //    calculate_fees: function(frm) {
+    //
+    //        frappe.call({
+    //            method: "get_storage_fee",
+    //            doc: frm.doc,
+    //            callback: function(s) {
+    //                console.log(s.message)
+    //                var sfee = flt((s.message) * frm.doc.storage_days_charged);
+    //                frm.set_value("storage_fee", sfee);
+    //            }
+    //        });
+    //        frappe.call({
+    //            method: "get_wharfage_fee",
+    //            doc: frm.doc,
+    //            callback: function(w) {
+    //                var wfee = flt((w.message));
+    //                frm.set_value("wharf_fee", wfee);
+    //           }
+    //        });
+    //  },
     insert_fees_button: function(frm) {
         return frappe.call({
             method: "insert_fees",
@@ -203,32 +222,31 @@ frappe.ui.form.on('Wharf Payment Fee', {
         frm.set_value("total_amount", (frm.doc.total_fee + frm.doc.tax_amount) - frm.doc.discount_amount);
     },
 
-    tax: function(frm) {
-        frm.set_value("tax_account", "CT - PAT");
-
-        if (frm.doc.tax == "Yes") {
-            frappe.call({
-                "method": "frappe.client.get",
-                args: {
-                    doctype: "Sales Taxes and Charges",
-                    filters: {
-                        parent: frm.doc.tax_account
-                    }
-                },
-                callback: function(data) {
-                    cur_frm.set_value("tax_rate", data.message["rate"]);
-                    cur_frm.set_value("tax_amount", (((data.message["rate"]) / 100) * frm.doc.total_fee));
-                    cur_frm.set_df_property("tax_rate", "read_only", 1);
-                    cur_frm.set_df_property("tax_account", "read_only", 1);
-                    cur_frm.set_df_property("tax_amount", "read_only", 1);
-                }
-            })
-        } else if (frm.doc.tax == "No") {
-            cur_frm.set_value("tax_rate", 0);
-            cur_frm.set_value("tax_amount", 0);
-            frm.refresh_fields("discount");
-        }
-    },
+    //tax: function(frm) {
+    //    frm.set_value("tax_account", "CT - PAT");
+    //    if (frm.doc.tax == "Yes") {
+    //        frappe.call({
+    //            "method": "frappe.client.get",
+    //            args: {
+    //                doctype: "Sales Taxes and Charges",
+    //                filters: {
+    //                    parent: frm.doc.tax_account
+    //                }
+    //            },
+    //            callback: function(data) {
+    //                cur_frm.set_value("tax_rate", data.message["rate"]);
+    //                cur_frm.set_value("tax_amount", (((data.message["rate"]) / 100) * frm.doc.total_fee));
+    //                cur_frm.set_df_property("tax_rate", "read_only", 1);
+    //                cur_frm.set_df_property("tax_account", "read_only", 1);
+    //                cur_frm.set_df_property("tax_amount", "read_only", 1);
+    //            }
+    //       })
+    //    } else if (frm.doc.tax == "No") {
+    //        cur_frm.set_value("tax_rate", 0);
+    //        cur_frm.set_value("tax_amount", 0);
+    //        frm.refresh_fields("discount");
+    //    }
+    //},
 
 });
 
