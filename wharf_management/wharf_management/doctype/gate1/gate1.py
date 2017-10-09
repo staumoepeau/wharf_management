@@ -13,13 +13,13 @@ class Gate1(Document):
 	def validate(self):
     		
 			self.validate_truck()
-			
+			self.validate_warrant_no()
 			self.validate_driver()
 			self.validate_company()
 
 
 	def on_submit(self):
-		self.validate_warrant_no()
+		
 		self.update_status()
 		self.update_export_status()
 		self.update_not_export_status()
@@ -29,7 +29,7 @@ class Gate1(Document):
     		self.status = "Passed Gate 1"
 	
 	def validate_warrant_no(self):
-			if self.status != 'Export':
+			if self.work_type != 'Loading':
     				if self.warrant_no != self.custom_warrant:
         						msgprint(_("Please Make sure that is the correct WARRANT NO"), raise_exception=1)
 

@@ -62,7 +62,7 @@ app_include_css = "assets/css/wharf_management.css"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "wharf_management.notifications.get_notification_config"
+notification_config = "wharf_management.notifications.get_notification_config"
 
 # Permissions
 # -----------

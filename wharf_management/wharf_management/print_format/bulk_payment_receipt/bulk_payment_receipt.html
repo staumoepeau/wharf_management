@@ -1,0 +1,188 @@
+ {%- from "templates/print_formats/standard_macros.html" import add_header -%}
+<!---------------------------------------------------->
+<div>
+    <div id="footer-html" class="visible-pdf">
+        {% if not no_letterhead and footer %}
+        <div class="letter-head-footer">
+            {{ footer }}
+        </div>
+        {% endif %}
+        <p class="text-center small page-number visible-pdf">
+            {{ _("Page {0} of {1}").format('<span class="page"></span>', '<span class="topage"></span>') }}
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <img src="/files/PAT_Logo.png">
+        </div>
+        <hr>
+    </div>
+    <!--------------------HEADING-------------------------------->
+    <div class="row">
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+            <p>PAYMENT RECEIPT</p>
+        </div>
+        <div class="col-xs-4">
+            <div class="row">
+                <div class="col-xs-4"><label class="text-right">{{ _("No : ") }}</label></div>
+                <div class="col-xs-8">{{ doc.name }}</div>
+            </div>
+        </div>
+        <br>
+        <hr>
+    </div>
+
+    <!--------------------RECEIPT START-------------------------------->
+
+    <div class="row">
+        <div class="col-xs-6">
+            {%- for label, value in ( (_("Posting Date"), frappe.utils.formatdate(doc.posting_date)), (_("Consignee"), doc.consignee), (_("Voyage No:"), doc.voyage_no) ) -%}
+            <div class="row">
+                <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
+                <div class="col-xs-8">{{ value }}</div>
+            </div>
+            {%- endfor -%}
+        </div>
+        <div class="col-xs-6">
+            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta)), (_("Agent"), doc.agents), (_("Vessel"), doc.vessel) ) -%}
+            <div class="row">
+                <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
+                <div class="col-xs-8">{{ value }}</div>
+            </div>
+            {%- endfor -%}
+        </div>
+    </div>
+    <hr>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="col-md-2">Refrence</th>
+                <th class="col-md-3">Container No</th>
+                <th class="col-md-1 text-center">Cargo Type</th>
+                <th class="col-md-1 text-center">Work Type</th>
+                <th class="col-md-1 text-right">Delivery Code</th>
+                <th class="col-md-3 text-right">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%- for row in doc.bulk_cargo_table -%}
+            <tr>
+                <td>
+                    {{ row.cargo_refrence }}
+                </td>
+                <td>
+                    {{ row.container_no }}
+                </td>
+                <td class="text-center">{{ row.cargo_type }}</td>
+                <td class="text-center">{{ row.work_type }}</td>
+                <td class="text-right">{{ row.custom_code }}</td>
+                <td class="text-right">{{ row.cargo_description }}</td>
+            </tr>
+            {%- endfor -%}
+        </tbody>
+    </table>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="col-md-2">Item Code</th>
+                <th class="col-md-3">Desription</th>
+                <th class="col-md-1 text-center">Price</th>
+                <th class="col-md-1 text-center">Qty</th>
+                <th class="col-md-1 text-right">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%- for row in doc.bulk_fees_items -%}
+            <tr>
+                <td>
+                    {{ row.item }}
+                </td>
+                <td>
+                    {{ row.description }}
+                </td>
+                <td class="text-center">{{ row.price }}</td>
+                <td class="text-center">{{ row.qty }}</td>
+                <td class="text-right">{{ row.total }}</td>
+            </tr>
+            {%- endfor -%}
+        </tbody>
+    </table>
+    <!--------------------FEE TABLE END-------------------------------->
+    <div class="row">
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-6"><label class="text-left">{{ _("NET TOTAL ") }}</label></div>
+            <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.total_fee) }}</div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="col-xs-6"><label class="text-left">{{ _("Discount") }}</label></div>
+            <div class="col-xs-6 text-right">{{ doc.discount }}</div>
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-6"><label class="text-left">{{ _("Authorize ") }}</label></div>
+            <div class="col-xs-6 text-left">{{ doc.authorized_discount }}</div>
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-6"><label class="text-left">{{ _("Discount") }}</label></div>
+            <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.discount_amount) }}</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-6"><label class="text-left">{{ _("TOTAL") }}</label></div>
+            <div class="col-xs-6 text-right"><b>{{ frappe.utils.fmt_money(doc.total_amount) }}</b></div>
+            <hr>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="col-xs-4"><label class="text-right">{{ _("Customer") }}</label></div>
+            <div class="col-xs-8"><label class="text-left">{{ _("_____________________________") }}</label></div>
+            <div class="col-xs-4"><label class="text-left">{{ _("") }}</label></div>
+            <div class="col-xs-8 text-center">{{ doc.consignee }}</div>
+
+        </div>
+        <div class="col-xs-6">
+            <div class="col-xs-4"><label class="text-right">{{ _("User") }}</label></div>
+            <div class="col-xs-8"><label class="text-left">{{ _("_____________________________") }}</label></div>
+            <div class="col-xs-4"><label class="text-left">{{ _("") }}</label></div>
+            <div class="col-xs-8 text-center">{{ frappe.db.get_value("User", doc.owner, "full_name") }}</div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center">_______________________________________________________________________________________________</p>
+            <p class="small text-center">Tel : 23168 | email : enquries@tongaports.to | P.O. Box 144, Nukualofa, Tonga.</p>
+        </div>
+    </div>
+
+</div>
