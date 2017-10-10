@@ -12,23 +12,24 @@ from frappe.model.document import Document
 
 class WharfPaymentFee(Document):
 
-	def validate(self):
-		self.update_bulk_payment()
+#	def validate(self):
+#		self.update_bulk_payment()
+#		self.update_warrant()
+		
 	
 	def on_submit(self):
 		self.update_payment_status()
 		self.update_export_status()
 		self.change_status()
-		self.update_warrant()
 		
 	
-	def update_bulk_payment(self):
-		if self.bulk_payment == 'Yes':
-			self.bulk_payment_code = self.custom_warrant
+#	def update_bulk_payment(self):
+#		if self.bulk_payment == 'Yes':
+#			self.bulk_payment_code = self.custom_warrant
 	
-	def update_warrant(self):
-		if self.bulk_payment == 'Yes':
-			self.custom_warrant = self.bulk_payment_code, '-' ,self.bulk_item
+#	def update_warrant(self):
+#		if self.bulk_payment == 'Yes':
+#			self.custom_warrant = self.bulk_payment_code, '-' ,self.bulk_item
 	
 	def change_status(self):
     		if self.bulk_payment == 'Yes':

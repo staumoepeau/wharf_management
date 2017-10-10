@@ -178,6 +178,14 @@ frappe.ui.form.on('Wharf Payment Fee', {
         } else if (frm.doc.custom_code == "IDLW") {
             frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
         }
+        if (frm.doc.bulk_payment == "Yes") {
+            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
+                //frm.set_value("custom_warrant", 0)
+            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
+
+
+            frm.refresh_fields("custom_warrant");
+        }
     },
 
     //    calculate_fees: function(frm) {
@@ -247,6 +255,11 @@ frappe.ui.form.on('Wharf Payment Fee', {
     //        frm.refresh_fields("discount");
     //    }
     //},
+    //    custom_warrant: function(frm) {
+    //        if (frm.doc.bulk_payment == "Yes") {
+    //            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
+    //        }
+    //    },
 
 });
 

@@ -13,7 +13,7 @@ class BulkPayment(Document):
 
     	
 	def insert_containers(self):
-    		container_list = frappe.db.sql("""select t1.name as cargo_refrence, t1.cargo_description, t1.custom_code, t1.container_type, t1.container_size, t1.container_no, t1.bol, t1.cargo_type, t1.work_type, t1.container_content, t1.status, t1.voyage_no, t1.booking_ref from `tabCargo` t1 where t1.bulk_payment='Yes' and t1.status = 'Paid' and t1.booking_ref = %s and t1.consignee = %s""",(self.booking_ref, self.consignee), as_dict=1)
+    		container_list = frappe.db.sql("""select t1.name as cargo_refrence, t1.cargo_description, t1.custom_code, t1.container_type, t1.container_size, t1.container_no, t1.bol, t1.cargo_type, t1.work_type, t1.container_content, t1.status, t1.voyage_no, t1.booking_ref from `tabCargo` t1 where t1.bulk_payment='Yes' and t1.status = 'Paid' and t1.bulk_payment_code=%s and t1.booking_ref = %s and t1.consignee = %s""",(self.bulk_payment_code, self.booking_ref, self.consignee), as_dict=1)
 
 		entries = sorted(list(container_list))
 		self.set('container_list', [])
