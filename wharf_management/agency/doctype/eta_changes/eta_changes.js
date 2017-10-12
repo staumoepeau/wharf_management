@@ -20,7 +20,7 @@ frappe.ui.form.on('ETA Changes', {
                 cur_frm.set_value("voyage_no", data.message["voyage_no"]);
                 cur_frm.set_value("agent", data.message["agents"]);
 
-                cur_frm.set_df_property("booking_ref", "hidden", 1);
+                cur_frm.set_df_property("booking_ref", "read_only", 1);
                 cur_frm.set_df_property("current_eta", "read_only", 1);
                 cur_frm.set_df_property("current_etd", "read_only", 1);
                 cur_frm.set_df_property("voyage_no", "read_only", 1);

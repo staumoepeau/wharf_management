@@ -36,7 +36,7 @@ frappe.ui.form.on('Booking Request', {
 
         }
 
-        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager")) {
+        if (frm.doc.workflow_state != "Booking_Paid" && (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
             frm.add_custom_button(__('Create Payment'), function() {
                 frappe.route_options = {
                     "booking_ref": frm.doc.name
