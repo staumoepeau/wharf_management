@@ -36,7 +36,7 @@ frappe.ui.form.on('Booking Request', {
 
         }
 
-        if (frm.doc.workflow_state in ("Booking_Paid", "Approved") && (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
+        if (((frm.doc.payment_status != "Paid")) && (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
             frm.add_custom_button(__('Create Payment'), function() {
                 frappe.route_options = {
                     "booking_ref": frm.doc.name
@@ -49,7 +49,6 @@ frappe.ui.form.on('Booking Request', {
         var Current_User = user
         if (Current_User == frm.doc.owner) {
             frm.add_custom_button(__('Amend ETA'), function() {
-                //   create_payment(frm);
                 frappe.route_options = {
                     "booking_ref": frm.doc.name
                 }
@@ -60,26 +59,7 @@ frappe.ui.form.on('Booking Request', {
         }
 
     },
-    agents: function(frm) {
-        var Current_User = user
-
-
-    },
     onload: function(frm) {
-
-        //    if (!frm.doc.__islocal){
-        //        frappe.call({
-        //            "method": "frappe.client.get",
-        //            args: {
-        //                doctype: "Agents",
-        //                filters: {'agent_user': Current_User }
-        //   name: frm.doc.name
-        //            },
-        //            callback: function(data) {                
-        //                cur_frm.set_value("agents", data.message["name"]);
-        //            }
-        //        })
-        //    }    
 
     },
 
@@ -96,19 +76,3 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
     frm.set_value("total_weight_amount", total_weight_amount);
 
 });
-
-var create_payment = function(frm) {
-    frappe.call({
-        "method": "frappe.client.get",
-        args: {
-            doctype: "Payment Entry",
-            filters: { 'payment_ref': frm.doc.name }
-            //   name: frm.doc.name
-        },
-        callback: function(data) {
-            frappe.route_options = { "payment_ref": frm.doc.name }
-            frappe.new_doc("Payment Entry");
-            frappe.set_route("Form", "Payment Entry", doc.name);
-        }
-    })
-}
