@@ -13,10 +13,12 @@ class Cargo(Document):
 
 	def on_submit(self):
 		self.check_validate()
-#		self.check_bulk_payment()
+		self.check_bulk_cargo()
 
-#	def validate(self):
-#		self.check_validate()
+	def check_bulk_cargo(self):
+		if self.cargo_type == "Break Bulk":
+			self.name = self.name +"-"+ self.break_bulk_items
+
 	
 	def check_validate(self):
 		if not self.booking_ref:
