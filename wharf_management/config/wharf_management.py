@@ -44,6 +44,15 @@ def get_data():
 			]
 		},
 		{
+			"label": _("Pilot"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Pilot"
+				},
+			]
+		},
+		{
 			"label": _("Yard Operation"),
 			"items": [
 				{
@@ -70,6 +79,20 @@ def get_data():
 					"type": "doctype",
 					"name": "Gate2",
 					"description": _("Security Main Gate."),
+				},
+			]
+		},
+
+		{
+			"label": _("Fleet Management"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Vehicle"
+				},
+				{
+					"type": "doctype",
+					"name": "Vehicle Log"
 				},
 			]
 		},
@@ -157,19 +180,6 @@ def get_data():
 					"type": "doctype",
 					"name": "Devanning Fee",
 					"description": _("Devanning Fee"),
-				},
-			]
-		},
-		{
-			"label": _("Fleet Management"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Vehicle"
-				},
-				{
-					"type": "doctype",
-					"name": "Vehicle Log"
 				},
 			]
 		},

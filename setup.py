@@ -16,7 +16,7 @@ setup(
 	name='wharf_management',
 	version=version,
 	description='App to Manage Wharf Operations',
-	author='Caitlah Technology',
+	author='Sione Taumoepeau',
 	author_email='sione.taumoepeau@gmail.com',
 	packages=find_packages(),
 	zip_safe=False,

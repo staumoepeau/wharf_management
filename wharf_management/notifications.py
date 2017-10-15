@@ -14,7 +14,7 @@ def get_notification_config():
 			"Bulk Payment": {"docstatus": 0},
 			"Wharf Payment Fee": {"docstatus": 0},
 			"Inspection": {"docstatus": 0},
-			"TYard": {"docstatus": 0},
+			"Yard": {"docstatus": 0},
 			"Gate1": {"docstatus": 0},
 			"Gate2": {"docstatus": 0}
 
