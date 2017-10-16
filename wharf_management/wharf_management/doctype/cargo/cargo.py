@@ -24,7 +24,9 @@ class Cargo(Document):
 			self.name = self.name +"-"+ self.break_bulk_items
 
 	def clear_new_cargo(self):
-		frappe.db.sql("""Update `tabCargo` set final_status="NULL", inspection_status="NULL" where name=%s""", (self.cargo_ref))
+		self.inspection_status == ""
+		self.final_status == ""
+#		frappe.db.sql("""Update `tabCargo` set final_status="NULL", inspection_status="NULL" where name=%s""", (self.cargo_ref))
 
 	
 	def validate_booking_ref(self):

@@ -28,6 +28,11 @@ def get_data():
 			"items": [
 				{
 					"type": "doctype",
+					"name": "Pre Advice",
+					"description": _("Pre Advice."),
+				},
+				{
+					"type": "doctype",
 					"name": "Cargo",
 					"description": _("Cargo."),
 				},
