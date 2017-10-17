@@ -12,9 +12,10 @@ frappe.ui.form.on('Booking Request', {
 
         frm.get_field('cargo_booking_manifest_table').grid.editable_fields = [
             { fieldname: 'cargo_type', columns: 1 },
+            { fieldname: 'container_size', columns: 1 },
             { fieldname: 'cargo_content', columns: 1 },
-            { fieldname: 'dis_charging', columns: 1 },
-            { fieldname: 'loading', columns: 1 },
+            { fieldname: 'work_type', columns: 1 },
+            { fieldname: 'qty', columns: 1 },
             { fieldname: 'total_weight', columns: 1 }
         ];
 
@@ -65,14 +66,54 @@ frappe.ui.form.on('Booking Request', {
 
 });
 
+frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn) {
+    var dc = locals[cdt][cdn];
+
+    frappe.call({
+        method: "frappe.client.get",
+        args: {
+            doctype: "Wharf Handling Fee",
+            filters: {
+                cargo_type: dc.cargo_type,
+                container_size: dc.container_size,
+                container_content: dc.cargo_content,
+                work_type: dc.work_type
+            },
+        },
+        callback: function(r) {
+            console.log(r);
+            frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
+            frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty));
+        }
+    });
+
+    var total_fee = 0;
+
+    frm.doc.cargo_booking_manifest_table.forEach(function(dc) {
+        flt(total_fee += flt(dc.fee * dc.qty));
+    });
+    frm.set_value("require_amount", total_fee);
+    frappe.throw(_("Test Amount", total_fee));
+
+});
+
 frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
-    frappe.model.set_value(d.doctype, d.name, "total_weight", flt(d.weight));
+
+    //   frappe.model.set_value(d.doctype, d.name, "total_weight", flt(d.weight));
 
     var total_weight_amount = 0;
     var totalamount = 0;
-    frm.doc.cargo_booking_manifest_table.forEach(function(d) { flt(total_weight_amount += flt(d.weight)); });
+    var total_fee = 0;
+
+    frm.doc.cargo_booking_manifest_table.forEach(function(d) {
+        flt(total_weight_amount += flt(d.weight));
+        flt(total_fee += flt(d.sub_total_fee));
+
+    });
 
     frm.set_value("total_weight_amount", total_weight_amount);
+    frm.set_value("require_amount", flt(total_fee / 2));
+
 
 });
