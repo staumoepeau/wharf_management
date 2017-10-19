@@ -166,7 +166,7 @@
 
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Custom Warrant No"),doc.custom_warrant), (_("Custom Code"), doc.custom_code) ) -%}
+                {%- for label, value in ( (_("Custom Warrant No"),doc.custom_warrant), (_("Delivery Code"), doc.custom_code) ) -%}
                 <div class="row">
 
                     <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
@@ -181,7 +181,7 @@
         <div class="col-xs-6">
         </div>
         <div class="col-xs-6">
-            <div class="col-xs-6"><label class="text-left">{{ _("Delivery Code ") }}</label></div>
+            <div class="col-xs-6"><label class="text-left">{{ _("Delivery Information ") }}</label></div>
             <div class="col-xs-6 text-right">{{ doc.delivery_code }}</div>
         </div>
     </div>

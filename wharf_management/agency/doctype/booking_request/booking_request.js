@@ -44,7 +44,7 @@ frappe.ui.form.on('Booking Request', {
                 }
                 frappe.new_doc("Wharf Payment Entry");
                 frappe.set_route("Form", "Wharf Payment Entry", doc.name);
-            });
+            }).addClass("btn-success");
 
         }
         var Current_User = user
@@ -56,12 +56,32 @@ frappe.ui.form.on('Booking Request', {
                 frappe.new_doc("ETA Changes");
                 frappe.set_route("Form", "ETA Changes", doc.name);
 
-            });
+            }).addClass("btn-success");
         }
 
     },
     onload: function(frm) {
+        if (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer")) {
+            cur_frm.set_df_property("security_documents", "hidden", 0);
 
+        } else {
+            cur_frm.set_df_property("security_documents", "hidden", 1);
+        }
+
+    },
+
+    vessel: function(frm) {
+        frappe.call({
+            "method": "frappe.client.get",
+            args: {
+                doctype: "Vessels",
+                filters: { 'name': frm.doc.vessel }
+            },
+            callback: function(data) {
+                console.log(data);
+                cur_frm.set_value("vessel_type", data.message["vessel_type"])
+            }
+        })
     },
 
 });
@@ -93,7 +113,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn)
         flt(total_fee += flt(dc.fee * dc.qty));
     });
     frm.set_value("require_amount", total_fee);
-    frappe.throw(_("Test Amount", total_fee));
+    //   frappe.throw(_("Test Amount", total_fee));
 
 });
 

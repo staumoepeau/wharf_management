@@ -26,13 +26,12 @@ frappe.ui.form.on('Booking Request', {
     },
 
     refresh: function(frm) {
-        cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
 
         if (!frm.doc.__islocal) {
             cur_frm.set_df_property("agents", "read_only", 1);
             cur_frm.set_df_property("voyage_no", "read_only", 1);
             cur_frm.set_df_property("vessel", "read_only", 1);
-            cur_frm.set_df_property("vessel_type", "read_only", 1);
+            //   cur_frm.set_df_property("vessel_type", "read_only", 1);
 
         }
 
@@ -49,10 +48,9 @@ frappe.ui.form.on('Booking Request', {
                 filters: { 'name': frm.doc.vessel }
             },
             callback: function(data) {
-                cur_frm.set_value("vessel_type", data.message['vessel_type'])
-
+                console.log(data);
+                cur_frm.set_value("vessel_type", data.message["vessel_type"])
             }
-
         })
     },
 

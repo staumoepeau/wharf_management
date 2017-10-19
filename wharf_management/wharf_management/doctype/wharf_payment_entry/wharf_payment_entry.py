@@ -25,7 +25,7 @@ class WharfPaymentEntry(Document):
 
 
     	def make_entries(self, cancel=0, adv_adj=0):
-			frappe.db.sql("""Update `tabBooking Request` set payment_status="Paid" where name=%s""", (self.booking_ref))
+			frappe.db.sql("""Update `tabBooking Request` set payment_status="Paid" , workflow_state="Booking Paid" where name=%s""", (self.booking_ref))
 			from erpnext.accounts.general_ledger import make_gl_entries
 			gl_map = []
 			

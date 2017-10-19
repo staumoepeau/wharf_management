@@ -4,11 +4,11 @@
 frappe.ui.form.on('Cargo', {
 
 
-    onload: function(frm){
+    onload: function(frm) {
 
-        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")){
+        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
             cur_frm.set_df_property("custom_warrant", "hidden", 1);
-        } else{
+        } else {
             cur_frm.set_df_property("custom_warrant", "hidden", 0);
         }
     },
@@ -27,7 +27,7 @@ frappe.ui.form.on('Cargo', {
         cur_frm.add_fetch('booking_ref', 'pod', 'pod');
         cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
 
-        
+
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.gate2_status != "Closed" &&
             frm.doc.gate1_status != "Closed" &&
@@ -43,7 +43,7 @@ frappe.ui.form.on('Cargo', {
                 frappe.new_doc("Inspection");
                 frappe.set_route("Form", "Inspection", doc.name);
 
-            });
+            }).addClass("btn-primary");
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Operation User") &&
@@ -56,7 +56,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Yard");
                 frappe.set_route("Form", "Yard", doc.name);
-            });
+            }).addClass("btn-primary");
         }
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Cargo Operation User") &&
                 frm.doc.payment_status != "Closed" &&
@@ -69,7 +69,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Wharf Payment Fee");
                 frappe.set_route("Form", "Wharf Payment Fee", doc.name);
-            });
+            }).addClass("btn-primary");
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
@@ -85,8 +85,8 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Gate1");
                 frappe.set_route("Form", "Gate1", doc.name);
-            });
-            
+            }).addClass("btn-primary");
+
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
@@ -102,7 +102,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Gate2");
                 frappe.set_route("Form", "Gate2", doc.name);
-            });
+            }).addClass("btn-primary");
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
@@ -121,7 +121,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Gate2");
                 frappe.set_route("Form", "Gate2", doc.name);
-            });
+            }).addClass("btn-primary");
 
         }
 
@@ -142,7 +142,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Gate1");
                 frappe.set_route("Form", "Gate1", doc.name);
-            });
+            }).addClass("btn-primary");
 
         }
 
@@ -163,7 +163,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Yard");
                 frappe.set_route("Form", "Yard", doc.name);
-            });
+            }).addClass("btn-primary");
 
         }
 
@@ -184,7 +184,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Wharf Payment Fee");
                 frappe.set_route("Form", "Wharf Payment Fee", doc.name);
-            });
+            }).addClass("btn-primary");
 
         }
 
@@ -205,7 +205,7 @@ frappe.ui.form.on('Cargo', {
                 }
                 frappe.new_doc("Inspection");
                 frappe.set_route("Form", "Inspection", doc.name);
-            });
+            }).addClass("btn-primary");
 
         }
 
