@@ -116,23 +116,18 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Vessel Type",
+					"description": _("Vessel Type"),
+				},
+				{
+					"type": "doctype",
 					"name": "Vessels",
 					"description": _("Vessels."),
 				},
 				{
 					"type": "doctype",
-					"name": "Cargo Content",
-					"description": _("Cargo Content.")
-				},
-				{
-					"type": "doctype",
 					"name": "Cargo Type",
 					"description": _("Cargo Type"),
-				},
-				{
-					"type": "doctype",
-					"name": "Container Size",
-					"description": _("Container Size"),
 				},
 				{
 					"type": "doctype",
@@ -151,11 +146,6 @@ def get_data():
 				},
 				{
 					"type": "doctype",
-					"name": "Vessel",
-					"description": _("Vessel List"),
-				},
-				{
-					"type": "doctype",
 					"name": "Work Type",
 					"description": _("Work Type"),
 				},
@@ -169,6 +159,11 @@ def get_data():
 					"type": "doctype",
 					"name": "Wharf Handling Fee",
 					"description": _("Wharf Handling Fee"),
+				},
+				{
+					"type": "doctype",
+					"name": "Berthage Fee",
+					"description": _("Berthage Fee"),
 				},
 				{
 					"type": "doctype",

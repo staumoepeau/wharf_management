@@ -48,7 +48,7 @@ frappe.ui.form.on('Booking Request', {
 
         }
         var Current_User = user
-        if (Current_User == frm.doc.owner) {
+        if ((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) {
             frm.add_custom_button(__('Amend ETA'), function() {
                 frappe.route_options = {
                     "booking_ref": frm.doc.name
@@ -58,10 +58,20 @@ frappe.ui.form.on('Booking Request', {
 
             }).addClass("btn-success");
         }
+        if ((!frm.doc.security_status) && (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer"))) {
+            frm.add_custom_button(__('Security'), function() {
+                frappe.route_options = {
+                    "booking_ref": frm.doc.name
+                }
+                frappe.new_doc("Security Check");
+                frappe.set_route("Form", "Security Check", doc.name);
+
+            }).addClass("btn-success");
+        }
 
     },
     onload: function(frm) {
-        if (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer")) {
+        if (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Agent User")) {
             cur_frm.set_df_property("security_documents", "hidden", 0);
 
         } else {

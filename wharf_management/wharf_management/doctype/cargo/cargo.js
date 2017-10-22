@@ -6,6 +6,7 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
+
         if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
             cur_frm.set_df_property("custom_warrant", "hidden", 1);
         } else {
@@ -22,7 +23,7 @@ frappe.ui.form.on('Cargo', {
         cur_frm.add_fetch('booking_ref', 'agents', 'agents');
         cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
         cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
-        cur_frm.add_fetch('booking_ref', 'eta_time', 'eta_time');
+        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
         cur_frm.add_fetch('booking_ref', 'pol', 'pol');
         cur_frm.add_fetch('booking_ref', 'pod', 'pod');
         cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
