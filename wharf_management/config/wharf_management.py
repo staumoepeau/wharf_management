@@ -149,6 +149,11 @@ def get_data():
 					"name": "Work Type",
 					"description": _("Work Type"),
 				},
+				{
+					"type": "doctype",
+					"name": "Container Truck",
+					"description": _("Container Truck"),
+				},
 			]
 		},
 		{

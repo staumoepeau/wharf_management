@@ -2595,7 +2595,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-10-21 20:11:28.976415", 
+ "modified": "2017-10-23 14:55:06.191105", 
  "modified_by": "Administrator", 
  "module": "Agency", 
  "name": "Booking Request", 
@@ -2725,9 +2725,9 @@
   {
    "amend": 0, 
    "apply_user_permissions": 0, 
-   "cancel": 1, 
+   "cancel": 0, 
    "create": 1, 
-   "delete": 1, 
+   "delete": 0, 
    "email": 1, 
    "export": 1, 
    "if_owner": 0, 
@@ -2739,7 +2739,7 @@
    "role": "Wharf Security Supervisor", 
    "set_user_permissions": 0, 
    "share": 1, 
-   "submit": 1, 
+   "submit": 0, 
    "write": 1
   }
  ], 
