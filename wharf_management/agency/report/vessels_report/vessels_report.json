@@ -1,0 +1,43 @@
+{
+ "add_total_row": 0, 
+ "apply_user_permissions": 1, 
+ "creation": "2017-10-23 14:58:49.650548", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "Ports Authority Tonga", 
+ "modified": "2017-10-24 09:56:33.152764", 
+ "modified_by": "Administrator", 
+ "module": "Agency", 
+ "name": "Vessels Report", 
+ "owner": "Administrator", 
+ "query": "select \n `tabBooking Request`.`eta_date` as \"ETA DATE:Date\",\n `tabBooking Request`.`vessel_type` as \"Vessel Type:Link/Vessel Type:120\",\n `tabBooking Request`.`vessel` as \"Vessel:Link/Vessels:120\",\n `tabVessels`.`vessel_gross_tonnage` as \"GRT::120\",\n `tabBooking Request`.`eta_pilot_date` as \"Achorage Date/Time:Date\",\n `tabBooking Request`.`mooring_date` as \"Mooring Date/Time:Date\",\n `tabBooking Request`.`unmooring_date` as \"UN-Mooring Date/Time:Date\",\n`tabBooking Request`.`cargo_ops_start_date` as \"Ops Start Date/Time:Date\",\n`tabBooking Request`.`cargo_ops_completed_date` as \"Ops End Date/Time:Date\",\n\nselect \n `tabBooking Request`.`eta_date` as \"ETA DATE:Date\",\n `tabBooking Request`.`vessel_type` as \"Vessel Type:Link/Vessel Type:120\",\n `tabBooking Request`.`vessel` as \"Vessel:Link/Vessels:120\",\n `tabVessels`.`vessel_gross_tonnage` as \"GRT::120\",\n `tabBooking Request`.`eta_pilot_date` as \"Achorage Date/Time:Date\",\n `tabBooking Request`.`mooring_date` as \"Mooring Date/Time:Date\",\n `tabBooking Request`.`unmooring_date` as \"UN-Mooring Date/Time:Date\",\n`tabBooking Request`.`cargo_ops_start_date` as \"Ops Start Date/Time:Date\",\n`tabBooking Request`.`cargo_ops_completed_date` as \"Ops End Date/Time:Date\",\nIF(`tabCargo Booking Manifest Table`.`cargo_type` = 'Container', \n(IF(`tabCargo Booking Manifest Table`.`work_type` = 'Loading'),\n`tabCargo Booking Manifest Table`.`qty`,0)) as \"Export ::120\"\n`tabBooking Request`, `tabVessels`, `tabCargo Booking Manifest Table`\nwhere\n`tabVessels`.vessel = `tabBooking Request`.vessel\nand\n`tabBooking Request`.name = `tabCargo Booking Manifest Table`.parent", 
+ "ref_doctype": "Booking Request", 
+ "report_name": "Vessels Report", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "All"
+  }, 
+  {
+   "role": "Cargo Operation User"
+  }, 
+  {
+   "role": "Agent User"
+  }, 
+  {
+   "role": "Cargo Operation Manager"
+  }, 
+  {
+   "role": "Pilot Operation Manager"
+  }, 
+  {
+   "role": "Wharf Operation Cashier"
+  }, 
+  {
+   "role": "Wharf Security Supervisor"
+  }
+ ]
+}

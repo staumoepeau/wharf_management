@@ -73,11 +73,10 @@ frappe.ui.form.on('Booking Request', {
     },
     onload: function(frm) {
         if (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Agent User")) {
-            //   cur_frm.set_df_property("security_documents", "hidden", 0);
-            cur_frm.set_df_property("tool_bar", "hidden", 1);
+            cur_frm.set_df_property("security_documents", "hidden", 0);
 
         } else {
-            //  cur_frm.set_df_property("security_documents", "hidden", 1);
+            cur_frm.set_df_property("security_documents", "hidden", 1);
         }
 
     },

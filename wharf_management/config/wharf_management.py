@@ -194,20 +194,8 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Tellers Report",
-					"doctype": "Send Money"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Tellers Details Report Today",
-					"doctype": "Send Money"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Tellers Details Report",
-					"doctype": "Send Money"
+					"name": "Vessels Report",
+					"doctype": "Vessels Report"
 				},
 			]
 		},
