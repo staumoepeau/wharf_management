@@ -16,12 +16,12 @@ class Cargo(Document):
 #		self.check_bulk_cargo()
 
 	def validate(self):
-		self.check_bulk_cargo()
+#		self.check_bulk_cargo()
 		self.clear_new_cargo()
 
-	def check_bulk_cargo(self):
-		if self.cargo_type == "Break Bulk":
-			self.name = self.name +"-"+ self.break_bulk_items
+#	def check_bulk_cargo(self):
+#		if self.cargo_type == "Break Bulk":
+#			self.name = self.name +"-"+ self.break_bulk_items
 
 	def clear_new_cargo(self):
 		self.inspection_status == ""
