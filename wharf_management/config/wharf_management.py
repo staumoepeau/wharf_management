@@ -78,8 +78,13 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Security Gate"),
+			"label": _("Security"),
 			"items": [
+				{
+					"type": "doctype",
+					"name": "Custom Inspection",
+					"description": _("Custom Inspection."),
+				},
 				{
 					"type": "doctype",
 					"name": "Gate1",

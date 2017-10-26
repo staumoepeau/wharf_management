@@ -122,7 +122,7 @@ class WharfPaymentFee(Document):
 			item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, 
 												   "container_size" : self.container_size,
 												  "container_content" : self.container_content}, "item_name")
-		if self.cargo_type == 'Vehicles':
+		if self.cargo_type != 'Container':
 			item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 
 		vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
@@ -137,7 +137,7 @@ class WharfPaymentFee(Document):
 		if self.cargo_type == 'Container':
 			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
 												   "container_size" : self.container_size}, "item_name")
-		if self.cargo_type == 'Vehicles':
+		if self.cargo_type != 'Container':
 			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 	
 		val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)

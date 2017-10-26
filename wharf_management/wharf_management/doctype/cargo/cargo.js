@@ -105,59 +105,59 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-primary");
         }
 
- //       if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
-//                frm.doc.gate2_status == "Open" &&
-//                frm.doc.gate1_status == "Open" &&
-//                frm.doc.payment_status == "Open" &&
-//                frm.doc.yard_status == "Open" &&
-//                frm.doc.inspection_status == "Open" &&
-//                frm.doc.work_type == "Loading" &&
-//                frm.doc.export_status != "Main Gate"
-//            )) {
-//            frm.add_custom_button(__('Main Gate'), function() {
-//                frappe.route_options = {
-//                    "cargo_ref": frm.doc.name
-//                }
-//                frappe.new_doc("Gate2");
-//                frappe.set_route("Form", "Gate2", doc.name);
-//            }).addClass("btn-primary");
-//        }
+        //       if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
+        //                frm.doc.gate2_status == "Open" &&
+        //                frm.doc.gate1_status == "Open" &&
+        //                frm.doc.payment_status == "Open" &&
+        //                frm.doc.yard_status == "Open" &&
+        //                frm.doc.inspection_status == "Open" &&
+        //                frm.doc.work_type == "Loading" &&
+        //                frm.doc.export_status != "Main Gate"
+        //            )) {
+        //            frm.add_custom_button(__('Main Gate'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frappe.new_doc("Gate2");
+        //                frappe.set_route("Form", "Gate2", doc.name);
+        //            }).addClass("btn-primary");
+        //        }
 
-//        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
-//                frm.doc.gate2_status == "Open" &&
-//                frm.doc.gate1_status == "Open" &&
-//                frm.doc.payment_status == "Open" &&
-//                frm.doc.yard_status == "Open" &&
-//                frm.doc.inspection_status == "Open" &&
-//                frm.doc.work_type == "Loading" &&
-//                frm.doc.export_status == "Main Gate"
-//            )) {
-//            frm.add_custom_button(__('Gate1'), function() {
-//                frappe.route_options = {
-//                    "cargo_ref": frm.doc.name
-//                }
-//                frappe.new_doc("Gate1");
-//                frappe.set_route("Form", "Gate1", doc.name);
-//            }).addClass("btn-primary");
-//        }
+        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+        //                frm.doc.gate2_status == "Open" &&
+        //                frm.doc.gate1_status == "Open" &&
+        //                frm.doc.payment_status == "Open" &&
+        //                frm.doc.yard_status == "Open" &&
+        //                frm.doc.inspection_status == "Open" &&
+        //                frm.doc.work_type == "Loading" &&
+        //                frm.doc.export_status == "Main Gate"
+        //            )) {
+        //            frm.add_custom_button(__('Gate1'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frappe.new_doc("Gate1");
+        //                frappe.set_route("Form", "Gate1", doc.name);
+        //            }).addClass("btn-primary");
+        //        }
 
-//        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Forklift Driver User") &&
-//                frm.doc.gate2_status == "Open" &&
-//                frm.doc.gate1_status == "Open" &&
-//                frm.doc.payment_status == "Open" &&
-//                frm.doc.yard_status == "Open" &&
-//                frm.doc.inspection_status == "Open" &&
-//                frm.doc.work_type == "Loading" &&
-//                frm.doc.export_status == "Gate1"
-//            )) {
-//            frm.add_custom_button(__('Driver'), function() {
-//                frappe.route_options = {
-//                    "cargo_ref": frm.doc.name
-//                }
-//                frappe.new_doc("Yard");
-//                frappe.set_route("Form", "Yard", doc.name);
-//            }).addClass("btn-primary");
-//        }
+        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Forklift Driver User") &&
+        //                frm.doc.gate2_status == "Open" &&
+        //                frm.doc.gate1_status == "Open" &&
+        //                frm.doc.payment_status == "Open" &&
+        //                frm.doc.yard_status == "Open" &&
+        //                frm.doc.inspection_status == "Open" &&
+        //                frm.doc.work_type == "Loading" &&
+        //                frm.doc.export_status == "Gate1"
+        //            )) {
+        //            frm.add_custom_button(__('Driver'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frappe.new_doc("Yard");
+        //                frappe.set_route("Form", "Yard", doc.name);
+        //            }).addClass("btn-primary");
+        //        }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
@@ -174,22 +174,22 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-danger");
         }
 
-//        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") &&
-//                frm.doc.gate2_status == "Open" &&
-//                frm.doc.gate1_status == "Open" &&
-//                frm.doc.payment_status == "Open" &&
-//                frm.doc.yard_status == "Open" &&
-//                frm.doc.inspection_status == "Open" &&
-//                frm.doc.work_type == "Loading" &&
-//                frm.doc.export_status == "Paid"
-//            )) {
-//            frm.add_custom_button(__('Inspection'), function() {
-//                frappe.route_options = {
-//                    "cargo_ref": frm.doc.name
-//                }
-//                frappe.new_doc("Inspection");
-//                frappe.set_route("Form", "Inspection", doc.name);
-//            }).addClass("btn-primary");
-//        }
+        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") &&
+        //                frm.doc.gate2_status == "Open" &&
+        //                frm.doc.gate1_status == "Open" &&
+        //                frm.doc.payment_status == "Open" &&
+        //                frm.doc.yard_status == "Open" &&
+        //                frm.doc.inspection_status == "Open" &&
+        //                frm.doc.work_type == "Loading" &&
+        //                frm.doc.export_status == "Paid"
+        //            )) {
+        //            frm.add_custom_button(__('Inspection'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frappe.new_doc("Inspection");
+        //                frappe.set_route("Form", "Inspection", doc.name);
+        //            }).addClass("btn-primary");
+        //        }
     },
 });

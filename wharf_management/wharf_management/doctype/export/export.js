@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Export', {
+
     refresh: function(frm) {
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
@@ -46,6 +47,9 @@ frappe.ui.form.on('Export', {
             }).addClass("btn-warning");
 
         }
+        cur_frm.add_fetch('container_type', 'size', 'container_size');
+        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
+
 
     }
 });

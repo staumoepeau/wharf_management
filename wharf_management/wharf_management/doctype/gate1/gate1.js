@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Gate1', {
     refresh: function(frm) {
-        frm.add_fetch('truck_licenses_plate', 'compnay', 'company');
+        frm.add_fetch('truck_licenses_plate', 'company', 'company');
 
     },
 
