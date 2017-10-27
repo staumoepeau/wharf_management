@@ -158,6 +158,26 @@ frappe.ui.form.on('Cargo', {
         //                frappe.set_route("Form", "Yard", doc.name);
         //            }).addClass("btn-primary");
         //        }
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+        frm.doc.gate2_status != "Closed" &&
+        frm.doc.gate1_status != "Closed" &&
+        frm.doc.payment_status != "Closed" &&
+        frm.doc.yard_status != "Closed" &&
+        frm.doc.inspection_status != "Closed" ||
+        frm.doc.inspection_status == "Closed" &&
+        frm.doc.qty > 0 &&
+        frm.doc.break_bulk_item_count != 0
+        ) {
+        frm.add_custom_button(__('Bulk Item Count'), function() {
+            frappe.route_options = {
+                "cargo_ref": frm.doc.name
+            }
+            frappe.new_doc("Bulk Item Count");
+            frappe.set_route("Form", "Bulk Item Count", doc.name);
+
+        }).addClass("btn-warning");
+        }
+
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
