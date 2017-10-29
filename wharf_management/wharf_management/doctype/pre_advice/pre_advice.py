@@ -60,3 +60,24 @@ class PreAdvice(Document):
 				})
 		doc.insert()
 		doc.submit()
+
+	
+	def validate_container_no(self):
+    		container_number=None
+		container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s and status="Yard" """, (self.container_no))
+
+		if not container_number:
+    			frappe.throw(_("There is no Container No : {0} in the Export List").format(self.container_no))
+				
+		else:
+#    			container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
+    			val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["status","yard_slot","main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start","driver_ends"], as_dict=True)
+			self.yard_slot = val.yard_slot
+			self.main_gate_start = val.main_gate_start
+			self.main_gate_ends = val.main_gate_ends
+			self.gate1_start = val.gate1_start
+			self.gate1_ends = val.gate1_ends
+			self.driver_start = val.driver_start
+			self.driver_ends = val.driver_ends
+    			
+			frappe.msgprint(_("Details for the Container No {0} have been imported from the Export List").format(self.container_no))

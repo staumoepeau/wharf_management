@@ -8,6 +8,7 @@ import frappe
 def get_notification_config():
 	return {
 		"for_doctype": {
+			"Pre Advice": {"docstatus": 0},
 			"Cargo Manifest": {"docstatus": 0},
 			"Cargo Operation Planning": {"docstatus": 0},
 			"Wharf Payment Entry": {"docstatus": 0},
@@ -20,3 +21,10 @@ def get_notification_config():
 
 		}
 	}
+
+	doctype = [d for d in notifications.get('for_doctype')]
+	for doc in frappe.get_all('DocType',
+		fields= ["name"], filters = {"name": ("not in", doctype), 'is_submittable': 1}):
+		notifications["for_doctype"][doc.name] = {"docstatus": 0}
+
+	return notifications
