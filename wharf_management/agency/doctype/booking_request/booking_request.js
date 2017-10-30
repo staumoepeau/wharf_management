@@ -91,6 +91,7 @@ frappe.ui.form.on('Booking Request', {
             callback: function(data) {
                 console.log(data);
                 cur_frm.set_value("vessel_type", data.message["vessel_type"])
+                cur_frm.set_value("grt", data.message["vessel_gross_tonnage"])
             }
         })
     },
@@ -123,7 +124,9 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn)
     frm.doc.cargo_booking_manifest_table.forEach(function(dc) {
         flt(total_fee += flt(dc.fee * dc.qty));
     });
-    frm.set_value("require_amount", total_fee);
+
+
+   // frm.set_value("require_amount", total_fee);
     //   frappe.throw(_("Test Amount", total_fee));
 
 });
@@ -145,6 +148,10 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
 
     frm.set_value("total_weight_amount", total_weight_amount);
     frm.set_value("require_amount", flt(total_fee / 2));
+    //frm.set_value("vessel_gross_tonnage", (frm.doc.grt));
+
+    
+    
 
 
 });
