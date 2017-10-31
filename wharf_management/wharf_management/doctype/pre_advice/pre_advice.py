@@ -84,6 +84,8 @@ class PreAdvice(Document):
 			self.container_type = val.container_type
 			self.container_size = val.container_size
 			self.pat_code = val.pat_code
-			self.container_content = val.container_content 
+			self.container_content = val.container_content
     			
 			frappe.msgprint(_("Details for the Container No {0} have been imported from the Export List").format(self.container_no))
+
+			frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
