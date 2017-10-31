@@ -73,7 +73,7 @@ class PreAdvice(Document):
 #    			container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
     			val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["status","yard_slot",
 				"main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
-				"container_type","cargo_type","container_size","pat_code","container_content","driver_ends"], as_dict=True)
+				"container_type","container_size","pat_code","container_content","driver_ends"], as_dict=True)
 			self.yard_slot = val.yard_slot
 			self.main_gate_start = val.main_gate_start
 			self.main_gate_ends = val.main_gate_ends
@@ -82,7 +82,6 @@ class PreAdvice(Document):
 			self.driver_start = val.driver_start
 			self.driver_ends = val.driver_ends
 			self.container_type = val.container_type
-			self.cargo_type = val.cargo_type
 			self.container_size = val.container_size
 			self.pat_code = val.pat_code
 			self.container_content = val.container_content 
