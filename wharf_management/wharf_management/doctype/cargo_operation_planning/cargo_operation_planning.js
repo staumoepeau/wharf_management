@@ -75,6 +75,8 @@ frappe.ui.form.on('Cargo Operation Planning', {
 		cur_frm.add_fetch('booking_ref','labour_requirements','labour_requirements');
 		cur_frm.add_fetch('booking_ref','gear_requirements','gear_requirements');
 		cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');
+		cur_frm.add_fetch('booking_ref','cargo_ops_start_date','start_time');
+		cur_frm.add_fetch('booking_ref','cargo_ops_completed_date','end_time');
 
 	},
 
