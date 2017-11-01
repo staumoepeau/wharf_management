@@ -14,9 +14,16 @@ frappe.ui.form.on('Cargo Manifest', {
 
 		frm.get_field('manifest_summary_table').grid.editable_fields = [
 			{fieldname: 'cargo_type', columns: 1},
-			{fieldname: 'cargo_content', columns: 1},
-			{fieldname: 'dis_charging', columns: 1},
-			{fieldname: 'loading', columns: 1},
+			{fieldname: 'container_content', columns: 1},
+			{fieldname: 'work_type', columns: 1},
+			{fieldname: 'container_size', columns: 1},
+			{fieldname: 'container', columns: 1}
+		];
+
+		frm.get_field('bbulks_summary_table').grid.editable_fields = [
+			{fieldname: 'cargo_type', columns: 1},
+			{fieldname: 'work_type', columns: 1},
+			{fieldname: 'weight', columns: 1},
 			{fieldname: 'total_weight', columns: 1}
 		];
 	},
@@ -39,7 +46,7 @@ frappe.ui.form.on('Cargo Manifest', {
 					cur_frm.set_value("agents", r.message["agents"]);
 					cur_frm.set_value("vessel", r.message["vessel"]);
 					cur_frm.set_value("eta_date", r.message["eta_date"]);
-					cur_frm.set_value("eta_time", r.message["eta_time"]);
+					cur_frm.set_value("etd_date", r.message["etd_date"]);
 					cur_frm.set_value("pod", r.message["pod"]);
 					cur_frm.set_value("pol", r.message["pol"]);
 					cur_frm.set_value("final_dest_port", r.message["final_dest_port"]);
@@ -60,6 +67,27 @@ frappe.ui.form.on('Cargo Manifest', {
 			}
 		});
 	},
+
+	get_summary_list: function(frm) {
+		return frappe.call({
+			method: "get_manifest_summary_list",
+			doc: frm.doc,
+			callback: function(r) {
+				frm.refresh_field("manifest_summary_table");
+				frm.refresh_fields();
+			}
+		});
+	},
+
+	get_bbulks_summary_list: function(frm) {
+		return frappe.call({
+			method: "get_bbulks_summary_list",
+			doc: frm.doc,
+			callback: function(r) {
+				frm.refresh_field("bbulks_summary_table");
+				frm.refresh_fields();
+			}
+		});
+	},
 });
 	
-

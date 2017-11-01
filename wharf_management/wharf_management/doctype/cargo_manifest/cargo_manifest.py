@@ -36,7 +36,7 @@ class CargoManifest(Document):
 
 			for d in entries:
 				row = self.append('manifest_table', {
-					'cargo_refrence':d.cargo_refrence,
+					'container_size':d.container_size,
 					'container_no':d.container_no,
 					'cargo_type':d.cargo_type,
 					'work_type':d.work_type,
@@ -44,18 +44,41 @@ class CargoManifest(Document):
 					'status':d.status,
 					'container_size':d.container_size,
 					'voyage_no':d.voyage_no,
-					'booking_ref':d.booking_ref
+					'booking_ref':d.booking_ref,
+					'cargo_refrence': d.cargo_refrence
 				})
 
 
 		def get_manifest_summary_list(self):
 			condition = ""
-			manifest_summary_table = frappe.db.sql("""select count(*)
-				from `tabCargo` where booking_ref = %s group by pat_code""", (self.booking_ref))
+			manifest_summary_table = frappe.db.sql("""select cargo_type, container_content, work_type, container_size, count(name) as container
+				from `tabCargo` where cargo_type = "Container" and booking_ref = %s and final_status in ("Discharged","Loading") group by work_type, container_content, container_size""", (self.booking_ref), as_dict=1)
 
 			entries = sorted(list(manifest_summary_table))
 
 			self.set('manifest_summary_table', [])
 
 			for d in entries:
-				row = self.append('manifest_summary_table', {})
+				row = self.append('manifest_summary_table', {
+					'cargo_type': d.cargo_type,
+					'container_content': d.container_content,
+					'work_type': d.work_type,
+					'container_size': d.container_size,
+					'Container' : d.container
+				})
+			
+		def get_bbulks_summary_list(self):
+    			condition = ""
+			bbulks_summary_table = frappe.db.sql("""select cargo_type, work_type, sum(net_weight) as weight
+				from `tabCargo` where cargo_type != "Container" and booking_ref = %s and final_status in ("Discharged","Loading") group by work_type""", (self.booking_ref), as_dict=1)
+
+			bbulks_entries = sorted(list(bbulks_summary_table))
+
+			self.set('bbulks_summary_table', [])
+
+			for b in bbulks_entries:
+				row = self.append('bbulks_summary_table', {
+					'cargo_type': b.cargo_type,
+					'work_type': b.work_type,
+					'weight':b.weight
+				})
