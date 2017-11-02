@@ -19,7 +19,7 @@ class WharfPaymentFee(Document):
 	
 	def on_submit(self):
 		self.update_payment_status()
-		self.update_export_status()
+#		self.update_export_status()
 		self.change_status()
 		
 	
@@ -39,12 +39,11 @@ class WharfPaymentFee(Document):
     				self.status == 'Paid'
 		
 	def update_payment_status(self):
-    		if self.status != 'Export':
-    				frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
+ 			frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
 	
-	def update_export_status(self):
-    		if self.status == 'Export':
-    				frappe.db.sql("""Update `tabCargo` set export_status="Paid" where name=%s""", (self.cargo_ref))
+#	def update_export_status(self):
+#    		if self.status == 'Export':
+#    				frappe.db.sql("""Update `tabCargo` set export_status="Paid" where name=%s""", (self.cargo_ref))
 
 	def get_working_days(self):
 
@@ -89,7 +88,7 @@ class WharfPaymentFee(Document):
 #		return free_days
 	
 	def get_storage_fee(self):
-		if self.cargo_type == 'Container':
+    		if self.cargo_type == 'Container':
 			sfee = frappe.db.sql("""Select fee_amount from `tabStorage Fee` 
 				where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
 		
@@ -115,6 +114,7 @@ class WharfPaymentFee(Document):
 		
 		return item_name
 		
+
 	def insert_fees(self):
 		fees=0
 
@@ -158,8 +158,7 @@ class WharfPaymentFee(Document):
 					"description": devan.description,
 					"price": devan.standard_rate,
 					"qty": "1",
-					"total": float(1 * devan.standard_rate)
-			
+					"total": float(1 * devan.standard_rate)			
 			})
 		if not self.secondary_work_type:
     			fees=0

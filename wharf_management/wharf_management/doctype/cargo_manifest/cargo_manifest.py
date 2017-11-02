@@ -27,33 +27,35 @@ class CargoManifest(Document):
 
 		def get_manifest(self):
 			condition = ""
-			manifest_list = frappe.db.sql("""select name as cargo_refrence, container_no, bol, cargo_type,
+			cargo_manifest_table = frappe.db.sql("""select name as cargo_refrence, container_no, bol, cargo_type,
 			work_type, container_size, container_content, status, voyage_no, booking_ref from `tabCargo` where booking_ref = %s and final_status in ("Discharged","Loading")""",(self.booking_ref), as_dict=1)
 
-			entries = sorted(list(manifest_list))
+			manifest_entries = sorted(list(cargo_manifest_table))
 
-			self.set('manifest_list', [])
+			self.set('cargo_manifest_table', [])
 
-			for d in entries:
-				row = self.append('manifest_table', {
-					'container_size':d.container_size,
-					'container_no':d.container_no,
-					'cargo_type':d.cargo_type,
-					'work_type':d.work_type,
-					'container_content':d.container_content,
-					'status':d.status,
-					'container_size':d.container_size,
-					'voyage_no':d.voyage_no,
-					'booking_ref':d.booking_ref,
-					'cargo_refrence': d.cargo_refrence
+			for f in manifest_entries:
+				row = self.append('cargo_manifest_table', {
+					'container_size':f.container_size,
+					'container_no':f.container_no,
+					'cargo_type':f.cargo_type,
+					'work_type':f.work_type,
+					'container_content':f.container_content,
+					'status':f.status,
+					'container_size':f.container_size,
+					'voyage_no':f.voyage_no,
+					'booking_ref':f.booking_ref,
+					'cargo_refrence': f.cargo_refrence
+					
 				})
 
 
 		def get_manifest_summary_list(self):
 			condition = ""
-			manifest_summary_table = frappe.db.sql("""select cargo_type, container_content, work_type, container_size, count(name) as container
-				from `tabCargo` where cargo_type = "Container" and booking_ref = %s and final_status in ("Discharged","Loading") group by work_type, container_content, container_size""", (self.booking_ref), as_dict=1)
-
+#			manifest_summary_table = frappe.db.sql("""select cargo_type, container_content, work_type, container_size, count(name) as container
+#				from `tabCargo` where cargo_type = "Container" and booking_ref = %s and final_status in ("Discharged","Loading") group by work_type, container_content, container_size""", (self.booking_ref), as_dict=1)
+			manifest_summary_table = frappe.db.sql("""select cargo_type, work_type, container_size, container_content, count(name) as number from `tabCargo` 
+			 where booking_ref = %s and final_status in ("Discharged","Loading") group by work_type, container_content, cargo_type, container_size""", (self.booking_ref), as_dict=1)
 			entries = sorted(list(manifest_summary_table))
 
 			self.set('manifest_summary_table', [])
@@ -64,7 +66,7 @@ class CargoManifest(Document):
 					'container_content': d.container_content,
 					'work_type': d.work_type,
 					'container_size': d.container_size,
-					'Container' : d.container
+					'number' : d.number
 				})
 			
 		def get_bbulks_summary_list(self):

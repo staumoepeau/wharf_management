@@ -165,7 +165,6 @@ frappe.ui.form.on('Wharf Payment Fee', {
             method: "insert_fees",
             doc: frm.doc,
             callback: function(fees) {
-
                 frm.refresh_fields();
                 console.log(fees);
             }
@@ -241,5 +240,15 @@ frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn) {
             frappe.model.set_value(d.doctype, d.name, "price", data.message["standard_rate"]);
             frappe.model.set_value(d.doctype, d.name, "description", data.message["description"]);
         }
+    })
+});
+
+frappe.ui.form.on("Wharf Fee Item", "qty", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    
+    frm.doc.wharf_fee_item.forEach(function(d) {
+        flt(total += flt(d.price * d.qty))
+
+        frm.set_value("total", total);
     })
 });

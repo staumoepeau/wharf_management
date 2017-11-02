@@ -4,12 +4,13 @@
 frappe.ui.form.on('Cargo Manifest', {
 
 	setup: function(frm) {
-		frm.get_field('manifest_table').grid.editable_fields = [
+		frm.get_field('cargo_manifest_table').grid.editable_fields = [
 			{fieldname: 'cargo_refrence', columns: 1},
 			{fieldname: 'container_no', columns: 1},
 			{fieldname: 'cargo_type', columns: 1},
 			{fieldname: 'work_type', columns: 1},
-			{fieldname: 'container_content', columns: 1}
+			{fieldname: 'container_content', columns: 1},
+			{fieldname: 'manifest_confirm', columns: 1}
 		];
 
 		frm.get_field('manifest_summary_table').grid.editable_fields = [
@@ -17,7 +18,7 @@ frappe.ui.form.on('Cargo Manifest', {
 			{fieldname: 'container_content', columns: 1},
 			{fieldname: 'work_type', columns: 1},
 			{fieldname: 'container_size', columns: 1},
-			{fieldname: 'container', columns: 1}
+			{fieldname: 'number', columns: 1}
 		];
 
 		frm.get_field('bbulks_summary_table').grid.editable_fields = [
@@ -61,8 +62,8 @@ frappe.ui.form.on('Cargo Manifest', {
 		return frappe.call({
 			method: "get_manifest",
 			doc: frm.doc,
-			callback: function(r) {
-				frm.refresh_field("manifest_table");
+			callback: function(t) {
+				frm.refresh_field("cargo_manifest_table");
 				frm.refresh_fields();
 			}
 		});

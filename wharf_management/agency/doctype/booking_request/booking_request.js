@@ -150,8 +150,4 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
     frm.set_value("require_amount", flt(total_fee / 2));
     //frm.set_value("vessel_gross_tonnage", (frm.doc.grt));
 
-    
-    
-
-
 });

@@ -46,7 +46,7 @@
             {%- endfor -%}
         </div>
         <div class="col-xs-6">
-            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta)), (_("Agent"), doc.agents), (_("Vessel"), doc.vessel) ) -%}
+            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta_date)), (_("Agent"), doc.agents), (_("Vessel"), doc.vessel) ) -%}
             <div class="row">
                 <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
                 <div class="col-xs-8">{{ value }}</div>
@@ -64,7 +64,7 @@
                 <th class="col-md-3">Container No</th>
                 <th class="col-md-1 text-center">Cargo Type</th>
                 <th class="col-md-1 text-center">Work Type</th>
-                <th class="col-md-1 text-right">Delivery Code</th>
+                <th class="col-md-1 text-right">BOL</th>
                 <th class="col-md-3 text-right">Description</th>
             </tr>
         </thead>
@@ -79,7 +79,7 @@
                 </td>
                 <td class="text-center">{{ row.cargo_type }}</td>
                 <td class="text-center">{{ row.work_type }}</td>
-                <td class="text-right">{{ row.custom_code }}</td>
+                <td class="text-right">{{ row.bol }}</td>
                 <td class="text-right">{{ row.cargo_description }}</td>
             </tr>
             {%- endfor -%}

@@ -46,7 +46,7 @@
             {%- endfor -%}
         </div>
         <div class="col-xs-6">
-            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta)), (_("Agent"), doc.agents) ) -%}
+            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta_date)), (_("Agent"), doc.agents) ) -%}
             <div class="row">
                 <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
                 <div class="col-xs-8">{{ value }}</div>
@@ -154,7 +154,7 @@
     <div class="row">
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Payment Method"), doc.payment_method), (_("Payment Information"), doc.payment_information), (_("Bulk Payment"), doc.bulk_payment) ) -%}
+                {%- for label, value in ( (_("Payment Method"), doc.payment_method), (_("Bulk Payment"), doc.bulk_payment) ) -%}
                 <div class="row">
                     <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
                     <div class="col-xs-6">{{ value }}</div>
