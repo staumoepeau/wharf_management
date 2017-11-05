@@ -19,21 +19,21 @@ frappe.ui.form.on('Bulk Item Count', {
 					},
 					callback: function(data) {
 						cur_frm.set_value("customer", data.message["consignee"]);
-//						cur_frm.set_value("container_no", data.message["container_no"]);
 						cur_frm.set_value("cargo_type", data.message["cargo_type"]);
 						cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 						cur_frm.set_value("yard_slot", data.message["yard_slot"]);
-						cur_frm.set_value("status", "Inspection");
+						cur_frm.set_value("qty", data.message["qty"]);
+						cur_frm.set_value("break_bulk_item_count", data.message["break_bulk_item_count"]);
 		
 						cur_frm.set_df_property("cargo_ref", "read_only", 1);
 						cur_frm.set_df_property("yard_slot", "read_only", 1);
-//						cur_frm.set_df_property("container_no", "read_only", 1);
 						cur_frm.set_df_property("customer", "read_only", 1);
 						cur_frm.set_df_property("cargo_type", "read_only", 1);
 						cur_frm.set_df_property("cargo_description", "read_only", 1);
+						cur_frm.set_df_property("qty", "read_only", 1);
 						cur_frm.set_df_property("status", "read_only", 1);		
+						cur_frm.set_df_property("break_bulk_item_count", "read_only", 1);
 					}
 				})
-		
 			}
 });

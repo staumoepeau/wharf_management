@@ -36,12 +36,13 @@ class Inspection(Document):
 						raise_exception=1)
 
 	def update_inspection_status(self):
-		frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+    		if self.qty > 1:
+    				frappe.db.sql("""Update `tabCargo` set break_bulk_item_count=1, inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+		if self.qty < 1:
+    			frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 	
 	def update_final_status(self):
-		frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Loading" where name=%s""", (self.cargo_ref))
+		frappe.db.sql("""Update `tabCargo` set status="Outbound", inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Loading" where name=%s""", (self.cargo_ref))
 	
 	def update_final_status_devanning(self):
 		frappe.db.sql("""Update `tabCargo` set secondary_work_type="devanning " where name=%s""", (self.cargo_ref))
-
-	pass

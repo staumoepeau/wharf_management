@@ -24,6 +24,7 @@ frappe.ui.form.on('Inspection', {
 								cur_frm.set_value("vessel", data.message["vessel"]);
 								cur_frm.set_value("bol", data.message["bol"]);
 								cur_frm.set_value("work_type", data.message["work_type"]);
+								cur_frm.set_value("qty", data.message["qty"]);
 
 								cur_frm.set_df_property("voyage_no", "read_only", 1);
 								cur_frm.set_df_property("work_type", "read_only", 1);

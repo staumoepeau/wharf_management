@@ -92,6 +92,11 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Bulk Item Count",
+					"description": _("Bulk Item Count."),
+				},
+				{
+					"type": "doctype",
 					"name": "Gate2",
 					"description": _("Security Main Gate."),
 				},

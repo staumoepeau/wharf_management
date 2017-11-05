@@ -13,11 +13,14 @@ class Cargo(Document):
 
 	def on_submit(self):
 		self.validate_booking_ref()
+		
 #		self.check_bulk_cargo()
 
 	def validate(self):
 #		self.check_bulk_cargo()
 		self.clear_new_cargo()
+		if not self.title:
+    			self.title = self.get_title()
 
 #	def check_bulk_cargo(self):
 #		if self.cargo_type == "Break Bulk":
@@ -35,4 +38,5 @@ class Cargo(Document):
 					raise_exception=1)
 	
 
-
+	def get_title(self):
+		return self.consignee

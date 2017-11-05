@@ -19,7 +19,7 @@ frappe.listview_settings['Cargo'] = {
 			return [__("Export"), "red", "status,=,Export"];
 		
 		} else if (doc.status === "Outbound"){
-			return [__("Outbound"), "black", "status,=,Outbound"];
+			return [__("Outbound"), "purple", "status,=,Outbound"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
@@ -33,7 +33,7 @@ frappe.listview_settings['Cargo'] = {
 		} else if (doc.status === "Gate1"){
 			return [__("Passed Gate1"), "blue", "status,=,Gate1"];
 
-		}else if (doc.status === "Gate2"){
+		}else if (doc.status === "Gate Out"){
 			return [__("Outward"), "green", "status,=,Gate2"];
 		}
 	}
