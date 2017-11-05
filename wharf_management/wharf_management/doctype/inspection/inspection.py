@@ -38,7 +38,9 @@ class Inspection(Document):
 	def update_inspection_status(self):
     		if self.qty > 1:
     				frappe.db.sql("""Update `tabCargo` set break_bulk_item_count=1, inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
-		if self.qty < 1:
+		if self.qty == 1:
+    			frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+		if self.qty == 0:
     			frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 	
 	def update_final_status(self):
