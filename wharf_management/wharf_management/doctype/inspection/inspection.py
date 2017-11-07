@@ -19,12 +19,12 @@ class Inspection(Document):
 		if self.final_work_type == "Discharged":
 			self.update_inspection_status()
 		
-		if self.final_work_type == "Loading":
+		elif self.final_work_type == "Loading":
 			self.update_final_status()
-		
-		if self.secondary_work_type == "Devanning":
-			self.update_final_status_devanning()
 
+		if self.secondary_work_type == "Devanning":
+    			self.update_final_status_devanning()
+		
 	def validate_work_type(self):
 		if not self.final_work_type:
 			msgprint(_("Work Type is Manadory").format(self.final_work_type),

@@ -136,9 +136,12 @@ class WharfPaymentFee(Document):
 		})
 
 		if self.cargo_type == 'Container':
+    			qty = 1
 			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
 												   "container_size" : self.container_size}, "item_name")
+								
 		if self.cargo_type != 'Container':
+    			qty = self.volume
 			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 	
 		val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
@@ -146,8 +149,8 @@ class WharfPaymentFee(Document):
 			"item": item_name,
 			"description": val.description,
 			"price": val.standard_rate,
-			"qty": "1",
-			"total": float(1 * val.standard_rate)
+			"qty": qty,
+			"total": float(qty * val.standard_rate)
 		})
 		
 		if self.secondary_work_type=="Devanning":
@@ -164,7 +167,7 @@ class WharfPaymentFee(Document):
 		if not self.secondary_work_type:
     			fees=0
 
-		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(1 * val.standard_rate)+(1 * fees))
+		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(qty * val.standard_rate)+(1 * fees))
 				
 
 

@@ -36,6 +36,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
                 cur_frm.set_value("work_type", data.message["work_type"]);
                 cur_frm.set_value("secondary_work_type", data.message["secondary_work_type"]);
                 cur_frm.set_value("agents", data.message["agents"]);
+                cur_frm.set_value("weight", data.message["net_weight"]);
+                cur_frm.set_value("volume", data.message["volume"]);
+                cur_frm.set_value("chasis_no", data.message["chasis_no"]);
 
                 cur_frm.set_value("yard_slot", data.message["yard_slot"]);
                 cur_frm.set_value("consignee", data.message["consignee"]);
@@ -60,6 +63,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
                 cur_frm.set_df_property("container_size", "read_only", 1);
                 cur_frm.set_df_property("container_content", "read_only", 1);
                 cur_frm.set_df_property("free_storage_days", "read_only", 1);
+                cur_frm.set_df_property("weight", "read_only", 1);
+                cur_frm.set_df_property("volume", "read_only", 1);
+                cur_frm.set_df_property("chasis_no", "read_only", 1);
+
             }
         })
     },
@@ -245,7 +252,7 @@ frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn) {
 
 frappe.ui.form.on("Wharf Fee Item", "qty", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
-    
+
     frm.doc.wharf_fee_item.forEach(function(d) {
         flt(total += flt(d.price * d.qty))
 

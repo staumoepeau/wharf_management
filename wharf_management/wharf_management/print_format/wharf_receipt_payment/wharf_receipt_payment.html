@@ -59,7 +59,7 @@
     <div class="row">
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Voyage No:"), doc.voyage_no), (_("Container No"), doc.container_no), (_("Cargo Type"), doc.cargo_type), (_("Storage Days"), doc.storage_days), (_("Free Storage Days"), doc.free_storage_days) ) -%}
+                {%- for label, value in ( (_("Voyage No:"), doc.voyage_no), (_("Container No"), doc.container_no), (_("Cargo Type"), doc.cargo_type), (_("Storage Days"), doc.storage_days), (_("Free Storage Days"), doc.free_storage_days), (_("Volume"), doc.volume) ) -%}
                 <div class="row">
                     <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
                     <div class="col-xs-6">{{ value }}</div>
@@ -71,7 +71,8 @@
 
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Vessel"), doc.vessel), (_("Container Type"), doc.container_type), (_("Container Size"), doc.container_size), (_("Container Content"), doc.container_content), (_("Days Charges"), doc.storage_days_charged) ) -%}
+                {%- for label, value in ( (_("Vessel"), doc.vessel), (_("Container Type"), doc.container_type), (_("Container Size"), doc.container_size), (_("Container Content"), doc.container_content), (_("Days Charges"), doc.storage_days_charged), (_("Chasis No:"),
+                doc.chasis_no) ) -%}
                 <div class="row">
 
                     <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
