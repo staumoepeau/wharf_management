@@ -34,18 +34,12 @@ class Gate1(Document):
         						msgprint(_("Please Make sure that is the correct WARRANT NO"), raise_exception=1)
 
 	def validate_company(self):
-		if self.cargo_type == "Container":
-    			if not self.company:
+    		if not self.company:
     				msgprint(_("Company is Manadory"), raise_exception=1)
-		elif self.cargo_type != "Container":
-    			break
-	
+		
 	def validate_driver(self):
-    		if self.cargo_type == "Container":
-    				if not self.drivers_information:
+    		if not self.drivers_information:
     						msgprint(_("Drivers Information is Manadory"), raise_exception=1)
-			elif self.cargo_type != "Container":
-    			break
 	
 	def validate_truck(self):
     		if not self.truck_licenses_plate:
