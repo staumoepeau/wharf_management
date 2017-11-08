@@ -49,7 +49,7 @@ class WharfPaymentFee(Document):
 	def get_working_days(self):
 
 		holidays = self.get_holidays(self.eta_date, self.posting_date)
-		working_days = date_diff(self.posting_date, self.eta_date) + 1
+		working_days = date_diff(self.posting_date, self.eta_date) - 1
 		working_days -= len(holidays)
 		return working_days
 
