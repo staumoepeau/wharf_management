@@ -17,8 +17,11 @@ class Gate2(Document):
 		self.update_export_status()
 	
 	def update_gate2_status(self):
-    		if self.status != "Export":
-    			frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', status='Gate2' where name=%s""", (self.cargo_ref))
+#    		if self.status != "Export":
+   			frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', yard_slot=NULL, status='Gate Out' where name=%s""", (self.cargo_ref))
+	
+#	def update_yard(self):
+#			frappe.db.sql("""Delete `tabCargo` where name=%s""", (self.cargo_ref))
 			
 	def update_export_status(self):		
 			if self.status == 'Export':

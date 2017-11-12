@@ -9,7 +9,7 @@ frappe.ui.form.on('Bulk Payment', {
             { fieldname: 'cargo_refrence', columns: 1 },
             { fieldname: 'container_no', columns: 1 },
             { fieldname: 'cargo_type', columns: 1 },
-            { fieldname: 'work_type', columns: 1 },
+            { fieldname: 'chasis_no', columns: 1 },
             { fieldname: 'bol', columns: 1 }
         ];
 
@@ -102,6 +102,8 @@ frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn) 
             frappe.model.set_value(d.doctype, d.name, "voyage_no", data.message["voyage_no"]);
             frappe.model.set_value(d.doctype, d.name, "cargo_ref", data.message["cargo_ref"]);
             frappe.model.set_value(d.doctype, d.name, "custom_code", data.message["cargo_ref"]);
+            frappe.model.set_value(d.doctype, d.name, "chasis_no", data.message["chasis_no"]);
+
 
         }
     })
