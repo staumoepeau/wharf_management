@@ -16,7 +16,7 @@ class Inspection(Document):
 
 
 	def on_submit(self):	
-		if self.final_work_type == "Discharged":
+		if self.final_work_type == "Discharged" or self.final_work_type == "Devanning":
 			self.update_inspection_status()
 		
 		elif self.final_work_type == "Loading":

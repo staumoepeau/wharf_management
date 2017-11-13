@@ -159,39 +159,39 @@ frappe.ui.form.on('Cargo', {
         //            }).addClass("btn-primary");
         //        }
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-        frm.doc.gate2_status != "Closed" &&
-        frm.doc.gate1_status != "Closed" &&
-        frm.doc.payment_status != "Closed" &&
-        frm.doc.yard_status != "Closed" &&
-        frm.doc.inspection_status != "Closed" &&
-        frm.doc.work_type == "Loading"
-         ) {
-        frm.add_custom_button(__('Inspection'), function() {
-            frappe.route_options = {
-                "cargo_ref": frm.doc.name
-            }
-            frappe.new_doc("Inspection");
-            frappe.set_route("Form", "Inspection", doc.name);
+            frm.doc.gate2_status != "Closed" &&
+            frm.doc.gate1_status != "Closed" &&
+            frm.doc.payment_status != "Closed" &&
+            frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status != "Closed" &&
+            frm.doc.work_type == "Loading"
+        ) {
+            frm.add_custom_button(__('Inspection'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name
+                }
+                frappe.new_doc("Inspection");
+                frappe.set_route("Form", "Inspection", doc.name);
 
             }).addClass("btn-info");
-        }   
+        }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-        //frm.doc.gate2_status != "Closed" &&
-        //frm.doc.gate1_status != "Closed" &&
-        //frm.doc.payment_status != "Closed" &&
-        //frm.doc.yard_status != "Closed" &&
-        frm.doc.inspection_status == "Closed" &&
-        //frm.doc.inspection_status == "Closed" &&
-        frm.doc.qty > 0 &&
-        frm.doc.break_bulk_item_count != frm.doc.qty
+            //frm.doc.gate2_status != "Closed" &&
+            //frm.doc.gate1_status != "Closed" &&
+            //frm.doc.payment_status != "Closed" &&
+            //frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status == "Closed" &&
+            //frm.doc.inspection_status == "Closed" &&
+            frm.doc.qty > 0 &&
+            frm.doc.break_bulk_item_count != frm.doc.qty
         ) {
-        frm.add_custom_button(__('Bulk Item Count'), function() {
-            frappe.route_options = {
-                "cargo_ref": frm.doc.name
-            }
-            frappe.new_doc("Bulk Item Count");
-            frappe.set_route("Form", "Bulk Item Count", doc.name);
+            frm.add_custom_button(__('Bulk Item Count'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name
+                }
+                frappe.new_doc("Bulk Item Count");
+                frappe.set_route("Form", "Bulk Item Count", doc.name);
 
             }).addClass("btn-warning");
         }
@@ -231,4 +231,73 @@ frappe.ui.form.on('Cargo', {
         //            }).addClass("btn-primary");
         //        }
     },
+    handling_fee_discount: function(frm) {
+        if (frm.doc.handling_fee_discount == "YES") {
+
+            if (frm.doc.cargo_type == "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Handling Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                            container_size: frm.doc.container_size,
+                            container_content: frm.doc.container_content,
+                            work_type: frm.doc.work_type
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    }
+                })
+            } else if (frm.doc.cargo_type != "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Handling Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    }
+                })
+            }
+
+        } else if (frm.doc.handling_fee_discount == "NO") {
+
+            if (frm.doc.cargo_type == "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Handling Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                            container_size: frm.doc.container_size,
+                            container_content: frm.doc.container_content,
+                            work_type: frm.doc.work_type
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    }
+                })
+            } else if (frm.doc.cargo_type != "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Handling Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    }
+                })
+            }
+        }
+    },
+
 });

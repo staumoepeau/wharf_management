@@ -23,7 +23,11 @@ frappe.ui.form.on('Gate2', {
 								cur_frm.set_value("custom_warrant", data.message["custom_warrant"]);
 								cur_frm.set_value("custom_code", data.message["custom_code"]);	
 								cur_frm.set_value("delivery_code", data.message["delivery_code"]);
+								cur_frm.set_value("chasis_no", data.message["chasis_no"]);
+								cur_frm.set_value("cargo_type", data.message["cargo_type"]);
+								cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 								cur_frm.set_value("status", data.message["status"]);
+
 									if (frm.doc.work_type != "Loading"){
 										frappe.call({
 											"method": "frappe.client.get",
@@ -50,6 +54,9 @@ frappe.ui.form.on('Gate2', {
 								cur_frm.set_df_property("delivery_code", "read_only", 1);
 								cur_frm.set_df_property("custom_code", "read_only", 1);
 								cur_frm.set_df_property("custom_warrant", "read_only", 1);
+								cur_frm.set_df_property("chasis_no", "read_only", 1);
+								cur_frm.set_df_property("cargo_type", "read_only", 1);
+								cur_frm.set_df_property("cargo_description", "read_only", 1);
 								
 								
 							}								

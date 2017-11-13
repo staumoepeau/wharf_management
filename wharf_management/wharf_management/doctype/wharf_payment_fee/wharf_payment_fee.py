@@ -34,7 +34,7 @@ class WharfPaymentFee(Document):
 	
 	def change_status(self):
     		if self.bulk_payment == 'Yes':
-        				frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes" where name=%s""", (self.cargo_ref))
+        				frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes", bulk_payment_code=%s where name=%s""", (self.bulk_payment_code, self.cargo_ref))
 
     		if not self.status:
     				self.status == 'Paid'

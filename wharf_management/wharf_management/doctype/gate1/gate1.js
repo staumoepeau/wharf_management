@@ -28,6 +28,7 @@ frappe.ui.form.on('Gate1', {
                 cur_frm.set_value("bulk_payment", data.message["bulk_payment"]);
                 cur_frm.set_value("cargo_type", data.message["cargo_type"]);
                 cur_frm.set_value("cargo_description", data.message["cargo_description"]);
+                cur_frm.set_value("chasis_no", data.message["chasis_no"]);
 
                 if (frm.doc.bulk_payment == "Yes") {
                     cur_frm.set_value("warrant_no", data.message["custom_warrant"]);
@@ -43,6 +44,8 @@ frappe.ui.form.on('Gate1', {
                 cur_frm.set_df_property("bulk_payment", "read_only", 1);
                 cur_frm.set_df_property("cargo_type", "read_only", 1);
                 cur_frm.set_df_property("cargo_description", "read_only", 1);
+                cur_frm.set_df_property("chasis_no", "read_only", 1);
+                
 
 
 

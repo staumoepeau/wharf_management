@@ -9,8 +9,8 @@ frappe.ui.form.on('Bulk Payment', {
             { fieldname: 'cargo_refrence', columns: 1 },
             { fieldname: 'container_no', columns: 1 },
             { fieldname: 'cargo_type', columns: 1 },
-            { fieldname: 'chasis_no', columns: 1 },
-            { fieldname: 'bol', columns: 1 }
+            { fieldname: 'bol', columns: 1 },
+            { fieldname: 'chasis_no', columns: 1 }
         ];
 
         frm.get_field('bulk_fees_items').grid.editable_fields = [
