@@ -6,9 +6,9 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class BulkItemCount(Document):
-    	
-		
+class Gate1ItemCount(Document):
+
+
 		def on_submit(self):
     			self.update_cargo_table()
 		
@@ -22,6 +22,6 @@ class BulkItemCount(Document):
 
 
 		def update_cargo_table(self):
-    			self.count_items = self.break_bulk_item_count + 1
+    			self.count_items = self.security_item_count + 1
 				
-			frappe.db.sql("""Update `tabCargo` set break_bulk_item_count=%s where name=%s""", (self.count_items, self.cargo_ref))
+			frappe.db.sql("""Update `tabCargo` set security_item_count=%s where name=%s""", (self.count_items, self.cargo_ref))

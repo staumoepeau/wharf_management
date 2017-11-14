@@ -26,12 +26,17 @@ frappe.ui.form.on('Yard', {
 								cur_frm.set_value("eta_date", data.message["eta_date"]);
 								cur_frm.set_value("bol", data.message["bol"]);
 								cur_frm.set_value("consignee", data.message["consignee"]);
+								cur_frm.set_value("chasis_no", data.message["chasis_no"]);
+								cur_frm.set_value("cargo_type", data.message["cargo_type"]);								
+								
 								cur_frm.set_df_property("container_no", "read_only", 1);
 								cur_frm.set_df_property("voyage_no", "read_only", 1);
 								cur_frm.set_df_property("vessel", "read_only", 1);
 								cur_frm.set_df_property("eta_date", "read_only", 1);
 								cur_frm.set_df_property("bol", "read_only", 1);
 								cur_frm.set_df_property("consignee", "read_only", 1);
+								cur_frm.set_df_property("cargo_type", "read_only", 1);
+								cur_frm.set_df_property("chasis_no", "read_only", 1);
 
 							}
 			})

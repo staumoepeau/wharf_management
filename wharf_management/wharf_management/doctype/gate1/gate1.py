@@ -24,6 +24,7 @@ class Gate1(Document):
 		self.update_export_status()
 		self.update_not_export_status()
 
+
 		
 	def update_status(self):
     		self.status = "Passed Gate 1"
@@ -47,8 +48,12 @@ class Gate1(Document):
     				
 
 	def update_not_export_status(self):
-			if self.status != 'Export':
-    				frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+			if self.qty > 1:
+    				frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+			if self.qty == 1:
+					frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+			if self.qty == 0:
+					frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
 
 	def update_export_status(self):		
 			if self.status == 'Export':

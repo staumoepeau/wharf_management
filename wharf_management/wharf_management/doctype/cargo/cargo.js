@@ -12,6 +12,22 @@ frappe.ui.form.on('Cargo', {
         } else {
             cur_frm.set_df_property("custom_warrant", "hidden", 0);
         }
+
+        if (frappe.user.has_role("Wharf Operation Manifest User")) {
+
+            cur_frm.set_df_property("manifest_section", "hidden", 0);
+            cur_frm.set_df_property("handling_fee", "read_only", 0);
+            cur_frm.set_df_property("wharfage_fee", "read_only", 0);
+            
+
+        }else{
+            cur_frm.set_df_property("manifest_section", "hidden", 1);
+            cur_frm.set_df_property("handling_fee", "read_only", 1);
+            cur_frm.set_df_property("wharfage_fee", "read_only", 1);
+            
+        }
+
+
     },
 
     refresh: function(frm) {
@@ -123,23 +139,7 @@ frappe.ui.form.on('Cargo', {
         //            }).addClass("btn-primary");
         //        }
 
-        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
-        //                frm.doc.gate2_status == "Open" &&
-        //                frm.doc.gate1_status == "Open" &&
-        //                frm.doc.payment_status == "Open" &&
-        //                frm.doc.yard_status == "Open" &&
-        //                frm.doc.inspection_status == "Open" &&
-        //                frm.doc.work_type == "Loading" &&
-        //                frm.doc.export_status == "Main Gate"
-        //            )) {
-        //            frm.add_custom_button(__('Gate1'), function() {
-        //                frappe.route_options = {
-        //                    "cargo_ref": frm.doc.name
-        //                }
-        //                frappe.new_doc("Gate1");
-        //                frappe.set_route("Form", "Gate1", doc.name);
-        //            }).addClass("btn-primary");
-        //        }
+
 
         //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Forklift Driver User") &&
         //                frm.doc.gate2_status == "Open" &&
@@ -176,6 +176,7 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-info");
         }
 
+        
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             //frm.doc.gate2_status != "Closed" &&
             //frm.doc.gate1_status != "Closed" &&
@@ -196,6 +197,22 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-warning");
         }
 
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+            frm.doc.inspection_status == "Closed" &&
+            frm.doc.yard_status == "Closed" &&
+            frm.doc.payment_status == "Closed" &&
+            frm.doc.gate1_status == "Closed" &&
+            frm.doc.qty > 0 &&
+            frm.doc.security_item_count != frm.doc.qty
+            )) {
+            frm.add_custom_button(__('Gate1 Count'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name
+                }
+                frappe.new_doc("Gate1 Item Count");
+                frappe.set_route("Form", "Gate1 Item Count", doc.name);
+            }).addClass("btn-warning");
+        }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
