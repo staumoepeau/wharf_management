@@ -24,6 +24,7 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_value("vessel", data.message["vessel"]);
                 cur_frm.set_value("bol", data.message["bol"]);
                 cur_frm.set_value("work_type", data.message["work_type"]);
+                cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
                 cur_frm.set_value("final_work_type", data.message["work_type"]);
                 cur_frm.set_df_property("voyage_no", "read_only", 1);
@@ -34,6 +35,7 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_df_property("vessel_arrival_date", "read_only", 1);
                 cur_frm.set_df_property("bol", "read_only", 1);
                 cur_frm.set_df_property("container_no", "read_only", 1);
+                cur_frm.set_df_property("chasis_no", "read_only", 1);
 
 
             }
