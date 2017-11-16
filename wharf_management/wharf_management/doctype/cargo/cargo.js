@@ -18,13 +18,13 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("manifest_section", "hidden", 0);
             cur_frm.set_df_property("handling_fee", "read_only", 0);
             cur_frm.set_df_property("wharfage_fee", "read_only", 0);
-            
 
-        }else{
+
+        } else {
             cur_frm.set_df_property("manifest_section", "hidden", 1);
             cur_frm.set_df_property("handling_fee", "read_only", 1);
             cur_frm.set_df_property("wharfage_fee", "read_only", 1);
-            
+
         }
 
 
@@ -86,14 +86,6 @@ frappe.ui.form.on('Cargo', {
                 frappe.new_doc("Wharf Payment Fee");
                 frappe.set_route("Form", "Wharf Payment Fee", doc.name);
             }).addClass("btn-primary");
-
-            frm.add_custom_button(__('Empty'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name
-                }
-                frappe.new_doc("Deliver Empty");
-                frappe.set_route("Form", "Deliver Empty", doc.name);
-            }).addClass("btn-warning");
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
@@ -184,7 +176,7 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-info");
         }
 
-        
+
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             //frm.doc.gate2_status != "Closed" &&
             //frm.doc.gate1_status != "Closed" &&
@@ -206,12 +198,12 @@ frappe.ui.form.on('Cargo', {
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
-            frm.doc.inspection_status == "Closed" &&
-            frm.doc.yard_status == "Closed" &&
-            frm.doc.payment_status == "Closed" &&
-            frm.doc.gate1_status == "Closed" &&
-            frm.doc.qty > 0 &&
-            frm.doc.security_item_count != frm.doc.qty
+                frm.doc.inspection_status == "Closed" &&
+                frm.doc.yard_status == "Closed" &&
+                frm.doc.payment_status == "Closed" &&
+                frm.doc.gate1_status == "Closed" &&
+                frm.doc.qty > 0 &&
+                frm.doc.security_item_count != frm.doc.qty
             )) {
             frm.add_custom_button(__('Gate1 Count'), function() {
                 frappe.route_options = {
