@@ -9,6 +9,7 @@ from frappe.utils import add_days, cint, cstr, flt, getdate, rounded, date_diff,
 import frappe
 from frappe import _, msgprint, throw
 from frappe.model.document import Document
+from erpnext.accounts.party import get_party_account
 
 class WharfPaymentFee(Document):
 
@@ -21,9 +22,14 @@ class WharfPaymentFee(Document):
 		self.update_payment_status()
 #		self.update_export_status()
 		self.change_status()
-#		self.make_entries()
+		self.make_entries()
 		
-	
+	def make_entries(self):
+    		if self.payment_method == 'Credit':
+    				self.make_credit_entries()
+			
+#			if self.payment_method == 'Cash' || self.payment_method == 'Cheque':
+#    				self.make_cash_entries()
 #	def update_bulk_payment(self):
 #		if self.bulk_payment == 'Yes':
 #			self.bulk_payment_code = self.custom_warrant
@@ -49,7 +55,7 @@ class WharfPaymentFee(Document):
 	def get_working_days(self):
 
 		holidays = self.get_holidays(self.eta_date, self.posting_date)
-		working_days = date_diff(self.posting_date, self.eta_date) - 1
+		working_days = date_diff(self.posting_date, self.eta_date)
 		working_days -= len(holidays)
 		return working_days
 
@@ -168,36 +174,64 @@ class WharfPaymentFee(Document):
     			fees=0
 
 		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(qty * val.standard_rate)+(1 * fees))
+		
+	def make_credit_entries(self, cancel=0, adv_adj=0):
+    		from erpnext.accounts.general_ledger import make_gl_entries
 				
+		gl_map = []
+		cost_center = frappe.db.get_value("Company", "Ports Authority Tonga", "cost_center")	
+		gl_map.append(
+			frappe._dict({
+				"posting_date": self.posting_date,
+				"account": "Debtors - PAT",
+				"account_currency": "TOP",
+				"debit": self.credit_amount,
+				"voucher_type": self.doctype,
+				"voucher_no": self.name,
+				"against": "Storage Fee - PAT",
+				"party_type": "Customer",
+				"party": self.agents,
+				"cost_center" : "Operations - PAT"
+			}))
+		gl_map.append(
+			frappe._dict({
+				"posting_date": self.posting_date,
+				"account": "Storage Fee - PAT",
+				"credit": self.credit_amount,
+				"voucher_type": self.doctype,
+				"voucher_no": self.name,
+				"against": self.agents,
+				"cost_center" : "Operations - PAT"
+			}))
 
+		if gl_map:
+			make_gl_entries(gl_map, cancel=(self.docstatus == 2))
 
-#    def make_entries(self, cancel=0, adv_adj=0):
-#		frappe.db.sql("""Update `tabBooking Request` set payment_status="Paid" , workflow_state="Booking Paid" where name=%s""", (self.booking_ref))
-#		from erpnext.accounts.general_ledger import make_gl_entries
+#	def make_cash_entries(self, cancel=0, adv_adj=0):
+#    		from erpnext.accounts.general_ledger import make_gl_entries				
 #		gl_map = []
-			
 #		gl_map.append(
 #			frappe._dict({
 #				"posting_date": self.posting_date,
-#				"account": self.paid_to,
-#				"account_currency": self.company_currency,
-#				"debit": self.paid_amount,
+#				"account": "Debtors - PAT",
+#				"account_currency": "TOP",
+#				"debit": self.credit_amount,
 #				"voucher_type": self.doctype,
 #				"voucher_no": self.name,
-#				"against": self.party_name
-#			}))
-#		gl_map.append(
-#			frappe._dict({
-#				"posting_date": self.posting_date,
-#				"account": self.paid_from,
-#				"credit": self.paid_amount,
-#				"voucher_type": self.doctype,
-#				"voucher_no": self.name,
-#				"against": self.paid_to,
-#				"party_type": self.party_type,
+#				"against": "Storage Fee - PAT",
+#				"party_type": "Customer",
 #				"party": self.consignee
+#				}))
+#		gl_map.append(
+#			frappe._dict({
+#				"posting_date": self.posting_date,
+#				"account": "Storage Fee - PAT",
+#				"credit": self.credit_amount,
+#				"voucher_type": self.doctype,
+#				"voucher_no": self.name,
+#				"against": self.agents,
+#				"cost_center" : "Operations - PAT"
 #			}))
-
 #		if gl_map:
 #			make_gl_entries(gl_map, cancel=(self.docstatus == 2))	
 	

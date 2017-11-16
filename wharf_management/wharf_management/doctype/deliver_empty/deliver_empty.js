@@ -1,9 +1,8 @@
-// Copyright (c) 2017, Caitlah Technology and contributors
+// Copyright (c) 2017, Sione Taumoepeau and contributors
 // For license information, please see license.txt
-//{% include 'erpnext/selling/sales_common.js' %};
 
-frappe.ui.form.on('Wharf Payment Fee', {
-
+frappe.ui.form.on('Deliver Empty', {
+	
 
     setup: function(frm) {
         frm.get_field('wharf_fee_item').grid.editable_fields = [
@@ -75,36 +74,6 @@ frappe.ui.form.on('Wharf Payment Fee', {
     refresh: function(frm) {
 
     },
-    payment_method: function(frm) {
-        var today = new Date();
-        var dd = today.getDate();
-
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        today = mm + '' + dd + '' + yyyy;
-
-        if (frm.doc.payment_method == 'Credit') {
-            cur_frm.set_df_property("credit_amount", "hidden", 0)
-            cur_frm.set_df_property("credit_amount", "read_only", 1)
-            cur_frm.set_df_property("deliver_empty", "hidden", 0)
-            frm.set_value("credit_amount", frm.doc.total_amount)
-            frm.set_value("total_amount", 0)
-            frm.set_value("total_fee", 0)
-            frm.set_value("custom_warrant", "ETY" + today)
-            cur_frm.set_df_property("custom_warrant", "read_only", 1)
-        } else {
-            cur_frm.set_df_property("credit_amount", "hidden", 1)
-            cur_frm.set_df_property("deliver_empty", "hidden", 1)
-        }
-    },
-
     posting_date: function(frm) {
         frappe.call({
             method: "get_working_days",
@@ -156,106 +125,4 @@ frappe.ui.form.on('Wharf Payment Fee', {
         }
 
     },
-
-    custom_code: function(frm) {
-        if (frm.doc.custom_code == "DDL") {
-            frm.set_value("delivery_code", "DIRECT DELIVERY")
-        } else if (frm.doc.custom_code == "DDLW") {
-            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
-        } else if (frm.doc.custom_code == "IDL") {
-            frm.set_value("delivery_code", "INSPECTION DELIVERY")
-        } else if (frm.doc.custom_code == "IDLW") {
-            frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
-        }
-        if (frm.doc.bulk_payment == "Yes") {
-            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
-                //frm.set_value("custom_warrant", 0)
-            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
-
-
-            frm.refresh_fields("custom_warrant");
-        }
-    },
-
-    //    calculate_fees: function(frm) {
-    //
-    //        frappe.call({
-    //            method: "get_storage_fee",
-    //            doc: frm.doc,
-    //            callback: function(s) {
-    //                console.log(s.message)
-    //                var sfee = flt((s.message) * frm.doc.storage_days_charged);
-    //                frm.set_value("storage_fee", sfee);
-    //            }
-    //        });
-    //        frappe.call({
-    //            method: "get_wharfage_fee",
-    //            doc: frm.doc,
-    //            callback: function(w) {
-    //                var wfee = flt((w.message));
-    //                frm.set_value("wharf_fee", wfee);
-    //           }
-    //        });
-    //  },
-    insert_fees_button: function(frm) {
-        return frappe.call({
-            method: "insert_fees",
-            doc: frm.doc,
-            callback: function(fees) {
-                frm.refresh_fields();
-                console.log(fees);
-            }
-        });
-    },
-
-    discount: function(frm) {
-        if (frm.doc.discount == "No") {
-            frm.set_value("total_amount", frm.doc.total_fee);
-        } else if (frm.doc.discount == "Yes") {
-            frm.set_value("total_amount", (frm.doc.total_fee) - frm.doc.discount_amount);
-        }
-    },
-    discount_amount: function(frm) {
-        frm.set_value("total_amount", (frm.doc.total_fee) - frm.doc.discount_amount);
-    },
-
-});
-
-
-frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn) {
-    var d = locals[cdt][cdn];
-    frappe.model.set_value(d.doctype, d.name, "total_fee", d.total);
-
-    var total_fees = 0;
-    frm.doc.wharf_fee_item.forEach(function(d) { total_fees += d.total; });
-
-    frm.set_value("total_fee", total_fees);
-
-});
-
-frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn) {
-    var d = locals[cdt][cdn];
-    frappe.call({
-        "method": "frappe.client.get",
-        args: {
-            doctype: "Item",
-            filters: {
-                'name': d.item
-            },
-        },
-        callback: function(data) {
-            frappe.model.set_value(d.doctype, d.name, "price", data.message["standard_rate"]);
-            frappe.model.set_value(d.doctype, d.name, "description", data.message["description"]);
-        }
-    })
-});
-
-frappe.ui.form.on("Wharf Fee Item", "qty", function(frm, cdt, cdn) {
-    var d = locals[cdt][cdn];
-
-    frm.doc.wharf_fee_item.forEach(function(d) {
-        flt(total += flt(d.price * d.qty))
-
-        frm.set_value("total", total);
-    })
 });
