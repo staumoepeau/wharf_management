@@ -264,7 +264,8 @@ frappe.ui.form.on('Cargo', {
                         }
                     },
                     callback: function(data) {
-                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                        var discount_rate = (data.message["fee_amount"] - (data.message["fee_amount"] * 20 / 100))
+                        cur_frm.set_value("handling_fee", discount_rate);
                     }
                 })
             } else if (frm.doc.cargo_type != "Container") {
@@ -277,7 +278,12 @@ frappe.ui.form.on('Cargo', {
                         }
                     },
                     callback: function(data) {
-                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                        if (frm.doc.volume > frm.doc.net_weight) {
+                            var handling_fee = frm.doc.volume * data.message["fee_amount"]
+                        } else if (frm.doc.volume < frm.doc.net_weight) {
+                            var handling_fee = frm.doc.net_weight * data.message["fee_amount"]
+                        }
+                        cur_frm.set_value("handling_fee", handling_fee);
                     }
                 })
             }
@@ -310,7 +316,12 @@ frappe.ui.form.on('Cargo', {
                         }
                     },
                     callback: function(data) {
-                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                        if (frm.doc.volume > frm.doc.net_weight) {
+                            var handling_fee = frm.doc.volume * data.message["fee_amount"]
+                        } else if (frm.doc.volume < frm.doc.net_weight) {
+                            var handling_fee = frm.doc.net_weight * data.message["fee_amount"]
+                        }
+                        cur_frm.set_value("handling_fee", handling_fee);
                     }
                 })
             }

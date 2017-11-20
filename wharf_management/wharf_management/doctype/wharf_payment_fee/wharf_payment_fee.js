@@ -81,6 +81,8 @@ frappe.ui.form.on('Wharf Payment Fee', {
 
         var mm = today.getMonth() + 1;
         var yyyy = today.getFullYear();
+        var hr = today.getHours();
+        var min = today.getMinutes();
         if (dd < 10) {
             dd = '0' + dd;
         }
@@ -88,7 +90,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
         if (mm < 10) {
             mm = '0' + mm;
         }
-        today = mm + '' + dd + '' + yyyy;
+        today = hr + '' + min + '' + mm + '' + dd + '' + yyyy;
 
         if (frm.doc.payment_method == 'Credit') {
             cur_frm.set_df_property("credit_amount", "hidden", 0)
