@@ -103,6 +103,7 @@ frappe.ui.form.on("Bulk Cargo Table", "cargo_refrence", function(frm, cdt, cdn) 
             frappe.model.set_value(d.doctype, d.name, "cargo_ref", data.message["cargo_ref"]);
             frappe.model.set_value(d.doctype, d.name, "custom_code", data.message["cargo_ref"]);
             frappe.model.set_value(d.doctype, d.name, "chasis_no", data.message["chasis_no"]);
+            frappe.model.set_value(d.doctype, d.name, "custom_warrant", data.message["cuctom_warrant"]);
 
 
         }

@@ -25,7 +25,8 @@ frappe.ui.form.on('Cargo Manifest', {
 			{fieldname: 'cargo_type', columns: 1},
 			{fieldname: 'work_type', columns: 1},
 			{fieldname: 'weight', columns: 1},
-			{fieldname: 'total_weight', columns: 1}
+			{fieldname: 'volume', columns: 1},
+			{fieldname: 'handling_fee', columns: 1}
 		];
 	},
 
