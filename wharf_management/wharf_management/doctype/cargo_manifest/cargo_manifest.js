@@ -14,11 +14,11 @@ frappe.ui.form.on('Cargo Manifest', {
 		];
 
 		frm.get_field('manifest_summary_table').grid.editable_fields = [
-			{fieldname: 'cargo_type', columns: 1},
 			{fieldname: 'container_content', columns: 1},
 			{fieldname: 'work_type', columns: 1},
 			{fieldname: 'container_size', columns: 1},
-			{fieldname: 'number', columns: 1}
+			{fieldname: 'number', columns: 1},
+			{fieldname: 'handling_fee', columns: 1}
 		];
 
 		frm.get_field('bbulks_summary_table').grid.editable_fields = [
