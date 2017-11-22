@@ -54,6 +54,16 @@ def get_data():
 			]
 		},
 		{
+			"label": _("Warehouse"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Cargo Warehouse",
+					"description": _("Warehouse."),
+				},
+			]
+		},
+		{
 			"label": _("Pilot"),
 			"items": [
 				{
