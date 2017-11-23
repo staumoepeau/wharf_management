@@ -306,7 +306,20 @@ frappe.ui.form.on('Cargo', {
                         cur_frm.set_value("handling_fee", data.message["fee_amount"]);
                     }
                 })
-            } else if (frm.doc.cargo_type != "Container") {
+            } else if (frm.doc.cargo_type == "Vehicles") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Handling Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    }
+                })
+            } else if (frm.doc.cargo_type != "Container" || frm.doc.cargo_type != "Vehicles") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
