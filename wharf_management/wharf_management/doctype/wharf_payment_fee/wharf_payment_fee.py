@@ -126,19 +126,22 @@ class WharfPaymentFee(Document):
 		fees=0
 
 		if self.cargo_type == 'Container':
-			item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, 
-												   "container_size" : self.container_size,
+				strqty = self.storage_days_charged
+				item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
+												  "container_size" : self.container_size,
 												  "container_content" : self.container_content}, "item_name")
+
 		if self.cargo_type != 'Container':
-			item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+				strqty = float(self.storage_days_charged * self.volume)
+				item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 
 		vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
 		self.append("wharf_fee_item", { 
 			"item": item_name,
 			"description": vals.description,
 			"price": vals.standard_rate,
-			"qty": self.storage_days_charged,
-			"total": float(self.storage_days_charged * vals.standard_rate)
+			"qty": strqty,
+			"total": float(self.storage_days_charged * strqty * vals.standard_rate)
 		})
 
 		if self.cargo_type == 'Container':
@@ -173,7 +176,7 @@ class WharfPaymentFee(Document):
 		if not self.secondary_work_type:
     			fees=0
 
-		self.total_fee = float((self.storage_days_charged * vals.standard_rate)+(qty * val.standard_rate)+(1 * fees))
+		self.total_fee = float((self.storage_days_charged * vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
 		
 	def make_credit_entries(self, cancel=0, adv_adj=0):
     		from erpnext.accounts.general_ledger import make_gl_entries

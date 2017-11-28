@@ -58,6 +58,11 @@ def get_data():
 			"items": [
 				{
 					"type": "doctype",
+					"name": "Devaning Request",
+					"description": _("Devaning Request."),
+				},
+				{
+					"type": "doctype",
 					"name": "Cargo Warehouse",
 					"description": _("Warehouse."),
 				},
