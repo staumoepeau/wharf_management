@@ -15,8 +15,8 @@ frappe.listview_settings['Cargo'] = {
 		} else if(doc.status=== ""){
 			return [__("Uploaded"), "purple", "status,=,"];
 			
-		} else if (doc.status === "Export"){
-			return [__("Export"), "red", "status,=,Export"];
+		} else if (doc.status === "Re-stowing"){
+			return [__("Re-stowing"), "grey", "status,=,Re-stowing"];
 		
 		} else if (doc.status === "Outbound"){
 			return [__("Outbound"), "purple", "status,=,Outbound"];
