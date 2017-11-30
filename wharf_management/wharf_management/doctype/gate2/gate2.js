@@ -27,6 +27,9 @@ frappe.ui.form.on('Gate2', {
 								cur_frm.set_value("cargo_type", data.message["cargo_type"]);
 								cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 								cur_frm.set_value("status", data.message["status"]);
+								cur_frm.set_value("container_content", data.message["container_content"]);
+								cur_frm.set_value("container_size", data.message["container_size"]);
+								cur_frm.set_value("consignee", data.message["consignee"]);
 
 									if (frm.doc.work_type != "Loading"){
 										frappe.call({
@@ -57,6 +60,9 @@ frappe.ui.form.on('Gate2', {
 								cur_frm.set_df_property("chasis_no", "read_only", 1);
 								cur_frm.set_df_property("cargo_type", "read_only", 1);
 								cur_frm.set_df_property("cargo_description", "read_only", 1);
+								cur_frm.set_df_property("container_content", "read_only", 1);
+								cur_frm.set_df_property("container_size", "read_only", 1);
+								cur_frm.set_df_property("consignee", "read_only", 1);
 								
 								
 							}								

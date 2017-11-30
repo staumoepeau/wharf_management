@@ -19,7 +19,10 @@ class Inspection(Document):
 		if self.final_work_type == "Discharged" or self.final_work_type == "Devanning":
 			self.update_inspection_status()
 		
-		elif self.final_work_type == "Loading" or self.final_work_type == "Re-stowing":
+		elif self.final_work_type == "Loading":
+			self.update_final_status()
+		
+		elif self.final_work_type == "Re-stowing":
 			self.update_final_status()
 
 		if self.secondary_work_type == "Devanning":
@@ -44,7 +47,7 @@ class Inspection(Document):
     			frappe.db.sql("""Update `tabCargo` set inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 	
 	def update_final_status(self):
-		frappe.db.sql("""Update `tabCargo` set status="Outbound", inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status=%s where name=%s""", (self.cargo_ref, self.final_work_type))
+		frappe.db.sql("""Update `tabCargo` set status="Outbound", inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status=%s where name=%s""", (self.final_work_type, self.cargo_ref))
 	
 	def update_final_status_devanning(self):
 		frappe.db.sql("""Update `tabCargo` set secondary_work_type="devanning " where name=%s""", (self.cargo_ref))
