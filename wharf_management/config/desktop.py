@@ -18,4 +18,11 @@ def get_data():
 			"type": "module",
 			"label": _("Agency")
 		},
+		{
+			"module_name": "Freight Forwarder",
+			"color": "blue",
+			"icon": "fa fa-cubes",
+			"type": "module",
+			"label": _("Freight Forwarder")
+		},
 	]
