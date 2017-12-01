@@ -18,11 +18,13 @@ frappe.ui.form.on('Cargo Operation Planning', {
 		];
 
 		frm.get_field('employee_table').grid.editable_fields = [
+//			{fieldname: 'employee', columns: 1},
 			{fieldname: 'employee_name', columns: 1},
 			{fieldname: 'machinery', columns: 1},
 			{fieldname: 'duty', columns: 1},
 			{fieldname: 'pickup_time', columns: 1},
 			{fieldname: 'drop_off_time', columns: 1},
+			
 		];
 
 		frm.get_field('shifttable').grid.editable_fields = [
@@ -85,6 +87,23 @@ frappe.ui.form.on('Cargo Operation Planning', {
 	},
 
 });
+
+frappe.ui.form.on("Employee Table", "employee", function(frm, cdt, cdn){
+	var d = locals[cdt][cdn];
+  
+	frappe.call({
+		"method": "frappe.client.get",
+		args: {
+				doctype: "Employee",
+				filters: {'employee': d.employee
+							},
+			},
+			callback: function (data) {
+				frappe.model.set_value(d.doctype, d.name, "employee_name",  data.message["employee_name"]);
+			}
+	})
+  
+  });
 
 frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn){
   var d = locals[cdt][cdn];
