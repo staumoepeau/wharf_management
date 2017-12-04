@@ -26,7 +26,6 @@ frappe.ui.form.on('Warehouse Inspection', {
 						cur_frm.set_value("mark", data.message["mark"]);
 						cur_frm.set_value("cargo_type", data.message["cargo_type"]);
 						
-						
 						cur_frm.set_df_property("voyage_no", "read_only", 1);
 						cur_frm.set_df_property("cargo_type", "read_only", 1);
 						cur_frm.set_df_property("consignee", "read_only", 1);
@@ -38,10 +37,6 @@ frappe.ui.form.on('Warehouse Inspection', {
 
 						cur_frm.set_df_property("status", "read_only", 1);
 						cur_frm.set_df_property("cargo_warehouse_ref", "read_only", 1);
-						
-						
-		
-		
 					}
 				})
 		
