@@ -25,7 +25,7 @@ frappe.ui.form.on('Custom Inspection', {
 						cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 						cur_frm.set_value("yard_slot", data.message["yard_slot"]);
 //						cur_frm.set_value("chasis_no", data.message["chasis_no"]);
-						cur_frm.set_value("status", "Inspection");
+//						cur_frm.set_value("status", "Inspection");
 		
 						cur_frm.set_df_property("cargo_ref", "read_only", 1);
 						cur_frm.set_df_property("yard_slot", "read_only", 1);
@@ -33,7 +33,7 @@ frappe.ui.form.on('Custom Inspection', {
 						cur_frm.set_df_property("customer", "read_only", 1);
 						cur_frm.set_df_property("cargo_type", "read_only", 1);
 						cur_frm.set_df_property("cargo_description", "read_only", 1);
-						cur_frm.set_df_property("status", "read_only", 1);		
+//						cur_frm.set_df_property("status", "read_only", 1);		
 					}
 				})
 		
