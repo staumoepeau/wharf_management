@@ -6,7 +6,7 @@ frappe.ui.form.on('Export', {
     refresh: function(frm) {
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
-                frm.doc.status == "Main Gate" &&
+                frm.doc.status == "Export" &&
                 frm.doc.docstatus == 1
             )) {
 
@@ -20,7 +20,7 @@ frappe.ui.form.on('Export', {
 
         }
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
-                frm.doc.status == "Gate1" &&
+                frm.doc.status == "Main Gate" &&
                 frm.doc.docstatus == 1
             )) {
 
@@ -34,7 +34,7 @@ frappe.ui.form.on('Export', {
 
         }
         if ((frappe.user.has_role("Forklift Driver User") || frappe.user.has_role("Yard Inspection User") &&
-                frm.doc.status == "Yard" &&
+                frm.doc.status == "Gate1" &&
                 frm.doc.docstatus == 1
             )) {
 

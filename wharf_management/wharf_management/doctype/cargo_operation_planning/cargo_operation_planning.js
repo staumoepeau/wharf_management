@@ -73,7 +73,7 @@ frappe.ui.form.on('Cargo Operation Planning', {
 		cur_frm.add_fetch('booking_ref','voyage_no','voyage_no');
 		cur_frm.add_fetch('booking_ref','vessel','vessel');
 		cur_frm.add_fetch('booking_ref','eta_date','eta_date');
-		cur_frm.add_fetch('booking_ref','eta_time','eta_time');
+		cur_frm.add_fetch('booking_ref','etd_date','etd_date');
 		cur_frm.add_fetch('booking_ref','labour_requirements','labour_requirements');
 		cur_frm.add_fetch('booking_ref','gear_requirements','gear_requirements');
 		cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');

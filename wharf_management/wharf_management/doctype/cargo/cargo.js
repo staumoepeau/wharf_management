@@ -27,6 +27,25 @@ frappe.ui.form.on('Cargo', {
 
         }
 
+        if (frappe.user.has_role("System Manager")){
+            cur_frm.set_df_property("inspection_status", "read_only", 0);
+            cur_frm.set_df_property("yard_status", "read_only", 0);
+            cur_frm.set_df_property("payment_status", "read_only", 0);
+            cur_frm.set_df_property("gate1_status", "read_only", 0);
+            cur_frm.set_df_property("gate2_status", "read_only", 0);
+            cur_frm.set_df_property("final_status", "read_only", 0);
+            cur_frm.set_df_property("status", "read_only", 0);
+
+        } else{
+            cur_frm.set_df_property("inspection_status", "read_only", 1);
+            cur_frm.set_df_property("yard_status", "read_only", 1);
+            cur_frm.set_df_property("payment_status", "read_only", 1);
+            cur_frm.set_df_property("gate1_status", "read_only", 1);
+            cur_frm.set_df_property("gate2_status", "read_only", 1);
+            cur_frm.set_df_property("final_status", "read_only", 1);
+            cur_frm.set_df_property("status", "read_only", 1);
+        }
+
 
     },
 

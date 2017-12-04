@@ -1,40 +1,32 @@
 // Copyright (c) 2017, Caitlah Technology and contributors
 // For license information, please see license.txt
 
-frappe.listview_settings['Cargo'] = {
+frappe.listview_settings['Cargo Warehouse'] = {
 	add_fields: ["status"],
 	has_indicator_for_draft: 1,
 	get_indicator: function(doc) {
 
 		if(doc.docstatus==0){
-			if(doc.status=="Export"){
-				return [__("Export"), "red", "status,=,Export"];
-			} else{
+			if(doc.status==""){
 				return [__("Need Attention"), "red", "status,=,'Uploaded'"];
 			}
 		} else if(doc.status=== "Uploaded"){
 			return [__("Uploaded"), "purple", "status,=,Uploaded"];
-			
-		} else if (doc.status === "Re-stowing"){
-			return [__("Re-stowing"), "grey", "status,=,Re-stowing"];
-		
-		} else if (doc.status === "Outbound"){
-			return [__("Outbound"), "purple", "status,=,Outbound"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
 
 		} else if (doc.status === "Yard"){
-			return [__("Yard"), "purple", "status,=,Yard"];
+			return [__("Yard"), "blue", "status,=,Yard"];
+		
+		}else if (doc.status === "Custom Check"){
+			return [__("Custom Check"), "red", "status,=,'Custom Check'"];
 
 		} else if (doc.status === "Paid"){
 			return [__("Paid"), "orange", "status,=,Paid"];
 
-		} else if (doc.status === "Gate1"){
-			return [__("Passed Gate1"), "blue", "status,=,Gate1"];
-
-		}else if (doc.status === "Gate Out"){
-			return [__("Outward"), "green", "status,=,Gate2"];
+		}else if (doc.status === "Security Check"){
+			return [__("Gate Out"), "green", "status,=,'Security Check'"];
 		}
 	}
 };

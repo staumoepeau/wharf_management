@@ -209,7 +209,7 @@
    "in_global_search": 0, 
    "in_list_view": 0, 
    "in_standard_filter": 0, 
-   "label": "Shipping Line Angeny", 
+   "label": "Shipping Angeny", 
    "length": 0, 
    "no_copy": 0, 
    "options": "Agents", 
@@ -926,7 +926,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-11-02 09:24:43.279570", 
+ "modified": "2017-12-03 23:18:24.542164", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Export", 
@@ -1063,7 +1063,7 @@
  "sort_field": "modified", 
  "sort_order": "DESC", 
  "timeline_field": "", 
- "title_field": "title", 
+ "title_field": "agents", 
  "track_changes": 1, 
  "track_seen": 1
 }

@@ -2318,7 +2318,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-10-31 10:38:19.395568", 
+ "modified": "2017-12-03 20:49:18.582961", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Pre Advice", 
@@ -2415,7 +2415,7 @@
  "sort_field": "modified", 
  "sort_order": "DESC", 
  "timeline_field": "", 
- "title_field": "title", 
+ "title_field": "consignee", 
  "track_changes": 1, 
  "track_seen": 1
 }

@@ -12,4 +12,4 @@ class Gate1Export(Document):
 		self.update_export_status()
 			
 	def update_export_status(self):		
-			frappe.db.sql("""Update `tabExport` set gate1_start=%s, gate1_ends=%s, status="Yard" where container_no=%s""", (self.creation, self.modified, self.container_no))
+			frappe.db.sql("""Update `tabExport` set gate1_start=%s, gate1_ends=%s, status="Gate1" where container_no=%s""", (self.creation, self.modified, self.container_no))

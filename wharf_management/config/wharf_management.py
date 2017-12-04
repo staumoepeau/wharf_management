@@ -66,6 +66,21 @@ def get_data():
 					"name": "Cargo Warehouse",
 					"description": _("Warehouse."),
 				},
+				{
+					"type": "doctype",
+					"name": "Warehouse Inspection",
+					"description": _("Warehouse Inspection."),
+				},
+				{
+					"type": "doctype",
+					"name": "Warehouse Custom Check",
+					"description": _("Warehouse Custom Check."),
+				},
+				{
+					"type": "doctype",
+					"name": "Warehouse Fee Payment",
+					"description": _("Warehouse Fee Payment."),
+				},
 			]
 		},
 		{
@@ -114,6 +129,16 @@ def get_data():
 					"type": "doctype",
 					"name": "Gate2",
 					"description": _("Security Main Gate."),
+				},
+				{
+					"type": "doctype",
+					"name": "Gate1 Export",
+					"description": _("Gate1 Export."),
+				},
+				{
+					"type": "doctype",
+					"name": "Main Gate Export",
+					"description": _("Main Gate Export."),
 				},
 			]
 		},
