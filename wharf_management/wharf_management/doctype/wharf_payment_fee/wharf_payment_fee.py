@@ -141,7 +141,7 @@ class WharfPaymentFee(Document):
 			"description": vals.description,
 			"price": vals.standard_rate,
 			"qty": strqty,
-			"total": float(self.storage_days_charged * strqty * vals.standard_rate)
+			"total": float(strqty * vals.standard_rate)
 		})
 
 		if self.cargo_type == 'Container':
@@ -162,7 +162,18 @@ class WharfPaymentFee(Document):
 			"total": float(qty * val.standard_rate)
 		})
 		
-		if self.secondary_work_type=="Devanning":
+		if self.work_type=="Discharged" and self.secondary_work_type=="Devanning":
+    			item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+			devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
+			fees = float(1 * devan.standard_rate)
+			self.append("wharf_fee_item", { 
+					"item": item_name,
+					"description": devan.description,
+					"price": devan.standard_rate,
+					"qty": "1",
+					"total": float(1 * devan.standard_rate)			
+			})
+		if self.work_type=="Devanning":
     			item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
 			devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
 			fees = float(1 * devan.standard_rate)
@@ -176,7 +187,7 @@ class WharfPaymentFee(Document):
 		if not self.secondary_work_type:
     			fees=0
 
-		self.total_fee = float((self.storage_days_charged * vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
+		self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
 		
 	def make_credit_entries(self, cancel=0, adv_adj=0):
     		from erpnext.accounts.general_ledger import make_gl_entries

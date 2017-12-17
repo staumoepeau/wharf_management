@@ -15,22 +15,97 @@ frappe.ui.form.on('Pre Advice', {
         cur_frm.add_fetch('booking_ref', 'pod', 'pod');
         cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
 
-        frm.add_custom_button(__('Insert Container'), function() {
+ //       frm.add_custom_button(__('Insert Container'), function() {        
+//            frappe.call({
+//                method: "validate_container_no",
+//                doc: frm.doc,
+//                callback: function(d) {
+//                	console.log(d)
+//                    cur_frm.refresh();
+ //               }
+//            })     
+//        }).addClass("btn-success");
+
+
+    if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+            frm.doc.work_type == "Discharged" &&
+            frm.doc.secondary_work_type == "Devanning" &&
+            frm.doc.docstatus == 1
+            ) {
+
+
+ //           cur_frm.add_custom_button(__('Vehicles'), this.create_vehicles, __("Devanning"));
+//                cur_frm.add_custom_button(_('Payment'), curfrm.cscript.make_bank_entry, __("Make"));
+//               cur_frm.add_custom_button(_('Completion Certificate'), curfrm.cscript.make_completion_certificate, __("Make"));
+                //	}
+ //               cur_frm.page.set_inner_btn_group_as_primary(__("Make"));	
+//                }
+//                },
             
-            frappe.call({
-                method: "validate_container_no",
-                doc: frm.doc,
-                callback: function(d) {
-                	console.log(d)
+            frm.add_custom_button(__('Vehicles'), function() {
+                    frappe.call({
+                        method: "devanning_create_vehicles",
+                        doc: frm.doc,
+                        callback: function(d) {
+                        console.log(d)
+                        cur_frm.refresh();
+                        }
+                })     
+
+            }, __("Devanning"));
+            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
+            
+            frm.add_custom_button(__('Break Bulk'), function() {
+                frappe.call({
+                    method: "devanning_create_bbulk",
+                    doc: frm.doc,
+                    callback: function(d) {
+                    console.log(d)
                     cur_frm.refresh();
-                }
+                    }
             })     
-        }).addClass("btn-success");
+
+        }, __("Devanning"));
+        cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
+            
+        }
+
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+            frm.doc.gate2_status != "Closed" &&
+            frm.doc.gate1_status != "Closed" &&
+            frm.doc.payment_status != "Closed" &&
+            frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status != "Closed" &&
+            frm.doc.docstatus == 1
+                ) {
+                frm.add_custom_button(__('Inspection'), function() {
+                    frappe.route_options = {
+                        "cargo_ref": frm.doc.name
+                    }
+                    frappe.new_doc("Inspection");
+                    frappe.set_route("Form", "Inspection", doc.name);
+
+                }).addClass("btn-primary");
+        }
+
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Operation User") &&
+            frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status == "Closed"
+                )) {
+                frm.add_custom_button(__('Yard'), function() {
+                    frappe.route_options = {
+                        "cargo_ref": frm.doc.name
+                    }
+                    frappe.new_doc("Yard");
+                    frappe.set_route("Form", "Yard", doc.name);
+                }).addClass("btn-primary");
+        }
     },
 
     onsubmit: function(frm){
         
 
-    }
+    },
     
 });
+

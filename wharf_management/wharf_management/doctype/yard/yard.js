@@ -12,7 +12,7 @@ frappe.ui.form.on('Yard', {
 		frappe.call({
 			"method": "frappe.client.get",
 						args: {
-							doctype: "Cargo",
+							doctype: "Pre Advice",
 							name: frm.doc.cargo_ref,
 							filters: {
 								'work_type': ["!=", "Loading"]
@@ -45,7 +45,7 @@ frappe.ui.form.on('Yard', {
 		frappe.call({
 			"method": "frappe.client.get",
 						args: {
-							doctype: "Cargo",
+							doctype: "Pre Advice",
 							name: frm.doc.cargo_ref,
 							filters: {
 								'work_type': ["=", "Loading"]

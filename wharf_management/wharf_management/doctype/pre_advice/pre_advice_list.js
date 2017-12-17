@@ -1,7 +1,7 @@
 // Copyright (c) 2017, Caitlah Technology and contributors
 // For license information, please see license.txt
 
-frappe.listview_settings['Cargo'] = {
+frappe.listview_settings['Pre Advice'] = {
 	add_fields: ["status"],
 	has_indicator_for_draft: 1,
 	get_indicator: function(doc) {
@@ -35,7 +35,7 @@ frappe.listview_settings['Cargo'] = {
 
 		}else if (doc.status === "Gate Out"){
 			return [__("Outward"), "green", "status,=,Gate2"];
-
+			
 		}else if (doc.status === "CCV"){
 			return [__("CCV"), "black", "status,=,CCV"];
 		}

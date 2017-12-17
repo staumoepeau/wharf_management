@@ -7,10 +7,12 @@ frappe.ui.form.on('Inspection', {
     },
     onload: function(frm) {
 
+        
+
         frappe.call({
             "method": "frappe.client.get",
             args: {
-                doctype: "Cargo",
+                doctype: "Pre Advice",
                 name: frm.doc.cargo_ref,
                 filters: {
                     'docstatus': 1
@@ -24,9 +26,17 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_value("vessel", data.message["vessel"]);
                 cur_frm.set_value("bol", data.message["bol"]);
                 cur_frm.set_value("work_type", data.message["work_type"]);
+                cur_frm.set_value("secondary_work_type", data.message["secondary_work_type"]);
+                
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
                 cur_frm.set_value("final_work_type", data.message["work_type"]);
+                cur_frm.set_value("cargo_type", data.message["cargo_type"]);
+                cur_frm.set_value("mark", data.message["mark"]);
+                
+                cur_frm.set_df_property("secondary_work_type", "read_only", 1);
+                cur_frm.set_df_property("mark", "read_only", 1);
+                cur_frm.set_df_property("cargo_type", "read_only", 1);
                 cur_frm.set_df_property("voyage_no", "read_only", 1);
                 cur_frm.set_df_property("work_type", "read_only", 1);
                 cur_frm.set_df_property("final_work_type", "read_only", 1);
@@ -40,6 +50,15 @@ frappe.ui.form.on('Inspection', {
 
             }
         })
+
+
+        if (frm.doc.work_type == "Loading"){
+            cur_frm.set_df_property("inspection_images","hidden",1);
+            cur_frm.set_df_property("cargo_condition","hidden",1);
+        } else{
+            cur_frm.set_df_property("inspection_images","hidden",0);
+            cur_frm.set_df_property("cargo_condition","hidden",0);
+        }
 
     }
 
