@@ -203,7 +203,7 @@ frappe.ui.form.on('Cargo', {
             //frm.doc.yard_status != "Closed" &&
             frm.doc.inspection_status == "Closed" &&
             //frm.doc.inspection_status == "Closed" &&
-            frm.doc.qty > 0 &&
+            frm.doc.qty > 1 &&
             frm.doc.break_bulk_item_count != frm.doc.qty
         ) {
             frm.add_custom_button(__('Bulk Item Count'), function() {
@@ -221,7 +221,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.payment_status == "Closed" &&
                 frm.doc.gate1_status == "Closed" &&
-                frm.doc.qty > 0 &&
+                frm.doc.qty > 1 &&
                 frm.doc.security_item_count != frm.doc.qty
             )) {
             frm.add_custom_button(__('Gate1 Count'), function() {

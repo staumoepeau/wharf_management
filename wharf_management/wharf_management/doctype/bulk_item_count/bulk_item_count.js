@@ -10,7 +10,7 @@ frappe.ui.form.on('Bulk Item Count', {
 				frappe.call({
 					"method": "frappe.client.get",
 					args: {
-						doctype: "Cargo",
+						doctype: "Pre Advice",
 						name: frm.doc.cargo_ref,
 						filters: {
 							'docstatus': 1,

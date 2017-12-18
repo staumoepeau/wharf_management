@@ -5,13 +5,13 @@ frappe.ui.form.on('Cargo Warehouse', {
 
     setup: function(frm) {
     
-        frm.get_field('warehouse_cargo_table').grid.editable_fields = [
-			{fieldname: 'cargo_type', columns: 1},
-			{fieldname: 'cargo_description', columns: 1},
-			{fieldname: 'net_weight', columns: 1},
-            {fieldname: 'volume', columns: 1},
-            {fieldname: 'mark', columns: 1},
-		];
+//        frm.get_field('warehouse_cargo_table').grid.editable_fields = [
+//			{fieldname: 'cargo_type', columns: 1},
+//			{fieldname: 'cargo_description', columns: 1},
+//			{fieldname: 'net_weight', columns: 1},
+//            {fieldname: 'volume', columns: 1},
+//            {fieldname: 'mark', columns: 1},
+//		];
     },
 
 	refresh: function(frm) {

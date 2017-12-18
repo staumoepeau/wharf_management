@@ -53,7 +53,8 @@ class Yard(Document):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
-			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status",
+			"break_bulk_item_count","security_item_count"], as_dict=True)
 		doc = frappe.new_doc("Cargo")
 		doc.update({
 	#				"company" : self.company,
@@ -98,7 +99,9 @@ class Yard(Document):
 					"yard_slot" : val.yard_slot,
 					"inspection_status" : val.inspection_status,
 					"yard_status" : val.yard_status,
-					"final_status" : val.final_status
+					"final_status" : val.final_status,
+					"break_bulk_item_count" : val.break_bulk_item_count,
+					"security_item_count" : val.security_item_count
 				})
 		doc.insert()
 		doc.submit()
