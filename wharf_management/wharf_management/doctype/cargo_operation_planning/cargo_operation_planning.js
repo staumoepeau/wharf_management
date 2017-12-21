@@ -4,13 +4,14 @@
 frappe.ui.form.on('Cargo Operation Planning', {
 
 	setup: function(frm) {
-		frm.get_field('cargo_booking_manifest_table').grid.editable_fields = [
-			{fieldname: 'cargo_type', columns: 2},
-			{fieldname: 'cargo_content', columns: 2},
-			{fieldname: 'dis_charging', columns: 2},
-			{fieldname: 'loading', columns: 2},
-			{fieldname: 'total_weight', columns: 2}
-		];
+        frm.get_field('cargo_booking_manifest_table').grid.editable_fields = [
+            { fieldname: 'cargo_type', columns: 1 },
+            { fieldname: 'container_size', columns: 1 },
+            { fieldname: 'cargo_content', columns: 1 },
+            { fieldname: 'work_type', columns: 1 },
+            { fieldname: 'qty', columns: 1 },
+            { fieldname: 'total_weight', columns: 1 }
+        ];
 
 		frm.get_field('forklift_table').grid.editable_fields = [
 			{fieldname: 'forklift_require', columns: 1},
@@ -50,7 +51,7 @@ frappe.ui.form.on('Cargo Operation Planning', {
 		frappe.call({
 			method: "get_operation_list",
 			doc: frm.doc,
-			callback: function(r, rt) {
+			callback: function(a, aq) {
 //				conosole.log("rt");
 				frm.refresh_field("cargo_booking_manifest_table");
 				frm.refresh_fields();
@@ -61,12 +62,12 @@ frappe.ui.form.on('Cargo Operation Planning', {
 			method: "get_forklift_list",
 			doc: frm.doc,
 			callback: function(r, rt) {
-//				conosole.log("rt");
+				conosole.log("rt");
 				frm.refresh_field("forklift_table");
 				frm.refresh_fields();
 			}
 		});
-
+		frm.refresh_fields();
 	},
 
 	refresh: function(frm) {

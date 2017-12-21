@@ -33,7 +33,7 @@ class Yard(Document):
 
 	def update_yard_slot(self):
     		if self.status != 'Export':
-    				frappe.db.sql("""Update `tabPre Advice` set yard_slot=%s, yard_status="Closed", status='Yard' where name=%s""", (self.yard_slot, self.cargo_ref))
+    				frappe.db.sql("""Update `tabPre Advice` set yard_slot=%s, yard_status="Closed", status='Transfer' where name=%s""", (self.yard_slot, self.cargo_ref))
 
 	def update_export_status(self):
     		if self.status == 'Export':
@@ -89,7 +89,7 @@ class Yard(Document):
 					"stowage" : val.stowage,
 					"hazardous" : val.hazardous,
 					"hazardous_code" : val.hazardous_code,
-					"status" : val.status,
+					"status" : "Yard",
 					"seal_1" : val.seal_1,
 					"seal_2" : val.seal_2,
 					"eta_date" : val.eta_date,

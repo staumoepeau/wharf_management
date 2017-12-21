@@ -10,7 +10,7 @@ class CargoOperationPlanning(Document):
 
 	def get_operation_list(self):
 		condition = ""
-		cargo_booking_manifest_table = frappe.db.sql("""select cargo_type, cargo_content, dis_charging, loading, weight, total_weight, parent
+		cargo_booking_manifest_table = frappe.db.sql("""select cargo_type, container_size, work_type, qty, cargo_content, dis_charging, loading, weight, total_weight, parent
 			from `tabCargo Booking Manifest Table`
 			where parent = %s {0}""".format(condition), (self.booking_ref), as_dict=1)
 
@@ -18,12 +18,11 @@ class CargoOperationPlanning(Document):
 			key=lambda k: k['parent'])
 
 		self.set('cargo_booking_manifest_table', [])
-#		self.total_denomination = 0.0
+
 
 		for d in entries:
 			row = self.append('cargo_booking_manifest_table', {})
 			row.update(d)
-#			self.total_denomination += flt(d.amount)
 
 	def get_forklift_list(self):
 		condition = ""

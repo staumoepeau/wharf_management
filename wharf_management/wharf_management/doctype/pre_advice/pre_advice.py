@@ -92,7 +92,6 @@ class PreAdvice(Document):
 
 
 	def devanning_create_vehicles(self):
-#		user = frappe.get_doc("Agents", self.transfer_from_agent)
     		val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",

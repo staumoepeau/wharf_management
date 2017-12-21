@@ -36,8 +36,8 @@ frappe.listview_settings['Cargo'] = {
 		}else if (doc.status === "Gate Out"){
 			return [__("Outward"), "green", "status,=,Gate2"];
 
-		}else if (doc.status === "CCV"){
-			return [__("CCV"), "black", "status,=,CCV"];
+		}else if (doc.status === "Devanning"){
+			return [__("Devan"), "black", "status,=,Devanning"];
 		}
 	}
 };
