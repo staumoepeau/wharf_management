@@ -46,7 +46,7 @@
             {%- endfor -%}
         </div>
         <div class="col-xs-6">
-            {%- for label, value in ( (_("Arrival Date"), frappe.utils.formatdate(doc.eta_date)), (_("Agent"), doc.agents) ) -%}
+            {%- for label, value in ( (_("Devan Date"), frappe.utils.formatdate(doc.devanning_date)), ) -%}
             <div class="row">
                 <div class="col-xs-4"><label class="text-right">{{ label }}</label></div>
                 <div class="col-xs-8">{{ value }}</div>
@@ -71,7 +71,7 @@
 
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Vessel"), doc.vessel), (_("Container Type"), doc.container_type), (_("Container Size"), doc.container_size), (_("Container Content"), doc.container_content), (_("Days Charges"), doc.storage_days_charged), (_("Chasis No:"),
+                {%- for label, value in ( (_("Vessel"), doc.vessel), (_("Bill of Lading"), doc.bol), (_("Weight"), doc.weight), (_("Mark"), doc.mark), (_("Days Charges"), doc.storage_days_charged), (_("Chasis No:"),
                 doc.chasis_no) ) -%}
                 <div class="row">
 
@@ -147,7 +147,7 @@
         </div>
         <div class="col-xs-4">
             <div class="col-xs-6"><label class="text-left">{{ _("TOTAL") }}</label></div>
-            <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.total_amount) }}</div>
+            <div class="col-xs-6 text-right">{{ frappe.utils.fmt_money(doc.total) }}</div>
             <hr>
         </div>
     </div>
@@ -157,25 +157,12 @@
     <div class="row">
         <div class="col-xs-6">
             <div class="panel">
-                {%- for label, value in ( (_("Payment Method"), doc.payment_method), (_("Bulk Payment"), doc.bulk_payment), (_("Deliver Empty"), doc.deliver_empty) ) -%}
+                {%- for label, value in ( (_("Payment Method"), doc.payment_method), ) -%}
                 <div class="row">
                     <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
                     <div class="col-xs-6">{{ value }}</div>
                 </div>
 
-                {%- endfor -%}
-            </div>
-        </div>
-
-        <div class="col-xs-6">
-            <div class="panel">
-                {%- for label, value in ( (_("Custom Warrant No"),doc.custom_warrant), (_("Delivery Code"), doc.custom_code), (_("Delivery Information"), doc.delivery_code) ) -%}
-                <div class="row">
-
-                    <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
-                    <div class="col-xs-6">{{ value }}</div>
-
-                </div>
                 {%- endfor -%}
             </div>
         </div>

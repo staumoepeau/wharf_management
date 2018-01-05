@@ -81,6 +81,11 @@ def get_data():
 					"name": "Warehouse Fee Payment",
 					"description": _("Warehouse Fee Payment."),
 				},
+				{
+					"type": "doctype",
+					"name": "Warehouse Storage Fee",
+					"description": _("Warehouse Storage Fee."),
+				},
 			]
 		},
 		{
