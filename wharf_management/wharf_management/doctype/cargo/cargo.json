@@ -1515,7 +1515,7 @@
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0, 
-   "unique": 1
+   "unique": 0
   }, 
   {
    "allow_bulk_edit": 0, 
@@ -3361,7 +3361,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-01-04 13:08:39.081994", 
+ "modified": "2018-01-08 02:04:58.370242", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo", 
