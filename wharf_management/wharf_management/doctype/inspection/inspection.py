@@ -38,6 +38,7 @@ class Inspection(Document):
 			self.update_final_status()
 		
 		elif self.final_work_type == "Re-stowing":
+			self.create_restow_cargo()
 			self.update_final_status()
 
 
@@ -68,6 +69,8 @@ class Inspection(Document):
     			frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 	
 	def update_restowing_status(self):
+		self.create_restow_cargo()
+		self.create_restow_pre_advice_items()
     		frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Re-stowing", status="Transfer" where name=%s""", (self.cargo_ref))
 
 
@@ -78,7 +81,68 @@ class Inspection(Document):
 		frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Discharged", status="Transfer" where name=%s""", (self.cargo_ref))
 #		frappe.db.sql("""Update `tabPre Advice` set secondary_work_type="Devanning " where name=%s""", (self.cargo_ref))
 
-	
+	def create_restow_cargo(self):
+    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
+			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
+			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+		doc = frappe.new_doc("Cargo")
+		if self.final_work_type == "Discharged":
+			if self.secondary_work_type == "Re-stowing":
+				worktype = self.final_work_type
+				movement = "Re-stowing"
+		elif self.final_work_type == "Re-stowing":
+				worktype = "Re-stowing"
+				movement = "Outbound"
+		doc.update({
+	#				"company" : self.company,
+					"docstatus" : 1,
+					"booking_ref" : val.booking_ref,
+					"pat_code" : val.pat_code,
+					"net_weight" : val.net_weight,
+					"cargo_type" : val.cargo_type,
+		#			"pre_advise_status" : self.pre_advise_status,
+					"qty" : val.qty,
+					"container_no" : val.container_no,
+					"voyage_no" : val.voyage_no,
+					"bol" : val.bol,
+					"work_type" : worktype,
+					"secondary_work_type" : val.secondary_work_type,
+		#			"third_work_type" : self.third_work_type,
+					"pol" : val.pol,
+					"agents" : val.agents,
+					"commodity_code" : val.commodity_code,
+					"vessel" : val.vessel,
+					"pod" : val.pod,
+					"temperature" : val.temperature,
+					"container_type" : val.container_type,
+					"mark" : val.mark,
+					"final_dest_port" : val.final_dest_port,
+					"volume" : val.volume,
+					"container_size" : val.container_size,
+					"consignee" : val.consignee,
+					"container_content" : val.container_content,
+					"stowage" : val.stowage,
+					"hazardous" : val.hazardous,
+					"hazardous_code" : val.hazardous_code,
+					"status" : movement,
+					"seal_1" : val.seal_1,
+					"seal_2" : val.seal_2,
+					"eta_date" : val.eta_date,
+					"cargo_description" : val.cargo_description,
+					"etd_date" : val.etd_date,
+					"chasis_no" : val.chasis_no,
+#					"yard_slot" : val.yard_slot,
+					"inspection_status" : "Closed",
+					"yard_status" : "Closed",
+					"final_status" : self.final_work_type,
+					"payment_status" : "Closed",
+					"gate1_status" : "Closed",
+					"gate2_status" : "Closed"
+				})
+		doc.insert()
+		doc.submit()
+
 	def create_cargo_item(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
@@ -91,7 +155,6 @@ class Inspection(Document):
 					"booking_ref" : val.booking_ref,
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
-		#			"export_status" : self.export_status,
 					"cargo_type" : val.cargo_type,
 		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
@@ -111,7 +174,6 @@ class Inspection(Document):
 					"mark" : val.mark,
 					"final_dest_port" : val.final_dest_port,
 					"volume" : val.volume,
-		#			"export_arrival_date" : self.export_arrival_date,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
 					"container_content" : val.container_content,
@@ -230,6 +292,58 @@ class Inspection(Document):
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
 					"container_content" : "EMPTY",
+					"stowage" : val.stowage,
+					"hazardous" : val.hazardous,
+					"hazardous_code" : val.hazardous_code,
+					"status" : "Uploaded",
+					"seal_1" : val.seal_1,
+					"seal_2" : val.seal_2,
+					"eta_date" : val.eta_date,
+					"cargo_description" : val.cargo_description,
+					"etd_date" : val.etd_date,
+					"chasis_no" : val.chasis_no,
+					"yard_slot" : val.yard_slot,
+					"inspection_status" : "Open"
+
+				})
+		doc.insert()
+		doc.submit()
+	
+	def create_restow_pre_advice_items(self):
+    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
+			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
+			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+		doc = frappe.new_doc("Pre Advice")
+		doc.update({
+	#				"company" : self.company,
+					"docstatus" : 1,
+					"booking_ref" : val.booking_ref,
+					"pat_code" : val.pat_code,
+					"net_weight" : val.net_weight,
+		#			"export_status" : self.export_status,
+					"cargo_type" : val.cargo_type,
+		#			"pre_advise_status" : self.pre_advise_status,
+					"qty" : val.qty,
+					"container_no" : val.container_no,
+					"voyage_no" : val.voyage_no,
+					"bol" : val.bol,
+					"work_type" : "Re-stowing",
+		#			"secondary_work_type" : val.secondary_work_type,
+		#			"third_work_type" : self.third_work_type,
+					"pol" : val.pol,
+					"agents" : val.agents,
+					"commodity_code" : val.commodity_code,
+					"vessel" : val.vessel,
+					"pod" : val.pod,
+					"temperature" : val.temperature,
+					"container_type" : val.container_type,
+					"mark" : val.mark,
+					"final_dest_port" : val.final_dest_port,
+					"volume" : val.volume,
+					"container_size" : val.container_size,
+					"consignee" : val.consignee,
+	#				"container_content" : "EMPTY",
 					"stowage" : val.stowage,
 					"hazardous" : val.hazardous,
 					"hazardous_code" : val.hazardous_code,
