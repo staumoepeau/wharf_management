@@ -21,4 +21,4 @@ class BulkItemCount(Document):
 		def update_cargo_table(self):
     			self.count_items = self.break_bulk_item_count + 1
 				
-			frappe.db.sql("""Update `tabCargo` set break_bulk_item_count=%s where name=%s""", (self.count_items, self.cargo_ref))
+			frappe.db.sql("""Update `tabPre Advice` set break_bulk_item_count=%s where name=%s""", (self.count_items, self.cargo_ref))
