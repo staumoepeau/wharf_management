@@ -100,6 +100,7 @@ frappe.ui.form.on('Booking Request', {
 
 frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn) {
     var dc = locals[cdt][cdn];
+    
     if (frm.doc.cargo_type == "Container"){
         frappe.call({
             method: "frappe.client.get",
@@ -149,6 +150,8 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn)
 
 });
 
+
+
 frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
 
@@ -160,12 +163,17 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
 
     frm.doc.cargo_booking_manifest_table.forEach(function(d) {
         flt(total_weight_amount += flt(d.weight));
-        flt(total_fee += flt(d.sub_total_fee));
+        flt(totalamount += flt(d.sub_total_fee * d.weight))
+        flt(total_fee += flt(totalamount));
 
     });
 
     frm.set_value("total_weight_amount", total_weight_amount);
     frm.set_value("require_amount", flt(total_fee / 2));
-    //frm.set_value("vessel_gross_tonnage", (frm.doc.grt));
+    
+    if (d.cargo_type == "Loose Cargo" || d.cargo_type == "Heavy Vehicles" || d.cargo_type == "Break Bulk"){
+
+        frappe.model.set_value(d.doctype, d.name, "sub_total_fee",( d.weight * d.qty * d.fee));
+    }
 
 });
