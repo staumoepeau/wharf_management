@@ -100,24 +100,42 @@ frappe.ui.form.on('Booking Request', {
 
 frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn) {
     var dc = locals[cdt][cdn];
-
-    frappe.call({
-        method: "frappe.client.get",
-        args: {
-            doctype: "Wharf Handling Fee",
-            filters: {
-                cargo_type: dc.cargo_type,
-                container_size: dc.container_size,
-                container_content: dc.cargo_content,
-                work_type: dc.work_type
+    if (frm.doc.cargo_type == "Container"){
+        frappe.call({
+            method: "frappe.client.get",
+            args: {
+                doctype: "Wharf Handling Fee",
+                filters: {
+                    cargo_type: dc.cargo_type,
+                    container_size: dc.container_size,
+                    container_content: dc.cargo_content,
+                    work_type: dc.work_type
+                },
             },
-        },
-        callback: function(r) {
-            console.log(r);
-            frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
-            frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty));
-        }
-    });
+            callback: function(r) {
+                console.log(r);
+                frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
+                frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty));
+            }
+        });
+    }
+    if (frm.doc.cargo_type != "Container"){
+        frappe.call({
+            method: "frappe.client.get",
+            args: {
+                doctype: "Wharf Handling Fee",
+                filters: {
+                    cargo_type: dc.cargo_type,
+                    work_type: dc.work_type
+                },
+            },
+            callback: function(r) {
+                console.log(r);
+                frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
+                frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty));
+            }
+        });
+    }
 
     var total_fee = 0;
 
