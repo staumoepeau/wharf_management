@@ -37,37 +37,19 @@ frappe.ui.form.on('Cargo Operation Planning', {
 	},
 	onload: function(frm){
 
-	//	frm.set_query("booking_ref", function() {
-	//		return {
-	//			"filters": {
-	//					"docstatus": ["=", 1],
-	//			}
-	//		};
-	//	});
 	},
 
 	booking_ref: function(frm){
 
-		frappe.call({
+		return frappe.call({
 			method: "get_operation_list",
 			doc: frm.doc,
-			callback: function(a, aq) {
-//				conosole.log("rt");
-				frm.refresh_field("cargo_booking_manifest_table");
+			callback: function(list) {
+				console.log(list);
 				frm.refresh_fields();
+	//			frm.refresh_field("cargo_booking_manifest_table");
 			}
-		});
-
-		frappe.call({
-			method: "get_forklift_list",
-			doc: frm.doc,
-			callback: function(r, rt) {
-				conosole.log("rt");
-				frm.refresh_field("forklift_table");
-				frm.refresh_fields();
-			}
-		});
-		frm.refresh_fields();
+		})	
 	},
 
 	refresh: function(frm) {
@@ -83,11 +65,21 @@ frappe.ui.form.on('Cargo Operation Planning', {
 
 	},
 
-	get_operation_list: function(frm) {
-		return
+
+insert_details: function(frm){
+
+	return frappe.call({
+			method: "get_forklift_list",
+			doc: frm.doc,
+			callback: function(list) {
+				console.log(list);
+
+			}
+		})
 	},
 
 });
+
 
 frappe.ui.form.on("Employee Table", "employee", function(frm, cdt, cdn){
 	var d = locals[cdt][cdn];
@@ -111,7 +103,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
   frappe.model.set_value(d.doctype, d.name, "total_weight", flt(d.weight));
 
   var total_weight_amount = 0;
-  frm.doc.cargo_booking_manifest_table.forEach(function(d) { flt(total_weight_amount += flt(d.weight)); });
+ frm.doc.cargo_booking_manifest_table.forEach(function(d) { flt(total_weight_amount += flt(d.weight)); });
 
   frm.set_value("weight_total", total_weight_amount);
 

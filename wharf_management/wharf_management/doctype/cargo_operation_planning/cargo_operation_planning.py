@@ -20,9 +20,9 @@ class CargoOperationPlanning(Document):
 		self.set('cargo_booking_manifest_table', [])
 
 
-		for d in entries:
+		for f in entries:
 			row = self.append('cargo_booking_manifest_table', {})
-			row.update(d)
+			row.update(f)
 
 	def get_forklift_list(self):
 		condition = ""

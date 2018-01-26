@@ -173,7 +173,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
     
     if (d.cargo_type == "Loose Cargo" || d.cargo_type == "Heavy Vehicles" || d.cargo_type == "Break Bulk"){
 
-        frappe.model.set_value(d.doctype, d.name, "sub_total_fee",( d.weight * d.qty * d.fee));
+        frappe.model.set_value(d.doctype, d.name, "sub_total_fee",( d.weight * d.fee));
     }
 
 });
