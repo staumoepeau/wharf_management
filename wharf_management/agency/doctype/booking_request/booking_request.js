@@ -101,7 +101,7 @@ frappe.ui.form.on('Booking Request', {
 frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn) {
     var dc = locals[cdt][cdn];
     
-    if (frm.doc.cargo_type == "Container"){
+    if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Tank Tainers" || frm.doc.cargo_type == "Flatrack"){
         frappe.call({
             method: "frappe.client.get",
             args: {
