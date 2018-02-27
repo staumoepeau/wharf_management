@@ -118,7 +118,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "qty", function(frm, cdt, cdn)
             }
         });
     } 
-    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack"){
+    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack" ||  dc.cargo_type == "Vehicles"){
         frappe.call({
             method: "frappe.client.get",
             args: {
