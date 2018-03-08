@@ -23,8 +23,8 @@ class Inspection(Document):
 					self.update_restowing_status()
 			elif self.secondary_work_type == "Devanning":
     				self.update_final_status_devanning()
-					self.create_cargo_list_items()
-					self.create_pre_advice_list_items()
+				self.create_cargo_list_items()
+				self.create_pre_advice_list_items()
 			elif self.secondary_work_type != "Re-stowing" or self.secondary_work_type != "Devanning":
 					self.update_inspection_status()
 		
