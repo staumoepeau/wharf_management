@@ -23,7 +23,7 @@ class WharfPaymentFee(Document):
 #		self.update_export_status()
 		self.change_status()
 		self.make_payment()
-		self.create_sales_invoices()
+#		self.create_sales_invoices()
 
 
 #	def check_duplicate_warrant_number(self):
@@ -238,17 +238,18 @@ class WharfPaymentFee(Document):
 
 	
 
-	def create_sales_invoices(self):
+#	def create_sales_invoices(self):
 
-		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-		entries = sorted(list(items))
-		self.set('items', [])
+#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+#		entries = sorted(list(items))
+#		self.set('items', [])
 
-		doc = frappe.new_doc("Sales Invoice")
-		doc.customer = self.consignee
-		doc.due_date = self.posting_date
-		doc.ref = self.name
-		doc.is_pos = True
+#		doc = frappe.new_doc("Sales Invoice")
+#		doc.customer = self.consignee
+#		doc.due_date = self.posting_date
+#		doc.ref = self.name
+#		doc.is_pos = True
+
 #		doc.paid_amount = self.total_amount
 #		doc.base_paid_amount = self.total_amount
 #		doc.outstanding_amount = 0
@@ -257,35 +258,35 @@ class WharfPaymentFee(Document):
 #		'amount' : self.total_amount
 #		})
 
-		for payment in get_mode_of_payment(doc):
-			payments = doc.append('payments', {})
-			payments.mode_of_payment = payment.parent
-			payments.account = payment.default_account
-			payments.type = payment.type
-			payments.amount = self.paid_amount
+#		for payment in get_mode_of_payment(doc):
+#			payments = doc.append('payments', {})
+#			payments.mode_of_payment = payment.parent
+#			payments.account = payment.default_account
+#			payments.type = payment.type
+#			payments.amount = self.paid_amount
 
-		for d in entries:
-			item = doc.append('items', {
-			'item_code' : d.item,
-			'item_name' : d.item,
-			'description' : d.description,
-			'uom' : "Nos",
-			'rate' : d.price,
-			'conversion_factor' : 1,
-			'qty' : d.qty,
-			'stock_qty' : d.qty * 1,
-			'amount' : d.qty * d.price,
-			'base_rate' : d.price,
-			'base_amount' : d.qty * d.price,
-			'cost_center' : 'Operations - PAT',
-			'income_account' : d.income_account
-			})
+#		for d in entries:
+#			item = doc.append('items', {
+#			'item_code' : d.item,
+#			'item_name' : d.item,
+#			'description' : d.description,
+#			'uom' : "Nos",
+#			'rate' : d.price,
+#			'conversion_factor' : 1,
+#			'qty' : d.qty,
+#			'stock_qty' : d.qty * 1,
+#			'amount' : d.qty * d.price,
+#			'base_rate' : d.price,
+#			'base_amount' : d.qty * d.price,
+#			'cost_center' : 'Operations - PAT',
+#			'income_account' : d.income_account
+#			})
 		
-		doc.save(ignore_permissions=True)
-		doc.save()
-		doc.submit()
+#		doc.save(ignore_permissions=True)
+#		doc.save()
+#		doc.submit()
 
-@frappe.whitelist()
-def get_mode_of_payment(doc):
-	return frappe.db.sql(""" select mpa.default_account, mpa.parent, mp.type as type from `tabMode of Payment Account` mpa,
-		 `tabMode of Payment` mp where mpa.parent = mp.name and mpa.company = %(company)s""", {'company': doc.company}, as_dict=1)
+#@frappe.whitelist()
+#def get_mode_of_payment(doc):
+#	return frappe.db.sql(""" select mpa.default_account, mpa.parent, mp.type as type from `tabMode of Payment Account` mpa,
+#		 `tabMode of Payment` mp where mpa.parent = mp.name and mpa.company = %(company)s""", {'company': doc.company}, as_dict=1)
