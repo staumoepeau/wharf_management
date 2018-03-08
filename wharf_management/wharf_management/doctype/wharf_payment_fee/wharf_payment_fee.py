@@ -14,7 +14,7 @@ from erpnext.accounts.party import get_party_account
 class WharfPaymentFee(Document):
 
 	def validate(self):
-		self.check_duplicate_warrant_number()
+#		self.check_duplicate_warrant_number()
 #		self.update_warrant()
 		
 	
@@ -26,12 +26,12 @@ class WharfPaymentFee(Document):
 		self.create_sales_invoices()
 
 
-	def check_duplicate_warrant_number(self):
-		check_duplicate = None
-		check_duplicate = frappe.db.sql("""Select custom_warrant, count(*) from `tabWharf Payment Fee` where custom_warrant=%s """, (self.custom_warrant))
+#	def check_duplicate_warrant_number(self):
+#		check_duplicate = None
+#		check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWharf Payment Fee` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
 		
-		if check_duplicate > 1:
-			frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
+#		if check_duplicate:
+#			frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 		
 	def make_payment(self):

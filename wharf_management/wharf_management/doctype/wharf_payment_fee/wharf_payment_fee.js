@@ -107,10 +107,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
 //        }
         if (frm.doc.payment_method) {
             frm.set_value("paid_amount", frm.doc.total_amount)
-        
-
         }
-
     },
 
     posting_date: function(frm) {
@@ -177,34 +174,16 @@ frappe.ui.form.on('Wharf Payment Fee', {
         }else if (frm.doc.custom_code == "SPLIT-PORT") {
             frm.set_value("delivery_code", "SPLIT-PORT")
         }
+       
         if (frm.doc.bulk_payment == "Yes") {
             cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
                 //frm.set_value("custom_warrant", 0)
             frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
             frm.refresh_fields("custom_warrant");
         }
+
     },
 
-    //    calculate_fees: function(frm) {
-    //
-    //        frappe.call({
-    //            method: "get_storage_fee",
-    //            doc: frm.doc,
-    //            callback: function(s) {
-    //                console.log(s.message)
-    //                var sfee = flt((s.message) * frm.doc.storage_days_charged);
-    //                frm.set_value("storage_fee", sfee);
-    //            }
-    //        });
-    //        frappe.call({
-    //            method: "get_wharfage_fee",
-    //            doc: frm.doc,
-    //            callback: function(w) {
-    //                var wfee = flt((w.message));
-    //                frm.set_value("wharf_fee", wfee);
-    //           }
-    //        });
-    //  },
     insert_fees_button: function(frm) {
         return frappe.call({
             method: "insert_fees",
@@ -235,7 +214,6 @@ frappe.ui.form.on('Wharf Payment Fee', {
             cur_frm.set_df_property("change_amount", "read_only", 1)
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
 
-
         } 
         if (frm.doc.total_amount < frm.doc.paid_amount){
             frm.set_value("change_amount", (frm.doc.paid_amount - frm.doc.total_amount));
@@ -249,9 +227,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
             cur_frm.set_df_property("change_amount", "read_only", 1)
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
         }
-
     },
-
 });
 
 frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn) {
@@ -262,7 +238,6 @@ frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn) {
     frm.doc.wharf_fee_item.forEach(function(d) { total_fees += d.total; });
 
     frm.set_value("total_fee", total_fees);
-
 });
 
 frappe.ui.form.on("Wharf Fee Item", "item", function(frm, cdt, cdn) {
@@ -287,7 +262,6 @@ frappe.ui.form.on("Wharf Fee Item", "qty", function(frm, cdt, cdn) {
 
     frm.doc.wharf_fee_item.forEach(function(d) {
         flt(total += flt(d.price * d.qty))
-
-       frm.set_value("total", total);
+        frm.set_value("total", total);
     })
 });
