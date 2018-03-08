@@ -79,7 +79,7 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("security_documents", "hidden", 1);
         }
 
-        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User")){
+        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User"){
 
             cur_frm.set_df_property("grt", "hidden", 0);
         
@@ -128,7 +128,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             }
         });
     } 
-    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack"){
+    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack" ||  dc.cargo_type == "Vehicles"){
         frappe.call({
             method: "frappe.client.get",
             args: {
@@ -179,38 +179,8 @@ var calculate_total_amount = function(frm){
         total_weight_amount += d.weight;
     });
 
-
    frm.set_value("total_required_amount", total_fee);
    frm.set_value("require_amount",total_fee);
    frm.set_value("total_weight_amount", total_weight_amount);
    frm.refresh_fields("total_weight_amount");
-
-//   frappe.throw(_("Test Amount", total_fee));
-
 }
-
-//frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn) {
-//    var d = locals[cdt][cdn];
-
-    //   frappe.model.set_value(d.doctype, d.name, "total_weight", flt(d.weight));
-
-//    var total_weight_amount = 0;
-//    var totalamount = 0;
-//    var total_fee = 0;
-
-//    frm.doc.cargo_booking_manifest_table.forEach(function(d) {
-//        flt(total_weight_amount += flt(d.weight));
-//        flt(totalamount += flt(d.sub_total_fee * d.weight))
-//        flt(total_fee += flt(totalamount));
-
-//    });
-
-//    frm.set_value("total_weight_amount", total_weight_amount);
-//    frm.set_value("require_amount", flt(total_fee));
-    
-//    if (d.cargo_type == "Loose Cargo" || d.cargo_type == "Heavy Vehicles" || d.cargo_type == "Break Bulk"){
-
-//        frappe.model.set_value(d.doctype, d.name, "sub_total_fee",( d.weight * d.fee));
-//    }
-
-//});
