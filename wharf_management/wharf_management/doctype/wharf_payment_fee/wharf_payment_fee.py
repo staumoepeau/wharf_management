@@ -13,7 +13,7 @@ from erpnext.accounts.party import get_party_account
 
 class WharfPaymentFee(Document):
 
-	def validate(self):
+#	def validate(self):
 #		self.check_duplicate_warrant_number()
 #		self.update_warrant()
 		
