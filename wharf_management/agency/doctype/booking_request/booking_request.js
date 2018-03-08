@@ -79,7 +79,7 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("security_documents", "hidden", 1);
         }
 
-        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User"){
+        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User")){
 
             cur_frm.set_df_property("grt", "hidden", 0);
         
