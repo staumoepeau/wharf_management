@@ -76,35 +76,41 @@ frappe.ui.form.on('Wharf Payment Fee', {
 
     },
     payment_method: function(frm) {
-        var today = new Date();
-        var dd = today.getDate();
+//        var today = new Date();
+//        var dd = today.getDate();
 
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        var hr = today.getHours();
-        var min = today.getMinutes();
-        if (dd < 10) {
-            dd = '0' + dd;
+//        var mm = today.getMonth() + 1;
+//        var yyyy = today.getFullYear();
+//        var hr = today.getHours();
+//        var min = today.getMinutes();
+//        if (dd < 10) {
+//            dd = '0' + dd;
+//        }
+
+//        if (mm < 10) {
+//            mm = '0' + mm;
+//        }
+//        today = hr + '' + min + '' + mm + '' + dd + '' + yyyy;
+
+//        if (frm.doc.payment_method == 'Credit') {
+//            cur_frm.set_df_property("credit_amount", "hidden", 0)
+//            cur_frm.set_df_property("credit_amount", "read_only", 1)
+//            cur_frm.set_df_property("deliver_empty", "hidden", 0)
+//            frm.set_value("credit_amount", frm.doc.total_amount)
+//            frm.set_value("total_amount", 0)
+//            frm.set_value("total_fee", 0)
+//            frm.set_value("custom_warrant", "ETY" + today)
+//            cur_frm.set_df_property("custom_warrant", "read_only", 1)
+//        } else {
+//            cur_frm.set_df_property("credit_amount", "hidden", 1)
+//            cur_frm.set_df_property("deliver_empty", "hidden", 1)
+//        }
+        if (frm.doc.payment_method) {
+            frm.set_value("paid_amount", frm.doc.total_amount)
+        
+
         }
 
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        today = hr + '' + min + '' + mm + '' + dd + '' + yyyy;
-
-        if (frm.doc.payment_method == 'Credit') {
-            cur_frm.set_df_property("credit_amount", "hidden", 0)
-            cur_frm.set_df_property("credit_amount", "read_only", 1)
-            cur_frm.set_df_property("deliver_empty", "hidden", 0)
-            frm.set_value("credit_amount", frm.doc.total_amount)
-            frm.set_value("total_amount", 0)
-            frm.set_value("total_fee", 0)
-            frm.set_value("custom_warrant", "ETY" + today)
-            cur_frm.set_df_property("custom_warrant", "read_only", 1)
-        } else {
-            cur_frm.set_df_property("credit_amount", "hidden", 1)
-            cur_frm.set_df_property("deliver_empty", "hidden", 1)
-        }
     },
 
     posting_date: function(frm) {
@@ -211,18 +217,42 @@ frappe.ui.form.on('Wharf Payment Fee', {
     },
 
     discount: function(frm) {
-        if (frm.doc.discount == "No") {
+        if (frm.doc.discount == "No" || frm.doc.discount == "") {
             frm.set_value("total_amount", frm.doc.total_fee);
+            frm.set_value("discount_amount", 0);
         } else if (frm.doc.discount == "Yes") {
-            frm.set_value("total_amount", (frm.doc.total_fee) - frm.doc.discount_amount);
+            frm.set_value("total_amount", (frm.doc.total_fee - frm.doc.discount_amount));
         }
     },
     discount_amount: function(frm) {
-        frm.set_value("total_amount", (frm.doc.total_fee) - frm.doc.discount_amount);
+        frm.set_value("total_amount", (frm.doc.total_fee - frm.doc.discount_amount));
+    },
+    paid_amount: function(frm){
+
+        if (frm.doc.total_amount > frm.doc.paid_amount){
+            frm.set_value("outstanding_amount", (frm.doc.total_amount - frm.doc.paid_amount));
+            frm.set_value("change_amount", 0.00)
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+
+
+        } 
+        if (frm.doc.total_amount < frm.doc.paid_amount){
+            frm.set_value("change_amount", (frm.doc.paid_amount - frm.doc.total_amount));
+            frm.set_value("outstanding_amount", 0.00);
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+        }
+        if (frm.doc.total_amount == frm.doc.paid_amount){
+            frm.set_value("change_amount", 0.00)
+            frm.set_value("outstanding_amount", 0.00);
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+        }
+
     },
 
 });
-
 
 frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];

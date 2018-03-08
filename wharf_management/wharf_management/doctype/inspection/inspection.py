@@ -14,18 +14,17 @@ class Inspection(Document):
 		self.validate_work_type()	
 		self.validate_crane_no()
 
-
 	def on_submit(self):
 
 #		self.check_duplicate_entries()
 
 		if self.final_work_type == "Discharged":
 			if self.secondary_work_type == "Re-stowing":
-				self.update_restowing_status()
+					self.update_restowing_status()
 			elif self.secondary_work_type == "Devanning":
     				self.update_final_status_devanning()
-				self.create_cargo_list_items()
-				self.create_pre_advice_list_items()
+					self.create_cargo_list_items()
+					self.create_pre_advice_list_items()
 			elif self.secondary_work_type != "Re-stowing" or self.secondary_work_type != "Devanning":
 					self.update_inspection_status()
 		

@@ -21,7 +21,6 @@ class BookingRequest(Document):
 	
 	def validate(self):
     		self.calculate_require_amount()
-
 	
 	def check_security_status(self):
 		if not self.security_status:

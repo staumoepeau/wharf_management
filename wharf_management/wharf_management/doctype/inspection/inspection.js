@@ -6,9 +6,6 @@ frappe.ui.form.on('Inspection', {
 
     },
     onload: function(frm) {
-
-        
-
         frappe.call({
             "method": "frappe.client.get",
             args: {
@@ -46,12 +43,9 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_df_property("bol", "read_only", 1);
                 cur_frm.set_df_property("container_no", "read_only", 1);
                 cur_frm.set_df_property("chasis_no", "read_only", 1);
-
-
             }
         })
-
-
+        
         if (frm.doc.work_type == "Loading"){
             cur_frm.set_df_property("inspection_images","hidden",1);
             cur_frm.set_df_property("cargo_condition","hidden",1);
