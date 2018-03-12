@@ -1488,7 +1488,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -3361,7 +3361,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-03-09 11:24:26.848588", 
+ "modified": "2018-03-12 05:22:51.904207", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo", 
