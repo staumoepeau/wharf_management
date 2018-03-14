@@ -23,7 +23,7 @@ class WharfPaymentFee(Document):
 #		self.update_export_status()
 		self.change_status()
 		self.make_payment()
-#		self.create_sales_invoices()
+		
 
 
 #	def check_duplicate_warrant_number(self):
@@ -35,8 +35,14 @@ class WharfPaymentFee(Document):
 
 		
 	def make_payment(self):
-    		if self.payment_method == 'Credit':
-    				self.make_credit_entries()
+		if self.payment_method == 'Credit':
+			self.create_sales_invoices_credit()
+    	
+		if self.payment_method == 'Credit' and self.work_type == 'Stock':
+				self.create_sales_invoices_credit_mty()
+		
+		if self.payment_method != 'Credit':
+			self.create_sales_invoices_paid()
 			
 #			if self.payment_method == 'Cash' || self.payment_method == 'Cheque':
 #    				self.make_cash_entries()
@@ -135,158 +141,208 @@ class WharfPaymentFee(Document):
 	def insert_fees(self):
 		fees=0
 
-		if self.cargo_type == 'Container':
-				strqty = self.storage_days_charged
-				item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
-												  "container_size" : self.container_size,
-												  "container_content" : self.container_content}, "item_name")
+		if self.work_type != 'Stock':
+			if self.cargo_type == 'Container':
+					strqty = self.storage_days_charged
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
+													"container_size" : self.container_size,
+													"container_content" : self.container_content}, "item_name")
 
-		if self.cargo_type != 'Container':
-				strqty = float(self.storage_days_charged * self.volume)
-				item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			if self.cargo_type != 'Container':
+					strqty = float(self.storage_days_charged * self.volume)
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 
-		vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
-		self.append("wharf_fee_item", { 
-			"item": item_name,
-			"description": vals.description,
-			"price": vals.standard_rate,
-			"qty": strqty,
-			"total": float(strqty * vals.standard_rate),
-			"income_account" : vals.income_accounts
+			vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
+			self.append("wharf_fee_item", { 
+				"item": item_name,
+				"description": vals.description,
+				"price": vals.standard_rate,
+				"qty": strqty,
+				"total": float(strqty * vals.standard_rate),
+				"income_account" : vals.income_accounts
+			})
+
+			if self.cargo_type == 'Container':
+					qty = 1
+					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
+														"container_size" : self.container_size}, "item_name")
+										
+			if self.cargo_type != 'Container':
+					qty = self.volume
+					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			
+			val = frappe.db.get_value("Item", item_name, ["description", "standard_rate" ,"income_account"], as_dict=True)
+			self.append("wharf_fee_item", { 
+				"item": item_name,
+				"description": val.description,
+				"price": val.standard_rate,
+				"qty": qty,
+				"total" : float(qty * val.standard_rate),
+				"income_account" : val.income_accounts
+			})
+			
+			if self.work_type=="Discharged" and self.secondary_work_type=="Devanning":
+					item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+					devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
+					fees = float(1 * devan.standard_rate)
+					self.append("wharf_fee_item", { 
+							"item": item_name,
+							"description": devan.description,
+							"price": devan.standard_rate,
+							"qty": "1",
+							"total": float(1 * devan.standard_rate),
+							"income_account" : devan.income_accounts	
+					})
+			if self.work_type=="Devanning":
+					item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+					devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate","income_account"], as_dict=True)
+					fees = float(1 * devan.standard_rate)
+					self.append("wharf_fee_item", { 
+							"item": item_name,
+							"description": devan.description,
+							"price": devan.standard_rate,
+							"qty": "1",
+							"total": float(1 * devan.standard_rate),
+							"income_account" : devan.income_accounts
+					})
+			if not self.secondary_work_type:
+					fees=0
+
+			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
+			self.total_amount = self.total_fee
+
+		elif self.work_type == 'Stock':
+			if self.cargo_type == 'Container':
+					strqty = self.storage_days_charged
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
+													"container_size" : self.container_size,
+													"container_content" : self.container_content}, "item_name")
+
+			if self.cargo_type != 'Container':
+					strqty = float(self.storage_days_charged * self.volume)
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+
+			vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
+			self.append("wharf_fee_item", { 
+				"item": item_name,
+				"description": vals.description,
+				"price": vals.standard_rate,
+				"qty": strqty,
+				"total": float(strqty * vals.standard_rate),
+				"income_account" : vals.income_accounts
+			})
+	
+			if not self.secondary_work_type:
+					fees=0
+
+			self.total_fee = float((vals.standard_rate * strqty)+(1 * fees))
+			self.total_amount = self.total_fee
+		
+#	def make_credit_entries(self, cancel=0, adv_adj=0):
+#   		from erpnext.accounts.general_ledger import make_gl_entries				
+#		gl_map = []
+#		cost_center = frappe.db.get_value("Company", "Ports Authority Tonga", "cost_center")	
+#		gl_map.append(
+#			frappe._dict({
+#				"posting_date": self.posting_date,
+#				"account": "Debtors - PAT",
+#				"account_currency": "TOP",
+#				"debit": self.credit_amount,
+#				"voucher_type": self.doctype,
+#				"voucher_no": self.name,
+#				"against": "Storage Fee - PAT",
+#				"party_type": "Customer",
+#				"party": self.agents,
+#				"cost_center" : "Operations - PAT"
+#			}))
+#		gl_map.append(
+#			frappe._dict({
+#				"posting_date": self.posting_date,
+#				"account": "Storage Fee - PAT",
+#				"credit": self.credit_amount,
+#				"voucher_type": self.doctype,
+#				"voucher_no": self.name,
+#				"against": self.agents,
+#				"cost_center" : "Operations - PAT"
+#			}))
+#		if gl_map:
+#			make_gl_entries(gl_map, cancel=(self.docstatus == 2))
+	
+	def create_sales_invoices_credit_mty(self):
+
+		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+		entries = sorted(list(items))
+		self.set('items', [])
+
+		doc = frappe.new_doc("Sales Invoice")
+		doc.customer = self.agents
+		doc.pms_ref = self.name
+
+		for d in entries:
+			item = doc.append('items', {
+			'item_code' : d.item,
+			'item_name' : d.item,
+			'description' : d.description,
+			'rate' : d.price,
+			'qty' : d.qty
+			})
+
+		doc.save(ignore_permissions=True)
+		doc.save()
+		doc.submit()
+
+	def create_sales_invoices_credit(self):
+
+		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+		entries = sorted(list(items))
+		self.set('items', [])
+
+		doc = frappe.new_doc("Sales Invoice")
+		doc.customer = self.consignee
+		doc.pms_ref = self.name
+
+		for d in entries:
+			item = doc.append('items', {
+			'item_code' : d.item,
+			'item_name' : d.item,
+			'description' : d.description,
+			'rate' : d.price,
+			'qty' : d.qty
+			})
+
+		doc.save(ignore_permissions=True)
+		doc.save()
+		doc.submit()
+
+	def create_sales_invoices_paid(self):
+
+		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+		entries = sorted(list(items))
+		self.set('items', [])
+
+		doc = frappe.new_doc("Sales Invoice")
+		doc.customer = self.consignee
+		doc.due_date = self.posting_date
+		doc.pms_ref = self.name
+		doc.is_pos = True
+
+		doc.paid_amount = self.total_amount
+		doc.base_paid_amount = self.total_amount
+		doc.outstanding_amount = 0
+		payments = doc.append('payments', {
+		'mode_of_payment': self.payment_method,
+		'amount' : self.total_amount
 		})
 
-		if self.cargo_type == 'Container':
-    			qty = 1
-			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
-												   "container_size" : self.container_size}, "item_name")
-								
-		if self.cargo_type != 'Container':
-    			qty = self.volume
-			item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
-	
-		val = frappe.db.get_value("Item", item_name, ["description", "standard_rate" ,"income_account"], as_dict=True)
-		self.append("wharf_fee_item", { 
-			"item": item_name,
-			"description": val.description,
-			"price": val.standard_rate,
-			"qty": qty,
-			"total" : float(qty * val.standard_rate),
-			"income_account" : val.income_accounts
-		})
-		
-		if self.work_type=="Discharged" and self.secondary_work_type=="Devanning":
-    			item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
-			devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
-			fees = float(1 * devan.standard_rate)
-			self.append("wharf_fee_item", { 
-					"item": item_name,
-					"description": devan.description,
-					"price": devan.standard_rate,
-					"qty": "1",
-					"total": float(1 * devan.standard_rate),
-					"income_account" : devan.income_accounts	
+		for d in entries:
+			item = doc.append('items', {
+			'item_code' : d.item,
+			'item_name' : d.item,
+			'description' : d.description,
+			'rate' : d.price,
+			'qty' : d.qty
 			})
-		if self.work_type=="Devanning":
-    			item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
-			devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate","income_account"], as_dict=True)
-			fees = float(1 * devan.standard_rate)
-			self.append("wharf_fee_item", { 
-					"item": item_name,
-					"description": devan.description,
-					"price": devan.standard_rate,
-					"qty": "1",
-					"total": float(1 * devan.standard_rate),
-					"income_account" : devan.income_accounts
-			})
-		if not self.secondary_work_type:
-    			fees=0
-
-		self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
-		self.total_amount = self.total_fee
 		
-	def make_credit_entries(self, cancel=0, adv_adj=0):
-    		from erpnext.accounts.general_ledger import make_gl_entries
-				
-		gl_map = []
-		cost_center = frappe.db.get_value("Company", "Ports Authority Tonga", "cost_center")	
-		gl_map.append(
-			frappe._dict({
-				"posting_date": self.posting_date,
-				"account": "Debtors - PAT",
-				"account_currency": "TOP",
-				"debit": self.credit_amount,
-				"voucher_type": self.doctype,
-				"voucher_no": self.name,
-				"against": "Storage Fee - PAT",
-				"party_type": "Customer",
-				"party": self.agents,
-				"cost_center" : "Operations - PAT"
-			}))
-		gl_map.append(
-			frappe._dict({
-				"posting_date": self.posting_date,
-				"account": "Storage Fee - PAT",
-				"credit": self.credit_amount,
-				"voucher_type": self.doctype,
-				"voucher_no": self.name,
-				"against": self.agents,
-				"cost_center" : "Operations - PAT"
-			}))
-
-		if gl_map:
-			make_gl_entries(gl_map, cancel=(self.docstatus == 2))
-
-	
-
-#	def create_sales_invoices(self):
-
-#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-#		entries = sorted(list(items))
-#		self.set('items', [])
-
-#		doc = frappe.new_doc("Sales Invoice")
-#		doc.customer = self.consignee
-#		doc.due_date = self.posting_date
-#		doc.ref = self.name
-#		doc.is_pos = True
-
-#		doc.paid_amount = self.total_amount
-#		doc.base_paid_amount = self.total_amount
-#		doc.outstanding_amount = 0
-#		payments = doc.append('payments', {
-#		'mode_of_payment': self.payment_method,
-#		'amount' : self.total_amount
-#		})
-
-#		for payment in get_mode_of_payment(doc):
-#			payments = doc.append('payments', {})
-#			payments.mode_of_payment = payment.parent
-#			payments.account = payment.default_account
-#			payments.type = payment.type
-#			payments.amount = self.paid_amount
-
-#		for d in entries:
-#			item = doc.append('items', {
-#			'item_code' : d.item,
-#			'item_name' : d.item,
-#			'description' : d.description,
-#			'uom' : "Nos",
-#			'rate' : d.price,
-#			'conversion_factor' : 1,
-#			'qty' : d.qty,
-#			'stock_qty' : d.qty * 1,
-#			'amount' : d.qty * d.price,
-#			'base_rate' : d.price,
-#			'base_amount' : d.qty * d.price,
-#			'cost_center' : 'Operations - PAT',
-#			'income_account' : d.income_account
-#			})
-		
-#		doc.save(ignore_permissions=True)
-#		doc.save()
-#		doc.submit()
-
-#@frappe.whitelist()
-#def get_mode_of_payment(doc):
-#	return frappe.db.sql(""" select mpa.default_account, mpa.parent, mp.type as type from `tabMode of Payment Account` mpa,
-#		 `tabMode of Payment` mp where mpa.parent = mp.name and mpa.company = %(company)s""", {'company': doc.company}, as_dict=1)
+		doc.save(ignore_permissions=True)
+		doc.save()
+		doc.submit()

@@ -4,7 +4,6 @@
 
 frappe.ui.form.on('Wharf Payment Fee', {
 
-
     setup: function(frm) {
         frm.get_field('wharf_fee_item').grid.editable_fields = [
             { fieldname: 'item', columns: 2 },
@@ -75,24 +74,27 @@ frappe.ui.form.on('Wharf Payment Fee', {
     refresh: function(frm) {
 
     },
+
     payment_method: function(frm) {
-//        var today = new Date();
-//        var dd = today.getDate();
+        var today = new Date();
+        var dd = today.getDate();
 
-//        var mm = today.getMonth() + 1;
-//        var yyyy = today.getFullYear();
-//        var hr = today.getHours();
-//        var min = today.getMinutes();
-//        if (dd < 10) {
-//            dd = '0' + dd;
-//        }
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var hr = today.getHours();
+        var min = today.getMinutes();
+        var sec = today.getSeconds();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
 
-//        if (mm < 10) {
-//            mm = '0' + mm;
-//        }
-//        today = hr + '' + min + '' + mm + '' + dd + '' + yyyy;
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = hr + '' + min + '' + mm + '' + sec;
+//        today = hr + '' + min + '' + mm + '' + sec + '' + dd + '' + yyyy;
 
-//        if (frm.doc.payment_method == 'Credit') {
+//        if (frm.doc.payment_method == 'Credit' || frm.doc.work_type == 'Stock') {
 //            cur_frm.set_df_property("credit_amount", "hidden", 0)
 //            cur_frm.set_df_property("credit_amount", "read_only", 1)
 //            cur_frm.set_df_property("deliver_empty", "hidden", 0)
@@ -108,6 +110,15 @@ frappe.ui.form.on('Wharf Payment Fee', {
         if (frm.doc.payment_method) {
             frm.set_value("paid_amount", frm.doc.total_amount)
         }
+        
+        if (frm.doc.payment_method == 'Credit' && frm.doc.work_type == 'Stock') {
+            frm.set_value("custom_warrant", "ETY" + today)
+        }
+
+        if (frm.doc.payment_method != 'Credit') {
+            frm.set_value("custom_warrant", "")
+        }
+
     },
 
     posting_date: function(frm) {
