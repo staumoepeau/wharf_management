@@ -325,6 +325,7 @@ class WharfPaymentFee(Document):
 		doc.due_date = self.posting_date
 		doc.pms_ref = self.name
 		doc.is_pos = True
+		doc.status = "Paid"
 
 		doc.paid_amount = self.total_amount
 		doc.base_paid_amount = self.total_amount

@@ -6,11 +6,12 @@ frappe.ui.form.on('Gate1 Item Count', {
 
 	},
 	onload: function(frm) {
+
 		
 				frappe.call({
 					"method": "frappe.client.get",
 					args: {
-						doctype: "Pre Advice",
+						doctype: "Cargo",
 						name: frm.doc.cargo_ref,
 						filters: {
 							'docstatus': 1,
