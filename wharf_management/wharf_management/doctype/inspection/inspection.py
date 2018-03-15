@@ -43,8 +43,8 @@ class Inspection(Document):
 		if self.final_work_type == "Stock":
 			self.create_empty_on_cargo()
 
-
-#		if self.final_work_type == "Discharged":
+		if self.final_work_type == "Discharged":
+			self.update_inspection_status()
 #			if self.secondary_work_type == "Re-stowing":
 #					self.update_restowing_status()
 #			elif self.secondary_work_type == "Devanning":
