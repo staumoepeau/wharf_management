@@ -3,7 +3,6 @@
 
 frappe.ui.form.on('Cargo', {
 
-
     onload: function(frm) {
 
 

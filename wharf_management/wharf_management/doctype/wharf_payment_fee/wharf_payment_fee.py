@@ -58,7 +58,7 @@ class WharfPaymentFee(Document):
     		if self.bulk_payment == 'Yes':
         				frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes", bulk_payment_code=%s where name=%s""", (self.bulk_payment_code, self.cargo_ref))
 
-    		if not self.status:
+    		if self.status != 'Paid':
     				self.status == 'Paid'
 		
 	def update_payment_status(self):
@@ -347,3 +347,13 @@ class WharfPaymentFee(Document):
 		doc.save(ignore_permissions=True)
 		doc.save()
 		doc.submit()
+
+	def refund_sales(self):
+		item_name = frappe.db.get_value("Sales Invoice", {"pms_ref": self.name}, "name")
+
+		frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
+		frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
+		frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+		frappe.db.sql("""delete from `tabWharf Payment Fee` where name = %s """, (self.name), as_dict=1)
+		frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
+		
