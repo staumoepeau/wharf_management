@@ -19,11 +19,16 @@ class Inspection(Document):
 #		self.check_duplicate_entries()
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Stock":
 			self.create_empty_container()
-
-		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning":
+		
+		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Loading":
 			self.update_final_status_devanning()
 			self.create_cargo_list_items()
 			self.create_pre_advice_list_items()
+
+#		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning":
+#			self.update_final_status_devanning()
+#			self.create_cargo_list_items()
+			
 
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing":
 			self.update_restowing_status()
@@ -45,6 +50,7 @@ class Inspection(Document):
 
 		if self.final_work_type == "Discharged":
 			self.update_inspection_status()
+
 #			if self.secondary_work_type == "Re-stowing":
 #					self.update_restowing_status()
 #			elif self.secondary_work_type == "Devanning":
@@ -391,7 +397,8 @@ class Inspection(Document):
 				})
 		doc.insert()
 		doc.submit()
-	
+		
+#	Create EMPTY Container for Loading after Devanning
 	def create_pre_advice_list_items(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
@@ -411,7 +418,7 @@ class Inspection(Document):
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
-					"work_type" : "Stock",
+					"work_type" : "Loading",
 		#			"secondary_work_type" : val.secondary_work_type,
 		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,

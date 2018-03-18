@@ -19,7 +19,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") && frm.doc.docstatus == 1
             )) {
                 
-                frm.add_custom_button(__('Return'), function() {
+                frm.add_custom_button(__('Refund Sale'), function() {
                     frappe.call({
                         method: "refund_sales",
                         doc: frm.doc,
@@ -28,7 +28,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
                             console.log(refund);
                         }
                     });
-                }).addClass("btn-primary");
+                },__("Make"));
         }
 
         frappe.call({

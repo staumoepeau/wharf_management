@@ -350,10 +350,16 @@ class WharfPaymentFee(Document):
 
 	def refund_sales(self):
 		item_name = frappe.db.get_value("Sales Invoice", {"pms_ref": self.name}, "name")
+		cargo_refrence = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, "name")
+		gate_status = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, "gate1_status")
 
-		frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
-		frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
-		frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-		frappe.db.sql("""delete from `tabWharf Payment Fee` where name = %s """, (self.name), as_dict=1)
-		frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
+		if gate_status == "Open":
+			frappe.db.sql("""Update `tabCargo` set payment_status="Open" where name = %s """, (cargo_refrence), as_dict=1)
+			frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
+			frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
+			frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+			frappe.db.sql("""Update `tabWharf Payment Fee` set docstatus=2 where name = %s """, (self.name), as_dict=1)
+			frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
 		
+		if gate_status != "Open":
+			frappe.throw(_("Sorry You cannot Cancel this transaction Check with your Supervisor first"))
