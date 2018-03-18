@@ -21,7 +21,7 @@ class Inspection(Document):
 			self.create_empty_container()
 		
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Loading":
-			self.update_final_status_devanning()
+#			self.update_final_status_devanning()
 			self.create_cargo_list_items()
 			self.create_pre_advice_list_items()
 
@@ -30,25 +30,25 @@ class Inspection(Document):
 #			self.create_cargo_list_items()
 			
 
-		if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing":
+		if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing" and not self.third_work_type:
 			self.update_restowing_status()
 
-		if self.final_work_type == "Devanning":
+		if self.final_work_type == "Devanning" and not self.secondary_work_type and not self.third_work_type:
 			self.update_inspection_status()
 
-		if self.final_work_type == "Loading":
+		if self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type:
 			self.check_empty_container()
 			self.create_cargo_item()
 			self.update_final_status()
 
-		if self.final_work_type == "Re-stowing":
+		if self.final_work_type == "Re-stowing" and not self.secondary_work_type and not self.third_work_type:
 			self.create_restow_cargo()
 			self.update_final_status()
 		
-		if self.final_work_type == "Stock":
+		if self.final_work_type == "Stock" and not self.secondary_work_type and not self.third_work_type:
 			self.create_empty_on_cargo()
 
-		if self.final_work_type == "Discharged":
+		if self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type:
 			self.update_inspection_status()
 
 #			if self.secondary_work_type == "Re-stowing":
@@ -397,7 +397,7 @@ class Inspection(Document):
 				})
 		doc.insert()
 		doc.submit()
-		
+
 #	Create EMPTY Container for Loading after Devanning
 	def create_pre_advice_list_items(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",

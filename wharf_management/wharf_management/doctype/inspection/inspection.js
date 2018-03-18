@@ -6,6 +6,8 @@ frappe.ui.form.on('Inspection', {
 
     },
     onload: function(frm) {
+        frm.refresh();
+
         frappe.call({
             "method": "frappe.client.get",
             args: {
@@ -28,6 +30,7 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
                 cur_frm.set_value("final_work_type", data.message["work_type"]);
+                cur_frm.set_value("third_work_type", data.message["third_work_type"]);
                 cur_frm.set_value("cargo_type", data.message["cargo_type"]);
                 cur_frm.set_value("mark", data.message["mark"]);
                 
@@ -43,6 +46,7 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_df_property("bol", "read_only", 1);
                 cur_frm.set_df_property("container_no", "read_only", 1);
                 cur_frm.set_df_property("chasis_no", "read_only", 1);
+                cur_frm.set_df_property("third_work_type", "read_only", 1);
             }
         })
         
