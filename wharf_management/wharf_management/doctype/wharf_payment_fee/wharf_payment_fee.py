@@ -368,7 +368,7 @@ class WharfPaymentFee(Document):
 			frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
 			frappe.db.sql("""Update `tabWharf Payment Fee` set docstatus=2 where name = %s """, (self.name), as_dict=1)
 			frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
-			frappe.throw(_("Transaction had been Cancel!"))
+	#		frappe.throw(_("Transaction had been Cancel!"))
 		
 		if gate_status != "Open":
 			frappe.throw(_("Sorry You cannot Cancel this transaction Check with your Supervisor first"))

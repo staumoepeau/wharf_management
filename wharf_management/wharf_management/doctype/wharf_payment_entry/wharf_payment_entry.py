@@ -17,11 +17,7 @@ class WharfPaymentEntry(Document):
 
     	def on_submit(self):
 #			self.update_payment_status()
-			self.make_entries()
-			
-			
-#		def update_payment_status(self):
-				
+			self.make_entries()	
 
 
     	def make_entries(self, cancel=0, adv_adj=0):
