@@ -5,9 +5,8 @@ frappe.ui.form.on('Export', {
 
     refresh: function(frm) {
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
-                frm.doc.status == "Export" &&
-                frm.doc.docstatus == 1
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
+                frm.doc.status == "Export" && frm.doc.docstatus == 1
             )) {
 
             frm.add_custom_button(__('Main Gate'), function() {
@@ -19,7 +18,7 @@ frappe.ui.form.on('Export', {
             }).addClass("btn-warning");
 
         }
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.status == "Main Gate" &&
                 frm.doc.docstatus == 1
             )) {

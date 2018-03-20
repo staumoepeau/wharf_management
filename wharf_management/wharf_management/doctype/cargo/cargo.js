@@ -48,9 +48,11 @@ frappe.ui.form.on('Cargo', {
         if (frappe.user.has_role("Wharf Operation Manifest User") || frappe.user.has_role("System Manager")) {
             cur_frm.set_df_property("cargo_status", "read_only", 0);
             cur_frm.set_df_property("status_section", "read_only", 0);
+            cur_frm.set_df_property("empty_details", "hidden", 0)
         }else {
             cur_frm.set_df_property("cargo_status", "read_only", 1);
             cur_frm.set_df_property("status_section", "read_only", 1);
+            cur_frm.set_df_property("empty_details", "hidden", 1)
 
         }
 
@@ -281,6 +283,26 @@ frappe.ui.form.on('Cargo', {
                     }
                 })
             }
+        }
+    },
+    manifest_check: function(frm){
+
+        if ((frm.doc.container_content == "EMPTY") && (frm.doc.work_type == "Loading")){
+            if (frm.doc.manifest_check == "Confirm"){
+                return frappe.call({
+                    method: "get_storage_fee",
+                    doc: frm.doc,
+                    callback: function(get_storage_fee) {
+ //                       frm.refresh_fields();
+ //                       cur_frm.set_value("storage_fee", get_storage_fee);
+                        console.log(get_storage_fee);
+                    }
+                });
+            }else if (frm.doc.manifest_check != "Confirm"){
+                cur_frm.set_value("storage_fee", 0);
+            }
+        }else if (frm.doc.container_content == "FULL"){
+            cur_frm.set_value("storage_fee", 0);   
         }
     },
 

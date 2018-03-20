@@ -38,13 +38,24 @@ frappe.ui.form.on('Booking Request', {
         }
 
         if (((frm.doc.payment_status != "Paid")) && (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
-            frm.add_custom_button(__('Create Payment'), function() {
-                frappe.route_options = {
-                    "booking_ref": frm.doc.name
-                }
-                frappe.new_doc("Wharf Payment Entry");
-                frappe.set_route("Form", "Wharf Payment Entry", doc.name);
+            frm.add_custom_button(__('Make Payment'), function() {
+                return frappe.call({
+                    method: "create_sales_invoices",
+                    doc: frm.doc,
+                    callback: function(sales_invoices) {
+                        frm.refresh_fields();
+                        console.log(sales_invoices);
+                    }
+                });
+                
+//                frappe.route_options = {
+//                    "booking_ref": frm.doc.name
+//                }
+//                frappe.new_doc("Wharf Payment Entry");
+//                frappe.set_route("Form", "Wharf Payment Entry", doc.name);
             }).addClass("btn-success");
+            frappe.throw("You cannot makes changes to this item.");
+            frappe.set_route("List", "Booking Request");
 
         }
         var Current_User = user
@@ -87,6 +98,15 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("grt", "hidden", 1);
         }
 
+
+    },
+    mode_of_payment: function(frm){
+
+        if (frm.doc.mode_of_payment == "Credit") {
+            cur_frm.set_value("paid_amount", 0)
+        }else if (frm.doc.mode_of_payment != "Credit") {
+            cur_frm.set_value("paid_amount", frm.doc.total_amount)
+        }
 
     },
 

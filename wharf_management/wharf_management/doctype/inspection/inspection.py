@@ -37,9 +37,12 @@ class Inspection(Document):
 			self.update_inspection_status()
 
 		if self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type:
-			self.check_empty_container()
+#			value = frappe.db.get_value("Export", {"container_no": self.container_no}, ["gate1_start"])
+
+			
 			self.create_cargo_item()
 			self.update_final_status()
+			self.check_empty_container()
 
 		if self.final_work_type == "Re-stowing" and not self.secondary_work_type and not self.third_work_type:
 			self.create_restow_cargo()
@@ -175,11 +178,14 @@ class Inspection(Document):
 		doc.insert()
 		doc.submit()
 
+#	Create EMPTY Container in Cargo for Handling Fee	
 	def create_cargo_item(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+		
+#		vals = frappe.db.get_value("Export", {"container_no": self.container_no}, ["gate1_start"], as_dict=True)
 		doc = frappe.new_doc("Cargo")
 		doc.update({
 	#				"company" : self.company,
@@ -226,6 +232,7 @@ class Inspection(Document):
 					"payment_status" : "Closed",
 					"gate1_status" : "Closed",
 					"gate2_status" : "Closed"
+#					"gate1_in" : vals.gate1_start
 				})
 		doc.insert()
 		doc.submit()
@@ -288,12 +295,15 @@ class Inspection(Document):
 		doc.insert()
 		doc.submit()
 	
-	#Create EMPTY Container on Cargo
+	#Create EMPTY Container on Cargo for STOCK
 	def create_empty_on_cargo(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+
+		
+
 		doc = frappe.new_doc("Cargo")
 		doc.update({
 	#				"company" : self.company,
@@ -506,6 +516,7 @@ class Inspection(Document):
 
 	def check_empty_container(self):
     		container_number=None
+		vals = frappe.db.get_value("Pre Advice", {"container_no": self.container_no, "name" : self.cargo_ref}, ["booking_ref", "name"], as_dict=True)
 		container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s """, (self.container_no))
 
 		if container_number:
@@ -533,5 +544,7 @@ class Inspection(Document):
 			doc.insert()
 			doc.submit()
 
+#			frappe.throw(_("Gate 1 {0}").format(vals.gate1_start))
 			frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
+			frappe.db.sql("""Update `tabCargo` set gate1_in=%s, maingate_in=%s where container_no=%s and booking_ref=%s """, (val.gate1_start, val.main_gate_start, self.container_no, vals.booking_ref ))
 			frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
