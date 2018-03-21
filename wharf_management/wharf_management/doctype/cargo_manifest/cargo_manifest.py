@@ -28,7 +28,7 @@ class CargoManifest(Document):
 		def get_manifest(self):
 			condition = ""
 			cargo_manifest_table = frappe.db.sql("""select name as cargo_refrence, container_no, bol, cargo_type,
-			work_type, container_size, container_content, status, voyage_no, booking_ref from `tabCargo` where booking_ref = %s and final_status in ("Discharged","Loading")""",(self.booking_ref), as_dict=1)
+			work_type, container_size, container_content, status, voyage_no, booking_ref, storage_fee, handling_fee, manifest_check from `tabCargo` where booking_ref = %s and manifest_check='Confirm'""",(self.booking_ref), as_dict=1)
 
 			manifest_entries = sorted(list(cargo_manifest_table))
 
@@ -44,6 +44,9 @@ class CargoManifest(Document):
 					'status':f.status,
 					'container_size':f.container_size,
 					'voyage_no':f.voyage_no,
+					'handling_fee' : f.handling_fee,
+					'storage_fee' : f.storage_fee,
+					'manifest_check': f.manifest_check,
 					'booking_ref':f.booking_ref,
 					'cargo_refrence': f.cargo_refrence
 					

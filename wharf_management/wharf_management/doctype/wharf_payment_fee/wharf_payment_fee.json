@@ -160,7 +160,7 @@
    "read_only": 0, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 0, 
+   "reqd": 1, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 0
@@ -2100,7 +2100,7 @@
    "read_only": 0, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 0, 
+   "reqd": 1, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 1
@@ -2326,7 +2326,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-03-17 05:50:31.265976", 
+ "modified": "2018-03-21 00:57:17.342741", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Wharf Payment Fee", 

@@ -21,9 +21,11 @@ class Inspection(Document):
 			self.create_empty_container()
 		
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Loading":
-#			self.update_final_status_devanning()
+			
 			self.create_cargo_list_items()
 			self.create_pre_advice_list_items()
+			self.update_final_status_devanning()
+#			self.update_inspection_status_pre_advice()
 
 #		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning":
 #			self.update_final_status_devanning()
