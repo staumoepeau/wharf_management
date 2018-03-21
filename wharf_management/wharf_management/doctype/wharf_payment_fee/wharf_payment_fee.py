@@ -285,6 +285,7 @@ class WharfPaymentFee(Document):
 		doc = frappe.new_doc("Sales Invoice")
 		doc.customer = self.agents
 		doc.pms_ref = self.name
+		doc.due_date = self.posting_date
 
 		for d in entries:
 			item = doc.append('items', {
