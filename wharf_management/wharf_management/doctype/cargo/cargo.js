@@ -5,12 +5,12 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-
         if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
             cur_frm.set_df_property("custom_warrant", "hidden", 1);
         } else {
             cur_frm.set_df_property("custom_warrant", "hidden", 0);
         }
+
 
         if (frappe.user.has_role("Wharf Operation Manifest User")) {
 
@@ -34,6 +34,9 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("gate2_status", "read_only", 0);
             cur_frm.set_df_property("final_status", "read_only", 0);
             cur_frm.set_df_property("status", "read_only", 0);
+            cur_frm.set_df_property("final_eta", "hidden", 0);
+            cur_frm.set_df_property("final_etd", "hidden", 0);
+            
 
         } else{
             cur_frm.set_df_property("inspection_status", "read_only", 1);
@@ -43,6 +46,8 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("gate2_status", "read_only", 1);
             cur_frm.set_df_property("final_status", "read_only", 1);
             cur_frm.set_df_property("status", "read_only", 1);
+            cur_frm.set_df_property("final_eta", "hidden", 1);
+            cur_frm.set_df_property("final_etd", "hidden", 1);
         }
         
         if (frappe.user.has_role("Wharf Operation Manifest User") || frappe.user.has_role("System Manager")) {

@@ -42,7 +42,7 @@ class BookingRequest(Document):
 			working_hours = int(round(td.total_seconds() / 60 / 60 ))
 
 			self.working_hours = working_hours
-			self.berthed_half_amount = float(float(working_hours) * float(self.grt) * 0.13)
+			self.berthed_half_amount = float(float(working_hours) * float(self.grt) * 0.1296)
 			self.total_amount = (float(self.berthed_half_amount) + float(self.require_amount))/2
 	
 	def create_sales_invoices(self):

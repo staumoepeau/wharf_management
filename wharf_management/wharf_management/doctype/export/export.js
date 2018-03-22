@@ -5,6 +5,19 @@ frappe.ui.form.on('Export', {
 
     refresh: function(frm) {
 
+        if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Cashier"))){
+            cur_frm.set_df_property("export_payment", "hidden", 0);
+            } else {
+            cur_frm.set_df_property("export_payment", "hidden", 1);
+        }
+        if (frappe.user.has_role("System Manager")){
+            cur_frm.set_df_property("export_movement", "hidden", 0);
+
+            } else {
+            cur_frm.set_df_property("export_movement", "hidden", 1);
+
+        }
+
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
                 frm.doc.status == "Export" && frm.doc.docstatus == 1
             )) {
@@ -49,6 +62,38 @@ frappe.ui.form.on('Export', {
         cur_frm.add_fetch('container_type', 'size', 'container_size');
         cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
 
+
+    },
+
+    load: function(frm){
+
+
+    },
+    apply_wharfage_fee: function(frm){
+
+        frappe.call({
+            "method": "frappe.client.get",
+            args: {
+                doctype: "Wharfage Fee",
+                filters: {
+                    cargo_type: frm.doc.cargo_type,
+                    container_size: frm.doc.container_size
+                }
+            },
+            callback: function(data) {
+                cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
+            }
+        })
+
+    },
+    apply_vgm_fee: function(frm){
+
+        if (frm.doc.container_size == 20){
+            cur_frm.set_value("vgm_fee", 77.05);         
+
+        } else if (frm.doc.container_size == 40){
+            cur_frm.set_value("vgm_fee", (77.05*2));
+        }
 
     }
 });

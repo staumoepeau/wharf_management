@@ -69,9 +69,17 @@ class WharfPaymentFee(Document):
 #    				frappe.db.sql("""Update `tabCargo` set export_status="Paid" where name=%s""", (self.cargo_ref))
 
 	def get_working_days(self):
+		
+		val = frappe.db.get_value("Cargo", self.cargo_ref, ["final_eta"], as_dict=True)
+#		val = frappe.db.get_value("Cargo", {"name" : self.cargo_ref}, "final_eta")
 
-		holidays = self.get_holidays(self.eta_date, self.posting_date)
-		working_days = date_diff(self.posting_date, self.eta_date)
+		if not val.final_eta:
+			eta = self.eta_date
+		if val.final_eta:
+			eta = val.final_eta
+
+		holidays = self.get_holidays(eta, self.posting_date)
+		working_days = date_diff(self.posting_date, eta)
 		working_days -= len(holidays)
 		return working_days
 
