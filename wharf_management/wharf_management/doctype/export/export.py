@@ -10,7 +10,7 @@ import datetime
 class Export(Document):
 	
 	def on_submit(self):
-		if self.payment_status == "Paid" and self.container_content == "FULL":
+		if self.paid_status == "Paid" and self.container_content == "FULL":
 			self.create_sales_invoices_paid()
 
 	def create_sales_invoices_paid(self):
