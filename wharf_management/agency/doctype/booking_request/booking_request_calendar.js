@@ -8,8 +8,8 @@ frappe.views.calendar["Booking Request"] = {
 		"end": "etd_date",
 		"id": "name",
 		"title": "vessel",
-		"allDay": "allDay",
-		"status": "status"
+		"allDay": "allDay"
+//		"status": "status"
 	},
 	gantt: true,
 //	filters: [

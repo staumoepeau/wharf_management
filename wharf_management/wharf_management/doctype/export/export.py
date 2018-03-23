@@ -10,33 +10,45 @@ import datetime
 class Export(Document):
 	
 	def on_submit(self):
-		self.create_sales_invoices_paid()
+		if self.payment_status == "Paid" and self.container_content == "FULL":
+			self.create_sales_invoices_paid()
 
 	def create_sales_invoices_paid(self):
 
+		item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+		dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+
 		doc = frappe.new_doc("Sales Invoice")
 		doc.customer = self.customer
-		doc.due_date = datetime.date.today()
-#		doc.pms_ref = self.name
+		doc.due_date = self.posting_date
+		doc.export_ref = self.name
 		doc.is_pos = True
 		doc.status = "Paid"
 
-		doc.paid_amount = self.total_amount
-		doc.base_paid_amount = self.total_amount
+		doc.paid_amount = self.total_fee
+		doc.base_paid_amount = self.total_fee
 		doc.outstanding_amount = 0
 		payments = doc.append('payments', {
 		'mode_of_payment': self.payment_method,
-		'amount' : self.total_amount
+		'amount' : self.total_fee
 		})
 
 		item = doc.append('items', {
-		'item_code' : d.item,
-		'item_name' : d.item,
-		'description' : d.description,
-		'rate' : d.price,
-		'qty' : d.qty
+		'item_code' : item,
+		'item_name' : item,
+		'description' : dc.description,
+		'rate' : dc.standard_rate,
+		'qty' : 1
 		})
-		
+
+		if self.apply_vgm_fee:
+			item = doc.append('items', {
+			'item_code' : "VGM",
+			'item_name' : "VGM",
+			'description' : "VGM Fee",
+			'rate' : self.vgm_fee,
+			'qty' : 1
+			})
+			
 		doc.save(ignore_permissions=True)
-		doc.save()
 		doc.submit()

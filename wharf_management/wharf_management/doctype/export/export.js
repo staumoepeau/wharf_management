@@ -71,20 +71,35 @@ frappe.ui.form.on('Export', {
     },
     apply_wharfage_fee: function(frm){
 
-        frappe.call({
-            "method": "frappe.client.get",
-            args: {
-                doctype: "Wharfage Fee",
-                filters: {
-                    cargo_type: frm.doc.cargo_type,
-                    container_size: frm.doc.container_size
+        if ((frm.doc.cargo_type == "Container") || (frm.doc.cargo_type == "Flatrack")){
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Wharfage Fee",
+                    filters: {
+                        cargo_type: frm.doc.cargo_type,
+                        container_size: frm.doc.container_size
+                    }
+                },
+                callback: function(data) {
+                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
                 }
-            },
-            callback: function(data) {
-                cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
-            }
-        })
-
+            })
+        } else if (frm.doc.cargo_type != "Container") {
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Wharfage Fee",
+                    filters: {
+                        cargo_type: frm.doc.cargo_type,
+                    }
+                },
+                callback: function(data) {
+                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
+                }
+            })
+        }
+        calculate_total_fee(frm);
     },
     apply_vgm_fee: function(frm){
 
@@ -95,5 +110,37 @@ frappe.ui.form.on('Export', {
             cur_frm.set_value("vgm_fee", (77.05*2));
         }
 
-    }
+        calculate_total_fee(frm);
+    },
+
+    clear_fee: function(frm){
+        
+  
+        cur_frm.set_value("total_fee", "");
+        cur_frm.set_value("vgm_fee", 0);
+        cur_frm.set_value("wharfage_fee", "")
+
+
+        cur_frm.set_value("apply_wharfage_fee", 0)
+        cur_frm.set_value("apply_vgm_fee", 0)
+        
+    },
+
 });
+
+var calculate_total_fee = function(frm){
+    total_fee = 0;
+    if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 1){
+        total_fee = frm.doc.vgm_fee + frm.doc.wharfage_fee
+    
+    }else if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 0){
+        total_fee = frm.doc.wharfage_fee
+    
+    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 1){
+        total_fee = frm.doc.vgm_fee
+   
+    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 0){
+        total_fee = 0
+    }
+    cur_frm.set_value("total_fee", total_fee);
+}
