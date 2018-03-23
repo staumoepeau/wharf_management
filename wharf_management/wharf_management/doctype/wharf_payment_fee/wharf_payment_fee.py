@@ -149,7 +149,7 @@ class WharfPaymentFee(Document):
 	def insert_fees(self):
 		fees=0
 
-		if self.work_type != 'Stock':
+		if self.work_type != 'Stock' and self.container_content != 'EMPTY':
 			if self.cargo_type == 'Container' or self.cargo_type == 'Tank Tainers' or self.cargo_type == 'Flatrack':
 					strqty = self.storage_days_charged
 					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
@@ -227,7 +227,7 @@ class WharfPaymentFee(Document):
 			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
 			self.total_amount = self.total_fee
 
-		elif self.work_type == 'Stock':
+		elif ((self.work_type == 'Stock' or self.work_type == 'Discharged') and self.container_content == 'EMPTY'):
 			if self.cargo_type == 'Container':
 					strqty = self.storage_days_charged
 					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
