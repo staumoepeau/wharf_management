@@ -70,16 +70,16 @@ class WharfPaymentFee(Document):
 
 	def get_working_days(self):
 		
-		val = frappe.db.get_value("Cargo", self.cargo_ref, ["final_eta"], as_dict=True)
+#		val = frappe.db.get_value("Cargo", self.cargo_ref, ["final_eta"], as_dict=True)
 #		val = frappe.db.get_value("Cargo", {"name" : self.cargo_ref}, "final_eta")
 
-		if not val.final_eta:
-			eta = self.eta_date
-		if val.final_eta:
-			eta = val.final_eta
+#		if not val.final_eta:
+#			eta = self.eta_date
+#		if val.final_eta:
+#			eta = val.final_eta
 
-		holidays = self.get_holidays(eta, self.posting_date)
-		working_days = date_diff(self.posting_date, eta)
+		holidays = self.get_holidays(self.eta, self.posting_date)
+		working_days = date_diff(self.posting_date, self.eta)
 		working_days -= len(holidays)
 		return working_days
 
