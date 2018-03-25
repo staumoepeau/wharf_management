@@ -81,30 +81,30 @@ frappe.ui.form.on('Pre Advice', {
                     frm.add_custom_button(__('Inspection'), function() {
 
               //Check Export Container for Unpaid Fees first
-                        frappe.call({
-                            "method": "frappe.client.get",
-                            args: {
-                                doctype: "Export",
-                                filters: {
-                                    container_no: frm.doc.container_no,
-                                }
-                            },
-                            callback: function(data) {
+//                        frappe.call({
+//                            "method": "frappe.client.get",
+//                            args: {
+//                                doctype: "Export",
+//                                filters: {
+//                                    container_no: frm.doc.container_no,
+//                                }
+//                            },
+//                            callback: function(data) {
 
-                                if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Paid")){
+//                                if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Paid")){
                                     
                                     frappe.route_options = {
                                         "cargo_ref": frm.doc.name
                                     }
                                     frappe.new_doc("Inspection");
                                     frappe.set_route("Form", "Inspection", doc.name);
-                                }
-                                if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Unpaid")){
-                                    frappe.throw("Please check this Container for UNPAID Fees.")
+//                                }
+//                                if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Unpaid")){
+//                                    frappe.throw("Please check this Container for UNPAID Fees.")
 
-                                }
-                            }
-                        })
+//                                }
+//                            }
+ //                       })
 
                         
 

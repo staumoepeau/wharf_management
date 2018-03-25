@@ -6,7 +6,7 @@ frappe.ui.form.on('Inspection', {
 
     },
     onload: function(frm) {
-        frm.refresh();
+//        frm.refresh();
 
         frappe.call({
             "method": "frappe.client.get",
