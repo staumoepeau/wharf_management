@@ -11,7 +11,7 @@
  "idx": 0, 
  "is_standard": 1, 
  "message": "<div>\n<h2>Booking Ref : {{ doc.name }}</h2>\n</div>\n<p>This is a Notification for a Booking Requested by {{ frappe.db.get_value(\"User\", doc.owner, \"full_name\") }}\n</p>\n<p>Booking Details:\n<ul>\n<li>Voyage No : {{ doc.voyage_no }}</li>\n<li>ETA: {{ doc.eta_date }} - {{ doc.eta_time }}</li>\n<li>Vessel: {{ doc.vessel }}</li>\n<li>Vessel Type: {{ doc.vessel_type }}</li>\n<li>STATUS: {{ doc.status }}</li>\n</ul>\n<br>\n<p>\nYour Booking is Pending Approval from the Port Master. You will be notify again if the status of your Booking change.\n<hr>\n<p style=\"font-size: 85%\">\nThank you for using Ports Authority Tonga - Port Management System\n</p>", 
- "modified": "2018-03-08 21:38:21.732524", 
+ "modified": "2018-03-27 22:29:33.244352", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Booking Requested", 

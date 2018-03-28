@@ -14,20 +14,18 @@ from time import mktime
 
 
 class BookingRequest(Document):
-    	
-
 	def on_submit(self):
 		self.check_security_status()
 	
 	def validate(self):
-    		self.calculate_require_amount()
+		self.calculate_half_amount()
 	
 	def check_security_status(self):
 		if not self.security_status:
 			frappe.throw(_("Please make sure that Port Security have Review this Booking Request Documents").format(self.security_status))
 
 
-	def calculate_require_amount(self):
+	def calculate_half_amount(self):
 #    		working_days = date_diff(self.etd_date, self.eta_date)
 #			working_hours = int(working_days * 24)
 
@@ -42,8 +40,26 @@ class BookingRequest(Document):
 			working_hours = int(round(td.total_seconds() / 60 / 60 ))
 
 			self.working_hours = working_hours
-			self.berthed_half_amount = float(float(working_hours) * float(self.grt) * 0.1296)
-			self.total_amount = (float(self.berthed_half_amount) + float(self.require_amount))/2
+
+			if self.vessel_type == "OIL TANKER":
+				grt_tariff = 0.0436
+				handling_fee = 0
+
+			if self.vessel_type == "LPG TANKER":
+				grt_tariff = 0.1392
+				handling_fee = 0
+
+			if self.vessel_type == "CRUISE":
+				grt_tariff = 0.0393
+				handling_fee = 0
+
+			if self.vessel_type == "Cargo":
+				grt_tariff = 0.1296
+				handling_fee = self.require_amount
+
+			self.berthed_half_amount = float(float(working_hours) * float(self.grt) * grt_tariff)
+			self.total_amount = (float(self.berthed_half_amount) + float(handling_fee))/2
+
 	
 	def create_sales_invoices(self):
 

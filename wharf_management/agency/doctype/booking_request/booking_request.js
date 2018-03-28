@@ -99,6 +99,15 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("grt", "hidden", 1);
         }
 
+        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")){
+
+            cur_frm.set_df_property("mode_of_payment", "hidden", 0);
+            cur_frm.set_df_property("paid_amount", "hidden", 0);
+        
+        } else{
+            cur_frm.set_df_property("mode_of_payment", "hidden", 1);
+            cur_frm.set_df_property("paid_amount", "hidden", 1);
+        }
 
     },
     mode_of_payment: function(frm){
