@@ -93,7 +93,8 @@ def get_data():
 			"items": [
 				{
 					"type": "doctype",
-					"name": "Pilot"
+					"name": "Pilot Log",
+					"description": _("Pilot Log Details."),
 				},
 			]
 		},

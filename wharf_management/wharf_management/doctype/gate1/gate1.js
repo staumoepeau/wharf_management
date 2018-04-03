@@ -6,6 +6,9 @@ frappe.ui.form.on('Gate1', {
         frm.add_fetch('truck_licenses_plate', 'company', 'company');
 
     },
+    on_submit: function(frm){
+        frm.reload_doc()
+    },
 
     onload: function(frm) {
 

@@ -5,6 +5,10 @@ frappe.ui.form.on('Inspection', {
     refresh: function(frm) {
 
     },
+        
+    on_submit: function(frm){
+        frm.reload_doc()
+    },
     onload: function(frm) {
 //        frm.refresh();
 

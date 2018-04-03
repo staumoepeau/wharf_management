@@ -45,7 +45,9 @@ frappe.ui.form.on('Booking Request', {
                     callback: function(sales_invoices) {
                         frm.refresh_fields();
                         console.log(sales_invoices);
+                        frm.reload_doc()
                     }
+                   
                 });
                 
 //                frappe.route_options = {
@@ -56,7 +58,8 @@ frappe.ui.form.on('Booking Request', {
             }).addClass("btn-success");
 //            frappe.throw("You cannot makes changes to this item.");
 //            frappe.set_route("List", "Booking Request");
-
+//            cur_frm.refresh();
+        
         }
         var Current_User = user
         if ((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) {

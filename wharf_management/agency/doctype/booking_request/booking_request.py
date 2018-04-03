@@ -85,16 +85,17 @@ class BookingRequest(Document):
 		'mode_of_payment': self.mode_of_payment,
 		'amount' : paid_amount
 		})
+		if self.vessel_type == "Cargo":
+			item = doc.append('items', {
+				'item_code' : "HANDLING",
+				'item_name' : "HANDLING FEE",
+				'description' : "Handling Fee",
+				'rate' : (self.require_amount)/2,
+				'qty' : "1"
+			})
 		item = doc.append('items', {
-			'item_code' : "Handling Fee",
-			'item_name' : "Handling Fee",
-			'description' : "Handling Fee",
-			'rate' : (self.require_amount)/2,
-			'qty' : "1"
-		})
-		item = doc.append('items', {
-			'item_code' : "Berthed",
-			'item_name' : "Berthed",
+			'item_code' : "BERTHED",
+			'item_name' : "BERTHED FEE",
 			'description' : "Berthed Fee",
 			'rate' : (self.berthed_half_amount)/2,
 			'qty' : "1"
