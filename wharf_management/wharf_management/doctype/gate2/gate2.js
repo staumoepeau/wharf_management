@@ -14,7 +14,8 @@ frappe.ui.form.on('Gate2', {
 							doctype: "Cargo",
 							name: frm.doc.cargo_ref,
 							filters: {
-								'docstatus' : 1
+								'docstatus' : 1,
+								'gate2_status': "Open"
 							},	
 						},
 						callback: function (data) {
