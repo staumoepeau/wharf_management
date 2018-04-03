@@ -156,28 +156,36 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <div class="panel">
-                {%- for label, value in ( (_("Payment Method"), doc.payment_method), (_("Bulk Payment"), doc.bulk_payment), (_("Deliver Empty"), doc.deliver_empty) ) -%}
-                <div class="row">
-                    <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
-                    <div class="col-xs-6">{{ value }}</div>
-                </div>
-
-                {%- endfor -%}
-            </div>
+              
+                    <div class="col-xs-6 text-right"><label>{{ _("Payment Method") }}</label></div>
+                    <div class="row">
+                    <div class="col-xs-6 text-left">{{ doc.payment_method }}</div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-6 text-right"><label>{{ _("Bulk Payment") }}</label></div>
+                    <div class="col-xs-6 text-left">{{ doc.bulk_payment }}</div>
+                    </div> <div class="row">
+                    <div class="col-xs-6 text-right"><label>{{ _("Delivery Empty") }}</label></div>
+                    <div class="col-xs-6 text-left">{{ doc.deliver_empty }}</div>
+                    </div>
+                
         </div>
 
         <div class="col-xs-6">
-            <div class="panel">
-                {%- for label, value in ( (_("Custom Warrant No"),doc.custom_warrant), (_("Delivery Code"), doc.custom_code), (_("Delivery Information"), doc.delivery_code) ) -%}
                 <div class="row">
-
-                    <div class="col-xs-6"><label class="text-right">{{ label }}</label></div>
-                    <div class="col-xs-6">{{ value }}</div>
-
+                <div class="col-xs-6 text-right"><label>{{ _("Custom Warrant No") }}</label></div>
+                <div class="col-xs-6 text-left">{{ doc.custom_warrant }}</div>
                 </div>
-                {%- endfor -%}
-            </div>
+                <div class="row">
+                <div class="col-xs-6 text-right"><label>{{ _("Delivery Code") }}</label></div>
+                <div class="col-xs-6 text-left">{{ doc.custom_code }}</div>
+                </div>
+                <div class="row">
+                <div class="col-xs-6 text-right"><label>{{ _("Delivery Information") }}</label></div>
+                <div class="col-xs-6 text-left">{{ doc.delivery_code }}</div>    
+                </div>
+
+           
         </div>
     </div>
     <hr>

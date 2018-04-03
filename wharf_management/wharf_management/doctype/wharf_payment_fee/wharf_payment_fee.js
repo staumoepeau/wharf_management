@@ -189,7 +189,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
     },
 
     custom_code: function(frm) {
-        if (frm.doc.custom_code == "DDL") {
+        if (frm.doc.custom_code == "MTY") {
+            frm.set_value("delivery_code", "EMPTY DELIVERY")
+        } else if (frm.doc.custom_code == "DDL") {
             frm.set_value("delivery_code", "DIRECT DELIVERY")
         } else if (frm.doc.custom_code == "DDLW") {
             frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
@@ -199,15 +201,37 @@ frappe.ui.form.on('Wharf Payment Fee', {
             frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
         }else if (frm.doc.custom_code == "SPLIT-PORT") {
             frm.set_value("delivery_code", "SPLIT-PORT")
+        } else if (!frm.doc.custom_code) {
+            frm.set_value("delivery_code", "")
         }
        
-        if (frm.doc.bulk_payment == "Yes") {
-            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
-                //frm.set_value("custom_warrant", 0)
-            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
-            frm.refresh_fields("custom_warrant");
-        }
+//        if (frm.doc.bulk_payment == "Yes") {
+//            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
+//                frm.set_value("custom_warrant", 0)
+//            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
+//           frm.refresh_fields("custom_warrant");
+//        }
 
+    },
+    deliver_empty: function(frm){
+        if (frm.doc.deliver_empty=="Yes"){
+            cur_frm.set_df_property("custom_warrant", "read_only", 1)
+        
+        }else if (frm.doc.deliver_empty=="No"){
+            cur_frm.set_df_property("custom_warrant", "read_only", 0)
+        }
+    },
+
+    different_warrant: function(frm){
+        if (frm.doc.different_warrant == "No"){
+            frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
+            cur_frm.set_df_property("bulk_payment_code", "read_only", 1)
+
+        }else if (frm.doc.different_warrant == "Yes"){
+            cur_frm.set_df_property("bulk_payment_code", "read_only", 0)
+            frm.set_value("bulk_payment_code", "")
+
+        }
     },
 
     insert_fees_button: function(frm) {

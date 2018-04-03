@@ -259,6 +259,17 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
+					"name": "Cargo Movement",
+					"doctype": "Cargo Movement"
+				},
+			]
+		},
+		{
+			"label": _("Reports"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
 					"name": "Vessels Report",
 					"doctype": "Vessels Report"
 				},

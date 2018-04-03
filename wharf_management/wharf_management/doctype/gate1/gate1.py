@@ -23,6 +23,7 @@ class Gate1(Document):
 		self.update_status()
 		self.update_export_status()
 		self.update_not_export_status()
+		self.update_cargo_movement()
 
 
 		
@@ -58,4 +59,30 @@ class Gate1(Document):
 	def update_export_status(self):		
 			if self.status == 'Export':
 	   				frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
-    				
+
+
+	def update_cargo_movement(self):
+
+		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","agents","container_type","container_size","consignee","container_content","cargo_description"], as_dict=True)
+
+		doc = frappe.new_doc("Cargo Movement")
+		doc.update({
+					"docstatus" : 1,
+					"pat_code" : val.pat_code,
+					"cargo_type" : val.cargo_type,
+					"container_no" : val.container_no,
+					"work_type" : self.work_type,
+					"agents" : val.agents,
+					"container_type" : val.container_type,
+					"container_size" : val.container_size,
+					"consignee" : val.consignee,
+					"container_content" : val.container_content,
+					"cargo_description" : val.cargo_description,
+					"gate_status" : "OUT",
+					"movement_date" : self.modified,
+					"truck" : self.truck_licenses_plate,
+					"truck_driver" : self.drivers_information,
+					"ref": self.name
+				})
+		doc.insert()
+		doc.submit()

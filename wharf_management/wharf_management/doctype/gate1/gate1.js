@@ -30,25 +30,40 @@ frappe.ui.form.on('Gate1', {
                 cur_frm.set_value("cargo_description", data.message["cargo_description"]);
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
+                cur_frm.set_value("container_content", data.message["container_content"]);
+                cur_frm.set_value("work_type", data.message["work_type"]);
                 
 
                 if (frm.doc.bulk_payment == "Yes") {
                     cur_frm.set_value("warrant_no", data.message["custom_warrant"]);
                     cur_frm.set_df_property("warrant_no", "read_only", 1);
+                    cur_frm.set_df_property("bulk_payment", "read_only", 1);
+                    cur_frm.set_df_property("bulk_payment", "hidden", 0);
+                } else {
+                    cur_frm.set_df_property("bulk_payment", "hidden", 1);
                 }
-
+               
                 cur_frm.set_df_property("cargo_ref", "read_only", 1);
                 cur_frm.set_df_property("container_no", "read_only", 1);
                 cur_frm.set_df_property("customer", "read_only", 1);
                 cur_frm.set_df_property("delivery_code", "read_only", 1);
                 cur_frm.set_df_property("custom_code", "read_only", 1);
                 cur_frm.set_df_property("custom_warrant", "read_only", 1);
-                cur_frm.set_df_property("bulk_payment", "read_only", 1);
+              
                 cur_frm.set_df_property("cargo_type", "read_only", 1);
                 cur_frm.set_df_property("cargo_description", "read_only", 1);
                 cur_frm.set_df_property("chasis_no", "read_only", 1);
+                cur_frm.set_df_property("container_content", "read_only", 1);
+
+                cur_frm.set_df_property("status", "hidden", 1);
+                cur_frm.set_df_property("work_type", "hidden", 1);
                 
 
+                if ((frm.doc.cargo_type == "Loose Cargo") || (frm.doc.cargo_type == "Break Bulk")){
+                    cur_frm.set_df_property("qty", "hidden", 0);
+                } else {
+                    cur_frm.set_df_property("qty", "hidden", 1);
+                }
 
 
             }

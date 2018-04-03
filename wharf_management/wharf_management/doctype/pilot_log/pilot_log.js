@@ -1,8 +1,8 @@
-// Copyright (c) 2017, Sione Taumoepeau and contributors
+// Copyright (c) 2018, Sione Taumoepeau and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Pilot', {
-    refresh: function(frm) {
+frappe.ui.form.on('Pilot Log', {
+	refresh: function(frm) {
 
     },
 

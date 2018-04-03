@@ -90,6 +90,11 @@ class PreAdvice(Document):
 
 #			frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
 
+	def check_export_container(self):
+		check_duplicate = None
+		check_duplicate = frappe.db.sql("""Select container_no from `tabExport` where container_no=%s having count(container_no) > 1""", (self.container_no))
+
+		return check_duplicate
 
 	def devanning_create_vehicles(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",

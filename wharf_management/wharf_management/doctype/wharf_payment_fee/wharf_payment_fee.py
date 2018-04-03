@@ -23,15 +23,23 @@ class WharfPaymentFee(Document):
 #		self.update_export_status()
 		self.change_status()
 		self.make_payment()
-		
+		self.check_duplicate_warrant_number()
+		self.check_warrant_number()
+
+	
+	def check_warrant_number(self):
+		if self.deliver_empty != "Yes":
+			if not self.custom_warrant:
+				frappe.msgprint(_("Custom Warrant Number is Required"), raise_exception=True)
 
 
-#	def check_duplicate_warrant_number(self):
-#		check_duplicate = None
-#		check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWharf Payment Fee` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
+	def check_duplicate_warrant_number(self):
+		check_duplicate = None
+		check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWharf Payment Fee` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
 		
-#		if check_duplicate:
-#			frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
+		if self.bulk_payment != "Yes":
+			if check_duplicate:
+				frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 		
 	def make_payment(self):
@@ -347,6 +355,10 @@ class WharfPaymentFee(Document):
 
 		doc.paid_amount = self.total_amount
 		doc.base_paid_amount = self.total_amount
+		
+		if self.discount_amount:
+			doc.discount_amount = self.discount_amount
+		
 		doc.outstanding_amount = 0
 		payments = doc.append('payments', {
 		'mode_of_payment': self.payment_method,
