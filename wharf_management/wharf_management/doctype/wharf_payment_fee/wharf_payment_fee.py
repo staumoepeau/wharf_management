@@ -43,7 +43,7 @@ class WharfPaymentFee(Document):
 
 		
 	def make_payment(self):
-		if self.payment_method == 'Credit':
+		if self.payment_method == 'Credit' and self.work_type != 'Stock':
 			self.create_sales_invoices_credit()
     	
 		if self.payment_method == 'Credit' and self.work_type == 'Stock':

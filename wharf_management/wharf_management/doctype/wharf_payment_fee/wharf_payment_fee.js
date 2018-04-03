@@ -126,9 +126,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
             frm.set_value("paid_amount", frm.doc.total_amount)
         }
         
-        if (frm.doc.payment_method == 'Credit' && frm.doc.work_type == 'Stock') {
-            frm.set_value("custom_warrant", "ETY" + today)
-        }
+//        if (frm.doc.payment_method == 'Credit' && frm.doc.work_type == 'Stock') {
+//            frm.set_value("custom_warrant", "ETY" + today)
+//       }
 
         if (frm.doc.payment_method != 'Credit') {
             frm.set_value("custom_warrant", "")
