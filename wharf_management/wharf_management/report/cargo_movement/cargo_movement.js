@@ -29,9 +29,9 @@ frappe.query_reports["Cargo Movement"] = {
 //		{
 //			"fieldname":"status",
 //			"label": __("Status"),
-//			"fieldtype": "Link",
-//			"options": "status"
+//			"fieldtype": "Select",
+//			"options": ["IN", "OUT"]
 //		},
-//
+
 	]
 }

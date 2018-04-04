@@ -82,7 +82,10 @@ class Gate1(Document):
 					"movement_date" : self.modified,
 					"truck" : self.truck_licenses_plate,
 					"truck_driver" : self.drivers_information,
-					"ref": self.name
+					"ref": self.name,
+					"chasis_no" : val.chasis_no,
+					"mark" : val.mark,
+					"qty" : val.qty
 				})
 		doc.insert()
 		doc.submit()

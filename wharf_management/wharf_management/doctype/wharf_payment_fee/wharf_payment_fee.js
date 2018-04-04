@@ -14,6 +14,13 @@ frappe.ui.form.on('Wharf Payment Fee', {
         ];
     },
 
+//    validate: function(frm){
+//        if (frm.doc.posting_date < get_today()) {
+//            frappe.msgprint(__("You can not select past date as the Posting Date"));
+//            frappe.validated = false;
+//        }
+//    },
+
     onload: function(frm) {
            
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") && frm.doc.docstatus == 1
@@ -137,43 +144,50 @@ frappe.ui.form.on('Wharf Payment Fee', {
     },
 
     posting_date: function(frm) {
-        frappe.call({
-            method: "get_working_days",
-            doc: frm.doc,
-            callback: function(r) {
-                frm.set_value("storage_days", r.message);
+
+        if (frm.doc.posting_date < frm.doc.eta_date) {
+            frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
+            frappe.validated = false;
+        } else {
+
+            frappe.call({
+                method: "get_working_days",
+                doc: frm.doc,
+                callback: function(r) {
+                    frm.set_value("storage_days", r.message);
+                }
+
+            })
+
+            if (frm.doc.cargo_type == "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Storage Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                            container_size: frm.doc.container_size,
+                            container_content: frm.doc.container_content
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("free_storage_days", data.message["grace_days"]);
+                    }
+                })
+            } else if (frm.doc.cargo_type != "Container") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Storage Fee",
+                        filters: {
+                            cargo_type: frm.doc.cargo_type,
+                        }
+                    },
+                    callback: function(data) {
+                        cur_frm.set_value("free_storage_days", data.message["grace_days"]);
+                    }
+                })
             }
-
-        })
-
-        if (frm.doc.cargo_type == "Container") {
-            frappe.call({
-                "method": "frappe.client.get",
-                args: {
-                    doctype: "Storage Fee",
-                    filters: {
-                        cargo_type: frm.doc.cargo_type,
-                        container_size: frm.doc.container_size,
-                        container_content: frm.doc.container_content
-                    }
-                },
-                callback: function(data) {
-                    cur_frm.set_value("free_storage_days", data.message["grace_days"]);
-                }
-            })
-        } else if (frm.doc.cargo_type != "Container") {
-            frappe.call({
-                "method": "frappe.client.get",
-                args: {
-                    doctype: "Storage Fee",
-                    filters: {
-                        cargo_type: frm.doc.cargo_type,
-                    }
-                },
-                callback: function(data) {
-                    cur_frm.set_value("free_storage_days", data.message["grace_days"]);
-                }
-            })
         }
     },
 
