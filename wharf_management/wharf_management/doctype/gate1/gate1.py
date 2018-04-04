@@ -63,7 +63,7 @@ class Gate1(Document):
 
 	def update_cargo_movement(self):
 
-		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","agents","container_type","container_size","consignee","container_content","cargo_description"], as_dict=True)
+		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","agents","container_type","container_size", "chasis_no", "mark", "qty", "consignee","container_content","cargo_description"], as_dict=True)
 
 		doc = frappe.new_doc("Cargo Movement")
 		doc.update({
