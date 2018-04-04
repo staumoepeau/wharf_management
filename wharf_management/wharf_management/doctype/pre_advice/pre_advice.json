@@ -1371,7 +1371,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -3006,7 +3006,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-03-20 17:25:45.657754", 
+ "modified": "2018-04-04 20:33:01.284958", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Pre Advice", 
