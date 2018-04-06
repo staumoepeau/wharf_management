@@ -156,7 +156,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             callback: function(r) {
                 console.log(r);
                 frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
-                frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty * dc.weight));
+                frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.weight));
                 calculate_total_amount(frm);
             }
         });
