@@ -158,23 +158,28 @@ class WharfPaymentFee(Document):
 		fees=0
 
 		if self.work_type != 'Stock' and self.container_content != 'EMPTY':
+			if self.cargo_type == 'Vehicles':
+					strqty = self.storage_days_charged
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			
+			if self.cargo_type == 'Split Ports':
+					strqty = self.storage_days_charged
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			
 			if self.cargo_type == 'Container' or self.cargo_type == 'Tank Tainers' or self.cargo_type == 'Flatrack':
 					strqty = self.storage_days_charged
 					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
 													"container_size" : self.container_size,
 													"container_content" : self.container_content}, "item_name")
-
-			if self.cargo_type == 'Vehicles':
-					strqty = self.storage_days_charged
-					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 			
 			if self.cargo_type == 'Heavy Vehicles' or self.cargo_type == 'Break Bulk' or self.cargo_type == 'Loose Cargo':
 					if self.volume > self.weight:
 						strqty = float(self.storage_days_charged * self.volume)
 					if self.volume < self.weight:
 						strqty = float(self.storage_days_charged * self.weight)
-					
 					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			
+			
 
 			vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
 			self.append("wharf_fee_item", { 
