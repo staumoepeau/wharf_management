@@ -145,10 +145,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
 
     posting_date: function(frm) {
 
-        if (frm.doc.posting_date < frm.doc.eta_date) {
-            frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
-            frappe.validated = false;
-        } else {
+  //      if (frm.doc.posting_date < frm.doc.eta_date) {
+  //          frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
+  //          frappe.validated = false;
+  //      } else {
 
             frappe.call({
                 method: "get_working_days",
@@ -188,7 +188,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
                     }
                 })
             }
-        }
+  //      }
     },
 
     free_storage_days: function(frm) {
