@@ -14,16 +14,26 @@ class Gate2(Document):
 	
 	def on_submit(self):
 		self.update_gate2_status()
-		self.update_export_status()
+#		self.update_export_status()
+		self.update_cargo_movement()
 	
 	def update_gate2_status(self):
-#    		if self.status != "Export":
    			frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', yard_slot=NULL, status='Gate Out' where name=%s""", (self.cargo_ref))
 	
 #	def update_yard(self):
 #			frappe.db.sql("""Delete `tabCargo` where name=%s""", (self.cargo_ref))
 			
-	def update_export_status(self):		
-			if self.status == 'Export':
-    				frappe.db.sql("""Update `tabCargo` set export_status="Main Gate", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
-    				
+#	def update_export_status(self):		
+#			if self.status == 'Export':
+#   				frappe.db.sql("""Update `tabCargo` set export_status="Main Gate", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
+	
+	def update_cargo_movement(self):
+
+		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","custom_code"], as_dict=True)
+		
+		if val.custom_code == "MTY" or val.custom_code == "DLWS":
+			gate_content = "EMPTY"
+		if val.custom_code != "DLWS":
+			gate_content = "FULL"
+
+		frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.cargo_ref))

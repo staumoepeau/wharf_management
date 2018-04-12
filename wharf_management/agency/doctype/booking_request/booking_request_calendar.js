@@ -9,16 +9,14 @@ frappe.views.calendar["Booking Request"] = {
 		"id": "name",
 		"title": "vessel",
 		"allDay": "allDay"
-//		"status": "status"
 	},
 	gantt: true,
-//	filters: [
-//		{
-//			"fieldtype": "Link",
-//			"fieldname": "project",
-//			"options": "Project",
-//			"label": __("Project")
-//		}
-//	],
-	get_events_method: "frappe.desk.calendar.get_events"
+	filters: [
+		{
+			"fieldtype": "Data",
+			"fieldname": "voyage_no",
+			"label": __("Voyage No")
+		}
+	],
+	get_events_method: "wharf_management.agency.calendar.get_events"
 }

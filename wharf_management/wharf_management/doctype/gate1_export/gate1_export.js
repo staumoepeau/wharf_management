@@ -36,6 +36,7 @@ frappe.ui.form.on('Gate1 Export', {
 								},	
 							},
 							callback: function (data) {
+									cur_frm.set_value("export_ref", data.message["name"]);
 									cur_frm.set_value("cargo_type", data.message["cargo_type"]);
 									cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 									cur_frm.set_value("container_type", data.message["container_type"]);

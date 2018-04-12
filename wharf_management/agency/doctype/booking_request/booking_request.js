@@ -111,6 +111,20 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("mode_of_payment", "hidden", 1);
             cur_frm.set_df_property("paid_amount", "hidden", 1);
         }
+        if (frm.doc.vessel_type == "Cargo"){
+            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
+            cur_frm.set_df_property("section_break_57", "hidden", 0);
+            cur_frm.set_df_property("section_break_54", "hidden", 0);
+            cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
+            cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
+        } else{
+            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 1)
+            cur_frm.set_df_property("section_break_57", "hidden", 1);
+            cur_frm.set_df_property("section_break_54", "hidden", 1);
+            cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
+            cur_frm.set_df_property("cargo_ops_start_date", "hidden", 1);
+
+        }
 
     },
     mode_of_payment: function(frm){
@@ -133,6 +147,20 @@ frappe.ui.form.on('Booking Request', {
             callback: function(data) {
                 console.log(data);
                 cur_frm.set_value("vessel_type", data.message["vessel_type"])
+                if (data.message["vessel_type"] == "Cargo"){
+                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
+                    cur_frm.set_df_property("section_break_57", "hidden", 0);
+                    cur_frm.set_df_property("section_break_54", "hidden", 0);
+                    cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
+                    cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
+                } else{
+                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 1)
+                    cur_frm.set_df_property("section_break_57", "hidden", 1);
+                    cur_frm.set_df_property("section_break_54", "hidden", 1);
+                    cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
+                    cur_frm.set_df_property("cargo_ops_start_date", "hidden", 1);
+
+                }
                 cur_frm.set_value("grt", data.message["vessel_gross_tonnage"])
             }
         })

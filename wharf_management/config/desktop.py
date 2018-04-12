@@ -9,18 +9,18 @@ def get_data():
 			"color": "blue",
 			"icon": "fa fa-gear",
 			"type": "module",
-			"label": _("PMS")
+			"label": _("Ports Management")
 		},
 		{
 			"module_name": "Agency",
-			"color": "blue",
+			"color": "red",
 			"icon": "fa fa-ship",
 			"type": "module",
 			"label": _("Agency")
 		},
 		{
 			"module_name": "Freight Forwarder",
-			"color": "blue",
+			"color": "green",
 			"icon": "fa fa-cubes",
 			"type": "module",
 			"label": _("Freight Forwarder")

@@ -49,7 +49,7 @@ class WharfPaymentFee(Document):
 		if self.payment_method == 'Credit' and self.work_type == 'Stock':
 				self.create_sales_invoices_credit_mty()
 		
-		if self.payment_method != 'Credit':
+		if self.payment_method != 'Credit' and self.bulk_payment != 'Yes':
 			self.create_sales_invoices_paid()
 			
 #			if self.payment_method == 'Cash' || self.payment_method == 'Cheque':
@@ -342,7 +342,6 @@ class WharfPaymentFee(Document):
 			})
 
 		doc.save(ignore_permissions=True)
-		doc.save()
 		doc.submit()
 
 	def create_sales_invoices_paid(self):
@@ -380,7 +379,6 @@ class WharfPaymentFee(Document):
 			})
 		
 		doc.save(ignore_permissions=True)
-		doc.save()
 		doc.submit()
 
 	def refund_sales(self):

@@ -27,11 +27,11 @@ frappe.ui.form.on('Bulk Payment', {
     },
     refresh: function(frm) {
 
-        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
-        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
-        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
-        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
-        cur_frm.add_fetch('booking_ref', 'labour_requirements', 'labour_requirements');
+ //       cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
+ //       cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
+ //       cur_frm.add_fetch('booking_ref', 'agents', 'agents');
+ //       cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
+ //       cur_frm.add_fetch('booking_ref', 'labour_requirements', 'labour_requirements');
         //cur_frm.add_fetch('booking_ref','gear_requirements','gear_requirements');
         //	cur_frm.add_fetch('booking_ref','crew_transport','crew_transport');
 
@@ -66,7 +66,15 @@ frappe.ui.form.on('Bulk Payment', {
     },
     discount_amount: function(frm) {
         frm.set_value("total_amount", frm.doc.total_fee - frm.doc.discount_amount);
-    }
+    },
+    payment_method: function(frm) {
+
+        if (frm.doc.payment_method) {
+            frm.set_value("paid_amount", frm.doc.total_amount)
+        } else if (!frm.doc.payment_method) {
+            frm.set_value("paid_amount", "")
+        }
+    },
 
 });
 

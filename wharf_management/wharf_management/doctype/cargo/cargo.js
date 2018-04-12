@@ -5,12 +5,17 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
-            cur_frm.set_df_property("custom_warrant", "hidden", 1);
-        } else {
-            cur_frm.set_df_property("custom_warrant", "hidden", 0);
-        }
+//        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
+//            cur_frm.set_df_property("custom_warrant", "hidden", 1);
+//        } else {
+//            cur_frm.set_df_property("custom_warrant", "hidden", 0);
+//        }
 
+        if (frappe.user.has_role("System Manager")) {
+            cur_frm.set_df_property("custom_warrant", "hidden", 0);
+        } else {
+            cur_frm.set_df_property("custom_warrant", "hidden", 1);
+        }
 
         if (frappe.user.has_role("Wharf Operation Manifest User")) {
 
@@ -98,7 +103,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
-            cur_frm.set_df_property("custom_warrant", "hidden", 1);
+ //           cur_frm.set_df_property("custom_warrant", "hidden", 1);
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name

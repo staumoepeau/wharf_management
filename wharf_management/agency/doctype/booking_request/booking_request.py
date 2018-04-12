@@ -107,3 +107,23 @@ class BookingRequest(Document):
 
 		frappe.db.sql("""Update `tabBooking Request` set payment_status="Paid" , workflow_state="Booking Paid" where name=%s""", (self.name))
 		frappe.clear_cache(doctype="Booking Request") 
+
+@frappe.whitelist()
+def get_events(doctype, start, end, field_map, filters=None, fields=None):
+	field_map = frappe._dict(json.loads(field_map))
+
+	if filters:
+		filters = json.loads(filters or '')
+
+	if not fields:
+		fields = [field_map.start, field_map.end, field_map.title, 'name']
+
+	start_date = "ifnull(%s, '0000-00-00 00:00:00')" % field_map.start
+	end_date = "ifnull(%s, '2199-12-31 00:00:00')" % field_map.end
+
+	filters += [
+		[doctype, start_date, '<=', end],
+		[doctype, end_date, '>=', start],
+	]
+
+	return frappe.get_list(doctype, fields=fields, filters=filters)

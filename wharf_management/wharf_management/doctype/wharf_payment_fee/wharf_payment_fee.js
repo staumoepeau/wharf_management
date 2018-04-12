@@ -211,8 +211,8 @@ frappe.ui.form.on('Wharf Payment Fee', {
             frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
         } else if (frm.doc.custom_code == "IDL") {
             frm.set_value("delivery_code", "INSPECTION DELIVERY")
-        } else if (frm.doc.custom_code == "IDLW") {
-            frm.set_value("delivery_code", "INSPECTION DELIVERY WAREHOUSE")
+        } else if (frm.doc.custom_code == "DLWS") {
+            frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
         }else if (frm.doc.custom_code == "SPLIT-PORT") {
             frm.set_value("delivery_code", "SPLIT-PORT")
         } else if (!frm.doc.custom_code) {
