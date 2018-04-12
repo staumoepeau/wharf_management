@@ -19,6 +19,9 @@ class MainGateExport(Document):
 	def update_cargo_movement(self):
 
 		val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["name","cargo_type","container_no","agents","container_type","container_size","container_content","cargo_description"], as_dict=True)
+		if not val.cargo_type:
+			if val.container_content == "EMPTY" or val.container_content == "FULL":
+				val.cargo_type == "Container"
 
 		doc = frappe.new_doc("Cargo Movement")
 		doc.update({
@@ -29,10 +32,11 @@ class MainGateExport(Document):
 					"container_type" : val.container_type,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
-					"container_content" : val.container_content,
+					"main_gate_content" : val.container_content,
 					"cargo_description" : val.cargo_description,
-					"gate_status" : "IN",
-					"movement_date" : self.modified,
+					"main_gate_status" : "IN",
+					"main_gate_date" : self.modified,
+					"main_gate_time" : self.modified,
 					"truck" : self.truck_licenses_plate,
 					"truck_driver" : self.drivers_information,
 					"refrence": val.name

@@ -30,7 +30,7 @@ frappe.ui.form.on('Gate1 Export', {
 				"method": "frappe.client.get",
 							args: {
 								doctype: "Export",
-								container_no: frm.doc.container_no,
+								name: frm.doc.export_ref,
 								filters: {
 									'docstatus': 1
 								},	

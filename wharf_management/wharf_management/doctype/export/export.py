@@ -8,10 +8,19 @@ from frappe.model.document import Document
 import datetime
 
 class Export(Document):
+
+	def validate(self):
+		self.validate_status()
 	
 	def on_submit(self):
 		if self.paid_status == "Paid" and self.container_content == "FULL":
 			self.create_sales_invoices_paid()
+	
+
+	def validate_status(self):
+		if self.paid_status == "Paid" and not self.container_content:
+			frappe.throw(_("Please make sure that Container Content id FULL or EMPTY"))
+
 
 	def create_sales_invoices_paid(self):
 

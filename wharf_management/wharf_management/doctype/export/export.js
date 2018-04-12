@@ -38,6 +38,7 @@ frappe.ui.form.on('Export', {
 
             frm.add_custom_button(__('Gate1'), function() {
                 frappe.route_options = {
+                    "export_ref": frm.doc.name,
                     "container_no": frm.doc.container_no
                 }
                 frappe.new_doc("Gate1 Export");
