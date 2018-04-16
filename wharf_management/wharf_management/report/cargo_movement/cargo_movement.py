@@ -51,8 +51,8 @@ def get_cargo_movement_data(filters, columns):
 
 def get_conditions(filters):
 	conditions = "1=1"
-	if filters.get("from_date"): conditions += " and main_gate_date >= %(from_date)s"
-	if filters.get("to_date"): conditions += " and main_gate_date <= %(to_date)s"
+	if filters.get("from_date"): conditions += " and movement_date >= %(from_date)s"
+	if filters.get("to_date"): conditions += " and movement_date <= %(to_date)s"
 	if filters.get("status"): conditions += " and status = %(status)s"
 #	if filters.get("owner"): conditions += " and a.owner = %(owner)s"
 #	if filters.get("pos_profile"): conditions += " and a.is_pos = %(pos_profile)s"

@@ -33,6 +33,8 @@ class Inspection(Document):
 #			self.update_final_status_devanning()
 #			self.create_cargo_list_items()
 			
+		if self.final_work_type == "Discharged" and self.secondary_work_type == "Transhipment" and not self.third_work_type:
+			self.update_restowing_status()
 
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing" and not self.third_work_type:
 			self.update_restowing_status()
