@@ -34,8 +34,9 @@ frappe.query_reports["Cargo Report"] = {
 //		},
 		{
 			"fieldname":"name",
-			"label": __("Booking Ref"),
+			"label": __("Booking Refrence"),
 			"fieldtype": "Link",
+			"reqd": 1,
 			"options": "Booking Request"
 		},
 

@@ -31,9 +31,9 @@ class Gate2(Document):
 
 		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","custom_code"], as_dict=True)
 		
-		if val.custom_code == "MTY" or val.custom_code == "DLWS":
+		if val.custom_code == "MTY" or val.custom_code == "DLWS" or val.custom_code == "DDLW":
 			gate_content = "EMPTY"
-		if val.custom_code != "DLWS":
+		if val.custom_code != "MTY" or val.custom_code != "DLWS" or val.custom_code != "DDLW":
 			gate_content = "FULL"
 
 		frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.cargo_ref))
