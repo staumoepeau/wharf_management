@@ -25,6 +25,7 @@ frappe.ui.form.on('Inspection', {
                 console.log(data);
                 cur_frm.set_value("cargo_ref", data.message["name"]);
                 cur_frm.set_value("container_no", data.message["container_no"]);
+                cur_frm.set_value("container_content", data.message["container_content"]);
                 cur_frm.set_value("voyage_no", data.message["voyage_no"]);
                 cur_frm.set_value("vessel", data.message["vessel"]);
                 cur_frm.set_value("bol", data.message["bol"]);

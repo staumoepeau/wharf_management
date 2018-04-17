@@ -222,7 +222,7 @@ class WharfPaymentFee(Document):
 							"total": float(1 * devan.standard_rate),
 							"income_account" : devan.income_accounts	
 					})
-			if self.work_type=="Devanning":
+			elif self.work_type=="Devanning" and not self.secondary_work_type:
 					item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
 					devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate","income_account"], as_dict=True)
 					fees = float(1 * devan.standard_rate)

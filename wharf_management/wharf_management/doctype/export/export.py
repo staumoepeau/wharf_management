@@ -19,7 +19,7 @@ class Export(Document):
 
 	def validate_status(self):
 		if self.paid_status == "Paid" and not self.container_content:
-			frappe.throw(_("Please make sure that Container Content id FULL or EMPTY"))
+			frappe.throw(_("Please make sure that Container Content is FULL or EMPTY"))
 
 
 	def create_sales_invoices_paid(self):

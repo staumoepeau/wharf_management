@@ -58,7 +58,7 @@ class CargoManifest(Document):
 #			manifest_summary_table = frappe.db.sql("""select cargo_type, container_content, work_type, container_size, count(name) as container
 #				from `tabCargo` where cargo_type = "Container" and booking_ref = %s and final_status in ("Discharged","Loading") group by work_type, container_content, container_size""", (self.booking_ref), as_dict=1)
 			manifest_summary_table = frappe.db.sql("""select cargo_type, work_type, container_size, container_content, sum(handling_fee) as handling_fee, count(name) as number from `tabCargo` 
-			 where booking_ref = %s and manifest_check="Confirm" and cargo_type = "Container" group by work_type, cargo_type, container_content, container_size""", (self.booking_ref), as_dict=1)
+			 where booking_ref = %s and manifest_check="Confirm" and cargo_type in ("Container","Split Ports","Petrolium","Tank Tainers") group by work_type, cargo_type, container_content, container_size""", (self.booking_ref), as_dict=1)
 			entries = sorted(list(manifest_summary_table))
 
 			self.set('manifest_summary_table', [])
@@ -76,7 +76,7 @@ class CargoManifest(Document):
 		def get_bbulks_summary_list(self):
     			condition = ""
 			bbulks_summary_table = frappe.db.sql("""select cargo_type, work_type, sum(net_weight) as weight, sum(volume) as volume, sum(handling_fee) as handling_fee
-				from `tabCargo` where cargo_type != "Container" and booking_ref = %s and manifest_check="Confirm" group by cargo_type, work_type""", (self.booking_ref), as_dict=1)
+				from `tabCargo` where cargo_type in ("Break Bulk","Loose Cargo","Vehicles","Heavy Vehicles") and booking_ref = %s and manifest_check="Confirm" group by cargo_type, work_type""", (self.booking_ref), as_dict=1)
 
 			bbulks_entries = sorted(list(bbulks_summary_table))
 

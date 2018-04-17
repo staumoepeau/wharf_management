@@ -15,15 +15,11 @@ def execute(filters=None):
 def get_columns():
 	return [
 		_("Cargo Type") + ":Data:80",
-		_("Container No") + ":Data:120",
+		_("Work Type") + ":Data:120",
 		_("Content") + ":Data:80",
-		_("Size") + ":Data:80",
-		_("Consignee") + ":Data:120",
-		_("Agents") + ":Data:120",
-		_("Status") + ":Data:60",
-		_("Movement Date") + ":Date:120",
-		_("Truck") + ":Data:80",
-		_("Truck Driver") + ":Data:90"
+		_("Container Size") + ":Data:80",
+		_("Total") + ":Data:60",
+		_("Handling Fee") + ":Currency:120"
 		
 	]
 
@@ -34,16 +30,16 @@ def get_cargo_data(filters, columns):
 
 	for cargo in cargo_data:
 #		owner_posting_date = container["owner"]+cstr(container["posting_date"])
-		row = [cargo.cargo_type, cargo.container_no, cargo.container_content, cargo.container_size, cargo.consignee, cargo.agents]
+		row = [cargo.cargo_type, cargo.work_type, cargo.container_content, cargo.container_size, cargo.total, cargo.handling_fee]
 		data.append(row)
 	return data
 
 
 def get_conditions(filters):
 	conditions = "1=1"
-	if filters.get("from_date"): conditions += " and eta_date >= %(from_date)s"
-	if filters.get("to_date"): conditions += " and eta_date <= %(to_date)s"
-#	if filters.get("agents"): conditions += " and agents=%(agents)s"
+#	if filters.get("from_date"): conditions += " and eta_date >= %(from_date)s"
+#	if filters.get("to_date"): conditions += " and eta_date <= %(to_date)s"
+	if filters.get("name"): conditions += " and booking_ref = %(name)s"
 #	if filters.get("status"): conditions += " and status = %(status)s"
 #	if filters.get("owner"): conditions += " and a.owner = %(owner)s"
 #	if filters.get("pos_profile"): conditions += " and a.is_pos = %(pos_profile)s"
@@ -53,10 +49,10 @@ def get_conditions(filters):
 def get_cargo_details(filters):
 	conditions = get_conditions(filters)
 	return frappe.db.sql("""
-		select
-			cargo_type, container_no, container_content, container_size, consignee, agents, eta_date
-		from `tabCargo`
-		where docstatus < 2
-		group by voyage_no
+		select 
+			booking_ref, cargo_type, work_type, container_size,
+			container_content, sum(handling_fee) as handling_fee, count(name) as total from `tabCargo` 
+			where manifest_check = "Confirm" 
+			group by work_type, cargo_type, container_content, container_size
 			and {conditions}			
 	""".format(conditions=conditions), filters, as_dict=1)

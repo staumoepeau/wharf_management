@@ -19,7 +19,7 @@ frappe.ui.form.on('Export', {
         }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
-                frm.doc.status == "Export" && frm.doc.docstatus == 1
+                !frm.doc.main_gate_start && frm.doc.docstatus == 1
             )) {
 
             frm.add_custom_button(__('Main Gate'), function() {

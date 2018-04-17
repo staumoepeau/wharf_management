@@ -8,7 +8,7 @@
  "idx": 0, 
  "is_standard": "Yes", 
  "letter_head": "Ports Authority Tonga", 
- "modified": "2018-04-04 22:00:46.753331", 
+ "modified": "2018-04-17 14:57:22.747720", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo Movement", 
@@ -19,6 +19,12 @@
  "roles": [
   {
    "role": "System Manager"
+  }, 
+  {
+   "role": "Wharf Security Officer"
+  }, 
+  {
+   "role": "Agent User"
   }
  ]
 }

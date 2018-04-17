@@ -46,10 +46,21 @@ def get_data():
 					"name": "Cargo Operation Planning",
 					"description": _("Cargo Operation Planning."),
 				},
+
+			]
+		},
+		{
+			"label": _("Cargo Movement"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Transhipment Cargo",
+					"description": _("Transhipment Cargo."),
+				},
 				{
 					"type": "doctype",
 					"name": "Export",
-					"description": _("Export."),
+					"description": _("Export Cargo."),
 				},
 			]
 		},
