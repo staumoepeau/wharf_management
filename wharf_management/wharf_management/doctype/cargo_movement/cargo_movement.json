@@ -806,7 +806,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-04-11 03:04:18.099146", 
+ "modified": "2018-04-17 22:56:14.392967", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo Movement", 
@@ -814,9 +814,9 @@
  "owner": "Administrator", 
  "permissions": [
   {
-   "amend": 0, 
+   "amend": 1, 
    "apply_user_permissions": 0, 
-   "cancel": 0, 
+   "cancel": 1, 
    "create": 1, 
    "delete": 1, 
    "email": 1, 
