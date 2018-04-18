@@ -11,6 +11,11 @@ frappe.ui.form.on('Cargo', {
 //            cur_frm.set_df_property("custom_warrant", "hidden", 0);
 //        }
 
+        if (frappe.user.has_role("System Manager")){
+            cur_frm.set_df_property("custom_code", "read_only", 0);
+            cur_frm.set_df_property("delivery_code", "read_only", 0);
+        }
+
         if (frappe.user.has_role("System Manager")) {
             cur_frm.set_df_property("custom_warrant", "hidden", 0);
         } else {
@@ -183,25 +188,26 @@ frappe.ui.form.on('Cargo', {
                     frappe.set_route("Form", "Gate1 Item Count", doc.name);
                 }).addClass("btn-warning");
         }
-
-        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") &&
-        //                frm.doc.gate2_status == "Open" &&
-        //                frm.doc.gate1_status == "Open" &&
-        //                frm.doc.payment_status == "Open" &&
-        //                frm.doc.yard_status == "Open" &&
-        //                frm.doc.inspection_status == "Open" &&
-        //                frm.doc.work_type == "Loading" &&
-        //                frm.doc.export_status == "Paid"
-        //            )) {
-        //            frm.add_custom_button(__('Inspection'), function() {
-        //                frappe.route_options = {
-        //                    "cargo_ref": frm.doc.name
-        //                }
-        //                frappe.new_doc("Inspection");
-        //                frappe.set_route("Form", "Inspection", doc.name);
-        //            }).addClass("btn-primary");
-        //        }
     },
+
+    custom_code: function(frm) {
+        if (frm.doc.custom_code == "MTY") {
+            frm.set_value("delivery_code", "EMPTY DELIVERY")
+        } else if (frm.doc.custom_code == "DDL") {
+            frm.set_value("delivery_code", "DIRECT DELIVERY")
+        } else if (frm.doc.custom_code == "DDLW") {
+            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
+        } else if (frm.doc.custom_code == "IDL") {
+            frm.set_value("delivery_code", "INSPECTION DELIVERY")
+        } else if (frm.doc.custom_code == "DLWS") {
+            frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
+        }else if (frm.doc.custom_code == "SPLIT-PORT") {
+            frm.set_value("delivery_code", "SPLIT-PORT")
+        } else if (!frm.doc.custom_code) {
+            frm.set_value("delivery_code", "")
+        }
+    },
+
     handling_fee_discount: function(frm) {
         if (frm.doc.handling_fee_discount == "YES") {
 
