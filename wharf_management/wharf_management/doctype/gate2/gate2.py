@@ -31,15 +31,20 @@ class Gate2(Document):
 
 		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","custom_code"], as_dict=True)
 
-		vals = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no}, ["refrence"], as_dict=True)
-		
 		if self.custom_code == "MTY" or self.custom_code == "DLWS" or self.custom_code == "DDLW":
 			gate_content = "EMPTY"
 		elif self.custom_code != "MTY" or self.custom_code != "DLWS" or self.custom_code != "DDLW":
 			gate_content = "FULL"
-
-		if not vals.refrence:
-			frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s where container_no=%s""", (gate_content, self.modified, self.modified, self.container_no))
 		
-		if vals.refrence:
-			frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.cargo_ref))
+		if self.cargo_type in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
+			vals = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no}, ["refrence"], as_dict=True)
+
+			if not vals.refrence:
+				frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where container_no=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.container_no))
+		
+			if vals.refrence:
+				frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+		
+		if self.cargo_type not in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
+			frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+		

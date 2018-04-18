@@ -3,6 +3,7 @@
 
 frappe.ui.form.on('Gate2', {
 	refresh: function(frm) {
+		frm.add_fetch('truck_licenses_plate', 'company', 'company');
 
 	},
 	
@@ -68,5 +69,14 @@ frappe.ui.form.on('Gate2', {
 								
 							}								
 			})		
+	},
+
+	different_truck: function(frm) {
+		if (frm.doc.different_truck == 1) {
+			cur_frm.set_df_property("drivers_information", "read_only", 0);
+			cur_frm.set_df_property("company", "read_only", 0);
+			cur_frm.set_df_property("truck_licenses_plate", "read_only", 0);
+
+		}
 	}
 });

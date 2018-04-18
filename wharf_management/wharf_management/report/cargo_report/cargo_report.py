@@ -49,11 +49,11 @@ def get_conditions(filters):
 def get_cargo_details(filters):
 	conditions = get_conditions(filters)
 	return frappe.db.sql("""
-		select 
+		select
 			booking_ref, cargo_type, work_type, container_size,
 			container_content, sum(handling_fee) as handling_fee, count(name) as total from `tabCargo` 
 			where  docstatus = 1
+			and {conditions}
 			and manifest_check = "Confirm" 
-			group by work_type, cargo_type, container_content, container_size
-			and {conditions}			
+			group by work_type, cargo_type, container_content, container_size			
 	""".format(conditions=conditions), filters, as_dict=1)
