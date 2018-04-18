@@ -31,7 +31,7 @@ frappe.ui.form.on('Gate1 Item Count', {
 						cur_frm.set_df_property("cargo_description", "read_only", 1);
 						cur_frm.set_df_property("qty", "read_only", 1);
 						cur_frm.set_df_property("status", "read_only", 1);		
-						cur_frm.set_df_property("security_item_count", "read_only", 1);
+						cur_frm.set_df_property("security_item_count", "read_only", 0);
 					}
 				})
 			}
