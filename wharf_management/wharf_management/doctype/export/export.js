@@ -86,7 +86,10 @@ frappe.ui.form.on('Export', {
                     cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
                 }
             })
-        } else if (frm.doc.cargo_type != "Container") {
+        } else if (frm.doc.cargo_type = "Tank Tainers") {
+            cur_frm.set_value("wharfage_fee", 179.00);
+
+        } else if (!frm.doc.cargo_type in ("Container","Tank Tainers","Flatrack")) {
             frappe.call({
                 "method": "frappe.client.get",
                 args: {
