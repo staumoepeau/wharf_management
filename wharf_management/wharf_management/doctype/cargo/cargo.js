@@ -303,7 +303,7 @@ frappe.ui.form.on('Cargo', {
     },
     manifest_check: function(frm){
 
-        if ((frm.doc.container_content == "EMPTY") && (frm.doc.work_type == "Loading")){
+        if (frm.doc.work_type = "Loading"){
             if (frm.doc.manifest_check == "Confirm"){
                 return frappe.call({
                     method: "get_storage_fee",
