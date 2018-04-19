@@ -13,7 +13,7 @@ class Export(Document):
 		self.validate_status()
 	
 	def on_submit(self):
-		if self.paid_status == "Paid" and self.container_content == "FULL":
+		if self.paid_status == "Paid":
 			self.create_sales_invoices_paid()
 	
 
