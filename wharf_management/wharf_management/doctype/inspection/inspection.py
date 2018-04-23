@@ -61,6 +61,7 @@ class Inspection(Document):
 			self.update_inspection_status()
 
 
+		
 #	def check_duplicate_entries(self):
 #		check_duplicate = None
 #		check_duplicate = frappe.db.sql("""Select name, count(*) from `tabInspection` where cargo_ref=%s and container_no=%s """, (self.cargo_ref, self.container_no))

@@ -9,6 +9,7 @@ frappe.ui.form.on('Gate1', {
     
     on_submit: function(frm){
         frm.reload_doc()
+        frappe.set_route("List", "Cargo")
     },
 
     onload: function(frm) {

@@ -14,6 +14,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
         ];
     },
 
+    on_submit: function(frm){
+        
+        frappe.set_route("List", "Cargo")
+    },
 //    validate: function(frm){
 //        if (frm.doc.posting_date < get_today()) {
 //            frappe.msgprint(__("You can not select past date as the Posting Date"));

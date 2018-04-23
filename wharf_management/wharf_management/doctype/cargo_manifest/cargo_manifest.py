@@ -91,6 +91,6 @@ class CargoManifest(Document):
 					'weight':b.weight,
 					'volume':b.volume,
 					'handling_fee':b.handling_fee,
-					'storage_fee' : d.storage_fee,
-					'wharfage_fee' : d.wharfage_fee
+					'storage_fee' : b.storage_fee,
+					'wharfage_fee' : b.wharfage_fee
 				})

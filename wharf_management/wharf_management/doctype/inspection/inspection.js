@@ -8,6 +8,7 @@ frappe.ui.form.on('Inspection', {
         
     on_submit: function(frm){
         frm.reload_doc()
+        frappe.set_route("List", "Pre Advice")
     },
     onload: function(frm) {
 //        frm.refresh();

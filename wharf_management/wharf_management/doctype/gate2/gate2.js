@@ -2,6 +2,13 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Gate2', {
+
+
+	on_submit: function(frm){
+        frm.reload_doc()
+        frappe.set_route("List", "Cargo")
+    },
+
 	refresh: function(frm) {
 		frm.add_fetch('truck_licenses_plate', 'company', 'company');
 

@@ -3,6 +3,11 @@
 
 frappe.ui.form.on('Pre Advice', {
 
+    onload: function(frm) {
+ //       frm.reload_doc()
+
+    },
+
     refresh: function(frm) {
         cur_frm.add_fetch('container_type', 'size', 'container_size');
         cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
