@@ -303,8 +303,8 @@ frappe.ui.form.on('Cargo', {
     },
     manifest_check: function(frm){
 
-        if (frm.doc.work_type = "Loading"){
-            if (frm.doc.manifest_check == "Confirm"){
+        if (frm.doc.manifest_check == "Confirm"){
+            if (frm.doc.work_type == "Loading"){
                 return frappe.call({
                     method: "get_storage_fee",
                     doc: frm.doc,
@@ -314,12 +314,10 @@ frappe.ui.form.on('Cargo', {
                         console.log(get_storage_fee);
                     }
                 });
-            }else if (frm.doc.manifest_check != "Confirm"){
+        } else if ((frm.doc.manifest_check != "Confirm") && (frm.doc.container_content == "FULL")) {
                 cur_frm.set_value("storage_fee", 0);
             }
-        }else if (frm.doc.container_content == "FULL"){
-            cur_frm.set_value("storage_fee", 0);   
-        }
-    },
+         }
+    }
 
 });

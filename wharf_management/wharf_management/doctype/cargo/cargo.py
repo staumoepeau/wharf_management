@@ -60,7 +60,7 @@ class Cargo(Document):
 	
 
 	def get_storage_fee(self):
-
+		wfee = 0
 		holidays = self.get_holidays(self.gate1_in, self.etd_date)
 		working_days = date_diff(self.etd_date, self.gate1_in)
 		working_days -= len(holidays)
@@ -80,6 +80,7 @@ class Cargo(Document):
 			if self.cargo_type != 'Container':
 				wfee = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "fee_amount")
 
+		self.wharfage_fee = wfee
 #		if free_days < working_days:
 #			charge_days = working_days - free_days
 #		elif free_days >= working_days:
@@ -99,7 +100,7 @@ class Cargo(Document):
 		self.free_days = free_days
 		self.storage_days = working_days
 		self.storage_rate = vals.standard_rate
-		self.wharfage_fee = wfee
+		
 		#frappe.throw(_("Charge Days : {0} Free Days {1} Working Days {2} Rate {3} Storate Fee {4}").format(charge_days, free_days, working_days, vals.standard_rate, storagefee))
 
 #		return storagefee
