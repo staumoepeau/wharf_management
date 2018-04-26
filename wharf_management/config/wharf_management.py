@@ -282,6 +282,17 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
+					"name": "Cargo Statitics",
+					"doctype": "Cargo Statitics"
+				},
+			]
+		},
+		{
+			"label": _("Reports"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
 					"name": "Cargo Report",
 					"doctype": "Cargo Report"
 				},
