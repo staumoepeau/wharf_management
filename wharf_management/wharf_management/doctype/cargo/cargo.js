@@ -211,7 +211,7 @@ frappe.ui.form.on('Cargo', {
     handling_fee_discount: function(frm) {
         if (frm.doc.handling_fee_discount == "YES") {
 
-            if (frm.doc.cargo_type == "Container") {
+            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
@@ -250,7 +250,7 @@ frappe.ui.form.on('Cargo', {
 
         } else if (frm.doc.handling_fee_discount == "NO") {
 
-            if (frm.doc.cargo_type == "Container") {
+            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
@@ -279,7 +279,7 @@ frappe.ui.form.on('Cargo', {
                         cur_frm.set_value("handling_fee", data.message["fee_amount"]);
                     }
                 })
-            } else if (frm.doc.cargo_type != "Container" || frm.doc.cargo_type != "Vehicles") {
+            } else if (frm.doc.cargo_type != "Container" || frm.doc.cargo_type != "Vehicles" || frm.doc.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
