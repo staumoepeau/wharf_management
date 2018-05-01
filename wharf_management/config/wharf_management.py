@@ -298,4 +298,15 @@ def get_data():
 				},
 			]
 		},
+		{
+			"label": _("Reports"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Cargo Statistics Report",
+					"doctype": "Cargo Statistics Report"
+				},
+			]
+		},
 	]
