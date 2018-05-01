@@ -72,7 +72,7 @@ class Export(Document):
 
 
 	def insert_fees(self):
-		fees=0
+		vgm_fee=0
 
 		if self.apply_wharfage_fee == 1:
 			if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
@@ -92,9 +92,9 @@ class Export(Document):
 				"qty": qty,
 				"total" : (qty * val.standard_rate)
 			})
-
+		
 		if self.apply_vgm_fee == 1:
-			vgm_fee=0,
+			
 			if self.container_size == "20":
 				vgm_fee = 77.05
 			if self.container_size == "40":
@@ -108,3 +108,5 @@ class Export(Document):
 			'qty' : 1,
 			'total' : (1 * vgm_fee)
 			})
+
+		self.total_fee = ((qty * val.standard_rate) + (1 * vgm_fee))
