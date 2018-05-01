@@ -38,8 +38,11 @@ frappe.ui.form.on('Wharf Payment Fee', {
                             frm.refresh_fields();
                             console.log(refund);
                         }
+                        
                     });
+                    frappe.set_route("List", "Cargo")
                 },__("Make"));
+                
         }
 
         frappe.call({
