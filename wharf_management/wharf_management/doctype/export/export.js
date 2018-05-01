@@ -3,6 +3,16 @@
 
 frappe.ui.form.on('Export', {
 
+    setup: function(frm) {
+        frm.get_field('fees_table').grid.editable_fields = [
+            { fieldname: 'item', columns: 2 },
+            { fieldname: 'description', columns: 2 },
+            { fieldname: 'price', columns: 2 },
+            { fieldname: 'qty', columns: 2 },
+            { fieldname: 'total', columns: 2 }
+        ];
+    },
+
     refresh: function(frm) {
 
         if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Cashier"))){
@@ -70,81 +80,88 @@ frappe.ui.form.on('Export', {
 
 
     },
-    apply_wharfage_fee: function(frm){
-
-        if ((frm.doc.cargo_type == "Container") || (frm.doc.cargo_type == "Flatrack")){
-            frappe.call({
-                "method": "frappe.client.get",
-                args: {
-                    doctype: "Wharfage Fee",
-                    filters: {
-                        cargo_type: frm.doc.cargo_type,
-                        container_size: frm.doc.container_size
-                    }
-                },
-                callback: function(data) {
-                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
-                }
-            })
-        } else if (frm.doc.cargo_type = "Tank Tainers") {
-            cur_frm.set_value("wharfage_fee", 179.00);
-
-        } else if (!frm.doc.cargo_type in ("Container","Tank Tainers","Flatrack")) {
-            frappe.call({
-                "method": "frappe.client.get",
-                args: {
-                    doctype: "Wharfage Fee",
-                    filters: {
-                        cargo_type: frm.doc.cargo_type,
-                    }
-                },
-                callback: function(data) {
-                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
-                }
-            })
-        }
-        calculate_total_fee(frm);
+    
+    insert_fees_button: function(frm) {
+        return frappe.call({
+            method: "insert_fees",
+            doc: frm.doc,
+            callback: function(fees) {
+                frm.refresh_fields();
+                console.log(fees);
+            }
+        });
     },
-    apply_vgm_fee: function(frm){
+//    apply_wharfage_fee: function(frm){
+//       if ((frm.doc.cargo_type == "Container") || (frm.doc.cargo_type == "Flatrack")){
+//            frappe.call({
+//                "method": "frappe.client.get",
+//                args: {
+//                    doctype: "Wharfage Fee",
+//                    filters: {
+//                        cargo_type: frm.doc.cargo_type,
+//                        container_size: frm.doc.container_size
+//                    }
+//                },
+//                callback: function(data) {
+//                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
+//                }
+//            })
+//        } else if (frm.doc.cargo_type = "Tank Tainers") {
+//            cur_frm.set_value("wharfage_fee", 179.00);
 
-        if (frm.doc.container_size == 20){
-            cur_frm.set_value("vgm_fee", 77.05);         
+//        } else if (!frm.doc.cargo_type in ("Container","Tank Tainers","Flatrack")) {
+//            frappe.call({
+//                "method": "frappe.client.get",
+//                args: {
+//                    doctype: "Wharfage Fee",
+//                    filters: {
+//                        cargo_type: frm.doc.cargo_type,
+//                    }
+//                },
+//                callback: function(data) {
+//                    cur_frm.set_value("wharfage_fee", data.message["fee_amount"]);
+//                }
+//           })
+//        }
+//        calculate_total_fee(frm);
+//    },
+//    apply_vgm_fee: function(frm){
 
-        } else if (frm.doc.container_size == 40){
-            cur_frm.set_value("vgm_fee", (77.05*2));
-        }
+//        if (frm.doc.container_size == 20){
+//            cur_frm.set_value("vgm_fee", 77.05);         
 
-        calculate_total_fee(frm);
-    },
+//        } else if (frm.doc.container_size == 40){
+//            cur_frm.set_value("vgm_fee", (77.05*2));
+//        }
 
-    clear_fee: function(frm){
-        
-  
-        cur_frm.set_value("total_fee", "");
-        cur_frm.set_value("vgm_fee", 0);
-        cur_frm.set_value("wharfage_fee", "")
+//        calculate_total_fee(frm);
+//    },
 
-
-        cur_frm.set_value("apply_wharfage_fee", 0)
-        cur_frm.set_value("apply_vgm_fee", 0)
-        
-    },
+//    clear_fee: function(frm){
+//        
+//  
+//        cur_frm.set_value("total_fee", "");
+//        cur_frm.set_value("vgm_fee", 0);
+//        cur_frm.set_value("wharfage_fee", "")
+//        cur_frm.set_value("apply_wharfage_fee", 0)
+//        cur_frm.set_value("apply_vgm_fee", 0)        
+//    },
 
 });
 
-var calculate_total_fee = function(frm){
-    total_fee = 0;
-    if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 1){
-        total_fee = frm.doc.vgm_fee + frm.doc.wharfage_fee
-    
-    }else if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 0){
-        total_fee = frm.doc.wharfage_fee
-    
-    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 1){
-        total_fee = frm.doc.vgm_fee
-   
-    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 0){
-        total_fee = 0
-    }
-    cur_frm.set_value("total_fee", total_fee);
-}
+//var calculate_total_fee = function(frm){
+//    total_fee = 0;
+//    if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 1){
+//        total_fee = frm.doc.vgm_fee + frm.doc.wharfage_fee
+//    
+//    }else if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 0){
+//        total_fee = frm.doc.wharfage_fee
+//    
+//    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 1){
+//        total_fee = frm.doc.vgm_fee
+//   
+//    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 0){
+//        total_fee = 0
+//    }
+//    cur_frm.set_value("total_fee", total_fee);
+//}

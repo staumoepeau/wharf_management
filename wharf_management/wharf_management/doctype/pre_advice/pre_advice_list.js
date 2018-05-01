@@ -12,8 +12,8 @@ frappe.listview_settings['Pre Advice'] = {
 			} else{
 				return [__("Need Attention"), "red", "status,=,'Uploaded'"];
 			}
-		} else if(doc.status=== "Uploaded"){
-			return [__("Uploaded"), "purple", "status,=,Uploaded"];
+		} else if(doc.status=== "Booked"){
+			return [__("Booked"), "purple", "status,=,Booked"];
 			
 		} else if (doc.status === "Re-stowing"){
 			return [__("Re-stowing"), "grey", "status,=,Re-stowing"];

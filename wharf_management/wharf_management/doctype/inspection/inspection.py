@@ -44,7 +44,6 @@ class Inspection(Document):
 			self.update_inspection_status()
 
 		if self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type:
-#			value = frappe.db.get_value("Export", {"container_no": self.container_no}, ["gate1_start"])
 			self.create_cargo_item()
 			self.update_final_status()
 			self.check_empty_container()
@@ -77,7 +76,7 @@ class Inspection(Document):
 	def validate_crane_no(self):
     		if not self.crane_no:
 				msgprint(_("Crane No is Manadory").format(self.crane_no),
-						raise_exception=1)
+                                        raise_exception = 1)
 
 	def update_inspection_status(self):
     		if self.qty > 1:
@@ -125,14 +124,12 @@ class Inspection(Document):
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : self.final_work_type,
 					"secondary_work_type" : worktype,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -156,7 +153,6 @@ class Inspection(Document):
 					"cargo_description" : val.cargo_description,
 					"etd_date" : val.etd_date,
 					"chasis_no" : val.chasis_no,
-#					"yard_slot" : val.yard_slot,
 					"inspection_status" : "Closed",
 					"yard_status" : "Closed",
 					"final_status" : self.final_work_type,
@@ -181,14 +177,12 @@ class Inspection(Document):
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : "Loading",
 					"secondary_work_type" : "Transhipment",
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -212,7 +206,6 @@ class Inspection(Document):
 					"cargo_description" : val.cargo_description,
 					"etd_date" : val.etd_date,
 					"chasis_no" : val.chasis_no,
-#					"yard_slot" : val.yard_slot,
 					"inspection_status" : "Closed",
 					"yard_status" : "Closed",
 					"final_status" : self.final_work_type,
@@ -240,14 +233,12 @@ class Inspection(Document):
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : self.final_work_type,
 					"secondary_work_type" : val.secondary_work_type,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -271,7 +262,6 @@ class Inspection(Document):
 					"cargo_description" : val.cargo_description,
 					"etd_date" : val.etd_date,
 					"chasis_no" : val.chasis_no,
-#					"yard_slot" : val.yard_slot,
 					"inspection_status" : "Closed",
 					"yard_status" : "Closed",
 					"final_status" : self.final_work_type,
@@ -287,7 +277,7 @@ class Inspection(Document):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
-			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)			
 		doc = frappe.new_doc("Cargo")
 		doc.update({
 	#				"company" : self.company,
@@ -302,7 +292,6 @@ class Inspection(Document):
 					"bol" : val.bol,
 					"work_type" : val.work_type,
 					"secondary_work_type" : val.secondary_work_type,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -351,9 +340,7 @@ class Inspection(Document):
 					"booking_ref" : val.booking_ref,
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
-		#			"export_status" : self.export_status,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
@@ -369,7 +356,6 @@ class Inspection(Document):
 					"mark" : val.mark,
 					"final_dest_port" : val.final_dest_port,
 					"volume" : val.volume,
-		#			"export_arrival_date" : self.export_arrival_date,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
 					"container_content" : "EMPTY",
@@ -397,27 +383,28 @@ class Inspection(Document):
 
 #	Create EMPTY Container for Loading after Devanning
 	def create_pre_advice_loading_empty(self):
-    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+			val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
-		doc = frappe.new_doc("Pre Advice")
-		doc.update({
-	#				"company" : self.company,
+			
+			if val.cargo_type == "Split Ports":
+				val.container_content = "FULL"
+			if val.cargo_type != "Split Ports":
+				val.container_content = "EMPTY"
+			
+			doc = frappe.new_doc("Pre Advice")
+			doc.update({
 					"docstatus" : 1,
 					"booking_ref" : val.booking_ref,
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
-		#			"export_status" : self.export_status,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : "Loading",
-		#			"secondary_work_type" : val.secondary_work_type,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -428,10 +415,9 @@ class Inspection(Document):
 					"mark" : val.mark,
 					"final_dest_port" : val.final_dest_port,
 					"volume" : val.volume,
-		#			"export_arrival_date" : self.export_arrival_date,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
-					"container_content" : "EMPTY",
+					"container_content" : val.container_content,
 					"stowage" : val.stowage,
 					"hazardous" : val.hazardous,
 					"hazardous_code" : val.hazardous_code,
@@ -446,14 +432,16 @@ class Inspection(Document):
 					"inspection_status" : "Open"
 
 				})
-		doc.insert()
-		doc.submit()
+
+			doc.insert()
+			doc.submit()
 	
 	def create_restow_pre_advice_items(self):
     		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+		
 		doc = frappe.new_doc("Pre Advice")
 		doc.update({
 	#				"company" : self.company,
@@ -461,16 +449,12 @@ class Inspection(Document):
 					"booking_ref" : val.booking_ref,
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
-		#			"export_status" : self.export_status,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : "Re-stowing",
-		#			"secondary_work_type" : val.secondary_work_type,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -483,7 +467,6 @@ class Inspection(Document):
 					"volume" : val.volume,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
-	#				"container_content" : "EMPTY",
 					"stowage" : val.stowage,
 					"hazardous" : val.hazardous,
 					"hazardous_code" : val.hazardous_code,
