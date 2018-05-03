@@ -136,22 +136,19 @@ class WharfPaymentFee(Document):
 
 		return sfee
 	
-	def get_wharfage_fee(self):
-		if self.cargo_type == 'Container':
-			wfee = frappe.db.sql("""Select fee_amount from `tabWharfage Fee` 
-				where cargo_type=%s and container_size=%s""", (self.cargo_type, self.container_size))
-		
-		if self.cargo_type != 'Container':
-			wfee = frappe.db.sql("""Select fee_amount from `tabWharfage Fee` where cargo_type=%s""", (self.cargo_type))
-		
-		return wfee
+#	def get_wharfage_fee(self):
+#		if self.cargo_type == 'Container':
+#			wfee = frappe.db.sql("""Select fee_amount from `tabWharfage Fee` 
+#				where cargo_type=%s and container_size=%s""", (self.cargo_type, self.container_size))
+#		if self.cargo_type != 'Container':
+#			wfee = frappe.db.sql("""Select fee_amount from `tabWharfage Fee` where cargo_type=%s""", (self.cargo_type))
+#		return wfee
 	
 
-	def get_item_name(self):
-		item_name = frappe.db.sql("""Select item_name from `tabStorage Fee` 
-			where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
-		
-		return item_name
+#	def get_item_name(self):
+#		item_name = frappe.db.sql("""Select item_name from `tabStorage Fee` 
+#			where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
+#		return item_name
 		
 
 	def insert_fees(self):

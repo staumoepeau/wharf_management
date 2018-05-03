@@ -19,7 +19,8 @@ frappe.ui.form.on('Cargo Manifest', {
 			{fieldname: 'work_type', columns: 1},
 			{fieldname: 'container_size', columns: 1},
 			{fieldname: 'number', columns: 1},
-			{fieldname: 'handling_fee', columns: 1}
+			{fieldname: 'handling_fee', columns: 1},
+			{fieldname: 'handling_fee_discount', columns: 1}
 		];
 
 		frm.get_field('bbulks_summary_table').grid.editable_fields = [
@@ -27,6 +28,7 @@ frappe.ui.form.on('Cargo Manifest', {
 			{fieldname: 'work_type', columns: 1},
 			{fieldname: 'weight', columns: 1},
 			{fieldname: 'volume', columns: 1},
+			{fieldname: 'number', columns: 1},
 			{fieldname: 'handling_fee', columns: 1}
 		];
 	},
