@@ -11,7 +11,7 @@ class Inspection(Document):
 
 	def validate(self):
     		
-		self.validate_work_type()	
+		self.validate_work_type()
 		self.validate_crane_no()
 
 	def on_submit(self):
@@ -25,7 +25,7 @@ class Inspection(Document):
 		
 		if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Loading":	
 			self.create_cargo_devanning()
-			self.create_pre_advice_loading_empty()
+			self.create_pre_advice_loading()
 			self.update_final_status_devanning()
 #			self.update_inspection_status_pre_advice()
 
@@ -44,10 +44,16 @@ class Inspection(Document):
 			self.update_inspection_status()
 
 		if self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type:
-			self.create_cargo_item()
-			self.update_final_status()
-			self.check_empty_container()
-			self.load_transhipment_cargo()
+			
+			if self.cargo_type == "Split Ports" and self.last_port == "NO":
+				self.create_cargo_item()
+				self.update_final_status()
+			
+			if self.cargo_type != "Split Ports" :
+				self.create_cargo_item()
+				self.update_final_status()
+				self.check_empty_container()
+				self.load_transhipment_cargo()
 
 		if self.final_work_type == "Re-stowing" and not self.secondary_work_type and not self.third_work_type:
 			self.create_cargo()
@@ -57,7 +63,13 @@ class Inspection(Document):
 			self.create_empty_on_cargo()
 
 		if self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type:
-			self.update_inspection_status()
+			
+			if self.cargo_type != "Split Ports":
+				self.update_inspection_status()
+			
+			if self.cargo_type == "Split Ports" and self.last_port == "NO":
+				self.create_cargo()
+				self.update_inspection_status()
 
 
 		
@@ -85,7 +97,9 @@ class Inspection(Document):
     			frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 		if self.qty == 0:
     			frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
-	
+		if self.qty == 0 and self.cargo_type == "Split Ports" and self.last_port == "NO":
+				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+
 	def update_status(self):
 		self.create_cargo()
 		self.create_restow_pre_advice_items()
@@ -100,7 +114,7 @@ class Inspection(Document):
 #		frappe.db.sql("""Update `tabPre Advice` set secondary_work_type="Devanning " where name=%s""", (self.cargo_ref))
 
 	def create_cargo(self):
-    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
@@ -112,6 +126,9 @@ class Inspection(Document):
 			elif self.secondary_work_type == "Transhipment":
 				worktype = "Transhipment"
 				movement = "Transhipment"
+			elif not self.secondary_work_type and self.cargo_type == "Split Ports":
+				worktype = self.final_work_type
+				movement = "Split Ports"
 		elif self.final_work_type == "Re-stowing":
 				worktype = "Re-stowing"
 				movement = "Outbound"
@@ -159,6 +176,7 @@ class Inspection(Document):
 					"payment_status" : "Closed",
 					"gate1_status" : "Closed",
 					"gate2_status" : "Closed"
+					
 				})
 		doc.insert()
 		doc.submit()
@@ -219,11 +237,11 @@ class Inspection(Document):
 
 #	Create EMPTY Container in Cargo for Handling Fee	
 	def create_cargo_item(self):
-    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
-		
+
 #		vals = frappe.db.get_value("Export", {"container_no": self.container_no}, ["gate1_start"], as_dict=True)
 		doc = frappe.new_doc("Cargo")
 		doc.update({
@@ -381,15 +399,16 @@ class Inspection(Document):
 		doc.submit()
 
 
-#	Create EMPTY Container for Loading after Devanning
-	def create_pre_advice_loading_empty(self):
-			val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+#	Create Container for Loading after Devanning
+	def create_pre_advice_loading(self):
+			val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
 			
-			if val.cargo_type == "Split Ports":
+			if val.cargo_type == "Split Ports" and val.last_port == "NO":
 				val.container_content = "FULL"
+
 			if val.cargo_type != "Split Ports":
 				val.container_content = "EMPTY"
 			
@@ -429,8 +448,8 @@ class Inspection(Document):
 					"etd_date" : val.etd_date,
 					"chasis_no" : val.chasis_no,
 					"yard_slot" : val.yard_slot,
-					"inspection_status" : "Open"
-
+					"inspection_status" : "Open",
+					"status" : "Booked"
 				})
 
 			doc.insert()
@@ -478,7 +497,8 @@ class Inspection(Document):
 					"etd_date" : val.etd_date,
 					"chasis_no" : val.chasis_no,
 					"yard_slot" : val.yard_slot,
-					"inspection_status" : "Open"
+					"inspection_status" : "Open",
+					"status" : "Booked"
 
 				})
 		doc.insert()

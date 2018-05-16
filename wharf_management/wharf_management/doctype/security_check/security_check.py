@@ -8,6 +8,9 @@ from frappe.model.document import Document
 
 class SecurityCheck(Document):
 
+	def on_submit(self):
+		self.create_security_timesheets()
+
 	def validate(self):
     		
 		self.update_booking_request()	

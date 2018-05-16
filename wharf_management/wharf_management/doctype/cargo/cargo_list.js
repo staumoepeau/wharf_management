@@ -44,6 +44,9 @@ frappe.listview_settings['Cargo'] = {
 		
 		}else if (doc.status === "CCV"){
 			return [__("CCV"), "black", "status,=,CCV"];
+
+		}else if (doc.status === "Split Ports"){
+			return [__("Split Ports"), "black", "status,=,Split Ports"];
 		}
 	}
 };

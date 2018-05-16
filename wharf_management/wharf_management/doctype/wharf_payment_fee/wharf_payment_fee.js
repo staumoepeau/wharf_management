@@ -14,10 +14,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
         ];
     },
 
-    on_submit: function(frm){
-        
-        frappe.set_route("List", "Cargo")
-    },
+//    on_submit: function(frm){   
+//        frappe.set_route("List", "Cargo")
+//    },
 //    validate: function(frm){
 //        if (frm.doc.posting_date < get_today()) {
 //            frappe.msgprint(__("You can not select past date as the Posting Date"));
@@ -121,21 +120,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
             mm = '0' + mm;
         }
         today = hr + '' + min + '' + mm + '' + sec;
-//        today = hr + '' + min + '' + mm + '' + sec + '' + dd + '' + yyyy;
 
-//        if (frm.doc.payment_method == 'Credit' || frm.doc.work_type == 'Stock') {
-//            cur_frm.set_df_property("credit_amount", "hidden", 0)
-//            cur_frm.set_df_property("credit_amount", "read_only", 1)
-//            cur_frm.set_df_property("deliver_empty", "hidden", 0)
-//            frm.set_value("credit_amount", frm.doc.total_amount)
-//            frm.set_value("total_amount", 0)
-//            frm.set_value("total_fee", 0)
-//            frm.set_value("custom_warrant", "ETY" + today)
-//            cur_frm.set_df_property("custom_warrant", "read_only", 1)
-//        } else {
-//            cur_frm.set_df_property("credit_amount", "hidden", 1)
-//            cur_frm.set_df_property("deliver_empty", "hidden", 1)
-//        }
         if (frm.doc.payment_method) {
             frm.set_value("paid_amount", frm.doc.total_amount)
         }
@@ -195,7 +180,6 @@ frappe.ui.form.on('Wharf Payment Fee', {
                     }
                 })
             }
-  //      }
     },
 
     free_storage_days: function(frm) {

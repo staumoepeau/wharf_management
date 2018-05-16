@@ -7,7 +7,7 @@ frappe.ui.form.on('Inspection', {
     },
         
     on_submit: function(frm){
-        frm.reload_doc()
+//        frm.reload_doc()
         frappe.set_route("List", "Pre Advice")
     },
     onload: function(frm) {
@@ -32,6 +32,7 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_value("bol", data.message["bol"]);
                 cur_frm.set_value("work_type", data.message["work_type"]);
                 cur_frm.set_value("secondary_work_type", data.message["secondary_work_type"]);
+                cur_frm.set_value("last_port", data.message["last_port"]);
                 
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
@@ -53,13 +54,14 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_df_property("container_no", "read_only", 1);
                 cur_frm.set_df_property("chasis_no", "read_only", 1);
                 cur_frm.set_df_property("third_work_type", "read_only", 1);
+                cur_frm.set_df_property("last_port", "read_only", 1);
             }
         })
         
         if (frm.doc.work_type == "Loading"){
             cur_frm.set_df_property("inspection_images","hidden",1);
             cur_frm.set_df_property("cargo_condition","hidden",1);
-        } else{
+        } else {
             cur_frm.set_df_property("inspection_images","hidden",0);
             cur_frm.set_df_property("cargo_condition","hidden",0);
         }

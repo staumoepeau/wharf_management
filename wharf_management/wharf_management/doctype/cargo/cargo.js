@@ -70,6 +70,22 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("empty_details", "hidden", 1)
 
         }
+        if (frm.doc.cargo_type == "Split Ports") {
+            cur_frm.set_df_property("last_port", "hidden", 0);
+            
+        } else if (frm.doc.cargo_type != "Split Ports") {
+            cur_frm.set_df_property("last_port", "hidden", 1);
+        }
+
+    },
+
+    cargo_type: function(frm){
+        if (frm.doc.cargo_type == "Split Ports") {
+            cur_frm.set_df_property("last_port", "hidden", 0);
+            
+        } else if (frm.doc.cargo_type != "Split Ports") {
+            cur_frm.set_df_property("last_port", "hidden", 1);
+        }
 
     },
 
