@@ -70,6 +70,9 @@ class Inspection(Document):
 			if self.cargo_type == "Split Ports" and self.last_port == "NO":
 				self.create_cargo()
 				self.update_inspection_status()
+			if self.cargo_type == "Split Ports" and self.last_port == "YES":
+				self.update_inspection_status()
+
 
 
 		

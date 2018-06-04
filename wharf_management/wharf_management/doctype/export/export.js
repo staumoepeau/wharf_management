@@ -78,8 +78,24 @@ frappe.ui.form.on('Export', {
 
     },
 
-    load: function(frm){
+    cargo_type: function(frm){
+        if (frm.doc.cargo_type == "Break Bulk"){
 
+            cur_frm.set_df_property("apply_vgm_fee", "hidden", 1);
+            cur_frm.set_df_property("container_size", "hidden", 1);
+            cur_frm.set_df_property("container_type", "hidden", 1);
+            cur_frm.set_df_property("container_no", "hidden", 1);
+            cur_frm.set_df_property("pat_code", "hidden", 1);
+            cur_frm.set_df_property("container_content", "hidden", 1);
+        }
+        else if (frm.doc.cargo_type != "Break Bulk"){
+            cur_frm.set_df_property("apply_vgm_fee", "hidden", 0);
+            cur_frm.set_df_property("container_size", "hidden", 0);
+            cur_frm.set_df_property("container_type", "hidden", 0);
+            cur_frm.set_df_property("container_no", "hidden", 0);
+            cur_frm.set_df_property("pat_code", "hidden", 0);
+            cur_frm.set_df_property("container_content", "hidden", 0);
+        }
 
     },
     

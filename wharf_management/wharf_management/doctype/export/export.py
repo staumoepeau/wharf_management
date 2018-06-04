@@ -95,10 +95,13 @@ class Export(Document):
 		
 		if self.apply_vgm_fee == 1:
 			
-			if self.container_size == "20":
-				vgm_fee = 77.05
-			if self.container_size == "40":
-				vgm_fee = (77.05 * 2)
+			if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
+				if self.container_size == "20":
+					vgm_fee = 77.05
+				if self.container_size == "40":
+					vgm_fee = (77.05 * 2)
+			if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
+				vgm_fee = 0
 			
 			self.append('fees_table', {
 			'item' : "VGM",
