@@ -18,4 +18,4 @@ class Gate1Export(Document):
 
 	def update_cargo_movement(self):
 
-			frappe.db.sql("""Update `tabCargo Movement` set gate_status='IN', container_content=%s, movement_date=%s, gate1_time=%s where refrence=%s""", (self.container_content, self.modified, self.modified, self.export_ref))
+			frappe.db.sql("""Update `tabCargo Movement` set gate_status='IN', container_content=%s, movement_date=%s, gate1_time=%s where refrence=%s""", (self.container_content, self.modified, self.modified, self.cargo_ref))
