@@ -102,6 +102,8 @@ class Inspection(Document):
     			frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 		if self.qty == 0 and self.cargo_type == "Split Ports" and self.last_port == "NO":
 				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+		if self.qty == 0 and self.cargo_type == "Split Ports" and self.last_port == "YES":
+				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 
 	def update_status(self):
 		self.create_cargo()
@@ -126,15 +128,23 @@ class Inspection(Document):
 			if self.secondary_work_type == "Re-stowing":
 				worktype = self.final_work_type
 				movement = "Re-stowing"
+				payment = "Closed"
+				gate = "Closed"
 			elif self.secondary_work_type == "Transhipment":
 				worktype = "Transhipment"
 				movement = "Transhipment"
+				payment = "Closed"
+				gate = "Closed"
 			elif not self.secondary_work_type and self.cargo_type == "Split Ports":
 				worktype = self.final_work_type
 				movement = "Split Ports"
+				payment = "Open"
+				gate = "Open"
 		elif self.final_work_type == "Re-stowing":
 				worktype = "Re-stowing"
 				movement = "Outbound"
+				payment = "Closed"
+				gate = "Closed"
 
 		doc = frappe.new_doc("Cargo")
 		doc.update({
@@ -176,9 +186,9 @@ class Inspection(Document):
 					"inspection_status" : "Closed",
 					"yard_status" : "Closed",
 					"final_status" : self.final_work_type,
-					"payment_status" : "Closed",
-					"gate1_status" : "Closed",
-					"gate2_status" : "Closed"
+					"payment_status" : payment,
+					"gate1_status" : gate,
+					"gate2_status" : gate
 					
 				})
 		doc.insert()
