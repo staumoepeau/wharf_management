@@ -66,7 +66,6 @@ class Inspection(Document):
 			
 			if self.cargo_type != "Split Ports":
 				self.update_inspection_status()
-			
 			if self.cargo_type == "Split Ports" and self.last_port == "NO":
 				self.create_cargo()
 				self.update_inspection_status()
@@ -103,7 +102,7 @@ class Inspection(Document):
 		if self.qty == 0 and self.cargo_type == "Split Ports" and self.last_port == "NO":
 				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 		if self.qty == 0 and self.cargo_type == "Split Ports" and self.last_port == "YES":
-				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+				frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s where name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 
 	def update_status(self):
 		self.create_cargo()
