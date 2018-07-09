@@ -324,11 +324,11 @@ frappe.ui.form.on('Cargo', {
                 return frappe.call({
                     method: "get_storage_fee",
                     doc: frm.doc,
-                    callback: function(get_storage_fee) {
+ //                   callback: function(get_storage_fee) {
  //                       frm.refresh_fields();
  //                       cur_frm.set_value("storage_fee", get_storage_fee);
-                        console.log(get_storage_fee);
-                    }
+ //                       console.log(get_storage_fee);
+ //                   }
                 });
         } else if ((frm.doc.manifest_check != "Confirm") && (frm.doc.container_content == "FULL")) {
                 cur_frm.set_value("storage_fee", 0);

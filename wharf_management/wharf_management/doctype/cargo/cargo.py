@@ -86,7 +86,7 @@ class Cargo(Document):
 #		elif free_days >= working_days:
 #			charge_days = 0
 		charge_days = 0
-		item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+		item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size, "container_content" : self.container_content}, "item_name")
 		vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
 
 		if flt(free_days) < flt(working_days):
