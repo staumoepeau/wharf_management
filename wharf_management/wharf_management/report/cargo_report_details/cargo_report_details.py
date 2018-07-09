@@ -11,7 +11,7 @@ def execute(filters=None):
 	return columns, data
 
 def get_columns():
-	return [*]
+	return []
 
 def get_cargo_data(filters, columns):
 	data = []
