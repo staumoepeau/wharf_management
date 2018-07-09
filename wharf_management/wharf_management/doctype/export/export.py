@@ -77,7 +77,7 @@ class Export(Document):
 		if self.apply_wharfage_fee == 1:
 			if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
 				qty = 1
-				item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "work_type" : "Loading", "container_size" : self.container_size}, "item_name")
+				item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
 				val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
 
 			if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
