@@ -21,6 +21,9 @@ class Cargo(Document):
 		self.clear_new_cargo()
 		if not self.title:
     			self.title = self.get_title()
+		
+#		if not self.barcode_code:
+#		self.barcode_code = self.get_barcode()
 
 #	def check_bulk_cargo(self):
 #		if self.cargo_type == "Break Bulk":
@@ -37,6 +40,8 @@ class Cargo(Document):
 			msgprint(_("Booking Ref # is Manadory").format(self.booking_ref),
 					raise_exception=1)
 	
+#	def get_barcode(self):
+#		return self.name
 
 	def get_title(self):
 		return self.consignee

@@ -20,7 +20,7 @@ class Export(Document):
 	
 
 	def validate_status(self):
-		if self.paid_status == "Paid" and not self.container_content:
+		if self.paid_status == "Paid" and not self.container_content and self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
 			frappe.throw(_("Please make sure that Container Content is FULL or EMPTY"))
 	
 	def check_cargo_type(self):
@@ -32,8 +32,13 @@ class Export(Document):
 				
 	def create_sales_invoices_paid(self):
 
-		item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
-		dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+		if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
+			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+		
+		if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
+			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
 
 		doc = frappe.new_doc("Sales Invoice")
 		doc.customer = self.customer
