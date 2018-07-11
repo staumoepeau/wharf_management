@@ -15,7 +15,7 @@ class WarehouseYard(Document):
 
 	def update_yard_status(self):
 		self.status = "Closed"
-		frappe.db.sql("""Update `tabCargo Warehouse` set yard_status="Closed", status="Yard", yard_slot=%s where name=%s""", (self.yard_slot, self.cargo_warehouse_ref))
+		frappe.db.sql("""Update `tabCargo Warehouse` set yard_status="Closed", status="Shelves", yard_slot=%s where name=%s""", (self.yard_slot, self.cargo_warehouse_ref))
 	
 
 

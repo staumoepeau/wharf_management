@@ -8,16 +8,16 @@ frappe.listview_settings['Cargo Warehouse'] = {
 
 		if(doc.docstatus==0){
 			if(doc.status==""){
-				return [__("Need Attention"), "red", "status,=,'Uploaded'"];
+				return [__("Need Attention"), "red", "status,=,'Booked'"];
 			}
-		} else if(doc.status=== "Uploaded"){
-			return [__("Uploaded"), "purple", "status,=,Uploaded"];
+		} else if(doc.status=== "Booked"){
+			return [__("Booked"), "purple", "status,=,Booked"];
 
 		} else if (doc.status === "Inspection"){
 			return [__("Inspection"), "green", "status,=,Inspection"];
 
-		} else if (doc.status === "Yard"){
-			return [__("Yard"), "blue", "status,=,Yard"];
+		} else if (doc.status === "Shelves"){
+			return [__("Shelves"), "blue", "status,=,Shelves"];
 		
 		}else if (doc.status === "Custom Check"){
 			return [__("Custom Check"), "red", "status,=,'Custom Check'"];
