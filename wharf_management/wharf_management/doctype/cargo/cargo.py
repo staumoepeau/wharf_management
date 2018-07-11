@@ -70,19 +70,19 @@ class Cargo(Document):
 		working_days = date_diff(self.etd_date, self.gate1_in)
 		working_days -= len(holidays)
 
-		if self.cargo_type == 'Container':
+		if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
 			free_days = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size, "container_content" : self.container_content }, "grace_days")
 #			free_days = frappe.db.sql("""Select grace_days from `tabStorage Fee` 
 #				where cargo_type=%s and container_size=%s and container_content=%s""", (self.cargo_type, self.container_size, self.container_content))
 		
-		elif self.cargo_type != 'Container':
+		if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
 			free_days = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "grace_days")
 
 		if self.secondary_work_type == "Transhipment":
-			if self.cargo_type == 'Container':
+			if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
 				wfee = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "fee_amount")
 			
-			if self.cargo_type != 'Container':
+			if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
 				wfee = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "fee_amount")
 
 		self.wharfage_fee = wfee
