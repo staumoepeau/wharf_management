@@ -22,7 +22,7 @@ class WharfPaymentFee(Document):
 		self.update_payment_status()
 #		self.update_export_status()
 		self.change_status()
-		self.make_payment()
+#		self.make_payment()
 		self.check_duplicate_warrant_number()
 		self.check_warrant_number()
 
@@ -42,15 +42,15 @@ class WharfPaymentFee(Document):
 				frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 		
-	def make_payment(self):
-		if self.payment_method == 'Credit' and self.work_type != 'Stock':
-			self.create_sales_invoices_credit()
+#	def make_payment(self):
+#		if self.payment_method == 'Credit' and self.work_type != 'Stock':
+#			self.create_sales_invoices_credit()
     	
-		if self.payment_method == 'Credit' and self.work_type == 'Stock':
-				self.create_sales_invoices_credit_mty()
+#		if self.payment_method == 'Credit' and self.work_type == 'Stock':
+#				self.create_sales_invoices_credit_mty()
 		
-		if self.payment_method != 'Credit' and self.bulk_payment != 'Yes':
-			self.create_sales_invoices_paid()
+#		if self.payment_method != 'Credit' and self.bulk_payment != 'Yes':
+#			self.create_sales_invoices_paid()
 			
 #			if self.payment_method == 'Cash' || self.payment_method == 'Cheque':
 #    				self.make_cash_entries()
@@ -294,103 +294,103 @@ class WharfPaymentFee(Document):
 #		if gl_map:
 #			make_gl_entries(gl_map, cancel=(self.docstatus == 2))
 	
-	def create_sales_invoices_credit_mty(self):
+#	def create_sales_invoices_credit_mty(self):
 
-		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-		entries = sorted(list(items))
-		self.set('items', [])
+#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+#		entries = sorted(list(items))
+#		self.set('items', [])
 
-		doc = frappe.new_doc("Sales Invoice")
-		doc.customer = self.agents
-		doc.pms_ref = self.name
-		doc.due_date = self.posting_date
+#		doc = frappe.new_doc("Sales Invoice")
+#		doc.customer = self.agents
+#		doc.pms_ref = self.name
+#		doc.due_date = self.posting_date
 
-		for d in entries:
-			item = doc.append('items', {
-			'item_code' : d.item,
-			'item_name' : d.item,
-			'description' : d.description,
-			'rate' : d.price,
-			'qty' : d.qty
-			})
+#		for d in entries:
+#			item = doc.append('items', {
+#			'item_code' : d.item,
+#			'item_name' : d.item,
+#			'description' : d.description,
+#			'rate' : d.price,
+#			'qty' : d.qty
+#			})
 
-		doc.save(ignore_permissions=True)
-		doc.save()
-		doc.submit()
+#		doc.save(ignore_permissions=True)
+#		doc.save()
+#		doc.submit()
 
-	def create_sales_invoices_credit(self):
+#	def create_sales_invoices_credit(self):
 
-		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-		entries = sorted(list(items))
-		self.set('items', [])
+#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+#		entries = sorted(list(items))
+#		self.set('items', [])
 
-		doc = frappe.new_doc("Sales Invoice")
-		doc.customer = self.consignee
-		doc.pms_ref = self.name
-		doc.due_date = self.posting_date
+#		doc = frappe.new_doc("Sales Invoice")
+#		doc.customer = self.consignee
+#		doc.pms_ref = self.name
+#		doc.due_date = self.posting_date
 
-		for d in entries:
-			item = doc.append('items', {
-			'item_code' : d.item,
-			'item_name' : d.item,
-			'description' : d.description,
-			'rate' : d.price,
-			'qty' : d.qty
-			})
+#		for d in entries:
+#			item = doc.append('items', {
+#			'item_code' : d.item,
+#			'item_name' : d.item,
+#			'description' : d.description,
+#			'rate' : d.price,
+#			'qty' : d.qty
+#			})
 
-		doc.save(ignore_permissions=True)
-		doc.submit()
+#		doc.save(ignore_permissions=True)
+#		doc.submit()
 
-	def create_sales_invoices_paid(self):
+#	def create_sales_invoices_paid(self):
 
-		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-		entries = sorted(list(items))
-		self.set('items', [])
+#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
+#		entries = sorted(list(items))
+#		self.set('items', [])
 
-		doc = frappe.new_doc("Sales Invoice")
-		doc.customer = self.consignee
-		doc.due_date = self.posting_date
-		doc.pms_ref = self.name
-		doc.is_pos = True
-		doc.status = "Paid"
+#		doc = frappe.new_doc("Sales Invoice")
+#		doc.customer = self.consignee
+#		doc.due_date = self.posting_date
+#		doc.pms_ref = self.name
+#		doc.is_pos = True
+#		doc.status = "Paid"
 
-		doc.paid_amount = self.total_amount
-		doc.base_paid_amount = self.total_amount
+#		doc.paid_amount = self.total_amount
+#		doc.base_paid_amount = self.total_amount
 		
-		if self.discount_amount:
-			doc.discount_amount = self.discount_amount
+#		if self.discount_amount:
+#			doc.discount_amount = self.discount_amount
 		
-		doc.outstanding_amount = 0
-		payments = doc.append('payments', {
-		'mode_of_payment': self.payment_method,
-		'amount' : self.total_amount
-		})
+#		doc.outstanding_amount = 0
+#		payments = doc.append('payments', {
+#		'mode_of_payment': self.payment_method,
+#		'amount' : self.total_amount
+#		})
 
-		for d in entries:
-			item = doc.append('items', {
-			'item_code' : d.item,
-			'item_name' : d.item,
-			'description' : d.description,
-			'rate' : d.price,
-			'qty' : d.qty
-			})
+#		for d in entries:
+#			item = doc.append('items', {
+#			'item_code' : d.item,
+#			'item_name' : d.item,
+#			'description' : d.description,
+#			'rate' : d.price,
+#			'qty' : d.qty
+#			})
 		
-		doc.save(ignore_permissions=True)
-		doc.submit()
+#		doc.save(ignore_permissions=True)
+#		doc.submit()
 
 	def refund_sales(self):
-		item_name = frappe.db.get_value("Sales Invoice", {"pms_ref": self.name}, "name")
+#		item_name = frappe.db.get_value("Sales Invoice", {"pms_ref": self.name}, "name")
 		cargo_refrence = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, "name")
 		gate_status = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, "gate1_status")
 
 		if gate_status == "Open":
 			frappe.db.sql("""Update `tabCargo` set payment_status="Open", status="Yard", custom_warrant="", delivery_code="", custom_code="", bulk_payment="", bulk_payment_code="" where name = %s """, (cargo_refrence), as_dict=1)
 			frappe.db.sql("""Update `tabWharf Payment Fee` set custom_warrant="" where name = %s """, (self.name), as_dict=1)
-			frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
-			frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
+#			frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
+#			frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
 			frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
 			frappe.db.sql("""Update `tabWharf Payment Fee` set docstatus=2 where name = %s """, (self.name), as_dict=1)
-			frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
+#			frappe.db.sql("""delete from `tabSales Invoice` where pms_ref = %s """, (self.name), as_dict=1)
 	#		frappe.throw(_("Transaction had been Cancel!"))
 		
 		if gate_status != "Open":
