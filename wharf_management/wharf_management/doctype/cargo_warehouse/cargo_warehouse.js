@@ -100,6 +100,22 @@ frappe.ui.form.on('Cargo Warehouse', {
 
             }).addClass("btn-info");
         }
+//        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+//        frm.doc.gate1_status != "Closed" &&
+//        frm.doc.payment_status == "Closed" &&
+//        frm.doc.yard_status == "Closed" &&
+//        frm.doc.inspection_status == "Closed" &&
+//        frm.doc.docstatus == 1
+//         )) {
+//           cur_frm.set_df_property("custom_warrant", "hidden", 1);
+//        frm.add_custom_button(__('Gate 1'), function() {
+//            frappe.route_options = {
+//                "cargo_warehouse_ref": frm.doc.name
+//            }
+//            frappe.new_doc("Gate1");
+//            frappe.set_route("Form", "Gate1", doc.name);
+//        }).addClass("btn-primary");
+//        }
 
 
     },

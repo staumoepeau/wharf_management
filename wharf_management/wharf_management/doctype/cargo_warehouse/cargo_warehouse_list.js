@@ -20,7 +20,7 @@ frappe.listview_settings['Cargo Warehouse'] = {
 			return [__("Shelves"), "blue", "status,=,Shelves"];
 		
 		}else if (doc.status === "Custom Check"){
-			return [__("Custom Check"), "red", "status,=,'Custom Check'"];
+			return [__("Custom Check"), "grey", "status,=,'Custom Check'"];
 
 		} else if (doc.status === "Paid"){
 			return [__("Paid"), "orange", "status,=,Paid"];
