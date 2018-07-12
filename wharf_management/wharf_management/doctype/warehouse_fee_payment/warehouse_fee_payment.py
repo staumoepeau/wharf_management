@@ -43,8 +43,8 @@ class WarehouseFeePayment(Document):
 		
 		if self.cargo_type == 'Loose Cargo':
 				strqty = 0
-				if self.weight < self.volume: strqty = float(self.volume)
-				if self.weight > self.volume: strqty = float(self.weight)
+				if self.weight < self.volume: strqty = float(self.volume * self.storage_days_charged)
+				if self.weight > self.volume: strqty = float(self.weight * self.storage_days_charged)
 				item_name = frappe.db.get_value("Warehouse Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 
 				val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)

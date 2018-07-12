@@ -385,6 +385,7 @@ class WharfPaymentFee(Document):
 
 		if gate_status == "Open":
 			frappe.db.sql("""Update `tabCargo` set payment_status="Open", status="Yard", custom_warrant="", delivery_code="", custom_code="", bulk_payment="", bulk_payment_code="" where name = %s """, (cargo_refrence), as_dict=1)
+			frappe.db.sql("""Update `tabWharf Payment Fee` set custom_warrant="" where name = %s """, (self.name), as_dict=1)
 			frappe.db.sql("""delete from `tabGL Entry` where voucher_no = %s """, (item_name), as_dict=1)
 			frappe.db.sql("""delete from `tabSales Invoice Item` where parent = %s """, (item_name), as_dict=1)
 			frappe.db.sql("""delete from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
