@@ -121,8 +121,8 @@ frappe.ui.form.on('Warehouse Fee Payment', {
             method: "insert_fees",
             doc: frm.doc,
             callback: function(fees) {
-                frm.refresh_fields();
-                console.log(fees);
+               frm.refresh_fields();
+               console.log(fees);
             }
         });
     },
