@@ -237,7 +237,7 @@ class WharfPaymentFee(Document):
 			if not self.secondary_work_type:
 					fees=0
 
-			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(1 * fees))
+			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount)+(1 * fees))
 			self.total_amount = self.total_fee
 
 		elif ((self.work_type == 'Stock' or self.work_type == 'Discharged') and self.container_content == 'EMPTY'):
@@ -258,7 +258,7 @@ class WharfPaymentFee(Document):
 				"price": vals.standard_rate,
 				"qty": strqty,
 				"total": float(strqty * vals.standard_rate),
-				"income_account" : vals.income_accounts
+#				"income_account" : vals.income_accounts
 			})
 	
 			if not self.secondary_work_type:
