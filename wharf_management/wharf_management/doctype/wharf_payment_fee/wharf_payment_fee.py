@@ -213,7 +213,7 @@ class WharfPaymentFee(Document):
 					devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name"], as_dict=True)
 #					item_name = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
 #					devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
-					fees = float(1 * devan.fee_amount)
+#					fees = float(1 * devan.fee_amount)
 					self.append("wharf_fee_item", { 
 							"item": devan.item_name,
 							"description": "Split Ports" + "-" + self.container_size,
@@ -225,7 +225,7 @@ class WharfPaymentFee(Document):
 			elif self.work_type=="Devanning" and not self.secondary_work_type:
 					devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name"], as_dict=True)
 #					devan = frappe.db.get_value("Item", item_name, ["description", "standard_rate","income_account"], as_dict=True)
-					fees = float(1 * devan.fee_amount)
+#					fees = 0
 					self.append("wharf_fee_item", { 
 							"item": devan.item_name,
 							"description": "Split Ports" + "-" + self.container_size,
@@ -234,10 +234,10 @@ class WharfPaymentFee(Document):
 							"total": float(cubic_value * devan.fee_amount)
 #							"income_account" : devan.income_accounts
 					})
-			if not self.secondary_work_type:
-					fees=0
+#			if not self.secondary_work_type:
+#					fees=0
 
-			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount)+(1 * fees))
+			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
 			self.total_amount = self.total_fee
 
 		elif ((self.work_type == 'Stock' or self.work_type == 'Discharged') and self.container_content == 'EMPTY'):
