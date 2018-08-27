@@ -169,7 +169,7 @@ class WharfPaymentFee(Document):
 													"container_size" : self.container_size,
 													"container_content" : self.container_content}, "item_name")
 			
-			if self.cargo_type == 'Heavy Vehicles' or self.cargo_type == 'Break Bulk' or self.cargo_type == 'Loose Cargo' or self.cargo_type == 'Split Ports':
+			if self.cargo_type == 'Heavy Vehicles' or self.cargo_type == 'Break Bulk' or self.cargo_type == 'Loose Cargo':
 					if self.volume > self.weight:
 						strqty = float(self.storage_days_charged * self.volume)
 						cubic_value = self.volume
@@ -177,6 +177,15 @@ class WharfPaymentFee(Document):
 						strqty = float(self.storage_days_charged * self.weight)
 						cubic_value = self.weight
 					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+			
+			if self.cargo_type == 'Split Ports':
+					if self.volume > self.weight:
+						strqty = float(self.storage_days_charged)
+						cubic_value = self.volume
+					if self.volume < self.weight:
+						strqty = float(self.storage_days_charged)
+						cubic_value = self.weight
+					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
 			
 			
 
