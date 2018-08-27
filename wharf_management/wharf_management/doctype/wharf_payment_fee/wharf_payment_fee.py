@@ -199,13 +199,16 @@ class WharfPaymentFee(Document):
 				"income_account" : vals.income_accounts
 			})
 
-			if (self.cargo_type == 'Container' or self.cargo_type == 'Split Ports'):
+			if self.cargo_type == 'Container':
 					qty = 1
 					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
 														"container_size" : self.container_size}, "item_name")
 										
 			if self.cargo_type != 'Container':
-					qty = self.volume
+					if self.volume > self.weight:
+						qty = self.volume
+					if self.volume < self.weight:
+						qty = self.weight
 					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 			
 			val = frappe.db.get_value("Item", item_name, ["description", "standard_rate" ,"income_account"], as_dict=True)
