@@ -85,5 +85,11 @@ frappe.ui.form.on('Gate2', {
 			cur_frm.set_df_property("truck_licenses_plate", "read_only", 0);
 
 		}
+		else {
+				cur_frm.set_df_property("drivers_information", "read_only", 1);
+				cur_frm.set_df_property("company", "read_only", 1);
+				cur_frm.set_df_property("truck_licenses_plate", "read_only", 1);
+			
+		}
 	}
 });

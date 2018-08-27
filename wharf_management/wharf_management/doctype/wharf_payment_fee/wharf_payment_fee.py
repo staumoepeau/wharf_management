@@ -217,6 +217,8 @@ class WharfPaymentFee(Document):
 				"total" : float(qty * val.standard_rate),
 				"income_account" : val.income_accounts
 			})
+
+			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate))
 			
 			if self.work_type=="Discharged" and self.secondary_work_type=="Devanning":
 					devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name"], as_dict=True)
@@ -243,10 +245,10 @@ class WharfPaymentFee(Document):
 							"total": float(cubic_value * devan.fee_amount)
 #							"income_account" : devan.income_accounts
 					})
-#			if not self.secondary_work_type:
-#					fees=0
 
-			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
+					self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
+
+			
 			self.total_amount = self.total_fee
 
 		elif ((self.work_type == 'Stock' or self.work_type == 'Discharged') and self.container_content == 'EMPTY'):
@@ -276,119 +278,6 @@ class WharfPaymentFee(Document):
 			self.total_fee = float((vals.standard_rate * strqty)+(1 * fees))
 			self.total_amount = self.total_fee
 		
-#	def make_credit_entries(self, cancel=0, adv_adj=0):
-#   		from erpnext.accounts.general_ledger import make_gl_entries				
-#		gl_map = []
-#		cost_center = frappe.db.get_value("Company", "Ports Authority Tonga", "cost_center")	
-#		gl_map.append(
-#			frappe._dict({
-#				"posting_date": self.posting_date,
-#				"account": "Debtors - PAT",
-#				"account_currency": "TOP",
-#				"debit": self.credit_amount,
-#				"voucher_type": self.doctype,
-#				"voucher_no": self.name,
-#				"against": "Storage Fee - PAT",
-#				"party_type": "Customer",
-#				"party": self.agents,
-#				"cost_center" : "Operations - PAT"
-#			}))
-#		gl_map.append(
-#			frappe._dict({
-#				"posting_date": self.posting_date,
-#				"account": "Storage Fee - PAT",
-#				"credit": self.credit_amount,
-#				"voucher_type": self.doctype,
-#				"voucher_no": self.name,
-#				"against": self.agents,
-#				"cost_center" : "Operations - PAT"
-#			}))
-#		if gl_map:
-#			make_gl_entries(gl_map, cancel=(self.docstatus == 2))
-	
-#	def create_sales_invoices_credit_mty(self):
-
-#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-#		entries = sorted(list(items))
-#		self.set('items', [])
-
-#		doc = frappe.new_doc("Sales Invoice")
-#		doc.customer = self.agents
-#		doc.pms_ref = self.name
-#		doc.due_date = self.posting_date
-
-#		for d in entries:
-#			item = doc.append('items', {
-#			'item_code' : d.item,
-#			'item_name' : d.item,
-#			'description' : d.description,
-#			'rate' : d.price,
-#			'qty' : d.qty
-#			})
-
-#		doc.save(ignore_permissions=True)
-#		doc.save()
-#		doc.submit()
-
-#	def create_sales_invoices_credit(self):
-
-#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-#		entries = sorted(list(items))
-#		self.set('items', [])
-
-#		doc = frappe.new_doc("Sales Invoice")
-#		doc.customer = self.consignee
-#		doc.pms_ref = self.name
-#		doc.due_date = self.posting_date
-
-#		for d in entries:
-#			item = doc.append('items', {
-#			'item_code' : d.item,
-#			'item_name' : d.item,
-#			'description' : d.description,
-#			'rate' : d.price,
-#			'qty' : d.qty
-#			})
-
-#		doc.save(ignore_permissions=True)
-#		doc.submit()
-
-#	def create_sales_invoices_paid(self):
-
-#		items = frappe.db.sql("""select item, price, description, total, qty, income_account from `tabWharf Fee Item` where parent = %s """, (self.name), as_dict=1)
-#		entries = sorted(list(items))
-#		self.set('items', [])
-
-#		doc = frappe.new_doc("Sales Invoice")
-#		doc.customer = self.consignee
-#		doc.due_date = self.posting_date
-#		doc.pms_ref = self.name
-#		doc.is_pos = True
-#		doc.status = "Paid"
-
-#		doc.paid_amount = self.total_amount
-#		doc.base_paid_amount = self.total_amount
-		
-#		if self.discount_amount:
-#			doc.discount_amount = self.discount_amount
-		
-#		doc.outstanding_amount = 0
-#		payments = doc.append('payments', {
-#		'mode_of_payment': self.payment_method,
-#		'amount' : self.total_amount
-#		})
-
-#		for d in entries:
-#			item = doc.append('items', {
-#			'item_code' : d.item,
-#			'item_name' : d.item,
-#			'description' : d.description,
-#			'rate' : d.price,
-#			'qty' : d.qty
-#			})
-		
-#		doc.save(ignore_permissions=True)
-#		doc.submit()
 
 	def refund_sales(self):
 #		item_name = frappe.db.get_value("Sales Invoice", {"pms_ref": self.name}, "name")
