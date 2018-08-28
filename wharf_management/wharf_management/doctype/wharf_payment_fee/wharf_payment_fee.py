@@ -160,7 +160,7 @@ class WharfPaymentFee(Document):
 		if self.work_type != 'Stock' and self.container_content != 'EMPTY':
 			if self.cargo_type == 'Vehicles':
 					strqty = self.storage_days_charged
-					vals = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+					vals = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, ["fee_amount", "item_name","description"], as_dict=True)
 						
 			if self.cargo_type == 'Container' or self.cargo_type == 'Tank Tainers' or self.cargo_type == 'Flatrack':
 					strqty = self.storage_days_charged
@@ -232,7 +232,7 @@ class WharfPaymentFee(Document):
 							"total": float(cubic_value * devan.fee_amount)
 #							"income_account" : devan.income_accounts
 					})
-					self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
+					self.total_fee = float((vals.fee_amount * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
 
 			elif self.work_type=="Devanning" and not self.secondary_work_type:
 					devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name","description"], as_dict=True)
@@ -247,7 +247,7 @@ class WharfPaymentFee(Document):
 #							"income_account" : devan.income_accounts
 					})
 
-					self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
+					self.total_fee = float((vals.fee_amount * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
 
 			
 			self.total_amount = self.total_fee
@@ -255,28 +255,28 @@ class WharfPaymentFee(Document):
 		elif ((self.work_type == 'Stock' or self.work_type == 'Discharged') and self.container_content == 'EMPTY'):
 			if self.cargo_type == 'Container':
 					strqty = self.storage_days_charged
-					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
+					item = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type,
 													"container_size" : self.container_size,
-													"container_content" : self.container_content}, "item_name")
+													"container_content" : self.container_content}, ["fee_amount", "item_name","description"], as_dict=True)
 
 			if self.cargo_type != 'Container':
 					strqty = float(self.storage_days_charged * self.volume)
-					item_name = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+					item = frappe.db.get_value("Storage Fee", {"cargo_type" : self.cargo_type}, ["fee_amount", "item_name","description"], as_dict=True)
 
-			vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
+#			vals = frappe.db.get_value("Item", item_name, ["description", "standard_rate", "income_account"], as_dict=True)
 			self.append("wharf_fee_item", { 
-				"item": item_name,
-				"description": vals.description,
-				"price": vals.standard_rate,
+				"item": item.item_name,
+				"description": item.description,
+				"price": item.fee_amount,
 				"qty": strqty,
-				"total": float(strqty * vals.standard_rate),
+				"total": float(strqty * item.fee_amount),
 #				"income_account" : vals.income_accounts
 			})
 	
 			if not self.secondary_work_type:
 					fees=0
 
-			self.total_fee = float((vals.standard_rate * strqty)+(1 * fees))
+			self.total_fee = float((item.fee_amount * strqty)+(1 * fees))
 			self.total_amount = self.total_fee
 		
 
