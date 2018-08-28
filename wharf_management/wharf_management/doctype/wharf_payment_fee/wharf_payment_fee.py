@@ -153,6 +153,9 @@ class WharfPaymentFee(Document):
 
 	def insert_fees(self):
 		fees=0
+		strqty=0
+		cubic_value=0
+		qty=0
 
 		if self.work_type != 'Stock' and self.container_content != 'EMPTY':
 			if self.cargo_type == 'Vehicles':
@@ -249,7 +252,7 @@ class WharfPaymentFee(Document):
 #							"income_account" : devan.income_accounts
 					})
 
-					self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
+			self.total_fee = float((vals.standard_rate * strqty)+(qty * val.standard_rate)+(cubic_value * devan.fee_amount))
 
 			
 			self.total_amount = self.total_fee
