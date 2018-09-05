@@ -122,6 +122,16 @@ def get_data():
 					"name": "Yard",
 					"description": _("Yard Operation."),
 				},
+				{
+					"type": "doctype",
+					"name": "Cargo Stock",
+					"description": _("Cargo Stock."),
+				},
+				{
+					"type": "doctype",
+					"name": "Cargo Stock Tool",
+					"description": _("Cargo Stock Tool."),
+				},
 			]
 		},
 		{

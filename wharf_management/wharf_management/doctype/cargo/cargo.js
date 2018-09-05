@@ -5,22 +5,102 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-//        if (frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Wharf Security Officer Main Gate")) {
-//            cur_frm.set_df_property("custom_warrant", "hidden", 1);
-//        } else {
-//            cur_frm.set_df_property("custom_warrant", "hidden", 0);
-//        }
 
-        if (frappe.user.has_role("System Manager")){
+        if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
+            
+            cur_frm.set_df_property("cargo_type", "read_only", 0);
+            cur_frm.set_df_property("work_type", "read_only", 0);
+            cur_frm.set_df_property("secondary_work_type", "read_only", 0);
+            cur_frm.set_df_property("booking_ref", "read_only", 0);
+
+            cur_frm.set_df_property("inspection_status", "read_only", 0);
+            cur_frm.set_df_property("yard_status", "read_only", 0);
+            cur_frm.set_df_property("payment_status", "read_only", 0);
+            cur_frm.set_df_property("gate1_status", "read_only", 0);
+            cur_frm.set_df_property("gate2_status", "read_only", 0);
+            cur_frm.set_df_property("final_status", "read_only", 0);
+            cur_frm.set_df_property("status", "read_only", 0);
+            cur_frm.set_df_property("final_eta", "hidden", 0);
+            cur_frm.set_df_property("final_etd", "hidden", 0);
+
             cur_frm.set_df_property("custom_code", "read_only", 0);
+            cur_frm.set_df_property("custom_warrant", "hidden", 0);
             cur_frm.set_df_property("delivery_code", "read_only", 0);
+
+//            cur_frm.set_df_property("eta_date", "read_only", 0);
+//            cur_frm.set_df_property("etd_date", "read_only", 0);
+//            cur_frm.set_df_property("pol", "read_only", 0);
+//            cur_frm.set_df_property("pod", "read_only", 0);
+//            cur_frm.set_df_property("final_dest_port", "read_only", 0);
+//            cur_frm.set_df_property("consignee", "read_only", 0);
+//            cur_frm.set_df_property("master_bol", "read_only", 0);
+//            cur_frm.set_df_property("bol", "read_only", 0);
+//            cur_frm.set_df_property("last_port", "read_only", 0);
+//            cur_frm.set_df_property("container_size", "read_only", 0);
+//            cur_frm.set_df_property("container_content", "read_only", 0);
+//            cur_frm.set_df_property("net_weight", "read_only", 0);
+//            cur_frm.set_df_property("seal_1", "read_only", 0);
+//            cur_frm.set_df_property("container_no", "read_only", 0);
+
+//            cur_frm.set_df_property("pat_code", "read_only", 0);
+//            cur_frm.set_df_property("volume", "read_only", 0);
+//            cur_frm.set_df_property("seal_2", "read_only", 0);
+//            cur_frm.set_df_property("mark", "read_only", 0);
+//            cur_frm.set_df_property("container_type", "read_only", 0);
+//            cur_frm.set_df_property("yard_slot", "read_only", 0);
+//            cur_frm.set_df_property("temperature", "read_only", 0);
+//            cur_frm.set_df_property("commodity_code", "read_only", 0);
+//            cur_frm.set_df_property("chasis_no", "read_only", 0);
+//            cur_frm.set_df_property("qty", "read_only", 0);
+
+
+        } else {
+            cur_frm.set_df_property("cargo_type", "read_only", 1);
+            cur_frm.set_df_property("work_type", "read_only", 1);
+            cur_frm.set_df_property("secondary_work_type", "read_only", 1);
+            cur_frm.set_df_property("booking_ref", "read_only", 1);
+
+            cur_frm.set_df_property("inspection_status", "read_only", 1);
+            cur_frm.set_df_property("yard_status", "read_only", 1);
+            cur_frm.set_df_property("payment_status", "read_only", 1);
+            cur_frm.set_df_property("gate1_status", "read_only", 1);
+            cur_frm.set_df_property("gate2_status", "read_only", 1);
+            cur_frm.set_df_property("final_status", "read_only", 1);
+            cur_frm.set_df_property("status", "read_only", 1);
+            cur_frm.set_df_property("final_eta", "hidden", 1);
+            cur_frm.set_df_property("final_etd", "hidden", 1);
+
+            cur_frm.set_df_property("custom_code", "read_only", 1);
+            cur_frm.set_df_property("custom_warrant", "hidden", 1);
+            cur_frm.set_df_property("delivery_code", "read_only", 1);
+
+//            cur_frm.set_df_property("eta_date", "read_only", 1);
+//            cur_frm.set_df_property("etd_date", "read_only", 1);
+//            cur_frm.set_df_property("pol", "read_only", 1);
+//            cur_frm.set_df_property("pod", "read_only", 1);
+//            cur_frm.set_df_property("final_dest_port", "read_only", 1);
+//            cur_frm.set_df_property("consignee", "read_only", 1);
+//            cur_frm.set_df_property("master_bol", "read_only", 1);
+//            cur_frm.set_df_property("bol", "read_only", 1);
+//            cur_frm.set_df_property("last_port", "read_only", 1);
+//            cur_frm.set_df_property("container_size", "read_only", 1);
+//            cur_frm.set_df_property("container_content", "read_only", 1);
+//            cur_frm.set_df_property("net_weight", "read_only", 1);
+//            cur_frm.set_df_property("seal_1", "read_only", 1);
+//           cur_frm.set_df_property("container_no", "read_only", 1);
+
+//            cur_frm.set_df_property("pat_code", "read_only", 1);
+//            cur_frm.set_df_property("volume", "read_only", 1);
+//            cur_frm.set_df_property("seal_2", "read_only", 1);
+//            cur_frm.set_df_property("mark", "read_only", 1);
+//            cur_frm.set_df_property("container_type", "read_only", 1);
+//            cur_frm.set_df_property("yard_slot", "read_only", 1);
+//            cur_frm.set_df_property("temperature", "read_only", 1);
+//            cur_frm.set_df_property("commodity_code", "read_only", 1);
+//            cur_frm.set_df_property("chasis_no", "read_only", 1);
+//            cur_frm.set_df_property("qty", "read_only", 1);
         }
 
-        if (frappe.user.has_role("System Manager")) {
-            cur_frm.set_df_property("custom_warrant", "hidden", 0);
-        } else {
-            cur_frm.set_df_property("custom_warrant", "hidden", 1);
-        }
 
         if (frappe.user.has_role("Wharf Operation Manifest User")) {
 
@@ -36,29 +116,6 @@ frappe.ui.form.on('Cargo', {
 
         }
 
-        if (frappe.user.has_role("System Manager")){
-            cur_frm.set_df_property("inspection_status", "read_only", 0);
-            cur_frm.set_df_property("yard_status", "read_only", 0);
-            cur_frm.set_df_property("payment_status", "read_only", 0);
-            cur_frm.set_df_property("gate1_status", "read_only", 0);
-            cur_frm.set_df_property("gate2_status", "read_only", 0);
-            cur_frm.set_df_property("final_status", "read_only", 0);
-            cur_frm.set_df_property("status", "read_only", 0);
-            cur_frm.set_df_property("final_eta", "hidden", 0);
-            cur_frm.set_df_property("final_etd", "hidden", 0);
-            
-
-        } else{
-            cur_frm.set_df_property("inspection_status", "read_only", 1);
-            cur_frm.set_df_property("yard_status", "read_only", 1);
-            cur_frm.set_df_property("payment_status", "read_only", 1);
-            cur_frm.set_df_property("gate1_status", "read_only", 1);
-            cur_frm.set_df_property("gate2_status", "read_only", 1);
-            cur_frm.set_df_property("final_status", "read_only", 1);
-            cur_frm.set_df_property("status", "read_only", 1);
-            cur_frm.set_df_property("final_eta", "hidden", 1);
-            cur_frm.set_df_property("final_etd", "hidden", 1);
-        }
         
         if (frappe.user.has_role("Wharf Operation Manifest User") || frappe.user.has_role("System Manager")) {
             cur_frm.set_df_property("cargo_status", "read_only", 0);

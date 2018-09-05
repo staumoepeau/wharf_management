@@ -12,9 +12,26 @@ class WarehouseFeePayment(Document):
 
 	def on_submit(self):
 		self.update_payment_status()
+		self.check_duplicate_warrant_number()
+		self.check_warrant_number()
+
+	
+	def check_warrant_number(self):
+		if self.deliver_empty != "Yes":
+			if not self.custom_warrant:
+				frappe.msgprint(_("Custom Warrant Number is Required"), raise_exception=True)
+
+
+	def check_duplicate_warrant_number(self):
+		check_duplicate = None
+		check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWarehouse Fee Payment` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
+		
+		if self.bulk_payment != "Yes":
+			if check_duplicate:
+				frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 	def update_payment_status(self):
- 			frappe.db.sql("""Update `tabCargo Warehouse` set payment_status="Closed", status='Paid' where name=%s""", (self.cargo_warehouse_ref))
+ 			frappe.db.sql("""Update `tabCargo Warehouse` set payment_status="Closed", status='Paid', warrant_no=%s where name=%s""", (self.custom_warrant, self.cargo_warehouse_ref))
 	
 	def get_working_days(self):
 

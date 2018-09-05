@@ -1,4 +1,4 @@
-// Copyright (c) 2017, Caitlah Technology and contributors
+// Copyright (c) 2017, Sione Taumoepeau and contributors
 // For license information, please see license.txt
 
 frappe.listview_settings['Cargo'] = {
