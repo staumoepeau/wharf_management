@@ -25,8 +25,8 @@ frappe.listview_settings['Cargo Warehouse'] = {
 		} else if (doc.status === "Paid"){
 			return [__("Paid"), "orange", "status,=,Paid"];
 
-		}else if (doc.status === "Security Check"){
-			return [__("Gate Out"), "green", "status,=,'Security Check'"];
+		}else if (doc.status === "Delivered"){
+			return [__("Delivered"), "green", "status,=,'Delivered'"];
 		}
 	}
 };

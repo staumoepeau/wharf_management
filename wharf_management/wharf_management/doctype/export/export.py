@@ -14,9 +14,9 @@ class Export(Document):
 		self.validate_status()
 		self.check_cargo_type()
 	
-	def on_submit(self):
-		if self.paid_status == "Paid":
-			self.create_sales_invoices_paid()
+#	def on_submit(self):
+#		if self.paid_status == "Paid":
+#			self.create_sales_invoices_paid()
 	
 
 	def validate_status(self):
@@ -30,50 +30,48 @@ class Export(Document):
 			if not self.weight:
 				frappe.throw(_("Please make sure to input the Weight Value"))
 				
-	def create_sales_invoices_paid(self):
+#	def create_sales_invoices_paid(self):
 
-		if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
-			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
-			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
-		
-		if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
-			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
-			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+#		if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
+#			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, "item_name")
+#			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+#		
+#		if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
+#			item = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+#			dc = frappe.db.get_value("Item", item, ["description", "standard_rate"], as_dict=True)
+#
+#		doc = frappe.new_doc("Sales Invoice")
+#		doc.customer = self.customer
+##		doc.export_ref = self.name
+#		doc.is_pos = True
+#		doc.status = "Paid"
 
-		doc = frappe.new_doc("Sales Invoice")
-		doc.customer = self.customer
-		doc.due_date = self.posting_date
-		doc.export_ref = self.name
-		doc.is_pos = True
-		doc.status = "Paid"
+#		doc.paid_amount = self.total_fee
+#		doc.base_paid_amount = self.total_fee
+#		doc.outstanding_amount = 0
+#		payments = doc.append('payments', {
+#		'mode_of_payment': self.payment_method,
+#		'amount' : self.total_fee
+#		})
 
-		doc.paid_amount = self.total_fee
-		doc.base_paid_amount = self.total_fee
-		doc.outstanding_amount = 0
-		payments = doc.append('payments', {
-		'mode_of_payment': self.payment_method,
-		'amount' : self.total_fee
-		})
+#		item = doc.append('items', {
+#		'item_code' : item,
+#		'item_name' : item,
+#		'description' : dc.description,
+#		'rate' : dc.standard_rate,
+#		'qty' : 1
+#		})
 
-		item = doc.append('items', {
-		'item_code' : item,
-		'item_name' : item,
-		'description' : dc.description,
-		'rate' : dc.standard_rate,
-		'qty' : 1
-		})
-
-		if self.apply_vgm_fee:
-			item = doc.append('items', {
-			'item_code' : "VGM",
-			'item_name' : "VGM",
-			'description' : "VGM Fee",
-			'rate' : self.vgm_fee,
-			'qty' : 1
-			})
+#		if self.apply_vgm_fee:
+#			item = doc.append('items', {
+#			'item_name' : "VGM",
+#			'description' : "VGM Fee",
+#			'rate' : self.vgm_fee,
+#			'qty' : 1
+#			})
 			
-		doc.save(ignore_permissions=True)
-		doc.submit()
+#		doc.save(ignore_permissions=True)
+#		doc.submit()
 
 
 	def insert_fees(self):

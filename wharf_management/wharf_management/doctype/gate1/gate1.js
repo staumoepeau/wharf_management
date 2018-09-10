@@ -13,7 +13,7 @@ frappe.ui.form.on('Gate1', {
     },
 
     onload: function(frm) {
-//        if (frm.doc.cargo_ref.str.substring(0,2) == "PM"){
+
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {

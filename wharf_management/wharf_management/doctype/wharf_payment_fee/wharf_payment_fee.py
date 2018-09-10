@@ -1,7 +1,7 @@
 
 
 # -*- coding: utf-8 -*-
-# Copyright (c) 2017, Caitlah Technology and contributors
+# Copyright (c) 2017, Sione Taumoepeau and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -78,14 +78,6 @@ class WharfPaymentFee(Document):
 
 	def get_working_days(self):
 		
-#		val = frappe.db.get_value("Cargo", self.cargo_ref, ["final_eta"], as_dict=True)
-#		val = frappe.db.get_value("Cargo", {"name" : self.cargo_ref}, "final_eta")
-
-#		if not val.final_eta:
-#			eta = self.eta_date
-#		if val.final_eta:
-#			eta = val.final_eta
-
 		holidays = self.get_holidays(self.eta_date, self.posting_date)
 		working_days = date_diff(self.posting_date, self.eta_date)
 		working_days -= len(holidays)

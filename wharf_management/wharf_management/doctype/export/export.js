@@ -17,13 +17,13 @@ frappe.ui.form.on('Export', {
 
         if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Cashier"))){
 
-            frm.add_custom_button(__('Deliver EMPTY'), function() {
+            frm.add_custom_button(__('EMPTY Outside'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name,
                     "container_no": frm.doc.container_no
                 }
-                frappe.new_doc("Main Gate Export");
-                frappe.set_route("Form", "Maint Gate Export", doc.name);
+                frappe.new_doc("Empty Deliver Payment");
+                frappe.set_route("Form", "Empty Deliver Payment", doc.name);
             }).addClass("btn-success");
 
 

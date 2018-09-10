@@ -12,23 +12,23 @@ class WarehouseFeePayment(Document):
 
 	def on_submit(self):
 		self.update_payment_status()
-		self.check_duplicate_warrant_number()
 		self.check_warrant_number()
 
-	
+
+	def validate(self):
+		self.check_duplicate_warrant_number()
+
 	def check_warrant_number(self):
-		if self.deliver_empty != "Yes":
-			if not self.custom_warrant:
-				frappe.msgprint(_("Custom Warrant Number is Required"), raise_exception=True)
+		if not self.custom_warrant:
+			frappe.msgprint(_("Custom Warrant Number is Required"), raise_exception=True)
 
 
 	def check_duplicate_warrant_number(self):
 		check_duplicate = None
 		check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWarehouse Fee Payment` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
 		
-		if self.bulk_payment != "Yes":
-			if check_duplicate:
-				frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
+		if check_duplicate:
+			frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 	def update_payment_status(self):
  			frappe.db.sql("""Update `tabCargo Warehouse` set payment_status="Closed", status='Paid', warrant_no=%s where name=%s""", (self.custom_warrant, self.cargo_warehouse_ref))
@@ -62,31 +62,27 @@ class WarehouseFeePayment(Document):
 				strqty = 0
 				if self.weight < self.volume: strqty = float(self.volume * self.storage_days_charged)
 				if self.weight > self.volume: strqty = float(self.weight * self.storage_days_charged)
-				item_name = frappe.db.get_value("Warehouse Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+				val = frappe.db.get_value("Warehouse Storage Fee", {"cargo_type" : self.cargo_type}, ["fee_amount", "fee_name","description"], as_dict=True)
 
-				val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
 				self.append("wharf_fee_item", { 
-					"item": item_name,
+					"item": val.fee_name,
 					"description": val.description,
-					"price": val.standard_rate,
+					"price": val.fee_amount,
 					"qty": strqty,
-					"total": float(strqty * val.standard_rate)
+					"total": float(strqty * val.fee_amount)
 				})
-				self.total_fee = float((val.standard_rate * strqty))
+				self.total_fee = float((val.fee_amount * strqty))
 
 		if self.cargo_type == 'Vehicles':
 				strqty = 0
 				strqty = self.storage_days_charged
-				item_name = frappe.db.get_value("Warehouse Storage Fee", {"cargo_type" : self.cargo_type}, "item_name")
+				val = frappe.db.get_value("Warehouse Storage Fee", {"cargo_type" : self.cargo_type}, ["fee_amount", "fee_name","description"], as_dict=True)
 
-				val = frappe.db.get_value("Item", item_name, ["description", "standard_rate"], as_dict=True)
 				self.append("wharf_fee_item", { 
-					"item": item_name,
+					"item": val.fee_name,
 					"description": val.description,
-					"price": val.standard_rate,
+					"price": val.fee_amount,
 					"qty": strqty,
-					"total": float(strqty * val.standard_rate)
+					"total": float(strqty * val.fee_amount)
 				})
-				self.total_fee = float((val.standard_rate * strqty))
-		
-		
+				self.total_fee = float((val.fee_amount * strqty))
