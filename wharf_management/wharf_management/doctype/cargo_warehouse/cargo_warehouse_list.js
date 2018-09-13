@@ -10,7 +10,8 @@ frappe.listview_settings['Cargo Warehouse'] = {
 			if(doc.status==""){
 				return [__("Need Attention"), "red", "status,=,'Booked'"];
 			}
-		else if(doc.docstatus==1){
+		
+		}else if(doc.docstatus==1){
 			} if(doc.status=== "Booked"){
 				return [__("Booked"), "purple", "status,=,Booked"];
 
@@ -29,6 +30,5 @@ frappe.listview_settings['Cargo Warehouse'] = {
 			}else if (doc.status === "Delivered"){
 				return [__("Delivered"), "green", "status,=,'Delivered'"];
 			}
-		}
 	}
 };

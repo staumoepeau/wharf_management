@@ -36,6 +36,11 @@ frappe.ui.form.on('Cargo Warehouse', {
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
         frm.doc.status == "Booked" &&
+        frm.doc.inspection_status == "Open" &&
+//        frm.doc.yard_staus == "Open" &&
+//        frm.doc.custom_check_status == "Open" &&
+//        frm.doc.payment_status == "Open" &&
+//        frm.doc.security_check_status == "Open" &&
         frm.doc.docstatus == 1
         ) {
             frm.add_custom_button(__('Warehouse Inspection'), function() {
@@ -49,6 +54,11 @@ frappe.ui.form.on('Cargo Warehouse', {
         }
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
         frm.doc.status == "Inspection" &&
+        frm.doc.inspection_status == "Closed" &&
+        frm.doc.yard_status == "Open" &&
+//        frm.doc.custom_check_status == "Open" &&
+//        frm.doc.payment_status == "Open" &&
+//        frm.doc.security_check_status == "Open" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Warehouse Yard'), function() {
@@ -62,6 +72,11 @@ frappe.ui.form.on('Cargo Warehouse', {
         }
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
         frm.doc.status == "Shelves" &&
+        frm.doc.inspection_status == "Closed" &&
+        frm.doc.yard_status == "Closed" &&
+        frm.doc.custom_check_status == "Open" &&
+//        frm.doc.payment_status == "Open" &&
+//        frm.doc.security_check_status == "Open" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Custom Check'), function() {
@@ -75,6 +90,11 @@ frappe.ui.form.on('Cargo Warehouse', {
         }
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
         frm.doc.status == "Custom Check" &&
+        frm.doc.inspection_status == "Closed" &&
+        frm.doc.yard_status == "Closed" &&
+        frm.doc.custom_check_status == "Closed" &&
+//        frm.doc.payment_status == "Open" &&
+        frm.doc.security_check_status == "Open" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Payment'), function() {
@@ -88,7 +108,11 @@ frappe.ui.form.on('Cargo Warehouse', {
         }
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
         frm.doc.status == "Paid" &&
+        frm.doc.inspection_status == "Closed" &&
+        frm.doc.yard_status == "Closed" &&
         frm.doc.custom_check_status == "Closed" &&
+        frm.doc.payment_status == "Open" &&
+        frm.doc.security_check_status == "Closed" &&
         frm.doc.docstatus == 1
          )) {
            cur_frm.set_df_property("custom_warrant", "hidden", 1);
