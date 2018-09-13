@@ -50,7 +50,7 @@ frappe.ui.form.on('Gate1', {
                         } else {
                             cur_frm.set_df_property("bulk_payment", "hidden", 1);
                         }
-                    
+                        cur_frm.set_df_property("mydoctype", "read_only", 1);
                         cur_frm.set_df_property("cargo_ref", "read_only", 1);
                         cur_frm.set_df_property("container_no", "read_only", 1);
                         cur_frm.set_df_property("customer", "read_only", 1);
@@ -94,7 +94,9 @@ frappe.ui.form.on('Gate1', {
 //                        cur_frm.set_value("agents", data.message["agents"]);
                         cur_frm.set_value("cargo_type", data.message["cargo_type"]);
                         cur_frm.set_value("container_content", data.message["container_content"]);
-                       
+
+
+                        cur_frm.set_df_property("mydoctype", "read_only", 1);
                         cur_frm.set_df_property("cargo_ref", "read_only", 1);
                         cur_frm.set_df_property("delivery_code", "read_only", 1);
                         cur_frm.set_df_property("custom_code", "read_only", 1);
