@@ -34,7 +34,7 @@ frappe.ui.form.on('Cargo Warehouse', {
         cur_frm.add_fetch('requesting_ref','container_size','container_size')
         cur_frm.add_fetch('requesting_ref','devanning_date','devanning_date');
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
         frm.doc.status == "Booked" &&
         frm.doc.docstatus == 1
         ) {
@@ -47,11 +47,8 @@ frappe.ui.form.on('Cargo Warehouse', {
 
             }).addClass("btn-info");
         }
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Operation User") &&
-        frm.doc.security_check_status != "Closed" &&
-        frm.doc.payment_status != "Closed" &&
-        frm.doc.yard_status != "Closed" &&
-        frm.doc.inspection_status == "Closed" &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
+        frm.doc.status == "Inspection" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Warehouse Yard'), function() {
@@ -63,12 +60,8 @@ frappe.ui.form.on('Cargo Warehouse', {
 
             }).addClass("btn-info");
         }
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
-        frm.doc.security_check_status != "Closed" &&
-        frm.doc.payment_status != "Closed" &&
-        frm.doc.custom_check_status != "Closed" &&
-        frm.doc.yard_status == "Closed" &&
-        frm.doc.inspection_status == "Closed" &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+        frm.doc.status == "Shelves" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Custom Check'), function() {
@@ -80,12 +73,8 @@ frappe.ui.form.on('Cargo Warehouse', {
 
             }).addClass("btn-warning");
         }
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
-        frm.doc.security_check_status != "Closed" &&
-        frm.doc.payment_status != "Closed" &&
-        frm.doc.custom_check_status == "Closed" &&
-        frm.doc.yard_status == "Closed" &&
-        frm.doc.inspection_status == "Closed" &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+        frm.doc.status == "Custom Check" &&
         frm.doc.docstatus == 1
         )) {
             frm.add_custom_button(__('Payment'), function() {
@@ -97,7 +86,7 @@ frappe.ui.form.on('Cargo Warehouse', {
 
             }).addClass("btn-info");
         }
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
         frm.doc.status == "Paid" &&
         frm.doc.custom_check_status == "Closed" &&
         frm.doc.docstatus == 1

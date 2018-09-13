@@ -10,23 +10,25 @@ frappe.listview_settings['Cargo Warehouse'] = {
 			if(doc.status==""){
 				return [__("Need Attention"), "red", "status,=,'Booked'"];
 			}
-		} else if(doc.status=== "Booked"){
-			return [__("Booked"), "purple", "status,=,Booked"];
+		else if(doc.docstatus==1){
+			} if(doc.status=== "Booked"){
+				return [__("Booked"), "purple", "status,=,Booked"];
 
-		} else if (doc.status === "Inspection"){
-			return [__("Inspection"), "green", "status,=,Inspection"];
+			} else if (doc.status === "Inspection"){
+				return [__("Inspection"), "green", "status,=,Inspection"];
 
-		} else if (doc.status === "Shelves"){
-			return [__("Shelves"), "blue", "status,=,Shelves"];
-		
-		}else if (doc.status === "Custom Check"){
-			return [__("Custom Check"), "grey", "status,=,'Custom Check'"];
+			} else if (doc.status === "Shelves"){
+				return [__("Shelves"), "blue", "status,=,Shelves"];
+			
+			}else if (doc.status === "Custom Check"){
+				return [__("Custom Check"), "grey", "status,=,'Custom Check'"];
 
-		} else if (doc.status === "Paid"){
-			return [__("Paid"), "orange", "status,=,Paid"];
+			} else if (doc.status === "Paid"){
+				return [__("Paid"), "orange", "status,=,Paid"];
 
-		}else if (doc.status === "Delivered"){
-			return [__("Delivered"), "green", "status,=,'Delivered'"];
+			}else if (doc.status === "Delivered"){
+				return [__("Delivered"), "green", "status,=,'Delivered'"];
+			}
 		}
 	}
 };
