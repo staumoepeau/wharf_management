@@ -49,21 +49,7 @@ def get_data():
 
 			]
 		},
-		{
-			"label": _("Cargo Movement"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Transhipment Cargo",
-					"description": _("Transhipment Cargo."),
-				},
-				{
-					"type": "doctype",
-					"name": "Export",
-					"description": _("Export Cargo."),
-				},
-			]
-		},
+		
 		{
 			"label": _("Warehouse"),
 			"items": [
@@ -94,8 +80,28 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Cargo Warehouse Security",
+					"description": _("Cargo Warehouse Security."),
+				},
+				{
+					"type": "doctype",
 					"name": "Warehouse Storage Fee",
 					"description": _("Warehouse Storage Fee."),
+				},
+			]
+		},
+		{
+			"label": _("Cargo Movement"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Transhipment Cargo",
+					"description": _("Transhipment Cargo."),
+				},
+				{
+					"type": "doctype",
+					"name": "Export",
+					"description": _("Export Cargo."),
 				},
 			]
 		},

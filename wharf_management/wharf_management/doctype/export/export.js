@@ -17,7 +17,7 @@ frappe.ui.form.on('Export', {
 
         if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Cashier"))){
 
-            frm.add_custom_button(__('EMPTY Outside'), function() {
+            frm.add_custom_button(__('DELIVER EMPTY'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name,
                     "container_no": frm.doc.container_no
@@ -26,9 +26,9 @@ frappe.ui.form.on('Export', {
                 frappe.set_route("Form", "Empty Deliver Payment", doc.name);
             }).addClass("btn-success");
 
-
             cur_frm.set_df_property("export_payment", "hidden", 0);
-            } else {
+            
+        } else {
             cur_frm.set_df_property("export_payment", "hidden", 1);
         }
         if (frappe.user.has_role("System Manager")){

@@ -23,6 +23,7 @@ class EmptyDeliverPayment(Document):
 		doc = frappe.new_doc("Empty Containers")
 		doc.update({
 					"docstatus" : 1,
+					"cargo_ref" : self.cargo_ref,
 					"pat_code" : val.pat_code,
 					"cargo_type" : val.cargo_type,
 					"container_no" : val.container_no,
@@ -32,7 +33,7 @@ class EmptyDeliverPayment(Document):
 					"container_size" : val.container_size,
 					"consignee" : self.consignee,
 					"container_content" : val.container_content,
-					"status" : "Paid",
+					"status" : "PAID",
 					"yard_slot" : val.yard_slot
 					
 				})

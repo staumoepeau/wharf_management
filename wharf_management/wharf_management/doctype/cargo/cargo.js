@@ -184,7 +184,8 @@ frappe.ui.form.on('Cargo', {
  //           cur_frm.set_df_property("custom_warrant", "hidden", 1);
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
-                    "cargo_ref": frm.doc.name
+                    "cargo_ref": frm.doc.name,
+                    "mydoctype" : "CARGO"
                 }
                 frappe.new_doc("Gate1");
                 frappe.set_route("Form", "Gate1", doc.name);

@@ -26,6 +26,12 @@ frappe.ui.form.on('Cargo Warehouse Security', {
                 callback: function(data) {
                 	cur_frm.set_value("customer", data.message["consignee"]);
 					cur_frm.set_value("cargo_type", data.message["cargo_type"]);
+						if (frm.doc.cargo_type == "Vehicles"){
+							cur_frm.set_df_property("delivery_details", "hidden", 1);
+						}
+						if (frm.doc.cargo_type != "Vehicles"){
+							cur_frm.set_df_property("delivery_details", "hidden", 0);
+						}
 					cur_frm.set_value("cargo_description", data.message["cargo_description"]);
 					cur_frm.set_value("chasis_no", data.message["chasis_no"]);
 					cur_frm.set_value("qty", data.message["qty"]);

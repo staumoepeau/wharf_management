@@ -35,10 +35,7 @@ frappe.ui.form.on('Cargo Warehouse', {
         cur_frm.add_fetch('requesting_ref','devanning_date','devanning_date');
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-        frm.doc.security_check_status != "Closed" &&
-        frm.doc.payment_status != "Closed" &&
-        frm.doc.yard_status != "Closed" &&
-        frm.doc.inspection_status != "Closed" &&
+        frm.doc.status == "Booked" &&
         frm.doc.docstatus == 1
         ) {
             frm.add_custom_button(__('Warehouse Inspection'), function() {
@@ -101,10 +98,8 @@ frappe.ui.form.on('Cargo Warehouse', {
             }).addClass("btn-info");
         }
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
-        frm.doc.gate1_status != "Closed" &&
-        frm.doc.payment_status == "Closed" &&
-        frm.doc.yard_status == "Closed" &&
-        frm.doc.inspection_status == "Closed" &&
+        frm.doc.status == "Paid" &&
+        frm.doc.custom_check_status == "Closed" &&
         frm.doc.docstatus == 1
          )) {
            cur_frm.set_df_property("custom_warrant", "hidden", 1);
@@ -127,6 +122,7 @@ frappe.ui.form.on('Cargo Warehouse', {
             cur_frm.set_df_property("payment_status", "read_only", 0);
             cur_frm.set_df_property("security_check_status", "read_only", 0);
             cur_frm.set_df_property("status", "read_only", 0);
+            cur_frm.set_df_property("cargo_movement_status", "hidden", 0);
 
         } else{
             cur_frm.set_df_property("inspection_status", "read_only", 1);
@@ -135,6 +131,7 @@ frappe.ui.form.on('Cargo Warehouse', {
             cur_frm.set_df_property("payment_status", "read_only", 1);
             cur_frm.set_df_property("security_check_status", "read_only", 1);
             cur_frm.set_df_property("status", "read_only", 1);
+            cur_frm.set_df_property("cargo_movement_status", "hidden", 1);
         }
     }
 });
