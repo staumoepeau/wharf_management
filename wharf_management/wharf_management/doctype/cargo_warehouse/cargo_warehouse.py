@@ -7,4 +7,13 @@ import frappe
 from frappe.model.document import Document
 
 class CargoWarehouse(Document):
-	pass
+	
+	def on_submit(self):
+		self.validate_status()
+
+	
+	def validate_status(self):
+		if not self.status:
+			self.status = "Booked"
+		if not self.inspection_status:
+			self.inspection_status = "Open"
