@@ -4,16 +4,26 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe import msgprint, _, scrub
 from frappe.model.document import Document
 
 class CargoWarehouse(Document):
 	
-	def on_submit(self):
-		self.validate_status()
+	def validate(self):
+		self.check_status()
 
 	
-	def validate_status(self):
+	def check_status(self):
 		if not self.status:
-			self.status = "Booked"
+			self.status = self.get_status()
 		if not self.inspection_status:
-			self.inspection_status = "Open"
+			self.inspection_status = self.get_inspection_status()
+	
+
+	def get_status(self):
+		mystatus = "Booked"
+		return mystatus
+	
+	def get_inspection_status(self):
+		inspection_status = "Open"
+		return inspection_status

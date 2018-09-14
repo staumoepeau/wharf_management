@@ -13,6 +13,13 @@ frappe.ui.form.on('Cargo Warehouse', {
 //            {fieldname: 'mark', columns: 1},
 //		];
     },
+ //   on_submit: function(frm){
+
+ //       if (frm.doc.status == ""){
+ //           frm.set_value("status", "Booked")
+//       }
+
+//    },
 
 	refresh: function(frm) {
 
