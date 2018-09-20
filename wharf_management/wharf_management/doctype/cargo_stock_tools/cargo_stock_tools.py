@@ -30,7 +30,7 @@ class CargoStockTools(Document):
 	
 	def move_stock_to_stock_history(self):
 		cargo_list = frappe.db.sql("""Select container_no,container_type,cargo_type,qty,mark,pat_code,chasis_no,
-		status,yard_slot,yard_status,title,yard_date,container_size,final_status,
+		status,yard_slot,title,yard_date,container_size,final_status,
 		cargo_stock_ref,loading_error,export_error,in_stock,discharged_error from `tabCargo Stock`""", as_dict=1)
 
 		entries = sorted(list(cargo_list))
@@ -49,7 +49,7 @@ class CargoStockTools(Document):
 						"chasis_no" : val.chasis_no,
 						"status" : val.status,
 						"yard_slot" : val.yard_slot,
-						"yard_status" : val.yard_status,
+#						"yard_status" : val.yard_status,
 						"title" : val.title,
 						"yard_date" : val.yard_date,
 						"container_size" : val.container_size,

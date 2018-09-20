@@ -212,17 +212,17 @@ frappe.ui.form.on('Pre Advice', {
             frm.doc.inspection_status == "Closed" &&
             frm.doc.qty > 1 &&
             frm.doc.break_bulk_item_count != frm.doc.qty
-        ) {
-            frm.add_custom_button(__('Bulk Item Count'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name
-                }
-                frappe.new_doc("Bulk Item Count");
-                frappe.set_route("Form", "Bulk Item Count", doc.name);
+            ) {
+                frm.add_custom_button(__('Bulk Item Count'), function() {
+                    frappe.route_options = {
+                        "cargo_ref": frm.doc.name
+                    }
+                    frappe.new_doc("Bulk Item Count");
+                    frappe.set_route("Form", "Bulk Item Count", doc.name);
 
-            }).addClass("btn-warning");
-        }
-    },
+                }).addClass("btn-warning");
+            }
+        },
     
 });
 
