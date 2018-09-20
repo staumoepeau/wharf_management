@@ -4,8 +4,8 @@
 frappe.ui.form.on('Yard', {
 
 	on_submit: function(frm){
-        frm.reload_doc()
         frappe.set_route("List", "Pre Advice")
+        location.reload(true);
     },
 
 	refresh: function(frm) {

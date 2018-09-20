@@ -9,18 +9,29 @@ frappe.ui.form.on('Inspection', {
     on_submit: function(frm){
 //        frm.reload_doc()
         frappe.set_route("List", "Pre Advice");
-        frm.refresh();
+        location.reload(true);
     },
     onload: function(frm) {
-//        frm.refresh();
+
+        if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
+            
+            cur_frm.set_df_property("container_content", "read_only", 0);
+
+        } else {
+
+            cur_frm.set_df_property("container_content", "read_only", 1);
+        }
+
 
         frappe.call({
             "method": "frappe.client.get",
             args: {
                 doctype: "Pre Advice",
                 name: frm.doc.cargo_ref,
+                "container_no": frm.doc.container_no,
                 filters: {
-                    'docstatus': 1
+                    'docstatus': 1,
+                   'inspection_status': ["!=", "Closed"]
                 },
             },
             callback: function(data) {

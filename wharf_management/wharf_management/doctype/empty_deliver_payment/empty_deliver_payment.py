@@ -34,11 +34,14 @@ class EmptyDeliverPayment(Document):
 					"consignee" : self.consignee,
 					"container_content" : val.container_content,
 					"status" : "PAID",
-					"yard_slot" : val.yard_slot
+					"yard_slot" : val.yard_slot,
+					"bulk_payment" : self.bulk_payment
 					
 				})
 		doc.insert()
 		doc.submit()
+
+		frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
 
 
 	def get_working_days(self):

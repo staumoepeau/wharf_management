@@ -5,6 +5,12 @@ frappe.ui.form.on('Warehouse Inspection', {
 	refresh: function(frm) {
 
 	},
+	
+	on_submit: function(frm){
+        frappe.set_route("List", "Cargo Warehouse");
+        location.reload(true);
+	},
+	
 	onload: function(frm) {
 		
 				frappe.call({

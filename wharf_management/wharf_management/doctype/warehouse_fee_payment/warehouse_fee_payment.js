@@ -14,6 +14,12 @@ frappe.ui.form.on('Warehouse Fee Payment', {
         ];
     },
 
+    on_submit: function(frm){
+        
+        frappe.set_route("List", "Cargo Warehouse")
+        frm.reload_doc()
+    },
+
 	refresh: function(frm) {
 
 	},
@@ -126,6 +132,23 @@ frappe.ui.form.on('Warehouse Fee Payment', {
             }
         });
     },
+    payment_method: function(frm){
+
+		if (frm.doc.payment_method == "No Payment Needed"){
+            cur_frm.set_df_property("paid_amount", "read_only", 1)
+            cur_frm.set_df_property("payment_information", "read_only", 1)
+			cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+		}
+		if (frm.doc.payment_method != "No Payment Needed") {
+            cur_frm.set_df_property("payment_information", "read_only", 0)
+			cur_frm.set_df_property("paid_amount", "read_only", 0)
+			cur_frm.set_df_property("change_amount", "read_only", 0)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 0)
+
+		}
+
+	},
     discount: function(frm) {
         if (frm.doc.discount == "NO") {
             frm.set_value("total", frm.doc.total_fee);

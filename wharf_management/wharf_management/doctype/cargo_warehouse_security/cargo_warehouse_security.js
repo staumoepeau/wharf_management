@@ -2,13 +2,15 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Cargo Warehouse Security', {
+	
 	refresh: function(frm) {
-
+		
 	},
 
-	on_submit: function(frm){
-        frm.reload_doc()
+    on_submit: function(frm){
+        
         frappe.set_route("List", "Cargo Warehouse")
+		location.reload(true);
     },
 
 	onload: function(frm) {

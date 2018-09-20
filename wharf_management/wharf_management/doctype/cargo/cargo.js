@@ -7,7 +7,10 @@ frappe.ui.form.on('Cargo', {
 
 
         if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
+
             
+            cur_frm.set_df_property("consignee_details", "hidden", 0);
+
             cur_frm.set_df_property("cargo_type", "read_only", 0);
             cur_frm.set_df_property("work_type", "read_only", 0);
             cur_frm.set_df_property("secondary_work_type", "read_only", 0);
@@ -26,6 +29,7 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("custom_code", "read_only", 0);
             cur_frm.set_df_property("custom_warrant", "hidden", 0);
             cur_frm.set_df_property("delivery_code", "read_only", 0);
+            cur_frm.set_df_property("gate1_in", "read_only", 0);
 
 //            cur_frm.set_df_property("eta_date", "read_only", 0);
 //            cur_frm.set_df_property("etd_date", "read_only", 0);
@@ -55,6 +59,9 @@ frappe.ui.form.on('Cargo', {
 
 
         } else {
+
+            cur_frm.set_df_property("consignee_details", "hidden", 1);
+
             cur_frm.set_df_property("cargo_type", "read_only", 1);
             cur_frm.set_df_property("work_type", "read_only", 1);
             cur_frm.set_df_property("secondary_work_type", "read_only", 1);
@@ -73,6 +80,8 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("custom_code", "read_only", 1);
             cur_frm.set_df_property("custom_warrant", "hidden", 1);
             cur_frm.set_df_property("delivery_code", "read_only", 1);
+            cur_frm.set_df_property("gate1_in", "read_only", 1);
+            
 
 //            cur_frm.set_df_property("eta_date", "read_only", 1);
 //            cur_frm.set_df_property("etd_date", "read_only", 1);
@@ -121,6 +130,7 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("cargo_status", "read_only", 0);
             cur_frm.set_df_property("status_section", "read_only", 0);
             cur_frm.set_df_property("empty_details", "hidden", 0)
+            
         }else {
             cur_frm.set_df_property("cargo_status", "read_only", 1);
             cur_frm.set_df_property("status_section", "read_only", 1);
@@ -181,7 +191,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
- //           cur_frm.set_df_property("custom_warrant", "hidden", 1);
+                
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name,
@@ -219,7 +229,8 @@ frappe.ui.form.on('Cargo', {
         ) {
             frm.add_custom_button(__('Inspection'), function() {
                 frappe.route_options = {
-                    "cargo_ref": frm.doc.name
+                    "cargo_ref": frm.doc.name,
+                    "container_no" : frm.doc.container_no
                 }
                 frappe.new_doc("Inspection");
                 frappe.set_route("Form", "Inspection", doc.name);

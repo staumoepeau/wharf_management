@@ -103,6 +103,16 @@ def get_data():
 					"name": "Export",
 					"description": _("Export Cargo."),
 				},
+				{
+					"type": "doctype",
+					"name": "Empty Deliver Payment",
+					"description": _("Empty Deliver Payment."),
+				},
+				{
+					"type": "doctype",
+					"name": "Empty Containers",
+					"description": _("Empty Containers."),
+				},
 			]
 		},
 		{
@@ -130,13 +140,18 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Cargo Stock Refrence",
+					"description": _("Cargo Stock Refrence."),
+				},
+				{
+					"type": "doctype",
 					"name": "Cargo Stock",
 					"description": _("Cargo Stock."),
 				},
 				{
 					"type": "doctype",
-					"name": "Cargo Stock Tool",
-					"description": _("Cargo Stock Tool."),
+					"name": "Cargo Stock Tools",
+					"description": _("Cargo Stock Tools."),
 				},
 			]
 		},
@@ -289,6 +304,17 @@ def get_data():
 					"is_query_report": True,
 					"name": "Cargo Movement",
 					"doctype": "Cargo Movement"
+				},
+			]
+		},
+		{
+			"label": _("Reports"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Cargo Warehouse Movement",
+					"doctype": "Cargo Warehouse Movement"
 				},
 			]
 		},

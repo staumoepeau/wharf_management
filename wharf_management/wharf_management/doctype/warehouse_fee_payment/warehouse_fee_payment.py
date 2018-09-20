@@ -31,7 +31,8 @@ class WarehouseFeePayment(Document):
 			frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 	def update_payment_status(self):
- 			frappe.db.sql("""Update `tabCargo Warehouse` set payment_status="Closed", status='Paid', warrant_no=%s where name=%s""", (self.custom_warrant, self.cargo_warehouse_ref))
+ 			frappe.db.sql("""Update `tabCargo Warehouse` set payment_status="Closed", status='Paid', warrant_no=%s, vehicle_licenses_plate=%s, driver_information=%s 
+			 where name=%s""", (self.custom_warrant, self.vehicle_licenses_plate, self.driver_information, self.cargo_warehouse_ref))
 	
 	def get_working_days(self):
 
@@ -86,3 +87,7 @@ class WarehouseFeePayment(Document):
 					"total": float(strqty * val.fee_amount)
 				})
 				self.total_fee = float((val.fee_amount * strqty))
+
+		if self.total_fee == 0:
+			self.payment_method = "No Payment Needed"
+			self.discount = "NO"

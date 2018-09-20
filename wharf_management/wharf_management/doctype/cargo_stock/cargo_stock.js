@@ -8,29 +8,29 @@ frappe.ui.form.on('Cargo Stock', {
 
 	},
 
-//	cargo_type: function(frm){
+	on_submit: function(frm){
+				frappe.set_route("List", "Cargo Stock");
+				location.reload(true);
+	},
 
-//		if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Tank Tainers")  {
+	onload: function(frm) {
 
-//			cur_frm.set_df_property("container_details", "hidden", 0);
-//			cur_frm.set_df_property("vehicles_details", "hidden", 1);
-//			cur_frm.set_df_property("break_bulk_details", "hidden", 1);
-//			frm.refresh_fields();
-//		}
+		frappe.call({
+			"method": "frappe.client.get",
+			args: {
+				doctype: "Cargo Stock Refrence",
+				filters: {
+					"status": "Open",
+				}
+			},
+			callback: function(data) {
+				cur_frm.set_value("cargo_stock_ref", data.message["name"]);
+				cur_frm.set_df_property("cargo_stock_ref", "read_only", 1);
+			}
+		})
 
-//		if (frm.doc.cargo_type == "Vehicles"){
-//			cur_frm.set_df_property("container_details", "hidden", 1);
-//			cur_frm.set_df_property("vehicles_details", "hidden", 0);
-//			cur_frm.set_df_property("break_bulk_details", "hidden", 1);
-//			frm.refresh_fields();
 
-//		}
-//		if (frm.doc.cargo_type == "Break Bulk"){
-//			cur_frm.set_df_property("container_details", "hidden", 1);
-//			cur_frm.set_df_property("vehicles_details", "hidden", 1);
-//			cur_frm.set_df_property("break_bulk_details", "hidden", 0);
-//			frm.refresh_fields();
 
-//		}
-//	}
+	}
+
 });

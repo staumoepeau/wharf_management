@@ -13,10 +13,11 @@ frappe.ui.form.on('Empty Containers', {
 			frm.add_custom_button(__('Main Gate'), function() {
 				frappe.route_options = {
 					"cargo_ref": frm.doc.name,
-					"container_no": frm.doc.container_no
+					"container_no": frm.doc.container_no,
+					"mydoctype" : "EMPTY CONTAINERS"
 				}
-				frappe.new_doc("Main Gate");
-				frappe.set_route("Form", "Maint Gate", doc.name);
+				frappe.new_doc("Gate2");
+				frappe.set_route("Form", "Gate2", doc.name);
 			}).addClass("btn-warning");
 
 		}

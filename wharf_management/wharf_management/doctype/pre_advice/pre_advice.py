@@ -9,6 +9,31 @@ from frappe.model.document import Document
 
 class PreAdvice(Document):
 
+	def validate(self):
+		self.check_status()
+
+	
+	def check_status(self):
+		if not self.status:
+			self.status = self.get_status()
+		if not self.inspection_status:
+			self.inspection_status = self.get_inspection_status()
+		if not self.hazardous:
+			self.hazardous = self.get_hazardous()
+	
+
+	def get_status(self):
+		mystatus = "Booked"
+		return mystatus
+	
+	def get_inspection_status(self):
+		inspection_status = "Open"
+		return inspection_status
+	
+	def get_hazardous(self):
+		hazardous_ans = "No"
+		return hazardous_ans
+
 
 #	def on_submit(self):
 #		self.create_cargo_list_items()

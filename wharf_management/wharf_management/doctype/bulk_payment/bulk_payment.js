@@ -23,6 +23,7 @@ frappe.ui.form.on('Bulk Payment', {
     },
     onload: function(frm) {
         cur_frm.set_df_property("naming_series", "hidden", 1);
+        cur_frm.set_df_property("payment_code","hidden",1)
 
     },
     refresh: function(frm) {
@@ -37,25 +38,60 @@ frappe.ui.form.on('Bulk Payment', {
 
 
     },
+    empty_containers: function(frm){
+        if (frm.doc.empty_containers == "Yes"){
+            cur_frm.set_df_property("payment_code","hidden",1)
+        }
+        if (frm.doc.empty_containers == "No"){
+            cur_frm.set_df_property("payment_code","hidden",0)
+        }
+
+    },
+
     insert_containers_button: function(frm) {
-        return frappe.call({
-            method: "insert_containers",
-            doc: frm.doc,
-            callback: function(r) {
-                frm.refresh_field("bulk_cargo_table");
-                frm.refresh_fields();
-            }
-        });
+        if (frm.doc.empty_containers == "No"){
+            return frappe.call({
+                method: "insert_containers",
+                doc: frm.doc,
+                callback: function(r) {
+                    frm.refresh_field("bulk_cargo_table");
+                    frm.refresh_fields();
+                }
+            });
+        }
+        if (frm.doc.empty_containers == "Yes"){
+            return frappe.call({
+                method: "insert_empty_containers",
+                doc: frm.doc,
+                callback: function(r) {
+                    frm.refresh_field("bulk_cargo_table");
+                    frm.refresh_fields();
+                }
+            });
+        }
     },
     insert_bulk_fees_button: function(frm) {
-        return frappe.call({
-            method: "insert_bulk_fees",
-            doc: frm.doc,
-            callback: function(r) {
-                frm.refresh_field("bulk_fees_item");
-                frm.refresh_fields();
-            }
-        });
+        
+        if (frm.doc.empty_containers == "No"){
+            return frappe.call({
+                method: "insert_bulk_fees",
+                doc: frm.doc,
+                callback: function(r) {
+                    frm.refresh_field("bulk_fees_item");
+                    frm.refresh_fields();
+                }
+            });
+        }
+        if (frm.doc.empty_containers == "Yes"){
+            return frappe.call({
+                method: "insert_bulk_fees_empty_containers",
+                doc: frm.doc,
+                callback: function(r) {
+                    frm.refresh_field("bulk_fees_item");
+                    frm.refresh_fields();
+                }
+            });
+        }
     },
     discount: function(frm) {
         if (frm.doc.discount == "No") {

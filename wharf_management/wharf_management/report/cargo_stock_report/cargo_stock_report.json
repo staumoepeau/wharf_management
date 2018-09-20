@@ -1,0 +1,49 @@
+{
+ "add_total_row": 0, 
+ "apply_user_permissions": 1, 
+ "creation": "2018-09-18 18:30:18.576627", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "letter_head": "Ports Authority Tonga", 
+ "modified": "2018-09-19 03:50:56.442714", 
+ "modified_by": "Administrator", 
+ "module": "Wharf Management", 
+ "name": "Cargo Stock Report", 
+ "owner": "Administrator", 
+ "query": "Select cargo_type as \"Cargo Type::80\",\n\tcontainer_no as \"Container No::120\",\n\tcontainer_type as \"Container Type::80\",\n\tmark as \"Mark::80\", \n\tchasis_no as \"Chasis No::100\",\n \tCASE WHEN loading_error = 1 THEN \"ERROR\" END as \"Loading::80\",\n\tCASE WHEN discharged_error = 1 THEN \"ERROR\" END as \"Discharged::80\",\n\tCASE WHEN export_error = 1 THEN \"ERROR\" END as \"Export::80\",\n\tqty as \"QTY::40\",\n\tyard_slot as \"Yard Slot::90\",\n\tyard_date as \"Stock Date::80\",\n\tcontainer_size as \"Container Size::90\",\n\tCASE WHEN status = 'Stock Completed' THEN \"Closed\" END as \"STATUS::70\",\n\tin_stock AS \"STOCK::40\"\nfrom `tabCargo Stock History`", 
+ "ref_doctype": "Cargo Stock History", 
+ "report_name": "Cargo Stock Report", 
+ "report_type": "Query Report", 
+ "roles": [
+  {
+   "role": "Wharf Operation Manager"
+  }, 
+  {
+   "role": "Wharf Operation User"
+  }, 
+  {
+   "role": "Cargo Operation User"
+  }, 
+  {
+   "role": "Yard Operation User"
+  }, 
+  {
+   "role": "Wharf Security Officer"
+  }, 
+  {
+   "role": "Wharf Security Officer Main Gate"
+  }, 
+  {
+   "role": "Forklift Driver User"
+  }, 
+  {
+   "role": "Wharf Operation Cashier"
+  }, 
+  {
+   "role": "Wharf Operation Manifest User"
+  }
+ ]
+}

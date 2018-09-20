@@ -8,7 +8,7 @@
  "idx": 0, 
  "is_standard": "Yes", 
  "letter_head": "Ports Authority Tonga", 
- "modified": "2018-04-17 14:57:22.747720", 
+ "modified": "2018-09-14 19:31:50.363133", 
  "modified_by": "Administrator", 
  "module": "Wharf Management", 
  "name": "Cargo Movement", 
@@ -25,6 +25,9 @@
   }, 
   {
    "role": "Agent User"
+  }, 
+  {
+   "role": "Movement Report"
   }
  ]
 }

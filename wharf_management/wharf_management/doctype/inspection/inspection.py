@@ -519,37 +519,41 @@ class Inspection(Document):
 	def check_empty_container(self):
     		container_number=None
 		vals = frappe.db.get_value("Pre Advice", {"container_no": self.container_no, "name" : self.cargo_ref}, ["booking_ref", "name"], as_dict=True)
-		container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s """, (self.container_no))
+		container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
 
 		if container_number:
-    			container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
-    			val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["yard_slot",
+				container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
+				val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["yard_slot",
 				"main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
-				"container_type","container_size","pat_code","container_content","driver_ends","seal_1"], as_dict=True)
+				"container_type","container_size","pat_code","container_content","driver_ends","seal_1", "paid_status"], as_dict=True)
+				
+				if not val.container_content:
+					if not val.paid_status or val.paid_status == "Unpaid":
+						val.container_content = "EMPTY"
 
-			doc = frappe.new_doc("Export History")
-			doc.update({
-						"yard_slot" : val.yard_slot,
-						"main_gate_start" : val.main_gate_start,
-						"main_gate_ends" : val.main_gate_ends,
-						"gate1_start": val.gate1_start,
-						"gate1_ends" : val.gate1_ends,
-						"driver_start" : val.driver_start,
-						"driver_ends" : val.driver_ends,
-						"container_type" : val.container_type,
-						"container_size" : val.container_size,
-						"pat_code" : val.pat_code,
-						"container_content" : val.container_content,
-						"seal_1" : val.seal_1,
-						"container_no" : self.container_no
-					})
-			doc.insert()
-			doc.submit()
+				doc = frappe.new_doc("Export History")
+				doc.update({
+							"yard_slot" : val.yard_slot,
+							"main_gate_start" : val.main_gate_start,
+							"main_gate_ends" : val.main_gate_ends,
+							"gate1_start": val.gate1_start,
+							"gate1_ends" : val.gate1_ends,
+							"driver_start" : val.driver_start,
+							"driver_ends" : val.driver_ends,
+							"container_type" : val.container_type,
+							"container_size" : val.container_size,
+							"pat_code" : val.pat_code,
+							"container_content" : val.container_content,
+							"seal_1" : val.seal_1,
+							"container_no" : self.container_no
+						})
+				doc.insert()
+				doc.submit()
 
-#			frappe.throw(_("Gate 1 {0}").format(vals.gate1_start))
-			frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
-			frappe.db.sql("""Update `tabCargo` set gate1_in=%s, maingate_in=%s where container_no=%s and booking_ref=%s """, (val.gate1_start, val.main_gate_start, self.container_no, vals.booking_ref ))
-			frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
+	#			frappe.throw(_("Gate 1 {0}").format(vals.gate1_start))
+				frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
+				frappe.db.sql("""Update `tabCargo` set gate1_in=%s, maingate_in=%s where container_no=%s and booking_ref=%s """, (val.gate1_start, val.main_gate_start, self.container_no, vals.booking_ref ))
+				frappe.db.sql("""delete from `tabExport` where container_no=%s""", self.container_no)
 	
 	def load_transhipment_cargo(self):
     		container_number=None

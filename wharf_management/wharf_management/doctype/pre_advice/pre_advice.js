@@ -3,6 +3,11 @@
 
 frappe.ui.form.on('Pre Advice', {
 
+    on_submit: function(frm){
+                frappe.set_route("List", "Pre Advice");
+                location.reload(true);
+    },
+
     onload: function(frm) {
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);
@@ -11,7 +16,71 @@ frappe.ui.form.on('Pre Advice', {
             cur_frm.set_df_property("last_port", "hidden", 1);
         }
 
+
+        if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
+
+            cur_frm.set_df_property("consignee_details", "hidden", 0);
+            cur_frm.set_df_property("hazardous_goods", "hidden", 0);
+            cur_frm.set_df_property("import_status", "hidden", 0);
+            cur_frm.set_df_property("break_bulk_items", "hidden", 0);
+
+            cur_frm.set_df_property("status", "read_only", 0);
+            cur_frm.set_df_property("work_type", "read_only", 0);
+            cur_frm.set_df_property("secondary_work_type", "read_only", 0);
+            cur_frm.set_df_property("third_work_type", "read_only", 0);
+
+            cur_frm.set_df_property("cargo_type", "read_only", 0);
+            cur_frm.set_df_property("container_no", "read_only", 0);
+            cur_frm.set_df_property("container_type", "read_only", 0);
+            cur_frm.set_df_property("container_size", "read_only", 0);
+            cur_frm.set_df_property("pat_code", "read_only", 0);
+            cur_frm.set_df_property("container_content", "read_only", 0);
+
+            cur_frm.set_df_property("net_weight", "read_only", 0);
+            cur_frm.set_df_property("seal_1", "read_only", 0);
+            cur_frm.set_df_property("mark", "read_only", 0);
+            cur_frm.set_df_property("volume", "read_only", 0);
+            cur_frm.set_df_property("seal_2", "read_only", 0);
+            cur_frm.set_df_property("yard_slot", "read_only", 0);
+            cur_frm.set_df_property("temperature", "read_only", 0);
+            cur_frm.set_df_property("commodity_code", "read_only", 0);
+            cur_frm.set_df_property("chasis_no", "read_only", 0);
+
+        }
+        else {
+            cur_frm.set_df_property("consignee_details", "hidden", 1);
+            cur_frm.set_df_property("hazardous_goods", "hidden", 1);
+            cur_frm.set_df_property("import_status", "hidden", 1);
+            cur_frm.set_df_property("break_bulk_items", "hidden", 1);
+
+            cur_frm.set_df_property("status", "read_only", 1);
+            cur_frm.set_df_property("work_type", "read_only", 1);
+            cur_frm.set_df_property("secondary_work_type", "read_only", 1);
+            cur_frm.set_df_property("third_work_type", "read_only", 1);
+
+            cur_frm.set_df_property("cargo_type", "read_only", 1);
+            cur_frm.set_df_property("container_no", "read_only", 1);
+            cur_frm.set_df_property("container_type", "read_only", 1);
+            cur_frm.set_df_property("container_size", "read_only", 1);
+            cur_frm.set_df_property("pat_code", "read_only", 1);
+            cur_frm.set_df_property("container_content", "read_only", 1);
+
+            cur_frm.set_df_property("net_weight", "read_only", 1);
+            cur_frm.set_df_property("seal_1", "read_only", 1);
+            cur_frm.set_df_property("mark", "read_only", 1);
+            cur_frm.set_df_property("volume", "read_only", 1);
+            cur_frm.set_df_property("seal_2", "read_only", 1);
+            cur_frm.set_df_property("yard_slot", "read_only", 1);
+            cur_frm.set_df_property("temperature", "read_only", 1);
+            cur_frm.set_df_property("commodity_code", "read_only", 1);
+            cur_frm.set_df_property("chasis_no", "read_only", 1);
+
+
+        }
+
     },
+
+
     cargo_type: function(frm){
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);

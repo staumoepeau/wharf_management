@@ -19,11 +19,14 @@ class Gate1(Document):
 
 
 	def on_submit(self):
-		
-		self.update_status()
-		self.update_export_status()
-		self.update_not_export_status()
-		self.update_cargo_movement()
+			
+		if self.mydoctype == "CARGO":
+			self.update_status()
+			self.update_export_status()
+			self.update_not_export_status()
+			self.update_cargo_movement()
+		if self.mydoctype == "EMPTY CONTAINERS":
+			self.update_empty_containers_movement()
 
 
 		
@@ -92,3 +95,34 @@ class Gate1(Document):
 				})
 		doc.insert()
 		doc.submit()
+	
+	def update_empty_containers_movement(self):
+
+		val = frappe.db.get_value("Empty Containers", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","agents","container_type","container_size", "consignee",
+		"container_content"], as_dict=True)
+
+		doc = frappe.new_doc("Cargo Movement")
+		doc.update({
+					"docstatus" : 1,
+					"pat_code" : val.pat_code,
+					"cargo_type" : val.cargo_type,
+					"container_no" : val.container_no,
+					"work_type" : self.work_type,
+					"agents" : val.agents,
+					"container_type" : val.container_type,
+					"container_size" : val.container_size,
+					"consignee" : val.consignee,
+					"container_content" : val.container_content,
+					"cargo_description" : "Empty Container",
+					"gate_status" : "OUT",
+					"movement_date" : self.modified,
+					"gate1_time" : self.modified,
+					"truck" : self.truck_licenses_plate,
+					"truck_driver" : self.drivers_information,
+					"refrence": self.cargo_ref,
+					"warrant_number" : "N/A"
+				})
+		doc.insert()
+		doc.submit()
+
+		frappe.db.sql("""Update `tabEmpty Containers` set gate1_date=%s, status='Gate 1' where name=%s""", (self.modified, self.cargo_ref))
