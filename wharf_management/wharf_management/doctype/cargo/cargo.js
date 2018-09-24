@@ -266,7 +266,8 @@ frappe.ui.form.on('Cargo', {
         )) {
                 frm.add_custom_button(__('Gate1 Count'), function() {
                     frappe.route_options = {
-                        "cargo_ref": frm.doc.name
+                        "cargo_ref": frm.doc.name,
+                        "mydoctype": "CARGO"
                         
                     }
                     frappe.new_doc("Gate1 Item Count");

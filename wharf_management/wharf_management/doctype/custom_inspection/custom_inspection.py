@@ -12,15 +12,22 @@ class CustomInspection(Document):
 	def on_submit(self):
     		self.update_custom_inspection_status()
 
-	def validate(self):
-    		self.check_movement()
-	
-	def check_movement(self):
-    		if not self.movement:
-    				 msgprint(_("Please enter value for Movement"), raise_exception=1)
 			
 	def update_custom_inspection_status(self):
-		self.status = "Deliver"
-		frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed' where name=%s""", (self.cargo_ref))
+		if not self.status or self.status != "Deliver":
+			self.status = self.get_status()
+		
+		if not self.movement or self.movement != "Completed":
+			self.inspection_status = self.get_inspection_status()
+		
+			frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed' where name=%s""", (self.cargo_ref))
 
-			
+	
+	def get_status(self):
+		mystatus = "Deliver"
+		return mystatus
+	
+	def get_inspection_status(self):
+		inspection_status = "Completed"
+		return inspection_status
+		

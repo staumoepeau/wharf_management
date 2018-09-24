@@ -116,16 +116,6 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Pilot"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Pilot Log",
-					"description": _("Pilot Log Details."),
-				},
-			]
-		},
-		{
 			"label": _("Yard Operation"),
 			"items": [
 				{
@@ -187,6 +177,16 @@ def get_data():
 					"type": "doctype",
 					"name": "Main Gate Export",
 					"description": _("Main Gate Export."),
+				},
+			]
+		},
+		{
+			"label": _("Pilot"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Pilot Log",
+					"description": _("Pilot Log Details."),
 				},
 			]
 		},

@@ -2,8 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Custom Inspection', {
+	
 	refresh: function(frm) {
 
+
+
+	},
+
+	on_submit: function(frm){
+		frappe.set_route("List", "Cargo");
+		location.reload(true);
 	},
 
 	onload: function(frm) {

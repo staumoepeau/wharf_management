@@ -3,22 +3,32 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
+from frappe.utils import add_days, cint, cstr, flt, getdate, rounded, date_diff, money_in_words
 import frappe
+from frappe import _, msgprint, throw
 from frappe.model.document import Document
 
 class BulkItemCount(Document):
     	
 		def on_submit(self):
     			self.update_cargo_table()
-		
+
 		def validate(self):
 				self.validate_qty()
-		
-		def validate_qty(self):
-				if self.count_items > self.qty:
-					msgprint(_("Items count is over the QTY"), raise_exception=1)
-
-		def update_cargo_table(self):
-    			self.count_items = self.break_bulk_item_count + self.count_items
 				
-			frappe.db.sql("""Update `tabPre Advice` set break_bulk_item_count=%s where name=%s""", (self.count_items, self.cargo_ref))
+		def validate_qty(self):
+			items = 0
+			items = flt(self.break_bulk_item_count)
+
+			if ((items + self.count_items) > self.qty):
+				msgprint(_("Items count is over the QTY"), raise_exception=1)
+			
+		def update_cargo_table(self):
+			items = 0
+			items = flt(self.break_bulk_item_count + self.count_items)
+    			
+			if self.mydoctype == "Pre Advice":
+				frappe.db.sql("""Update `tabPre Advice` set break_bulk_item_count=%s where name=%s""", (items, self.cargo_ref))
+				
+			if self.mydoctype == "Warehouse":
+				frappe.db.sql("""Update `tabCargo Warehouse` set break_bulk_item_count=%s where name=%s""", (items, self.cargo_ref))

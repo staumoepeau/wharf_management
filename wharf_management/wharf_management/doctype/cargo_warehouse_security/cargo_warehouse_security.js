@@ -38,6 +38,7 @@ frappe.ui.form.on('Cargo Warehouse Security', {
 					cur_frm.set_value("chasis_no", data.message["chasis_no"]);
 					cur_frm.set_value("qty", data.message["qty"]);
 					cur_frm.set_value("warrant_no", data.message["warrant_no"]);
+					cur_frm.set_value("security_item_count", data.message["security_item_count"]);
 
 					cur_frm.set_df_property("customer", "read_only", 1);
 					cur_frm.set_df_property("qty", "read_only", 1);
@@ -46,7 +47,7 @@ frappe.ui.form.on('Cargo Warehouse Security', {
 					cur_frm.set_df_property("cargo_type", "read_only", 1);
                     cur_frm.set_df_property("cargo_description", "read_only", 1);
 //                    cur_frm.set_df_property("custom_code", "read_only", 1);
-//					cur_frm.set_df_property("custom_warrant", "read_only", 1);
+//					cur_frm.set_df_property("security_item_count", "read_only", 1);
                 	cur_frm.set_df_property("warrant_no", "hidden", 1);
 
                 }

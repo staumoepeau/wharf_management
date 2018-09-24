@@ -215,7 +215,8 @@ frappe.ui.form.on('Pre Advice', {
             ) {
                 frm.add_custom_button(__('Bulk Item Count'), function() {
                     frappe.route_options = {
-                        "cargo_ref": frm.doc.name
+                        "cargo_ref": frm.doc.name,
+                        "mydoctype": "Pre Advice"
                     }
                     frappe.new_doc("Bulk Item Count");
                     frappe.set_route("Form", "Bulk Item Count", doc.name);
