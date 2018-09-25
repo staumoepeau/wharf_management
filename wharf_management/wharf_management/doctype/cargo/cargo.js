@@ -212,7 +212,8 @@ frappe.ui.form.on('Cargo', {
             )) {
             frm.add_custom_button(__('Main Gate'), function() {
                 frappe.route_options = {
-                    "cargo_ref": frm.doc.name
+                    "cargo_ref": frm.doc.name,
+                    "mydoctype": "CARGO"
                 }
                 frappe.new_doc("Gate2");
                 frappe.set_route("Form", "Gate2", doc.name);
