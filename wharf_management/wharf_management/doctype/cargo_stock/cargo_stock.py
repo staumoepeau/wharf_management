@@ -71,7 +71,7 @@ class CargoStock(Document):
 			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and container_no=%s""", (self.yard_date, self.container_no))
 			
 		if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and and mark=%s""", (self.yard_date, self.mark))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and mark=%s""", (self.yard_date, self.mark))
 		
 		if self.cargo_type in ["Vehicles", "Heavy Vehicles"]:
 			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and chasis_no=%s""", (self.yard_date, self.chasis_no))
