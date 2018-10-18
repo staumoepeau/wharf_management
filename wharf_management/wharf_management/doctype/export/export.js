@@ -90,7 +90,7 @@ frappe.ui.form.on('Export', {
     },
 
     cargo_type: function(frm){
-        if (frm.doc.cargo_type == "Break Bulk"){
+        if ((frm.doc.cargo_type == "Break Bulk") || (frm.doc.cargo_type == "Loose Cargo")){
 
             cur_frm.set_df_property("apply_vgm_fee", "hidden", 1);
             cur_frm.set_df_property("container_size", "hidden", 1);

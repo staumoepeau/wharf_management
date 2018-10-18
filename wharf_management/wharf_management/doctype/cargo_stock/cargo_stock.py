@@ -53,13 +53,13 @@ class CargoStock(Document):
 		cargo_exist=None
 
 		if self.cargo_type in ["Container", "Tank Tainer", "Flatrack"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and container_no=%s""", (self.yard_date, self.container_no))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and container_no=%s""", (self.container_no))
 			
 		if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
-			cargo_exist  = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and mark=%s""", (self.yard_date, self.mark))
+			cargo_exist  = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and mark=%s""", (self.mark))
 		
 		if self.cargo_type in ["Vehicles", "Heavy Vehicles"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and chasis_no=%s""", (self.yard_date, self.chasis_no))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and status="Outbound" and manifest_check != "Confirm" and work_type="Loading" and chasis_no=%s""", (self.chasis_no))
 
 		if cargo_exist:
 			frappe.db.sql("""Update `tabCargo Stock` set loading_error=1 where name=%s""", (self.title))
@@ -68,13 +68,13 @@ class CargoStock(Document):
 	def check_cargo_discharged(self):
 		cargo_exist=None
 		if self.cargo_type in ["Container", "Tank Tainer", "Flatrack"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and container_no=%s""", (self.yard_date, self.container_no))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and manifest_check != "Confirm" and payment_status = "Open" and work_type="Discharged" and container_no=%s""", (self.container_no))
 			
 		if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and mark=%s""", (self.yard_date, self.mark))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and manifest_check != "Confirm" and payment_status = "Open" and work_type="Discharged" and mark=%s""", (self.mark))
 		
 		if self.cargo_type in ["Vehicles", "Heavy Vehicles"]:
-			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where ((%s - eta_date) < 30) and manifest_check != "Confirm" and work_type="Discharged" and chasis_no=%s""", (self.yard_date, self.chasis_no))
+			cargo_exist = frappe.db.sql("""Select name from `tabCargo` where docstatus = "1" and manifest_check != "Confirm" and payment_status = "Open" and work_type="Discharged" and chasis_no=%s""", (self.chasis_no))
 
 		if not cargo_exist:
 			frappe.db.sql("""Update `tabCargo Stock` set discharged_error=1 where name=%s""", (self.title))
