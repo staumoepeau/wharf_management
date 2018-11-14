@@ -27,12 +27,11 @@ frappe.query_reports["Cargo Movement Details"] = {
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
-			"fieldname":"booking",
-			"label": __("Ref #"),
-			"fieldtype": "Link",
-			"options": ["Booking Request"],
-			"get_query": function(){ return {'filters':
-			 [['Booking Request', 'docstatus','=','1']]}}
+			"fieldname":"booking_ref",
+			"label": __("Booking Ref #"),
+			"fieldtype": "Data",
+			"reqd": 1,
+			
 		},
 
 	]

@@ -305,44 +305,30 @@ def get_data():
 					"name": "Cargo Movement",
 					"doctype": "Cargo Movement"
 				},
-			]
-		},
-		{
-			"label": _("Reports"),
-			"items": [
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Cargo Warehouse Movement",
 					"doctype": "Cargo Warehouse Movement"
 				},
-			]
-		},
-		{
-			"label": _("Reports"),
-			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Cargo Yard Efficiency Report",
+					"doctype": "Cargo Yard Efficiency Report"
+				},
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Cargo Statitics",
 					"doctype": "Cargo Statitics"
 				},
-			]
-		},
-		{
-			"label": _("Reports"),
-			"items": [
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Cargo Report",
 					"doctype": "Cargo Report"
 				},
-			]
-		},
-		{
-			"label": _("Reports"),
-			"items": [
 				{
 					"type": "report",
 					"is_query_report": True,

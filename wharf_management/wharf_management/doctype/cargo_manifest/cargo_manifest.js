@@ -60,6 +60,14 @@ frappe.ui.form.on('Cargo Manifest', {
 		})
 		
 	},
+	apply_manifest_fee: function(frm){
+		if (frm.doc.apply_manifest_fee == 1){
+			cur_frm.set_value("manifest_fee", "600.00");
+		}
+		else {
+			cur_frm.set_value("manifest_fee", );
+		}
+	},
 	
 	
 	get_manifest_list: function(frm) {

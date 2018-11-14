@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Sione Taumoepeau and contributors
+# Copyright (c) 2018, Sione Taumoepeau and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -30,22 +30,7 @@ def get_columns():
 		_("Start Date") + ":Date:130",
 		_("End Date") + ":Date:130",
 		_("Yard Efficiency") + ":Time:130",
-		_("Efficiency") + ":Time:130"
-#		_("Warrant No") + ":Data:90",
-#		_("Consignee") + ":Data:120",
-#		_("Agents") + ":Data:120",
-#		_("Chasis No") + ":Data:120",
-#		_("Mark") + ":Data:60",
-#		_("Gate 1 Status") + ":Data:110",
-#		_("Gate 1 Date") + ":Date:110",
-#		_("Gate 1 ata") + ":Time:110",
-#		_("Main Gate Status") + ":Data:110",
-#		_("Main Gate Date") + ":Date:110",
-#		_("Main Gate Time") + ":Time:110",
-#		_("Main Gate Content") + ":Data:110",
-#		_("Truck") + ":Data:80",
-#		_("Truck Driver") + ":Data:90"
-		
+		_("Efficiency") + ":Time:130"	
 	]
 
 def get_cargo_movement_data(filters, columns):
@@ -64,11 +49,6 @@ def get_conditions(filters):
 	conditions = "1=1"
 	if filters.get("booking_ref"): conditions += " and c.booking_ref = %(booking_ref)s"
 #	if filters.get("from_date"): conditions += " and eta >= %(from_date)s"
-#	if filters.get("to_date"): conditions += " and eta <= %(to_date)s"
-#	if filters.get("status"): conditions += " and status = %(status)s"
-#	if filters.get("owner"): conditions += " and a.owner = %(owner)s"
-#	if filters.get("pos_profile"): conditions += " and a.is_pos = %(pos_profile)s"
-#	if filters.get("status"): conditions += " and a.status = %(status)s"
 	return conditions
 
 
