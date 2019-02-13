@@ -122,7 +122,7 @@ class PreAdvice(Document):
 		return check_duplicate
 
 	def devanning_create_vehicles(self):
-    		val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+			val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
@@ -177,7 +177,7 @@ class PreAdvice(Document):
 		frappe.msgprint(_("Vehicle was created under this Container No {0} ").format(self.container_no))
 
 	def devanning_create_bbulk(self):
-    		val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
+			val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","yard_slot","final_status"], as_dict=True)
