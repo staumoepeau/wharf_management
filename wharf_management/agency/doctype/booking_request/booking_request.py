@@ -26,39 +26,36 @@ class BookingRequest(Document):
 
 
 	def calculate_half_amount(self):
-#    		working_days = date_diff(self.etd_date, self.eta_date)
-#			working_hours = int(working_days * 24)
+		fmt = '%Y-%m-%d %H:%M:%S'
+		tstamp1 = datetime.strptime(self.etd_date, fmt)
+		tstamp2 = datetime.strptime(self.eta_date, fmt)
 
-			fmt = '%Y-%m-%d %H:%M:%S'
-			tstamp1 = datetime.strptime(self.etd_date, fmt)
-			tstamp2 = datetime.strptime(self.eta_date, fmt)
-
-			if tstamp1 > tstamp2:
-				td = tstamp1 - tstamp2
-			else:
-				td = tstamp2 - tstamp1
+		if tstamp1 > tstamp2:
+			td = tstamp1 - tstamp2
+		else:
+			td = tstamp2 - tstamp1
 			working_hours = int(round(td.total_seconds() / 60 / 60 ))
 
-			self.working_hours = working_hours
+		self.working_hours = working_hours
 
-			if self.vessel_type == "OIL TANKER":
-				grt_tariff = 0.0436
-				handling_fee = 0
+		if self.vessel_type == "OIL TANKER":
+			grt_tariff = 0.0436
+			handling_fee = 0
 
-			if self.vessel_type == "LPG TANKER":
-				grt_tariff = 0.1392
-				handling_fee = 0
+		if self.vessel_type == "LPG TANKER":
+			grt_tariff = 0.1392
+			handling_fee = 0
 
-			if self.vessel_type == "CRUISE":
-				grt_tariff = 0.0393
-				handling_fee = 0
+		if self.vessel_type == "CRUISE":
+			grt_tariff = 0.0393
+			handling_fee = 0
+		
+		if self.vessel_type == "Cargo":
+			grt_tariff = 0.1296
+			handling_fee = self.require_amount
 
-			if self.vessel_type == "Cargo":
-				grt_tariff = 0.1296
-				handling_fee = self.require_amount
-
-			self.berthed_half_amount = float(float(working_hours) * float(self.grt) * grt_tariff)
-			self.total_amount = (float(self.berthed_half_amount) + float(handling_fee))/2
+		self.berthed_half_amount = float(float(working_hours) * float(self.grt) * grt_tariff)
+		self.total_amount = (float(self.berthed_half_amount) + float(handling_fee))/2
 
 	
 	def create_sales_invoices(self):
