@@ -126,8 +126,8 @@ class PreAdvice(Document):
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
-		doc = frappe.new_doc("Pre Advice")
-		doc.update({
+			doc = frappe.new_doc("Pre Advice")
+			doc.update({
 	#				"company" : self.company,
 					"docstatus" : 1,
 					"booking_ref" : val.booking_ref,
@@ -170,19 +170,18 @@ class PreAdvice(Document):
 		#			"yard_slot" : val.yard_slot,
 					"inspection_status" : "Open",
 					"final_status" : "Devanning"
-
-				})
-		doc.insert()
-		doc.submit()
-		frappe.msgprint(_("Vehicle was created under this Container No {0} ").format(self.container_no))
+                                        })
+			doc.insert()
+			doc.submit()
+			frappe.msgprint(_("Vehicle was created under this Container No {0} ").format(self.container_no))
 
 	def devanning_create_bbulk(self):
 			val = frappe.db.get_value("Pre Advice", {"name": self.name}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
 			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
 			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
 			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","yard_slot","final_status"], as_dict=True)
-		doc = frappe.new_doc("Pre Advice")
-		doc.update({
+			doc = frappe.new_doc("Pre Advice")
+			doc.update({
 	#				"company" : self.company,
 					"docstatus" : 1,
 					"booking_ref" : val.booking_ref,
@@ -225,8 +224,7 @@ class PreAdvice(Document):
 		#			"yard_slot" : val.yard_slot,
 					"inspection_status" : "Open",
 					"final_status" : "Devanning"
-
-				})
-		doc.insert()
-		doc.submit()
-		frappe.msgprint(_("Break Bulk was created under this Container No {0} ").format(self.container_no))
+                                        })
+			doc.insert()
+			doc.submit()
+			frappe.msgprint(_("Break Bulk was created under this Container No {0} ").format(self.container_no))
