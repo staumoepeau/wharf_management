@@ -77,7 +77,7 @@ class CargoManifest(Document):
 				})
 			
 		def get_bbulks_summary_list(self):
-    			condition = ""
+			condition = ""
 			bbulks_summary_table = frappe.db.sql("""select cargo_type, work_type, count(name) as number, sum(net_weight) as weight, sum(volume) as volume, sum(handling_fee) as handling_fee, sum(storage_fee) as storage_fee, sum(wharfage_fee) as wharfage_fee from `tabCargo` where cargo_type in ("Break Bulk","Loose Cargo","Vehicles","Heavy Vehicles") and booking_ref = %s and manifest_check="Confirm" group by cargo_type, work_type""", (self.booking_ref), as_dict=1)
 
 			bbulks_entries = sorted(list(bbulks_summary_table))
