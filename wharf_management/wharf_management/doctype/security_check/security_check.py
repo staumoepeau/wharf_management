@@ -12,7 +12,6 @@ class SecurityCheck(Document):
 #		self.create_security_timesheets()
 
 	def validate(self):
-    		
 		self.update_booking_request()
 
 

@@ -22,7 +22,7 @@ class CargoStock(Document):
 	
 	def update_cargo_title(self):
 		if not self.title:
-    			self.title = self.get_title()
+			self.title = self.get_title()
 	
 
 	def get_title(self):

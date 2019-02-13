@@ -22,7 +22,7 @@ class Gate2(Document):
 
 	
 	def update_gate2_status(self):
-   			frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', yard_slot=NULL, status='Gate Out' where name=%s""", (self.cargo_ref))
+		frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', yard_slot=NULL, status='Gate Out' where name=%s""", (self.cargo_ref))
 	
 #	def update_yard(self):
 #			frappe.db.sql("""Delete `tabCargo` where name=%s""", (self.cargo_ref))

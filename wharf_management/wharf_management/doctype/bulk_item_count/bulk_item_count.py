@@ -9,9 +9,9 @@ from frappe import _, msgprint, throw
 from frappe.model.document import Document
 
 class BulkItemCount(Document):
-    	
+
 		def on_submit(self):
-    			self.update_cargo_table()
+			self.update_cargo_table()
 
 		def validate(self):
 				self.validate_qty()
@@ -26,7 +26,7 @@ class BulkItemCount(Document):
 		def update_cargo_table(self):
 			items = 0
 			items = flt(self.break_bulk_item_count + self.count_items)
-    			
+						
 			if self.mydoctype == "Pre Advice":
 				frappe.db.sql("""Update `tabPre Advice` set break_bulk_item_count=%s where name=%s""", (items, self.cargo_ref))
 				

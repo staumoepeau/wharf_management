@@ -20,7 +20,7 @@ class Cargo(Document):
 #		self.check_bulk_cargo()
 		self.clear_new_cargo()
 		if not self.title:
-    			self.title = self.get_title()
+			self.title = self.get_title()
 		
 #		if not self.barcode_code:
 #		self.barcode_code = self.get_barcode()

@@ -12,10 +12,10 @@ class Gate1ItemCount(Document):
 
 
 		def on_submit(self):
-    			self.update_cargo_table()
+			self.update_cargo_table()
 		
 		def validate(self):
-				self.validate_qty()
+			self.validate_qty()
 		
 
 		def validate_qty(self):
@@ -29,10 +29,10 @@ class Gate1ItemCount(Document):
 		def update_cargo_table(self):
 			items = 0
 			items = flt(self.security_item_count + self.count_items)
-    			
+
+
 			if self.mydoctype == "CARGO":
 				frappe.db.sql("""Update `tabCargo` set security_item_count=%s where name=%s""", (items, self.cargo_ref))
 				
 			if self.mydoctype == "Warehouse":
 				frappe.db.sql("""Update `tabCargo Warehouse` set security_item_count=%s where name=%s""", (items, self.cargo_ref))
-				

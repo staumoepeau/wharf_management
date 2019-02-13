@@ -45,7 +45,7 @@ class WharfPaymentFee(Document):
 #	def make_payment(self):
 #		if self.payment_method == 'Credit' and self.work_type != 'Stock':
 #			self.create_sales_invoices_credit()
-    	
+
 #		if self.payment_method == 'Credit' and self.work_type == 'Stock':
 #				self.create_sales_invoices_credit_mty()
 		
@@ -53,7 +53,7 @@ class WharfPaymentFee(Document):
 #			self.create_sales_invoices_paid()
 			
 #			if self.payment_method == 'Cash' || self.payment_method == 'Cheque':
-#    				self.make_cash_entries()
+# self.make_cash_entries()
 #	def update_bulk_payment(self):
 #		if self.bulk_payment == 'Yes':
 #			self.bulk_payment_code = self.custom_warrant
@@ -63,18 +63,15 @@ class WharfPaymentFee(Document):
 #			self.custom_warrant = self.bulk_payment_code, '-' ,self.bulk_item
 	
 	def change_status(self):
-    		if self.bulk_payment == 'Yes':
-        				frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes", bulk_payment_code=%s where name=%s""", (self.bulk_payment_code, self.cargo_ref))
+		if self.bulk_payment == 'Yes':
+			frappe.db.sql("""Update `tabCargo` set bulk_payment="Yes", bulk_payment_code=%s where name=%s""", (self.bulk_payment_code, self.cargo_ref))
 
-    		if self.status != 'Paid':
-    				self.status == 'Paid'
+		if self.status != 'Paid':
+			self.status == 'Paid'
 		
 	def update_payment_status(self):
  			frappe.db.sql("""Update `tabCargo` set payment_status="Closed", custom_warrant=%s, custom_code=%s, delivery_code=%s, status='Paid' where name=%s""", (self.custom_warrant, self.custom_code, self.delivery_code, self.cargo_ref))
 	
-#	def update_export_status(self):
-#    		if self.status == 'Export':
-#    				frappe.db.sql("""Update `tabCargo` set export_status="Paid" where name=%s""", (self.cargo_ref))
 
 	def get_working_days(self):
 		

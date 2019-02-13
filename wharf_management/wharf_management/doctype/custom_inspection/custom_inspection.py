@@ -10,7 +10,7 @@ from frappe import msgprint, _, scrub
 class CustomInspection(Document):
 	
 	def on_submit(self):
-    		self.update_custom_inspection_status()
+		self.update_custom_inspection_status()
 
 			
 	def update_custom_inspection_status(self):

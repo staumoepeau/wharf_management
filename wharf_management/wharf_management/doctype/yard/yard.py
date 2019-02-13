@@ -11,50 +11,42 @@ from frappe.utils import formatdate
 from datetime import datetime
 
 class Yard(Document):
- #   def __init__(self, arg1, arg2=None):
 
 	def validate(self):
-		
 		self.update_yard_slot()
-		
 		self.update_export_status()
 		self.validate_yard_slot()
 
 	def on_submit(self):
-    		
 		self.update_yard_timestamp()
 		self.create_cargo_list_items()
 
 
 	def validate_yard_slot(self):
-    		if not self.yard_slot:
-    				msgprint(_("Yard Slot is Manadory").format(self.yard_slot),
-						raise_exception=1)
+		if not self.yard_slot:
+			msgprint(_("Yard Slot is Manadory").format(self.yard_slot), raise_exception=1)
 
 	def update_yard_slot(self):
-    		if self.status != 'Export':
-    				frappe.db.sql("""Update `tabPre Advice` set yard_slot=%s, yard_status="Closed", status='Transfer' where name=%s""", (self.yard_slot, self.cargo_ref))
+		if self.status != 'Export':
+			frappe.db.sql("""Update `tabPre Advice` set yard_slot=%s, yard_status="Closed", status='Transfer' where name=%s""", (self.yard_slot, self.cargo_ref))
 
 	def update_export_status(self):
-    		if self.status == 'Export':
-    				frappe.db.sql("""Update `tabPre Advice` set export_status="Yard", yard_slot=%s, gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.yard_slot, self.cargo_ref))
+		if self.status == 'Export':
+			frappe.db.sql("""Update `tabPre Advice` set export_status="Yard", yard_slot=%s, gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.yard_slot, self.cargo_ref))
 
 	def update_yard_timestamp(self):
-			if not self.yard_time_stamp:
-			 	self.yard_time_stamp = self.modified
+		if not self.yard_time_stamp:
+			self.yard_time_stamp = self.modified
 
 			self.status = "Yard"
 	
 
-
-	
 	def create_cargo_list_items(self):
-#		user = frappe.get_doc("Agents", self.transfer_from_agent)
-    		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
-			"container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
-			"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
-			"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status",
-			"break_bulk_item_count","security_item_count"], as_dict=True)
+		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty","container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
+		"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
+		"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status",
+		"break_bulk_item_count","security_item_count"], as_dict=True)
+		
 		doc = frappe.new_doc("Cargo")
 		doc.update({
 	#				"company" : self.company,

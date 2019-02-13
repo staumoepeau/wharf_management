@@ -12,9 +12,8 @@ class MainGateExport(Document):
 		self.update_export_status()
 		self.update_cargo_movement()
 			
-	def update_export_status(self):		
-			frappe.db.sql("""Update `tabExport` set main_gate_start=%s, main_gate_ends=%s, status="Main Gate" where container_no=%s""", (self.creation, self.modified, self.container_no))
-    				
+	def update_export_status(self):
+		frappe.db.sql("""Update `tabExport` set main_gate_start=%s, main_gate_ends=%s, status="Main Gate" where container_no=%s""", (self.creation, self.modified, self.container_no))
 
 	def update_cargo_movement(self):
 

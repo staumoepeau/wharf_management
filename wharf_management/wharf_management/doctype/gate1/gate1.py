@@ -11,11 +11,10 @@ from frappe import msgprint, _, scrub
 class Gate1(Document):
 	
 	def validate(self):
-    		
-			self.validate_truck()
-			self.validate_warrant_no()
-			self.validate_driver()
-			self.validate_company()
+		self.validate_truck()
+		self.validate_warrant_no()
+		self.validate_driver()
+		self.validate_company()
 
 
 	def on_submit(self):
@@ -31,37 +30,36 @@ class Gate1(Document):
 
 		
 	def update_status(self):
-    		self.status = "Passed Gate 1"
+		self.status = "Passed Gate 1"
 	
 	def validate_warrant_no(self):
 			if self.work_type != 'Loading':
-    				if self.warrant_no != self.custom_warrant:
-        						msgprint(_("Please Make sure that is the correct WARRANT NO"), raise_exception=1)
+				if self.warrant_no != self.custom_warrant:
+					msgprint(_("Please Make sure that is the correct WARRANT NO"), raise_exception=1)
 
 	def validate_company(self):
-    		if not self.company:
-    				msgprint(_("Company is Manadory"), raise_exception=1)
+		if not self.company:
+			msgprint(_("Company is Manadory"), raise_exception=1)
 		
 	def validate_driver(self):
-    		if not self.drivers_information:
-    						msgprint(_("Drivers Information is Manadory"), raise_exception=1)
+		if not self.drivers_information:
+			msgprint(_("Drivers Information is Manadory"), raise_exception=1)
 	
 	def validate_truck(self):
-    		if not self.truck_licenses_plate:
-    				msgprint(_("Truck Information is Manadory"), raise_exception=1)
-    				
+		if not self.truck_licenses_plate:
+			msgprint(_("Truck Information is Manadory"), raise_exception=1)
 
 	def update_not_export_status(self):
-			if self.qty > 1:
-    				frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
-			if self.qty == 1:
-					frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
-			if self.qty == 0:
-					frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+		if self.qty > 1:
+			frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+		if self.qty == 1:
+			frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+		if self.qty == 0:
+			frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
 
-	def update_export_status(self):		
-			if self.status == 'Export':
-	   				frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
+	def update_export_status(self):
+		if self.status == 'Export':
+			frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
 
 
 	def update_cargo_movement(self):

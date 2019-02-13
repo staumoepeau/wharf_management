@@ -12,6 +12,3 @@ class YardExport(Document):
 			
 	def update_export_status(self):		
 			frappe.db.sql("""Update `tabExport` set yard_slot=%s, driver_start=%s, driver_ends=%s, status="Yard" where container_no=%s""", (self.yard_slot, self.creation, self.modified, self.container_no))
-    				
-
-	
