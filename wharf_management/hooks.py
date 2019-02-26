@@ -18,7 +18,18 @@ error_report_email = "support@tongaports.to"
 
 app_include_js = "assets/js/wharf_management.min.js"
 
-app_include_css = "assets/css/wharf_management.css"
+app_include_css = [
+	"assets/css/wharf_management.css",
+	"assets/css/pivot.min.css"
+]
+
+app_include_js = [
+	"assets/js/wharf_management.min.js",
+	"assets/js/pivot.min.js",
+	"assets/js/jquery-ui.min.js",
+	"assets/js/query_report_pivot_table.js",
+	"assets/js/pivot_table.min.js"
+]
 
 # Includes in <head>
 # ------------------

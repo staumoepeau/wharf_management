@@ -189,13 +189,16 @@ class WharfPaymentFee(Document):
 					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type, 
 														"container_size" : self.container_size}, "item_name")
 										
-			if self.cargo_type != 'Container':
+			if self.cargo_type != 'Container' or self.cargo_type != 'Tank Tainers':
 					if self.volume > self.weight:
 						qty = self.volume
 					if self.volume < self.weight:
 						qty = self.weight
 					item_name = frappe.db.get_value("Wharfage Fee", {"cargo_type" : self.cargo_type}, "item_name")
 			
+			if self.cargo_type == 'Tank Tainers':
+					qty = float(self.litre/1000)
+
 			val = frappe.db.get_value("Item", item_name, ["description", "standard_rate" ,"income_account"], as_dict=True)
 			self.append("wharf_fee_item", { 
 				"item": item_name,
@@ -213,8 +216,12 @@ class WharfPaymentFee(Document):
 				if self.cargo_type == 'Vehicles' or self.cargo_type == 'Heavy Vehicles' or self.cargo_type == 'Break Bulk' or self.cargo_type == 'Loose Cargo':
 					devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type}, ["fee_amount", "item_name","description"], as_dict=True)
 				
-				if self.cargo_type == 'Container' or self.cargo_type == 'Tank Tainers' or self.cargo_type == 'Flatrack':
+				if self.cargo_type == 'Container' or self.cargo_type == 'Flatrack':
 						cubic_value = 1
+						devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name","description"], as_dict=True)
+				
+				if self.cargo_type == 'Tank Tainers':
+						cubic_value = self.litre
 						devan = frappe.db.get_value("Devanning Fee", {"cargo_type" : self.cargo_type, "container_size" : self.container_size}, ["fee_amount", "item_name","description"], as_dict=True)
 				
 				if self.cargo_type == 'Split Ports':

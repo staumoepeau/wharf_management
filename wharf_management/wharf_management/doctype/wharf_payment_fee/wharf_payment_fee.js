@@ -65,6 +65,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
                 cur_frm.set_value("agents", data.message["agents"]);
                 cur_frm.set_value("weight", data.message["net_weight"]);
                 cur_frm.set_value("volume", data.message["volume"]);
+                cur_frm.set_value("litre", data.message["litre"]);
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("bol", data.message["bol"]);
 
@@ -93,6 +94,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
                 cur_frm.set_df_property("free_storage_days", "read_only", 1);
                 cur_frm.set_df_property("weight", "read_only", 1);
                 cur_frm.set_df_property("volume", "read_only", 1);
+                cur_frm.set_df_property("litre", "read_only", 1);
                 cur_frm.set_df_property("chasis_no", "read_only", 1);
                 cur_frm.set_df_property("bol", "read_only", 1);
 
