@@ -59,7 +59,6 @@ def get_conditions(filters):
 #	if filters.get("status"): conditions += " and a.status = %(status)s"
 	return conditions
 
-
 def get_cargo_movement_details(filters):
 	conditions = get_conditions(filters)
 	return frappe.db.sql("""
