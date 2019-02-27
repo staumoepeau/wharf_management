@@ -1,0 +1,9 @@
+{
+	"js/wharf_management.min.js": [
+		"public/js/wharf_management.js"
+	
+	],
+	 "css/wharf_management.css": [
+		"public/css/wharf_management.css"
+    ]
+}

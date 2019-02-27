@@ -1,13 +1,1 @@
-{
-	"js/wharf_management.min.js": [
-		"public/js/wharf_management.js",
-		"public/js/pivot.min.js",
-		"public/js/jquery-ui.min.js",
-		"public/js/pivot_table.min.js"
-	
-	],
-	 "css/wharf_management.css": [
-		"public/css/wharf_management.css",
-		"public/css/pivot.min.css"
-    ]
-}
+

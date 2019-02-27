@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Sione Taumoepeau and contributors
+# Copyright (c) 2017, Sione Taumoepeau and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -33,7 +33,10 @@ def get_columns():
 		_("Main Gate Time") + ":Time:110",
 		_("Main Gate Content") + ":Data:110",
 		_("Truck") + ":Data:80",
-		_("Truck Driver") + ":Data:90"
+		_("Truck Driver") + ":Data:90",
+		_("ETA") + ":Datetime:90",
+		_("ETD") + ":Datetime:90",
+		_("Ref") + ":Data:90"
 		
 	]
 
@@ -44,8 +47,9 @@ def get_cargo_movement_data(filters, columns):
 
 	for cont in cargo_movement_data:
 #		owner_posting_date = container["owner"]+cstr(container["posting_date"])
-		row = [cont.cargo_type, cont.container_no, cont.container_content, cont.container_size, cont.cargo_description, cont.warrant_number, cont.consignee, cont.agents, 
-		cont.chasis_no, cont.mark, cont.status, cont.movement_date, cont.gate1_time, cont.main_gate_status, cont.main_gate_date, cont.main_gate_time, cont.main_gate_content, cont.truck, cont.truck_driver]
+		row = [cont.cargo_type, cont.container_no, cont.container_content, cont.container_size, cont.cargo_description, cont.warrant_number, cont.consignee,
+		cont.agents, cont.chasis_no, cont.mark, cont.status, cont.movement_date, cont.gate1_time, cont.main_gate_status, cont.main_gate_date,
+		cont.main_gate_time, cont.main_gate_content, cont.truck, cont.truck_driver, cont.eta_date, cont.etd_date, cont.booking_ref]
 		data.append(row)
 	return data
 
@@ -64,7 +68,7 @@ def get_cargo_movement_details(filters):
 	return frappe.db.sql("""
 		select
 			cargo_type, container_no, container_content, container_size, cargo_description, consignee, agents, chasis_no, mark, gate_status as status, movement_date,
-			gate1_time, truck, truck_driver, main_gate_date, main_gate_time, main_gate_status, main_gate_content, warrant_number
+			gate1_time, truck, truck_driver, main_gate_date, main_gate_time, main_gate_status, main_gate_content, warrant_number, eta_date, etd_date, booking_ref
 		from `tabCargo Movement`
 		where docstatus < 2
 			and {conditions}			
