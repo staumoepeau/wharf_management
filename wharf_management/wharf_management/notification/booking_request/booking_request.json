@@ -1,0 +1,28 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.status==\"Pending\"",
+ "creation": "2018-05-16 02:50:45.114016",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Booking Request",
+ "enabled": 0,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<div>\n<h2>Booking Ref : {{ doc.name }}</h2>\n</div>\n<p>This is a Notification for a Booking Requested by {{ frappe.db.get_value(\"User\", doc.owner, \"full_name\") }}\n</p>\n<p>Booking Details:\n<ul>\n<li>Voyage No : {{ doc.voyage_no }}</li>\n<li>ETA: {{ doc.eta_date }} - {{ doc.eta_time }}</li>\n<li>Vessel: {{ doc.vessel }}</li>\n<li>Vessel Type: {{ doc.vessel_type }}</li>\n<li>STATUS: {{ doc.status }}</li>\n</ul>\n<br>\n<p>\nYour Booking is Pending Approval from the Port Master. You will be notify again if the status of your Booking change.\n<hr>\n<p style=\"font-size: 85%\">\nThank you for using Ports Authority Tonga - Port Management System\n</p>",
+ "modified": "2019-02-28 02:35:03.445540",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Booking Request",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "cc": "sione.taumoepeau@gmail.com\nmaileseni@tongaports.to\nkisina@tongaports.to\nfakapelea@tongaports.to\ntelefoni@tongaports.to\nlangi@tongaports.to\nmichael@tongaports.to",
+   "email_by_document_field": "owner"
+  }
+ ],
+ "subject": "Booking Ref : {{ doc.name }} - REQUEST",
+ "value_changed": ""
+}
