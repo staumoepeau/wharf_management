@@ -26,6 +26,7 @@ class BookingRequest(Document):
 
 
 	def calculate_half_amount(self):
+		working_hours = 0
 		fmt = '%Y-%m-%d %H:%M:%S'
 		tstamp1 = datetime.strptime(self.etd_date, fmt)
 		tstamp2 = datetime.strptime(self.eta_date, fmt)
