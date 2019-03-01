@@ -26,7 +26,6 @@ class BookingRequest(Document):
 
 
 	def calculate_half_amount(self):
-#		working_hours = 0
 		fmt = '%Y-%m-%d %H:%M:%S'
 		tstamp1 = datetime.strptime(self.etd_date, fmt)
 		tstamp2 = datetime.strptime(self.eta_date, fmt)
@@ -35,9 +34,8 @@ class BookingRequest(Document):
 			td = tstamp1 - tstamp2
 		else:
 			td = tstamp2 - tstamp1
-		
+	
 		self.working_hours = int(round(td.total_seconds() / 60 / 60 ))
-
 		if self.vessel_type == "OIL TANKER":
 			grt_tariff = 0.0436
 			handling_fee = 0
