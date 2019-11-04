@@ -1,0 +1,50 @@
+{
+ "add_total_row": 0,
+ "creation": "2018-11-16 04:15:29.583881",
+ "disable_prepared_report": 1,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Ports Authority Tonga",
+ "modified": "2019-11-04 08:47:15.031941",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo Efficiency Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT c.cargo_type AS \"Cargo Type:Data/:80\", \nc.container_no AS \"Container No:Data/:100\",\nc.eta_date AS \"ETA Date:Date/:130\",\nc.container_content AS \"Content:Select/:80\",\nc.container_size AS \"Container Size:Data/:80\",\nc.name AS \"Cargo Ref:Link/Pre Advice:100\",\nt.owner AS \"User:Data/:140\",\nt.creation AS \"Inspection Start:Datetime/:130\",\nt.modified AS \"Inspection End:Datetime/:130\",\nTIMEDIFF(t.modified, t.creation) AS \"Inspection Time:Time/:100\",\ny.owner AS \"User:Data/:140\",\ny.creation AS \"Inspection Start:Datetime/:130\",\ny.modified AS \"Inspection End:Datetime/:130\",\nTIMEDIFF(y.modified, y.creation) AS \"Yard Time:Time/:100\"\nFROM `tabPre Advice` c\nINNER JOIN `tabInspection` t ON t.cargo_ref = c.name\nINNER JOIN `tabYard` y ON y.cargo_ref = c.name\nWHERE c.docstatus < 2\nAND c.cargo_type = \"Container\"\nAND c.cargo_type IS NOT NULL\nAND c.booking_ref=\"PMSB1808000011\"",
+ "ref_doctype": "Cargo",
+ "report_name": "Cargo Efficiency Report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Wharf Operation User"
+  },
+  {
+   "role": "Cargo Operation User"
+  },
+  {
+   "role": "Yard Operation User"
+  },
+  {
+   "role": "Wharf Security Officer"
+  },
+  {
+   "role": "Wharf Security Officer Main Gate"
+  },
+  {
+   "role": "Forklift Driver User"
+  },
+  {
+   "role": "Wharf Operation Cashier"
+  },
+  {
+   "role": "Wharf Operation Manifest User"
+  }
+ ]
+}

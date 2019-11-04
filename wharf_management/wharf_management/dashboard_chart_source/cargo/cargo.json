@@ -1,0 +1,13 @@
+{
+ "creation": "2019-10-15 05:12:40.128814",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart Source",
+ "idx": 0,
+ "modified": "2019-10-15 05:12:42.635667",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo",
+ "owner": "Administrator",
+ "source_name": "Cargo",
+ "timeseries": 1
+}

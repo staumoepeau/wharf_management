@@ -17,17 +17,27 @@ frappe.ui.form.on('Wharf Payment Fee', {
 //    on_submit: function(frm){   
 //        frappe.set_route("List", "Cargo")
 //    },
-//    validate: function(frm){
-//        if (frm.doc.posting_date < get_today()) {
-//            frappe.msgprint(__("You can not select past date as the Posting Date"));
-//            frappe.validated = false;
-//        }
-//    },
+    validate: function(frm){
+        if (frm.doc.posting_date < get_today()) {
+            frappe.msgprint(__("You can not select past date as the Posting Date"));
+            frappe.validated = false;
+        }
+    },
 
     onload: function(frm) {
-           
+        
+
+//        if ((frappe.user.has_role("Wharf Operation Cashier"))){
+//            cur_frm.set_df_property("posting_date", "read_only", 1);
+//            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
+//        }
+ //       if ((frappe.user.has_role("System Manager"))){
+ //           cur_frm.set_df_property("posting_date", "read_only", 0);
+//            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
+ //       }
+
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") && frm.doc.docstatus == 1
-            )) {
+            )) {0
                 
                 frm.add_custom_button(__('Refund Sale'), function() {
                     frappe.call({
@@ -141,10 +151,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
 
     posting_date: function(frm) {
 
-  //      if (frm.doc.posting_date < frm.doc.eta_date) {
-  //          frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
-  //          frappe.validated = false;
-  //      } else {
+        if (frm.doc.posting_date < frappe.datetime.nowdate()) {
+           frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
+           frappe.validated = false;
+       } else {
 
             frappe.call({
                 method: "get_working_days",
@@ -184,6 +194,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
                     }
                 })
             }
+        }
     },
 
     free_storage_days: function(frm) {
