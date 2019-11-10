@@ -152,7 +152,7 @@ frappe.ui.form.on('Wharf Payment Fee', {
     posting_date: function(frm) {
 
         if (frm.doc.posting_date < frappe.datetime.nowdate()) {
-           frappe.msgprint(__("Posting Date must be equal or after the ETA Date"));
+           frappe.msgprint(__("You can not select past date as the Posting Date"));
            frappe.validated = false;
        } else {
 

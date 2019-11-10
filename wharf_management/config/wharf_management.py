@@ -302,38 +302,32 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Cargo Movement",
-					"doctype": "Cargo Movement"
+					"name": "Cargo Movement"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Cargo Warehouse Movement",
-					"doctype": "Cargo Warehouse Movement"
+					"name": "Cargo Warehouse Movement"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Cargo Yard Efficiency Report",
-					"doctype": "Cargo Yard Efficiency Report"
+					"name": "Cargo Yard Efficiency Report"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Cargo Statitics",
-					"doctype": "Cargo Statitics"
+					"name": "Cargo Statitics"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Cargo Report",
-					"doctype": "Cargo Report"
+					"name": "Cargo Report"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Vessels Report",
-					"doctype": "Vessels Report"
+					"name": "Vessels Report"
 				},
 			]
 		},
