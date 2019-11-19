@@ -1,12 +1,9 @@
 {
     "css/wharf_management.css": [
-        "public/css/pivot.min.css"
+        "public/css/bootstrap.css"
     ],
     "js/wharf_management.min.js": [
-        "public/js/wharf_management.js",
-        "public/js/lib/jquery-ui.min.js",
-        "public/js/lib/pivottable/pivot.min.js"
-        
+        "public/js/bootstrap.min.js"       
     ]
  
 }

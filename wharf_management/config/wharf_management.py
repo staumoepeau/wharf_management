@@ -138,11 +138,6 @@ def get_data():
 					"name": "Cargo Stock",
 					"description": _("Cargo Stock."),
 				},
-				{
-					"type": "doctype",
-					"name": "Cargo Stock Tools",
-					"description": _("Cargo Stock Tools."),
-				},
 			]
 		},
 		{

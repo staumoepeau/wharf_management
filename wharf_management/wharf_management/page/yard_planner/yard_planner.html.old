@@ -1,0 +1,31 @@
+<div class="yard-planner">
+<H2>{{ __("Hello Cargo") }}</H2>
+<div class="yard-planner-main"></div>
+<table>
+        <thead>
+            <tr>
+                <th class="col-md-2">{{ __("Cargo Ref") }}</b>
+                </th>
+                <th class="col-md-6">{{ __("Container No") }}</b>
+                </th>
+                <th class="col-md-1 text-center">{{ __("Container Size") }}</th>
+                <th class="col-md-2 text-center">{{ __("Yard Slot") }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%- for item in items -%}
+            <tr>
+                <td>
+                    {{ item.name }}
+                </td>
+                <td>
+                    {{ row.container_no }}
+                </td>
+                <td class="text-center">{{ item.container_size }}</td>
+                <td class="text-center">{{ item.yard_slot }}</td>
+            </tr>
+            {%- endfor -%}
+        </tbody>
+    </table>
+    </div>
+</div>

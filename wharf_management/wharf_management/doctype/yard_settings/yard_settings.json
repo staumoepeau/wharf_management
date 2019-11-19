@@ -1,0 +1,112 @@
+{
+ "allow_import": 1,
+ "autoname": "field:yard_slot",
+ "creation": "2019-11-15 06:13:18.339345",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cargo_ref",
+  "container_no",
+  "container_size",
+  "yard_slot",
+  "yard_section",
+  "status",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "label": "Container No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "container_size",
+   "fieldtype": "Data",
+   "label": "Container Size",
+   "read_only": 1
+  },
+  {
+   "fieldname": "yard_slot",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Yard Slot",
+   "unique": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Yard Settings",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "yard_section",
+   "fieldtype": "Select",
+   "label": "Yard Section",
+   "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nYard\nPaid"
+  },
+  {
+   "fieldname": "cargo_ref",
+   "fieldtype": "Data",
+   "label": "Cargo Ref"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2019-11-16 20:27:00.059975",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Yard Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

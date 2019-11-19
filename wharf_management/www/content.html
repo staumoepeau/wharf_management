@@ -1,0 +1,34 @@
+
+<section class="cargo section-bg">
+
+    <header class="section-header">
+        <h3>Vessel Schedule</h3>
+        <p>Welcome to Ports Authority - Ports Management System Schedule.</br>Dynamic Schedule getting data straign from the Ports Management System</p>
+      </header>
+
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Vessel Name</th>
+              <th>Voyage #</th>
+              <th>Agency</th>
+              <th>Vessel Type</th>
+              <th>Arrivel Time</th>
+              <th>Depart Time</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in schedule %}
+            <tr>
+              <td>{{ item.vessel }}</td>
+              <td>{{ item.voyage_no }}</td>
+              <td>{{ item.agents }}</td>
+              <td>{{ item.vessel_type }}</td>
+              <td>{{ item.eta_date }}</td>
+              <td>{{ item.etd_date }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+</section>
