@@ -848,7 +848,7 @@ h6 {
   background: #3395ff;
 }
 
-#portfolio .portfolio-item .portfolio-wrap .portfolio-info .link-preview:hover i,
+#portfolio .portfolio-item .portfolio-wrap .portfolio-info .link-preview:hover i,4
 #portfolio .portfolio-item .portfolio-wrap .portfolio-info .link-details:hover i {
   color: #fff;
 }
@@ -1419,4 +1419,20 @@ h6 {
   #intro {
     padding: 100px 0 20px 0;
   }
+}
+
+ .dataTables_filter {
+  float: right;
+}
+
+.dataTables_paginate{
+  float: right;
+}
+
+.custom-select-sm{
+  width:150px;
+}
+
+.form-control{
+  width:250px;
 }
