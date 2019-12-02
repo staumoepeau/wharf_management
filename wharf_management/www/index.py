@@ -13,5 +13,5 @@ def get_context(context):
 #        frappe.db.sql(""" Update `tabYard Settings` set cargo_ref=%s, container_no=%s, status=%s, container_size=%s, yard_slot=%s where yard_slot=%s""",(d.name, d.container_no, d.status, d.container_size, d.yard_slot, d.yard_slot))
 #    context.items = frappe.db.sql("select name, cargo_ref, container_no, container_size, status, yard_slot, yard_section from `tabYard Settings`", as_dict=True)
 
-    context.schedule = frappe.db.sql("SELECT name, vessel, voyage_no, vessel_type, agents, eta_date, etd_date, status FROM `tabBooking Request` ORDER BY etd_date DESC", as_dict=True)
+    context.schedule = frappe.db.sql("SELECT name, vessel, voyage_no, vessel_type, agents, eta_date, etd_date, status FROM `tabBooking Request` ORDER BY etd_date ASC", as_dict=True)
 
