@@ -1,0 +1,27 @@
+{
+ "content": null,
+ "creation": "2019-05-15 05:51:08.223470",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa fa-th",
+ "idx": 0,
+ "modified": "2019-05-15 05:51:36.013224",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "cargo_inspection",
+ "owner": "Administrator",
+ "page_name": "cargo_inspection",
+ "roles": [
+  {
+   "role": "Yard Inspection User"
+  },
+  {
+   "role": "Wharf Operation Manager"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Cargo Inspection"
+}
