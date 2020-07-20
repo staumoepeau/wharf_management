@@ -2,51 +2,41 @@
 // For license information, please see license.txt
 
 frappe.listview_settings['Cargo'] = {
-	add_fields: ["status"],
-	has_indicator_for_draft: 1,
-	get_indicator: function(doc) {
+    hide_name_column: true,
+    add_fields: ["status", "container_content"],
+    filters: [
+        ["status", "=", "Yard"]
+    ],
+    has_indicator_for_draft: 1,
+    get_indicator: function(doc) {
+        if (doc.status) {
+            var indicator = [__(doc.status), frappe.utils.guess_colour(doc.status), "status,=," + doc.status];
+            indicator[1] = {
+                "Need Attention": "red",
+                "Export": "red",
+                "Uploaded": "purple",
+                "Re-stowing": "yellow",
+                "Transhipment": "purple",
+                "Outbound": "lightblue",
+                "Inspection": "green",
+                "Yard": "purple",
+                "Paid": "orange",
+                "Gate1": "blue",
+                "Gate Out": "green",
+                "Devanning": "black",
+                "CCV": "black",
+                "Split Ports": "black",
+                "Custom Inspection": "orange",
+            }[doc.status];
+            return indicator;
 
-		if(doc.docstatus==0){
-			if(doc.status=="Export"){
-				return [__("Export"), "red", "status,=,Export"];
-			} else{
-				return [__("Need Attention"), "red", "status,=,'Uploaded'"];
-			}
-		} else if(doc.status=== "Uploaded"){
-			return [__("Uploaded"), "purple", "status,=,Uploaded"];
-			
-		} else if (doc.status === "Re-stowing"){
-			return [__("Re-stowing"), "grey", "status,=,Re-stowing"];
-
-		} else if (doc.status === "Transhipment"){
-				return [__("Transhipment"), "grey", "status,=,Transhipment"];
-
-		} else if (doc.status === "Outbound"){
-			return [__("Outbound"), "purple", "status,=,Outbound"];
-
-		} else if (doc.status === "Inspection"){
-			return [__("Inspection"), "green", "status,=,Inspection"];
-
-		} else if (doc.status === "Yard"){
-			return [__("Yard"), "purple", "status,=,Yard"];
-
-		} else if (doc.status === "Paid"){
-			return [__("Paid"), "orange", "status,=,Paid"];
-
-		} else if (doc.status === "Gate1"){
-			return [__("Passed Gate1"), "blue", "status,=,Gate1"];
-
-		}else if (doc.status === "Gate Out"){
-			return [__("Outward"), "green", "status,=,Gate2"];
-
-		}else if (doc.status === "Devanning"){
-			return [__("Devan"), "black", "status,=,Devanning"];
-		
-		}else if (doc.status === "CCV"){
-			return [__("CCV"), "black", "status,=,CCV"];
-
-		}else if (doc.status === "Split Ports"){
-			return [__("Split Ports"), "black", "status,=,Split Ports"];
-		}
-	}
+        } else if (doc.container_content) {
+            var indicator = [__(doc.container_content), frappe.utils.guess_colour(doc.container_content), "container_content,=," + doc.container_content];
+            indicator[1] = {
+                "FULL": "green",
+                "EMPTY": "red",
+            }[doc.container_content];
+            return indicator;
+        }
+    }
 };

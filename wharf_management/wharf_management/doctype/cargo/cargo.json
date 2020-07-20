@@ -159,8 +159,10 @@
    "label": "Barcode"
   },
   {
+   "collapsible": 1,
    "fieldname": "manifest_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "MANIFEST DETAILS"
   },
   {
    "allow_on_submit": 1,
@@ -200,9 +202,10 @@
    "options": "\nConfirm\nPending"
   },
   {
+   "collapsible": 1,
    "fieldname": "empty_details",
    "fieldtype": "Section Break",
-   "label": "EMPTY'S Details"
+   "label": "EMPTY'S DETAILS"
   },
   {
    "allow_on_submit": 1,
@@ -234,7 +237,8 @@
   },
   {
    "fieldname": "cargo_information",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "VESSEL DETAILS"
   },
   {
    "allow_on_submit": 1,
@@ -256,12 +260,15 @@
   {
    "fieldname": "voyage_no",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Voyage No"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "eta_date",
    "fieldtype": "Datetime",
+   "in_preview": 1,
    "label": "ETA"
   },
   {
@@ -281,9 +288,11 @@
    "options": "Agents"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "etd_date",
    "fieldtype": "Datetime",
+   "in_preview": 1,
    "label": "ETD"
   },
   {
@@ -377,11 +386,13 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "cargo_type",
    "fieldtype": "Link",
    "in_filter": 1,
    "in_global_search": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Cargo Type",
    "options": "Cargo Type"
@@ -389,13 +400,18 @@
   {
    "allow_on_submit": 1,
    "fieldname": "container_size",
-   "fieldtype": "Data",
-   "label": "Container Size"
+   "fieldtype": "Select",
+   "label": "Container Size",
+   "options": "\n10\n20\n40"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "container_content",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Container Contents",
    "options": "\nEMPTY\nFULL"
   },
@@ -442,9 +458,12 @@
    "label": "Seal 2"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "mark",
    "fieldtype": "Data",
    "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Mark"
   },
@@ -462,10 +481,11 @@
   {
    "allow_on_submit": 1,
    "fieldname": "yard_slot",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Yard Slot",
-   "length": 5
+   "length": 5,
+   "options": "Yard Settings"
   },
   {
    "allow_on_submit": 1,
@@ -485,14 +505,18 @@
    "label": "Litre"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "chasis_no",
    "fieldtype": "Data",
    "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Chaisis No"
   },
   {
+   "collapsible": 1,
    "fieldname": "break_bulk_items",
    "fieldtype": "Section Break",
    "label": "BREAK BULK ITEMS"
@@ -522,9 +546,10 @@
    "label": "Security Count Item"
   },
   {
+   "collapsible": 1,
    "fieldname": "hazardous_goods",
    "fieldtype": "Section Break",
-   "label": "HAZRADOUS GOODS"
+   "label": "HAZARADOUS GOODS"
   },
   {
    "fieldname": "hazardous",
@@ -543,8 +568,10 @@
    "label": "Hazardous Code"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_42",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "CARGO WORK TYPE"
   },
   {
    "allow_on_submit": 1,
@@ -584,6 +611,7 @@
    "label": "Cargo Description"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_30",
    "fieldtype": "Section Break",
    "label": "CUSTOM DETAILS"
@@ -671,6 +699,7 @@
    "label": "Stowage"
   },
   {
+   "collapsible": 1,
    "fieldname": "cargo_status",
    "fieldtype": "Section Break",
    "label": "MOVEMENT STATUS"
@@ -731,6 +760,7 @@
    "label": "Final Status"
   },
   {
+   "collapsible": 1,
    "fieldname": "status_section",
    "fieldtype": "Section Break",
    "label": "MAIN STATUS"
@@ -745,7 +775,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nRe-stowing\nSplit Ports\nTranshipment\nCCV\nDevanning\nNeed Attention",
+   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nRe-stowing\nSplit Ports\nTranshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection",
    "print_hide": 1
   },
   {
@@ -810,6 +840,7 @@
    "label": "Custom Inspection Status"
   },
   {
+   "collapsible": 1,
    "fieldname": "gate_section",
    "fieldtype": "Section Break",
    "label": "Gate IN/OUT"
@@ -841,7 +872,7 @@
  ],
  "image_field": "file_attach",
  "is_submittable": 1,
- "modified": "2019-11-04 08:16:07.891476",
+ "modified": "2020-07-20 05:24:47.999010",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
@@ -898,8 +929,9 @@
   }
  ],
  "route": "cargo",
- "search_fields": "container_no, status, consignee,chasis_no",
+ "search_fields": "container_no, status, consignee,chasis_no,mark",
  "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "consignee",

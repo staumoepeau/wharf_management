@@ -6,27 +6,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "cargo_ref",
-  "container_no",
-  "container_size",
   "yard_slot",
   "yard_section",
-  "status",
+  "column_break_4",
   "amended_from"
  ],
  "fields": [
-  {
-   "fieldname": "container_no",
-   "fieldtype": "Data",
-   "label": "Container No",
-   "read_only": 1
-  },
-  {
-   "fieldname": "container_size",
-   "fieldtype": "Data",
-   "label": "Container Size",
-   "read_only": 1
-  },
   {
    "fieldname": "yard_slot",
    "fieldtype": "Data",
@@ -34,6 +19,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Yard Slot",
+   "reqd": 1,
    "unique": 1
   },
   {
@@ -49,22 +35,15 @@
    "fieldname": "yard_section",
    "fieldtype": "Select",
    "label": "Yard Section",
-   "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL"
+   "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL",
+   "reqd": 1
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "\nYard\nPaid"
-  },
-  {
-   "fieldname": "cargo_ref",
-   "fieldtype": "Data",
-   "label": "Cargo Ref"
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
   }
  ],
- "is_submittable": 1,
- "modified": "2019-11-16 20:27:00.059975",
+ "modified": "2020-07-19 16:00:26.174073",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard Settings",

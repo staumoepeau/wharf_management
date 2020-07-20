@@ -5,15 +5,15 @@ frappe.ui.form.on('Inspection', {
     refresh: function(frm) {
 
     },
-        
-    on_submit: function(frm){
-        frappe.set_route("List", "Pre Advice");
+
+    on_submit: function(frm) {
+        frappe.set_route("List", "Pre Advice", "List");
         location.reload(true);
     },
     onload: function(frm) {
 
         if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
-            
+
             cur_frm.set_df_property("container_content", "read_only", 0);
 
         } else {
@@ -30,7 +30,7 @@ frappe.ui.form.on('Inspection', {
                 "container_no": frm.doc.container_no,
                 filters: {
                     'docstatus': 1,
-                   'inspection_status': ["!=", "Closed"]
+                    'inspection_status': ["!=", "Closed"]
                 },
             },
             callback: function(data) {
@@ -44,14 +44,14 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_value("work_type", data.message["work_type"]);
                 cur_frm.set_value("secondary_work_type", data.message["secondary_work_type"]);
                 cur_frm.set_value("last_port", data.message["last_port"]);
-                
+
                 cur_frm.set_value("chasis_no", data.message["chasis_no"]);
                 cur_frm.set_value("qty", data.message["qty"]);
                 cur_frm.set_value("final_work_type", data.message["work_type"]);
                 cur_frm.set_value("third_work_type", data.message["third_work_type"]);
                 cur_frm.set_value("cargo_type", data.message["cargo_type"]);
                 cur_frm.set_value("mark", data.message["mark"]);
-                
+
                 cur_frm.set_df_property("secondary_work_type", "read_only", 1);
                 cur_frm.set_df_property("mark", "read_only", 1);
                 cur_frm.set_df_property("cargo_type", "read_only", 1);
@@ -68,13 +68,13 @@ frappe.ui.form.on('Inspection', {
                 cur_frm.set_df_property("last_port", "read_only", 1);
             }
         })
-        
-        if (frm.doc.work_type == "Loading"){
-            cur_frm.set_df_property("inspection_images","hidden",1);
-            cur_frm.set_df_property("cargo_condition","hidden",1);
+
+        if (frm.doc.work_type == "Loading") {
+            cur_frm.set_df_property("inspection_images", "hidden", 1);
+            cur_frm.set_df_property("cargo_condition", "hidden", 1);
         } else {
-            cur_frm.set_df_property("inspection_images","hidden",0);
-            cur_frm.set_df_property("cargo_condition","hidden",0);
+            cur_frm.set_df_property("inspection_images", "hidden", 0);
+            cur_frm.set_df_property("cargo_condition", "hidden", 0);
         }
 
     }

@@ -9,27 +9,17 @@ from frappe import msgprint, _, scrub
 
 class CustomInspection(Document):
 	
-	def on_submit(self):
-		self.update_custom_inspection_status()
-
-			
-	def update_custom_inspection_status(self):
-#		if not self.status or self.status != "Deliver":
-#			self.status = self.get_status()
-		
-#		if not self.movement or self.movement != "Completed":
-#			self.inspection_status = self.get_inspection_status()
-		
-		frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed' where name=%s""", (self.cargo_ref))
-		frappe.db.sql("""Update `tabCustom Inspection` set status="Deliver", movement='Completed0' where name=%s""", (self.name))
-
-
+    def on_submit(self):
+        self.update_custom_inspection_status()
 	
-#	def get_status(self):
-#		mystatus = "Deliver"
-#		return mystatus
+    def validate(self):
+        self.update_status()
+
+    def update_status(self):
+            frappe.db.sql("""Update `tabCargo` set status='Custom Inspection' where name=%s""", (self.cargo_ref))
 	
-#	def get_inspection_status(self):
-#		inspection_status = "Completed"
-#		return inspection_status
-		
+    def update_custom_inspection_status(self):
+    
+        frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed' where name=%s""", (self.cargo_ref))
+        frappe.db.sql("""Update `tabCustom Inspection` set movement='Completed' where name=%s""", (self.name))
+

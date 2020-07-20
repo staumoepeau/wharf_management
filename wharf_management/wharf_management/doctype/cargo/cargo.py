@@ -58,11 +58,8 @@ class Cargo(Document):
 					"start_date": start_date,
 					"end_date": end_date
 				})
-
 		holidays = [cstr(i) for i in holidays]
-
 		return holidays
-	
 
 	def get_storage_fee(self):
 		wfee = 0
