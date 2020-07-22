@@ -251,6 +251,7 @@
    "bold": 1,
    "fieldname": "vessel",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Vessel"
   },
   {
@@ -872,7 +873,7 @@
  ],
  "image_field": "file_attach",
  "is_submittable": 1,
- "modified": "2020-07-20 05:24:47.999010",
+ "modified": "2020-07-20 23:23:10.077151",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

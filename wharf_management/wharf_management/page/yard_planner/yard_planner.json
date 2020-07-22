@@ -5,7 +5,7 @@
  "doctype": "Page",
  "icon": "fa-fa-cube",
  "idx": 0,
- "modified": "2020-07-20 05:46:12.904254",
+ "modified": "2020-07-20 20:53:42.494603",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "yard-planner",
@@ -17,6 +17,9 @@
   },
   {
    "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Cargo Operation Manager"
   }
  ],
  "script": null,
