@@ -67,6 +67,8 @@ error_report_email = "support@tongaports.to"
 
 notification_config = "wharf_management.notifications.get_notification_config"
 
+
+
 # Permissions
 # -----------
 # Permissions evaluated in scripted ways

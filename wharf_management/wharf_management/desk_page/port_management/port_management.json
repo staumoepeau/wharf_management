@@ -1,0 +1,45 @@
+{
+ "cards": [],
+ "category": "Modules",
+ "charts": [],
+ "creation": "2020-07-25 04:41:39.643739",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Desk Page",
+ "extends_another_page": 0,
+ "hide_custom": 1,
+ "idx": 0,
+ "is_standard": 1,
+ "label": "Port Management",
+ "modified": "2020-07-25 05:06:01.717781",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Port Management",
+ "owner": "Administrator",
+ "pin_to_bottom": 1,
+ "pin_to_top": 0,
+ "shortcuts": [
+  {
+   "color": "#4d4da8",
+   "format": "{} Yard",
+   "label": "Cargo at the Yard",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\": \"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#6be273",
+   "format": "{} Paid",
+   "label": "Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\":\"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "label": "Yard",
+   "link_to": "Yard",
+   "type": "DocType"
+  }
+ ]
+}
