@@ -29,7 +29,7 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("delivery_code", "read_only", 0);
             cur_frm.set_df_property("gate1_in", "read_only", 0);
 
-            //            cur_frm.set_df_property("eta_date", "read_only", 0);
+
             //            cur_frm.set_df_property("etd_date", "read_only", 0);
             //            cur_frm.set_df_property("pol", "read_only", 0);
             //            cur_frm.set_df_property("pod", "read_only", 0);
@@ -57,7 +57,11 @@ frappe.ui.form.on('Cargo', {
 
 
         } else {
-
+            cur_frm.set_df_property("cargo_information", "hidden", 1);
+            cur_frm.set_df_property("cargo_work_type_section", "hidden", 1);
+            cur_frm.set_df_property("cargo_status", "hidden", 1);
+            cur_frm.set_df_property("status_section", "hidden", 1);
+            cur_frm.set_df_property("ports_details", "hidden", 1);
             cur_frm.set_df_property("consignee_details", "hidden", 1);
 
             cur_frm.set_df_property("cargo_type", "read_only", 1);

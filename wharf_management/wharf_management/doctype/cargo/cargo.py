@@ -13,8 +13,6 @@ class Cargo(Document):
 
 	def on_submit(self):
 		self.validate_booking_ref()
-		
-#		self.check_bulk_cargo()
 
 	def validate(self):
 #		self.check_bulk_cargo()
@@ -22,9 +20,6 @@ class Cargo(Document):
 		if not self.title:
 			self.title = self.get_title()
 		
-#		if not self.barcode_code:
-#		self.barcode_code = self.get_barcode()
-
 #	def check_bulk_cargo(self):
 #		if self.cargo_type == "Break Bulk":
 #			self.name = self.name +"-"+ self.break_bulk_items
@@ -40,13 +35,9 @@ class Cargo(Document):
 			msgprint(_("Booking Ref # is Manadory").format(self.booking_ref),
 					raise_exception=1)
 	
-#	def get_barcode(self):
-#		return self.name
-
 	def get_title(self):
 		return self.consignee
 	
-
 	def get_holidays(self, start_date, end_date):
 		holiday_list = frappe.db.get_value("Company", "Ports Authority Tonga", "default_holiday_list")
 		holidays = frappe.db.sql_list('''select holiday_date  from `tabHoliday`
@@ -96,13 +87,11 @@ class Cargo(Document):
 
 		storagefee = flt(charge_days) * flt(vals.standard_rate)
 
-
 		self.storage_fee = storagefee
 		self.charge_days = charge_days
 		self.free_days = free_days
 		self.storage_days = working_days
-		self.storage_rate = vals.standard_rate
-		
+		self.storage_rate = vals.standard_rate	
 		#frappe.throw(_("Charge Days : {0} Free Days {1} Working Days {2} Rate {3} Storate Fee {4}").format(charge_days, free_days, working_days, vals.standard_rate, storagefee))
 
 #		return storagefee

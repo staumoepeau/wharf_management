@@ -3,15 +3,15 @@
 
 frappe.ui.form.on('Pre Advice', {
 
-    on_submit: function(frm){
-                frappe.set_route("List", "Pre Advice");
-                location.reload(true);
+    on_submit: function(frm) {
+        frappe.set_route("List", "Pre Advice");
+        location.reload(true);
     },
 
     onload: function(frm) {
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);
-            
+
         } else if (frm.doc.cargo_type != "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 1);
         }
@@ -46,8 +46,7 @@ frappe.ui.form.on('Pre Advice', {
             cur_frm.set_df_property("commodity_code", "read_only", 0);
             cur_frm.set_df_property("chasis_no", "read_only", 0);
 
-        }
-        else {
+        } else {
             cur_frm.set_df_property("consignee_details", "hidden", 1);
             cur_frm.set_df_property("hazardous_goods", "hidden", 1);
             cur_frm.set_df_property("import_status", "hidden", 1);
@@ -81,10 +80,10 @@ frappe.ui.form.on('Pre Advice', {
     },
 
 
-    cargo_type: function(frm){
+    cargo_type: function(frm) {
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);
-            
+
         } else if (frm.doc.cargo_type != "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 1);
         }
@@ -105,125 +104,171 @@ frappe.ui.form.on('Pre Advice', {
 
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-                frm.doc.work_type == "Discharged" &&
-                frm.doc.secondary_work_type == "Devanning" &&
-                frm.doc.docstatus == 1
-                ) {
+            frm.doc.work_type == "Discharged" &&
+            frm.doc.secondary_work_type == "Devanning" &&
+            frm.doc.docstatus == 1
+        ) {
 
-                frm.add_custom_button(__('Vehicles'), function() {
-                        frappe.call({
-                            method: "devanning_create_vehicles",
-                            doc: frm.doc,
-                            callback: function(d) {
-                            console.log(d)
-                            cur_frm.refresh();
-                            }
-                    })     
-
-                }, __("Devanning"));
-                cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
-                
-                frm.add_custom_button(__('Break Bulk'), function() {
-                    frappe.call({
-                        method: "devanning_create_bbulk",
-                        doc: frm.doc,
-                        callback: function(d) {
+            frm.add_custom_button(__('Vehicles'), function() {
+                frappe.call({
+                    method: "devanning_create_vehicles",
+                    doc: frm.doc,
+                    callback: function(d) {
                         console.log(d)
                         cur_frm.refresh();
-                        }
-                })     
+                    }
+                })
+
             }, __("Devanning"));
             cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
-                
-            }
+
+            frm.add_custom_button(__('Break Bulk'), function() {
+                frappe.call({
+                    method: "devanning_create_bbulk",
+                    doc: frm.doc,
+                    callback: function(d) {
+                        console.log(d)
+                        cur_frm.refresh();
+                    }
+                })
+            }, __("Devanning"));
+            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
+
+        }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-                frm.doc.gate2_status != "Closed" &&
-                frm.doc.gate1_status != "Closed" &&
-                frm.doc.payment_status != "Closed" &&
-                frm.doc.yard_status != "Closed" &&
-                frm.doc.inspection_status != "Closed" &&
-                frm.doc.docstatus == 1
-                    ) {
-                    frm.add_custom_button(__('Inspection'), function() {
-                        
-                        frappe.call({
-                            method: "check_export_container",
-                            doc: frm.doc,
-                            callback: function(r) {
-                                if (r.message > 1){
-                                       frappe.call({
-                                        "method": "frappe.client.get",
-                                        args: {
-                                            doctype: "Export",
-                                            filters: {
-                                                container_no: frm.doc.container_no,
-                                            }
-                                        },
-                                        callback: function(data) {
-
-                                            if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Paid")){
-                                                                                
-                                                frappe.route_options = {
-                                                    "cargo_ref": frm.doc.name
-                                                }
-                                                frappe.new_doc("Inspection");
-                                                frappe.set_route("Form", "Inspection", doc.name);
-                                                                            }
-                                            if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Unpaid")){
-                                                frappe.throw("Please check this Container for UNPAID Fees.")
-
-                                                }
-                                            }
-                                        })
-                                } else {
-                                    frappe.route_options = {
-                                        "cargo_ref": frm.doc.name
+            frm.doc.gate2_status != "Closed" &&
+            frm.doc.gate1_status != "Closed" &&
+            frm.doc.payment_status != "Closed" &&
+            frm.doc.yard_status != "Closed" &&
+            frm.doc.inspection_status != "Closed" &&
+            frm.doc.docstatus == 1
+        ) {
+            frm.add_custom_button(__('Inspection'), function() {
+                frappe.call({
+                    "method": "check_export_container",
+                    "doc": frm.doc,
+                    callback: function(r) {
+                        if (r.message > 1) {
+                            frappe.call({
+                                "method": "frappe.client.get",
+                                "args": {
+                                    "doctype": "Export",
+                                    "filters": {
+                                        "container_no": frm.doc.container_no,
                                     }
-                                    frappe.new_doc("Inspection");
-                                    frappe.set_route("Form", "Inspection", doc.name);
+                                },
+                                callback: function(data) {
+
+                                    if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Paid")) {
+
+                                        frappe.route_options = {
+                                            "cargo_ref": frm.doc.name,
+                                            "container_no": frm.doc.container_no,
+                                            "container_content": frm.doc.container_content,
+                                            "voyage_no": frm.doc.voyage_no,
+                                            "vessel": frm.doc.vessel,
+                                            "bol": frm.doc.bol,
+                                            "work_type": frm.doc.work_type,
+                                            "secondary_work_type": frm.doc.secondary_work_type,
+                                            "last_port": frm.doc.last_port,
+                                            "chasis_no": frm.doc.chasis_no,
+                                            "qty": frm.doc.qty,
+                                            "final_work_type": frm.doc.work_type,
+                                            "third_work_type": frm.doc.third_work_type,
+                                            "cargo_type": frm.doc.cargo_type,
+                                            "mark": frm.doc.mark
+                                        };
+                                        frappe.set_route("Form", "Inspection", "New Inspection 1");
+                                    }
+                                    if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Unpaid")) {
+                                        frappe.throw("Please check this Container for UNPAID Fees.")
+
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        } else {
 
-                         frappe.route_options = {
-                            "cargo_ref": frm.doc.name
-                            }
-                            frappe.new_doc("Inspection");
-                            frappe.set_route("Form", "Inspection", doc.name);
+                            frappe.route_options = {
+                                "cargo_ref": frm.doc.name,
+                                "container_no": frm.doc.container_no,
+                                "container_content": frm.doc.container_content,
+                                "voyage_no": frm.doc.voyage_no,
+                                "vessel": frm.doc.vessel,
+                                "bol": frm.doc.bol,
+                                "work_type": frm.doc.work_type,
+                                "secondary_work_type": frm.doc.secondary_work_type,
+                                "last_port": frm.doc.last_port,
+                                "chasis_no": frm.doc.chasis_no,
+                                "qty": frm.doc.qty,
+                                "final_work_type": frm.doc.work_type,
+                                "third_work_type": frm.doc.third_work_type,
+                                "cargo_type": frm.doc.cargo_type,
+                                "mark": frm.doc.mark
+                            };
+                            frappe.set_route("Form", "Inspection", "New Inspection 1");
+                        }
+                    }
+                })
 
-                    }).addClass("btn-primary");
-            }
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name,
+                    "container_no": frm.doc.container_no,
+                    "container_content": frm.doc.container_content,
+                    "voyage_no": frm.doc.voyage_no,
+                    "vessel": frm.doc.vessel,
+                    "bol": frm.doc.bol,
+                    "work_type": frm.doc.work_type,
+                    "secondary_work_type": frm.doc.secondary_work_type,
+                    "last_port": frm.doc.last_port,
+                    "chasis_no": frm.doc.chasis_no,
+                    "qty": frm.doc.qty,
+                    "final_work_type": frm.doc.work_type,
+                    "third_work_type": frm.doc.third_work_type,
+                    "cargo_type": frm.doc.cargo_type,
+                    "mark": frm.doc.mark
+                };
+                frappe.set_route("Form", "Inspection", "New Inspection 1");
+
+            }).addClass("btn-primary");
+        }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Operation User") &&
                 frm.doc.yard_status != "Closed" &&
                 frm.doc.inspection_status == "Closed"
-                    )) {
-                    frm.add_custom_button(__('Yard'), function() {
-                        frappe.route_options = {
-                            "cargo_ref": frm.doc.name
-                        }
-                        frappe.new_doc("Yard");
-                        frappe.set_route("Form", "Yard", doc.name);
-                    }).addClass("btn-primary");
-            }
-        
+            )) {
+            frm.add_custom_button(__('Yard'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name,
+                    "container_no": frm.doc.container_no,
+                    "voyage_no": frm.doc.voyage_no,
+                    "vessel": frm.doc.vessel,
+                    "eta_date": frm.doc.eta_date,
+                    "bol": frm.doc.bol,
+                    "consignee": frm.doc.consignee,
+                    "chasis_no": frm.doc.chasis_no,
+                    "cargo_type": frm.doc.cargo_type,
+                }
+                frappe.set_route("Form", "Yard", "New Yard 1");
+
+            }).addClass("btn-primary");
+        }
+
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.inspection_status == "Closed" &&
             frm.doc.qty > 1 &&
             frm.doc.break_bulk_item_count != frm.doc.qty
-            ) {
-                frm.add_custom_button(__('Bulk Item Count'), function() {
-                    frappe.route_options = {
-                        "cargo_ref": frm.doc.name,
-                        "mydoctype": "Pre Advice"
-                    }
-                    frappe.new_doc("Bulk Item Count");
-                    frappe.set_route("Form", "Bulk Item Count", doc.name);
+        ) {
+            frm.add_custom_button(__('Bulk Item Count'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name,
+                    "mydoctype": "Pre Advice"
+                }
+                frappe.new_doc("Bulk Item Count");
+                frappe.set_route("Form", "Bulk Item Count", doc.name);
 
-                }).addClass("btn-warning");
-            }
-        },
-    
+            }).addClass("btn-warning");
+        }
+    },
+
 });
-

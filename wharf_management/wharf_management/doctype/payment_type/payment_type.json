@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "creation": "2020-07-25 06:46:14.133883",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "mode_of_payment",
+  "name_on_the_cheque",
+  "name_on_credit_card",
+  "column_break_4",
+  "amount",
+  "account_no",
+  "cheque_no",
+  "card_no"
+ ],
+ "fields": [
+  {
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mode of Payment",
+   "options": "Mode of Payment",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "options": "currency"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Cheque\"",
+   "fieldname": "name_on_the_cheque",
+   "fieldtype": "Data",
+   "label": "Name on the Cheque"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Credit Card\"",
+   "fieldname": "name_on_credit_card",
+   "fieldtype": "Data",
+   "label": "Name on the Credit Card"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Cheque\"",
+   "fieldname": "account_no",
+   "fieldtype": "Data",
+   "label": "Account Number"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Cheque\"",
+   "fieldname": "cheque_no",
+   "fieldtype": "Data",
+   "label": "Cheque No"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Credit Card\"",
+   "fieldname": "card_no",
+   "fieldtype": "Data",
+   "label": "Card No"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-07-25 07:00:45.766030",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Payment Type",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

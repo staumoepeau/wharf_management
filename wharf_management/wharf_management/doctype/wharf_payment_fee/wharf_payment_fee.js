@@ -14,10 +14,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
         ];
     },
 
-//    on_submit: function(frm){   
-//        frappe.set_route("List", "Cargo")
-//    },
-    validate: function(frm){
+    //    on_submit: function(frm){   
+    //        frappe.set_route("List", "Cargo")
+    //    },
+    validate: function(frm) {
         if (frm.doc.posting_date < get_today()) {
             frappe.msgprint(__("You can not select past date as the Posting Date"));
             frappe.validated = false;
@@ -25,33 +25,32 @@ frappe.ui.form.on('Wharf Payment Fee', {
     },
 
     onload: function(frm) {
-        
 
-//        if ((frappe.user.has_role("Wharf Operation Cashier"))){
-//            cur_frm.set_df_property("posting_date", "read_only", 1);
-//            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
-//        }
- //       if ((frappe.user.has_role("System Manager"))){
- //           cur_frm.set_df_property("posting_date", "read_only", 0);
-//            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
- //       }
 
-        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") && frm.doc.docstatus == 1
-            )) {0
-                
-                frm.add_custom_button(__('Refund Sale'), function() {
-                    frappe.call({
-                        method: "refund_sales",
-                        doc: frm.doc,
-                        callback: function(refund) {
-                            frm.refresh_fields();
-                            console.log(refund);
-                        }
-                        
-                    });
-                    frappe.set_route("List", "Cargo")
-                },__("Make"));
-                
+        //        if ((frappe.user.has_role("Wharf Operation Cashier"))){
+        //            cur_frm.set_df_property("posting_date", "read_only", 1);
+        //            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
+        //        }
+        //       if ((frappe.user.has_role("System Manager"))){
+        //           cur_frm.set_df_property("posting_date", "read_only", 0);
+        //            cur_frm.set_value("posting_date",frappe.datetime.nowdate());
+        //       }
+
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") && frm.doc.docstatus == 1)) {
+
+            frm.add_custom_button(__('Refund Sale'), function() {
+                frappe.call({
+                    method: "refund_sales",
+                    doc: frm.doc,
+                    callback: function(refund) {
+                        frm.refresh_fields();
+                        console.log(refund);
+                    }
+
+                });
+                frappe.set_route("List", "Cargo")
+            }, __("Make"));
+
         }
 
         frappe.call({
@@ -138,10 +137,10 @@ frappe.ui.form.on('Wharf Payment Fee', {
         if (frm.doc.payment_method) {
             frm.set_value("paid_amount", frm.doc.total_amount)
         }
-        
-//        if (frm.doc.payment_method == 'Credit' && frm.doc.work_type == 'Stock') {
-//            frm.set_value("custom_warrant", "ETY" + today)
-//       }
+
+        //        if (frm.doc.payment_method == 'Credit' && frm.doc.work_type == 'Stock') {
+        //            frm.set_value("custom_warrant", "ETY" + today)
+        //       }
 
         if (frm.doc.payment_method != 'Credit') {
             frm.set_value("custom_warrant", "")
@@ -152,9 +151,9 @@ frappe.ui.form.on('Wharf Payment Fee', {
     posting_date: function(frm) {
 
         if (frm.doc.posting_date < frappe.datetime.nowdate()) {
-           frappe.msgprint(__("You can not select past date as the Posting Date"));
-           frappe.validated = false;
-       } else {
+            frappe.msgprint(__("You can not select past date as the Posting Date"));
+            frappe.validated = false;
+        } else {
 
             frappe.call({
                 method: "get_working_days",
@@ -219,35 +218,35 @@ frappe.ui.form.on('Wharf Payment Fee', {
             frm.set_value("delivery_code", "INSPECTION DELIVERY")
         } else if (frm.doc.custom_code == "DLWS") {
             frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
-        }else if (frm.doc.custom_code == "SPLIT-PORT") {
+        } else if (frm.doc.custom_code == "SPLIT-PORT") {
             frm.set_value("delivery_code", "SPLIT-PORT")
         } else if (!frm.doc.custom_code) {
             frm.set_value("delivery_code", "")
         }
-       
-//        if (frm.doc.bulk_payment == "Yes") {
-//            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
-//                frm.set_value("custom_warrant", 0)
-//            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
-//           frm.refresh_fields("custom_warrant");
-//        }
+
+        //        if (frm.doc.bulk_payment == "Yes") {
+        //            cur_frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
+        //                frm.set_value("custom_warrant", 0)
+        //            frm.set_value("custom_warrant", frm.doc.bulk_payment_code + "-" + frm.doc.bulk_item)
+        //           frm.refresh_fields("custom_warrant");
+        //        }
 
     },
-    deliver_empty: function(frm){
-        if (frm.doc.deliver_empty=="Yes"){
+    deliver_empty: function(frm) {
+        if (frm.doc.deliver_empty == "Yes") {
             cur_frm.set_df_property("custom_warrant", "read_only", 1)
-        
-        }else if (frm.doc.deliver_empty=="No"){
+
+        } else if (frm.doc.deliver_empty == "No") {
             cur_frm.set_df_property("custom_warrant", "read_only", 0)
         }
     },
 
-    different_warrant: function(frm){
-        if (frm.doc.different_warrant == "No"){
+    different_warrant: function(frm) {
+        if (frm.doc.different_warrant == "No") {
             frm.set_value("bulk_payment_code", frm.doc.custom_warrant)
             cur_frm.set_df_property("bulk_payment_code", "read_only", 1)
 
-        }else if (frm.doc.different_warrant == "Yes"){
+        } else if (frm.doc.different_warrant == "Yes") {
             cur_frm.set_df_property("bulk_payment_code", "read_only", 0)
             frm.set_value("bulk_payment_code", "")
 
@@ -276,22 +275,22 @@ frappe.ui.form.on('Wharf Payment Fee', {
     discount_amount: function(frm) {
         frm.set_value("total_amount", (frm.doc.total_fee - frm.doc.discount_amount));
     },
-    paid_amount: function(frm){
+    paid_amount: function(frm) {
 
-        if (frm.doc.total_amount > frm.doc.paid_amount){
+        if (frm.doc.total_amount > frm.doc.paid_amount) {
             frm.set_value("outstanding_amount", (frm.doc.total_amount - frm.doc.paid_amount));
             frm.set_value("change_amount", 0.00)
             cur_frm.set_df_property("change_amount", "read_only", 1)
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
 
-        } 
-        if (frm.doc.total_amount < frm.doc.paid_amount){
+        }
+        if (frm.doc.total_amount < frm.doc.paid_amount) {
             frm.set_value("change_amount", (frm.doc.paid_amount - frm.doc.total_amount));
             frm.set_value("outstanding_amount", 0.00);
             cur_frm.set_df_property("change_amount", "read_only", 1)
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
         }
-        if (frm.doc.total_amount == frm.doc.paid_amount){
+        if (frm.doc.total_amount == frm.doc.paid_amount) {
             frm.set_value("change_amount", 0.00)
             frm.set_value("outstanding_amount", 0.00);
             cur_frm.set_df_property("change_amount", "read_only", 1)
@@ -334,4 +333,14 @@ frappe.ui.form.on("Wharf Fee Item", "qty", function(frm, cdt, cdn) {
         flt(total += flt(d.price * d.qty))
         frm.set_value("total", total);
     })
+});
+
+frappe.ui.form.on("Payment Type", "amount", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    frappe.model.set_value(d.doctype, d.name, "total_amount", d.amount);
+
+    var total_amount = 0;
+    frm.doc.payment_type.forEach(function(d) { total_amount += d.amount; });
+
+    frm.set_value("paid_amount", total_amount);
 });

@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "allow_import": 1,
  "autoname": "PMSC.YY.MM.#####",
  "creation": "2017-05-05 01:13:19.003736",
@@ -77,7 +78,7 @@
   "hazardous",
   "column_break_44",
   "hazdardous_code",
-  "section_break_42",
+  "cargo_work_type_section",
   "work_type",
   "column_break_42",
   "secondary_work_type",
@@ -399,9 +400,14 @@
    "options": "Cargo Type"
   },
   {
+   "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
    "fieldname": "container_size",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Container Size",
    "options": "\n10\n20\n40"
   },
@@ -567,12 +573,6 @@
    "fieldname": "hazdardous_code",
    "fieldtype": "Data",
    "label": "Hazardous Code"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "section_break_42",
-   "fieldtype": "Section Break",
-   "label": "CARGO WORK TYPE"
   },
   {
    "allow_on_submit": 1,
@@ -869,11 +869,18 @@
    "options": "Cargo",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "cargo_work_type_section",
+   "fieldtype": "Section Break",
+   "label": "CARGO WORK TYPE"
   }
  ],
  "image_field": "file_attach",
  "is_submittable": 1,
- "modified": "2020-07-20 23:23:10.077151",
+ "links": [],
+ "modified": "2020-07-25 06:34:24.921731",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

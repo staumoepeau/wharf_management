@@ -10,65 +10,46 @@ frappe.ui.form.on('Inspection', {
         frappe.set_route("List", "Pre Advice", "List");
         location.reload(true);
     },
+
     onload: function(frm) {
 
         if (frappe.user.has_role("Cargo Operation Manager") || (frappe.user.has_role("System Manager"))) {
-
             cur_frm.set_df_property("container_content", "read_only", 0);
-
+            cur_frm.set_df_property("secondary_work_type", "read_only", 0);
+            cur_frm.set_df_property("mark", "read_only", 0);
+            cur_frm.set_df_property("cargo_type", "read_only", 0);
+            cur_frm.set_df_property("voyage_no", "read_only", 0);
+            cur_frm.set_df_property("work_type", "read_only", 0);
+            cur_frm.set_df_property("final_work_type", "read_only", 0);
+            cur_frm.set_df_property("cargo_ref", "read_only", 0);
+            cur_frm.set_df_property("vessel", "read_only", 0);
+            cur_frm.set_df_property("vessel_arrival_date", "read_only", 0);
+            cur_frm.set_df_property("bol", "read_only", 0);
+            cur_frm.set_df_property("container_no", "read_only", 0);
+            cur_frm.set_df_property("chasis_no", "read_only", 0);
+            cur_frm.set_df_property("third_work_type", "read_only", 0);
+            cur_frm.set_df_property("last_port", "read_only", 0);
         } else {
-
             cur_frm.set_df_property("container_content", "read_only", 1);
+            cur_frm.set_df_property("secondary_work_type", "read_only", 1);
+            cur_frm.set_df_property("mark", "read_only", 1);
+            cur_frm.set_df_property("cargo_type", "read_only", 1);
+            cur_frm.set_df_property("voyage_no", "read_only", 1);
+            cur_frm.set_df_property("work_type", "read_only", 1);
+            cur_frm.set_df_property("final_work_type", "read_only", 1);
+            cur_frm.set_df_property("cargo_ref", "read_only", 1);
+            cur_frm.set_df_property("vessel", "read_only", 1);
+            cur_frm.set_df_property("vessel_arrival_date", "read_only", 1);
+            cur_frm.set_df_property("bol", "read_only", 1);
+            cur_frm.set_df_property("container_no", "read_only", 1);
+            cur_frm.set_df_property("chasis_no", "read_only", 1);
+            cur_frm.set_df_property("third_work_type", "read_only", 1);
+            cur_frm.set_df_property("last_port", "read_only", 1);
+
+            cur_frm.set_df_property("volume", "hidden", 1);
+            cur_frm.set_df_property("seal_1", "hidden", 1);
+            cur_frm.set_df_property("net_weight", "hidden", 1);
         }
-
-
-        frappe.call({
-            "method": "frappe.client.get",
-            args: {
-                doctype: "Pre Advice",
-                name: frm.doc.cargo_ref,
-                "container_no": frm.doc.container_no,
-                filters: {
-                    'docstatus': 1,
-                    'inspection_status': ["!=", "Closed"]
-                },
-            },
-            callback: function(data) {
-                console.log(data);
-                cur_frm.set_value("cargo_ref", data.message["name"]);
-                cur_frm.set_value("container_no", data.message["container_no"]);
-                cur_frm.set_value("container_content", data.message["container_content"]);
-                cur_frm.set_value("voyage_no", data.message["voyage_no"]);
-                cur_frm.set_value("vessel", data.message["vessel"]);
-                cur_frm.set_value("bol", data.message["bol"]);
-                cur_frm.set_value("work_type", data.message["work_type"]);
-                cur_frm.set_value("secondary_work_type", data.message["secondary_work_type"]);
-                cur_frm.set_value("last_port", data.message["last_port"]);
-
-                cur_frm.set_value("chasis_no", data.message["chasis_no"]);
-                cur_frm.set_value("qty", data.message["qty"]);
-                cur_frm.set_value("final_work_type", data.message["work_type"]);
-                cur_frm.set_value("third_work_type", data.message["third_work_type"]);
-                cur_frm.set_value("cargo_type", data.message["cargo_type"]);
-                cur_frm.set_value("mark", data.message["mark"]);
-
-                cur_frm.set_df_property("secondary_work_type", "read_only", 1);
-                cur_frm.set_df_property("mark", "read_only", 1);
-                cur_frm.set_df_property("cargo_type", "read_only", 1);
-                cur_frm.set_df_property("voyage_no", "read_only", 1);
-                cur_frm.set_df_property("work_type", "read_only", 1);
-                cur_frm.set_df_property("final_work_type", "read_only", 1);
-                cur_frm.set_df_property("cargo_ref", "read_only", 1);
-                cur_frm.set_df_property("vessel", "read_only", 1);
-                cur_frm.set_df_property("vessel_arrival_date", "read_only", 1);
-                cur_frm.set_df_property("bol", "read_only", 1);
-                cur_frm.set_df_property("container_no", "read_only", 1);
-                cur_frm.set_df_property("chasis_no", "read_only", 1);
-                cur_frm.set_df_property("third_work_type", "read_only", 1);
-                cur_frm.set_df_property("last_port", "read_only", 1);
-            }
-        })
-
         if (frm.doc.work_type == "Loading") {
             cur_frm.set_df_property("inspection_images", "hidden", 1);
             cur_frm.set_df_property("cargo_condition", "hidden", 1);
@@ -77,6 +58,8 @@ frappe.ui.form.on('Inspection', {
             cur_frm.set_df_property("cargo_condition", "hidden", 0);
         }
 
+        //       if (!frm.doc.container_no) {
+        //          frm.set_df_property("container_no", "hidden", 1);
+        //   }
     }
-
 });
