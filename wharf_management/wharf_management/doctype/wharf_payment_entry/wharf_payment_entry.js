@@ -1,85 +1,243 @@
 // Copyright (c) 2017, Sione Taumoepeau and contributors
 // For license information, please see license.txt
+frappe.provide("wharf_management.wharf_payment_entry");
 
 frappe.ui.form.on('Wharf Payment Entry', {
-    refresh: function(frm) {
 
+    before_submit: function(frm) {
+        if (!frm.doc.status) {
+            frm.set_value("status", "Paid");
+        }
+        frm.save()
     },
-    setup: function(frm) {
-        frm.set_query("paid_from", function() {
-            var party_account_type = frm.doc.party_type == "Customer" ? "Receivable" : "Payable";
-            var account_types = in_list(["Pay", "Internal Transfer"], frm.doc.payment_type) ? ["Bank", "Cash"] : party_account_type;
 
-            return {
-                filters: {
-                    "account_type": ["in", account_types],
-                    "is_group": 0,
-                    "company": frm.doc.company
-                }
-            }
-        });
-
-        frm.set_query("party_type", function() {
-            return {
-                "filters": {
-                    "name": ["in", ["Customer", "Supplier", "Employee"]],
-                }
-            }
-        });
-
-        frm.set_query("paid_to", function() {
-            var party_account_type = frm.doc.party_type == "Customer" ? "Receivable" : "Payable";
-            var account_types = in_list(["Receive", "Internal Transfer"], frm.doc.payment_type) ? ["Bank", "Cash"] : party_account_type;
-
-            return {
-                filters: {
-                    "account_type": ["in", account_types],
-                    "is_group": 0,
-                    "company": frm.doc.company
-                }
-            }
-        });
-    },
     onload: function(frm) {
-        frappe.call({
-            "method": "frappe.client.get",
-            args: {
-                doctype: "Booking Request",
-                name: frm.doc.booking_ref,
-                filters: {
-                    'docstatus': 1
-                },
-            },
-            callback: function(data) {
-                cur_frm.set_value("party_type", "Customer");
-                cur_frm.set_value("party_name", data.message["agents"]);
-                cur_frm.set_value("party", data.message["agents"]);
-                cur_frm.set_value("paid_amount", data.message["total_amount"]);
-                cur_frm.set_value("paid_from", "Debtors - PAT");
+        wharf_management.wharf_payment_entry.setup_queries(frm);
+    },
 
-                cur_frm.set_df_property("booking_ref", "read_only", 1);
-                cur_frm.set_df_property("paid_from", "read_only", 1);
-                cur_frm.set_df_property("payment_type", "read_only", 1);
-                cur_frm.set_df_property("party_type", "read_only", 1);
-                cur_frm.set_df_property("party_name", "hidden", 1);
-                cur_frm.set_df_property("party", "read_only", 1);
-                cur_frm.set_df_property("paid_amount", "read_only", 1);
-                cur_frm.set_df_property("transaction_references", "hidden", 1);
+    insert_fees_button: function(frm) {
+        get_storage_fee(frm)
+        get_wharfage_fee(frm)
+    },
+
+    //    net_total: function(frm) {
+
+    //        frm.set_value("total_amount", frm.doc.net_total);
+    //        refresh_field('total_amount')
+    //    },
+
+    discount: function(frm) {
+
+        if (frm.doc.discount == "NO" || frm.doc.discount == "") {
+            frm.set_value("total_amount", frm.doc.net_total);
+            frm.set_value("discount_amount", 0);
+        } else if (frm.doc.discount == "YES") {
+            frm.set_value("total_amount", (frm.doc.net_total - frm.doc.discount_amount));
+        }
+    },
+
+    discount_amount: function(frm) {
+
+        frm.set_value("total_amount", (frm.doc.net_total - frm.doc.discount_amount));
+    },
+
+    paid_amount: function(frm) {
+
+        if (frm.doc.total_amount > frm.doc.paid_amount) {
+            frm.set_value("outstanding_amount", (frm.doc.total_amount - frm.doc.paid_amount));
+            frm.set_value("change_amount", 0.00)
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+
+        }
+        if (frm.doc.total_amount < frm.doc.paid_amount) {
+            frm.set_value("change_amount", (frm.doc.paid_amount - frm.doc.total_amount));
+            frm.set_value("outstanding_amount", 0.00);
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+        }
+        if (frm.doc.total_amount == frm.doc.paid_amount) {
+            frm.set_value("change_amount", 0.00)
+            frm.set_value("outstanding_amount", 0.00);
+            cur_frm.set_df_property("change_amount", "read_only", 1)
+            cur_frm.set_df_property("outstanding_amount", "read_only", 1)
+        }
+    },
+});
+
+var get_net_total_fee = function(frm) {
+    var doc = frm.doc;
+
+    doc.net_total = 0.0
+    if (doc.wharf_fee_item) {
+        $.each(doc.wharf_fee_item, function(index, data) {
+            doc.net_total += data.total
+        })
+    }
+    frm.set_value("total_amount", doc.net_total);
+    refresh_field('net_total')
+    refresh_field('total_amount')
+}
+
+var get_storage_fee = function(frm) {
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_fees",
+        args: {
+            "docname": frm.doc.name,
+        },
+        callback: function(r) {
+            if (r.message) {
+                if (frm.doc.wharf_fee_item) {
+                    frm.set_value("wharf_fee_item", [])
+                }
+                $.each(r.message, function(i, item) {
+                    var item_row = frm.add_child("wharf_fee_item")
+                    console.log(item)
+                    item_row.item = item.item_code,
+                        item_row.description = item.description,
+                        item_row.price = item.price,
+                        item_row.qty = item.qty,
+                        item_row.total = item.total
+
+                });
+
+            }
+        }
+    });
+}
+var get_wharfage_fee = function(frm) {
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_wharfage_fees",
+        args: {
+            "docname": frm.doc.name,
+        },
+        callback: function(r) {
+            if (r.message) {
+                $.each(r.message, function(i, item) {
+                    var item_row = frm.add_child("wharf_fee_item")
+                    console.log(item)
+                    item_row.item = item.wharfage_item_code,
+                        item_row.description = item.description,
+                        item_row.price = item.price,
+                        item_row.qty = item.qty,
+                        item_row.total = item.total
+                    get_net_total_fee(frm)
+
+                });
+            }
+            frm.save()
+        }
+    });
+}
+
+
+$.extend(wharf_management.wharf_payment_entry, {
+    setup_queries: function(frm) {
+        frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['Cargo', 'docstatus', '=', 1],
+                    ['Cargo', 'status', '=', 'Yard'],
+                    ['Cargo', 'consignee', '=', frm.doc.customer],
+                ]
+            }
+        }
+    }
+});
+
+frappe.ui.form.on("Wharf Fee Item", "total", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    frappe.model.set_value(d.doctype, d.name, "net_total", d.total);
+
+    var total_fees = 0;
+    frm.doc.wharf_fee_item.forEach(function(i) { total_fees += i.total; });
+
+    frm.set_value("net_total", total_fees);
+});
+
+
+frappe.ui.form.on("Payment Method", "amount", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    frappe.model.set_value(d.doctype, d.name, "total_amount", d.amount);
+    var total_amount = 0;
+    frm.doc.payment_method.forEach(function(i) { total_amount += i.amount; });
+    frm.set_value("paid_amount", total_amount);
+});
+
+frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    if (d.reference_doctype) {
+        if (d.cargo_type == "Container") {
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Storage Fee",
+                    filters: {
+                        cargo_type: d.cargo_type,
+                        container_size: d.container_size,
+                        container_content: d.container_content
+                    }
+                },
+                callback: function(data) {
+                    frappe.model.set_value(d.doctype, d.name, "free_storage_days", data.message["grace_days"]);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee_price", data.message["fee_amount"]);
+                    frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);
+                }
+            })
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Wharfage Fee",
+                    filters: {
+                        cargo_type: d.cargo_type,
+                        container_size: d.container_size,
+
+                    }
+                },
+                callback: function(data) {
+                    frappe.model.set_value(d.doctype, d.name, "wharfage_fee_price", data.message["fee_amount"]);
+                    frappe.model.set_value(d.doctype, d.name, "wharfage_item_code", data.message["item_name"]);
+
+                }
+            })
+
+        } else if (d.cargo_type != "Container") {
+            frappe.call({
+                "method": "frappe.client.get",
+                args: {
+                    doctype: "Storage Fee",
+                    filters: {
+                        cargo_type: d.cargo_type,
+                    }
+                },
+                callback: function(data) {
+                    frappe.model.set_value(d.doctype, d.name, "free_storage_days", data.message["grace_days"]);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee_price", data.message["fee_amount"]);
+                    frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);
+                }
+            })
+        }
+        frappe.call({
+            method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
+            args: {
+                "eta_date": d.eta_date,
+                "posting_date": frm.doc.posting_date
+            },
+            callback: function(r) {
+                frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
+                if (d.free_storage_days < d.storage_days) {
+                    var sdays = flt(d.storage_days - d.free_storage_days);
+                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                } else if (d.free_storage_days >= d.storage_days) {
+                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+
+                }
 
             }
         })
-    },
-    mode_of_payment: function(frm) {
-
-        if (frm.doc.mode_of_payment == "Cash") {
-            cur_frm.set_value("paid_to", "Cash - PAT");
-            cur_frm.set_df_property("paid_to", "read_only", 1);
-            cur_frm.set_df_property("transaction_references", "hidden", 1);
-        } else if (frm.doc.mode_of_payment == "Cheque") {
-            cur_frm.set_value("paid_to", "BSP Tonga Limited - PAT");
-            cur_frm.set_df_property("paid_to", "read_only", 1);
-            cur_frm.set_df_property("transaction_references", "hidden", 0);
-
-        }
-    },
+    } else if (!d.reference_doctype) {
+        msgprint("Please select a Cargo")
+    }
 });

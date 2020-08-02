@@ -12,7 +12,8 @@
   "amount",
   "account_no",
   "cheque_no",
-  "card_no"
+  "card_no",
+  "cheque_date"
  ],
  "fields": [
   {
@@ -64,14 +65,20 @@
    "fieldname": "card_no",
    "fieldtype": "Data",
    "label": "Card No"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_payment == \"Cheque\"",
+   "fieldname": "cheque_date",
+   "fieldtype": "Data",
+   "label": "Cheque Date"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-07-25 07:00:45.766030",
+ "modified": "2020-07-29 21:35:18.117598",
  "modified_by": "Administrator",
  "module": "Wharf Management",
- "name": "Payment Type",
+ "name": "Payment Method",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,

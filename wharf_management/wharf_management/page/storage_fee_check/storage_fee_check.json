@@ -1,0 +1,20 @@
+{
+ "content": null,
+ "creation": "2020-08-01 07:00:05.938779",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2020-08-02 20:53:19.281723",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "storage-fee-check",
+ "owner": "Administrator",
+ "page_name": "storage-fee-check",
+ "restrict_to_domain": "Services",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Check for Storage Fee"
+}

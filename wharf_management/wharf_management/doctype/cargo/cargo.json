@@ -1,13 +1,15 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "PMSC.YY.MM.#####",
+ "allow_rename": 1,
+ "autoname": "naming_series",
  "creation": "2017-05-05 01:13:19.003736",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "company",
+  "naming_series",
   "column_break_4",
   "title",
   "barcode_code",
@@ -395,6 +397,7 @@
    "in_filter": 1,
    "in_global_search": 1,
    "in_list_view": 1,
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Cargo Type",
    "options": "Cargo Type"
@@ -875,15 +878,22 @@
    "fieldname": "cargo_work_type_section",
    "fieldtype": "Section Break",
    "label": "CARGO WORK TYPE"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "PMSC.YY.MM.#####"
   }
  ],
  "image_field": "file_attach",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-25 06:34:24.921731",
+ "modified": "2020-08-02 19:29:56.460047",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
+ "name_case": "UPPER CASE",
  "owner": "Administrator",
  "permissions": [
   {

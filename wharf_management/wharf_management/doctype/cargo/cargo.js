@@ -159,6 +159,7 @@ frappe.ui.form.on('Cargo', {
     },
 
     refresh: function(frm) {
+        var cargo_ref = frm.doc.name;
         cur_frm.add_fetch('container_type', 'size', 'container_size');
         cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
         cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
@@ -185,6 +186,19 @@ frappe.ui.form.on('Cargo', {
                 frappe.new_doc("Wharf Payment Fee");
                 frappe.set_route("Form", "Wharf Payment Fee", doc.name);
             }).addClass("btn-primary");
+        }
+
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
+                frm.doc.payment_status != "Closed" &&
+                frm.doc.yard_status == "Closed" &&
+                frm.doc.inspection_status == "Closed"
+            )) {
+            frm.add_custom_button(__('New Payment'), function() {
+                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1", {
+                    "payment_type": "Receive",
+                    "customer": frm.doc.consignee,
+                });
+            }).addClass("btn-success");
         }
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&

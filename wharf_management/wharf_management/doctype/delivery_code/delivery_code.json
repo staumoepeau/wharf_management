@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "field:delivery_code",
+ "creation": "2020-07-30 15:13:23.098257",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_2",
+  "delivery_code",
+  "delivery_information"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "delivery_code",
+   "fieldtype": "Data",
+   "label": "Delivery Code",
+   "unique": 1
+  },
+  {
+   "fieldname": "delivery_information",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Delivery Information"
+  }
+ ],
+ "links": [],
+ "modified": "2020-07-30 15:15:30.241132",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Delivery Code",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Cashier",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1
+}
