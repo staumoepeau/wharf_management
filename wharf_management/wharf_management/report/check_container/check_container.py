@@ -27,8 +27,8 @@ def get_columns():
 		_("Yard Slot") + ":Data:120",
 		_("ETA") + ":Date:90",
 		_("ETD") + ":Date:90",
-		_("Consignee") + ":Data:140",
-		_("Cargo Description") + ":Data:180",
+		_("Consignee") + ":Data:200",
+		_("Cargo Description") + ":Data:200",
 		
 		
 	]
