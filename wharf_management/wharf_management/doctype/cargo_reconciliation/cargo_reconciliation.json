@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "creation": "2020-08-03 08:55:15.287524",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "reference_doctype",
+  "cargo_type",
+  "container_no",
+  "container_size",
+  "work_type",
+  "column_break_7",
+  "container_content",
+  "current_yard_slot",
+  "new_yard_slot",
+  "mark",
+  "chasis_no",
+  "secondary_work_type",
+  "column_break_12",
+  "eta_date",
+  "voyage_no",
+  "bol",
+  "net_weight",
+  "volume"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Reference",
+   "options": "Cargo",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "reference_doctype.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Cargo Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Container No",
+   "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "reference_doctype.container_size",
+   "fieldname": "container_size",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Size",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.work_type",
+   "fieldname": "work_type",
+   "fieldtype": "Data",
+   "label": "Work Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "reference_doctype.container_content",
+   "fieldname": "container_content",
+   "fieldtype": "Data",
+   "label": "Container Content",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.mark",
+   "fieldname": "mark",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mark",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.chasis_no",
+   "fieldname": "chasis_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Chasis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.secondary_work_type",
+   "fieldname": "secondary_work_type",
+   "fieldtype": "Data",
+   "label": "Secondary Work Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "reference_doctype.eta_date",
+   "fieldname": "eta_date",
+   "fieldtype": "Date",
+   "label": "ETA",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.bol",
+   "fieldname": "bol",
+   "fieldtype": "Data",
+   "label": "BOL",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.net_weight",
+   "fieldname": "net_weight",
+   "fieldtype": "Data",
+   "label": "Weight",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.volume",
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "label": "Volume",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.yard_slot",
+   "fieldname": "current_yard_slot",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Current Yard Slot",
+   "read_only": 1
+  },
+  {
+   "fieldname": "new_yard_slot",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "New Yard Slot",
+   "options": "Yard Settings"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-08-03 09:16:42.388596",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo Reconciliation",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

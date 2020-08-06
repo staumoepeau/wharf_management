@@ -4,18 +4,22 @@
 
 frappe.query_reports["Check Container"] = {
     filters: [{
-            fieldname: "cargo_ref",
-            label: __("Cargo"),
-            fieldtype: "Link",
-            options: "Cargo",
-            reqd: 1,
-            ingore_permissions: 1,
-            filters: { "status": "yard" },
+        fieldname: "cargo_ref",
+        label: __("Cargo"),
+        fieldtype: "Link",
+        options: "Cargo",
+        reqd: 1,
+        filters: { "status": "yard" },
+//        flags: { ingore_permissions = true }
 
-        },
+    }, ],
 
+    onload: function() {
+        var me = this;
+        this.page.remove_inner_button('Menu', 'Edit')
 
-    ],
-
-    onload: function() {}
+        //       $(`.btn:contains("Menu"):visible`).hide();
+        //        $(page.remove_inner_button('Set Chart'))
+        //        frm.remove_custom_button("Installation Note", 'Make');
+    }
 };

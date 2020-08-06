@@ -1,7 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
- "autoname": "field:agents",
+ "autoname": "AGENT-.####",
  "creation": "2017-04-01 08:56:21.961055",
  "doctype": "DocType",
  "document_type": "Setup",
@@ -9,20 +8,26 @@
  "engine": "InnoDB",
  "field_order": [
   "agent_information",
-  "agents",
+  "agent",
   "enabled",
   "column_break_5",
   "contact_section",
   "phone_no",
   "address",
-  "column_break_9",
-  "agent_user_table"
+  "column_break_9"
  ],
  "fields": [
   {
    "fieldname": "agent_information",
    "fieldtype": "Section Break",
    "label": "AGENT INFORMATION"
+  },
+  {
+   "fieldname": "agent",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Agent",
+   "unique": 1
   },
   {
    "default": "0",
@@ -52,24 +57,10 @@
   {
    "fieldname": "column_break_9",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "agents",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Agents",
-   "unique": 1
-  },
-  {
-   "fieldname": "agent_user_table",
-   "fieldtype": "Table",
-   "label": "User",
-   "options": "Agent User"
   }
  ],
- "hide_toolbar": 1,
  "links": [],
- "modified": "2020-08-04 11:34:55.795893",
+ "modified": "2020-08-04 11:25:28.095211",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Agents",

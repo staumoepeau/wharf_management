@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 import unittest
 
-class TestAgents(unittest.TestCase):
+class TestVesselGRTFee(unittest.TestCase):
 	pass

@@ -47,19 +47,19 @@ frappe.ui.form.on('Booking Request', {
                         console.log(sales_invoices);
                         frm.reload_doc()
                     }
-                   
+
                 });
-                
-//                frappe.route_options = {
-//                    "booking_ref": frm.doc.name
-//                }
-//                frappe.new_doc("Wharf Payment Entry");
-//                frappe.set_route("Form", "Wharf Payment Entry", doc.name);
+
+                //                frappe.route_options = {
+                //                    "booking_ref": frm.doc.name
+                //                }
+                //                frappe.new_doc("Wharf Payment Entry");
+                //                frappe.set_route("Form", "Wharf Payment Entry", doc.name);
             }).addClass("btn-success");
-//            frappe.throw("You cannot makes changes to this item.");
-//            frappe.set_route("List", "Booking Request");
-//            cur_frm.refresh();
-        
+            //            frappe.throw("You cannot makes changes to this item.");
+            //            frappe.set_route("List", "Booking Request");
+            //            cur_frm.refresh();
+
         }
         var Current_User = user
         if ((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) {
@@ -94,31 +94,31 @@ frappe.ui.form.on('Booking Request', {
             cur_frm.set_df_property("security_documents", "hidden", 1);
         }
 
-        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User")){
+        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User")) {
 
             cur_frm.set_df_property("grt", "hidden", 0);
-        
-        } else{
+
+        } else {
             cur_frm.set_df_property("grt", "hidden", 1);
         }
 
-        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")){
+        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")) {
 
             cur_frm.set_df_property("mode_of_payment", "hidden", 0);
             cur_frm.set_df_property("paid_amount", "hidden", 0);
-        
-        } else{
+
+        } else {
             cur_frm.set_df_property("mode_of_payment", "hidden", 1);
             cur_frm.set_df_property("paid_amount", "hidden", 1);
         }
-        if (frm.doc.vessel_type == "Cargo"){
+        if (frm.doc.vessel_type == "Cargo") {
             cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
             cur_frm.set_df_property("section_break_57", "hidden", 0);
             cur_frm.set_df_property("section_break_54", "hidden", 0);
             cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
             cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
-        } else{
-            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 1)
+        } else {
+            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0)
             cur_frm.set_df_property("section_break_57", "hidden", 1);
             cur_frm.set_df_property("section_break_54", "hidden", 1);
             cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
@@ -127,11 +127,11 @@ frappe.ui.form.on('Booking Request', {
         }
 
     },
-    mode_of_payment: function(frm){
+    mode_of_payment: function(frm) {
 
         if (frm.doc.mode_of_payment == "Credit") {
             cur_frm.set_value("paid_amount", 0)
-        }else if (frm.doc.mode_of_payment != "Credit") {
+        } else if (frm.doc.mode_of_payment != "Credit") {
             cur_frm.set_value("paid_amount", frm.doc.total_amount)
         }
 
@@ -147,14 +147,14 @@ frappe.ui.form.on('Booking Request', {
             callback: function(data) {
                 console.log(data);
                 cur_frm.set_value("vessel_type", data.message["vessel_type"])
-                if (data.message["vessel_type"] == "Cargo"){
+                if (data.message["vessel_type"] == "Cargo") {
                     cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
                     cur_frm.set_df_property("section_break_57", "hidden", 0);
                     cur_frm.set_df_property("section_break_54", "hidden", 0);
                     cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
                     cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
-                } else{
-                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 1)
+                } else {
+                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0)
                     cur_frm.set_df_property("section_break_57", "hidden", 1);
                     cur_frm.set_df_property("section_break_54", "hidden", 1);
                     cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
@@ -170,8 +170,8 @@ frappe.ui.form.on('Booking Request', {
 
 frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn) {
     var dc = locals[cdt][cdn];
-    
-    if (dc.cargo_type == "Loose Cargo" || dc.cargo_type == "Heavy Vehicles" || dc.cargo_type == "Break Bulk"){
+
+    if (dc.cargo_type == "Loose Cargo" || dc.cargo_type == "Heavy Vehicles" || dc.cargo_type == "Break Bulk") {
         frappe.call({
             method: "frappe.client.get",
             args: {
@@ -188,8 +188,8 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
                 calculate_total_amount(frm);
             }
         });
-    } 
-    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack"){
+    }
+    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack") {
         frappe.call({
             method: "frappe.client.get",
             args: {
@@ -209,7 +209,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             }
         });
     }
-    if (dc.cargo_type == "Vehicles"){
+    if (dc.cargo_type == "Vehicles") {
         frappe.call({
             method: "frappe.client.get",
             args: {
@@ -227,21 +227,21 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             }
         });
     }
-   
+
 });
 
-var calculate_total_amount = function(frm){
+var calculate_total_amount = function(frm) {
 
     var total_fee = 0;
     var total_weight_amount = 0;
 
-    frm.doc.cargo_booking_manifest_table.forEach(function(d) { 
+    frm.doc.cargo_booking_manifest_table.forEach(function(d) {
         total_fee += d.sub_total_fee;
         total_weight_amount += d.weight;
     });
 
-   frm.set_value("total_required_amount", total_fee);
-   frm.set_value("require_amount",total_fee);
-   frm.set_value("total_weight_amount", total_weight_amount);
-   frm.refresh_fields("total_weight_amount");
+    frm.set_value("total_required_amount", total_fee);
+    frm.set_value("require_amount", total_fee);
+    frm.set_value("total_weight_amount", total_weight_amount);
+    frm.refresh_fields("total_weight_amount");
 }

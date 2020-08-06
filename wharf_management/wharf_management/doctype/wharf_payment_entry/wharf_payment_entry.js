@@ -1,30 +1,44 @@
 // Copyright (c) 2017, Sione Taumoepeau and contributors
 // For license information, please see license.txt
+
 frappe.provide("wharf_management.wharf_payment_entry");
 
 frappe.ui.form.on('Wharf Payment Entry', {
+
+    refresh: function(frm) {
+        if (frm.doc.docstatus == 0) {
+            if (!frm.doc.posting_date) {
+                frm.set_value('posting_date', frappe.datetime.nowdate());
+            }
+            if (!frm.doc.posting_time) {
+                frm.set_value('posting_time', frappe.datetime.now_time());
+            }
+            set_posting_date_time(frm)
+        }
+    },
 
     before_submit: function(frm) {
         if (!frm.doc.status) {
             frm.set_value("status", "Paid");
         }
-        frm.save()
+        frm.save('Update');
     },
 
     onload: function(frm) {
+
         wharf_management.wharf_payment_entry.setup_queries(frm);
+        if (!frappe.user.has_role("Cargo Operation Manager")) {
+            cur_frm.set_df_property("set_posting_time", "hidden", 1);
+        } else if (frappe.user.has_role("Cargo Operation Manager")) {
+            cur_frm.set_df_property("set_posting_time", "hidden", 0);
+        }
+
     },
 
     insert_fees_button: function(frm) {
         get_storage_fee(frm)
         get_wharfage_fee(frm)
     },
-
-    //    net_total: function(frm) {
-
-    //        frm.set_value("total_amount", frm.doc.net_total);
-    //        refresh_field('total_amount')
-    //    },
 
     discount: function(frm) {
 
@@ -63,7 +77,22 @@ frappe.ui.form.on('Wharf Payment Entry', {
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
         }
     },
+
+    set_posting_time: function(frm) {
+        set_posting_date_time(frm)
+    }
+
 });
+
+var set_posting_date_time = function(frm) {
+    if (frm.doc.docstatus == 0 && frm.doc.set_posting_time) {
+        frm.set_df_property('posting_date', 'read_only', 0);
+        frm.set_df_property('posting_time', 'read_only', 0);
+    } else {
+        frm.set_df_property('posting_date', 'read_only', 1);
+        frm.set_df_property('posting_time', 'read_only', 1);
+    }
+}
 
 var get_net_total_fee = function(frm) {
     var doc = frm.doc;
@@ -122,14 +151,12 @@ var get_wharfage_fee = function(frm) {
                         item_row.qty = item.qty,
                         item_row.total = item.total
                     get_net_total_fee(frm)
-
+                    frm.save()
                 });
             }
-            frm.save()
         }
     });
 }
-
 
 $.extend(wharf_management.wharf_payment_entry, {
     setup_queries: function(frm) {

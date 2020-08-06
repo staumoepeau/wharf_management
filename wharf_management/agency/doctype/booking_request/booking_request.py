@@ -22,7 +22,7 @@ class BookingRequest(Document):
 	
 	def check_security_status(self):
 		if not self.security_status:
-			frappe.throw(_("Please make sure that Port Security have Review this Booking Request Documents").format(self.security_status))
+			frappe.throw(_("Please make sure that Port Security had Review this Booking Request Documents").format(self.security_status))
 
 
 	def calculate_half_amount(self):
@@ -36,6 +36,7 @@ class BookingRequest(Document):
 			td = tstamp2 - tstamp1
 	
 		self.working_hours = int(round(td.total_seconds() / 60 / 60 ))
+		grt_tariff, handling_fee  = 0.0, 0.0
 		if self.vessel_type == "OIL TANKER":
 			grt_tariff = 0.0436
 			handling_fee = 0

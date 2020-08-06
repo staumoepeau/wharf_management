@@ -14,6 +14,8 @@
   "payment_type",
   "column_break_5",
   "posting_date",
+  "posting_time",
+  "set_posting_time",
   "customer_section",
   "customer",
   "reference_section",
@@ -111,7 +113,9 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Posting Date",
-   "reqd": 1
+   "no_copy": 1,
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "payment_amounts_section",
@@ -312,11 +316,25 @@
    "fieldtype": "Currency",
    "label": "NET TOTAL",
    "read_only": 1
+  },
+  {
+   "fieldname": "posting_time",
+   "fieldtype": "Data",
+   "label": "Posting Time",
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.docstatus==0",
+   "fieldname": "set_posting_time",
+   "fieldtype": "Check",
+   "label": "Edit Posting Date and Time"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-31 22:48:23.456759",
+ "modified": "2020-08-03 06:29:03.018690",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",

@@ -196,7 +196,7 @@ frappe.ui.form.on('Cargo', {
             frm.add_custom_button(__('New Payment'), function() {
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1", {
                     "payment_type": "Receive",
-                    "customer": frm.doc.consignee,
+                    "customer": frm.doc.consignee
                 });
             }).addClass("btn-success");
         }
@@ -293,23 +293,23 @@ frappe.ui.form.on('Cargo', {
         }
     },
 
-    custom_code: function(frm) {
-        if (frm.doc.custom_code == "MTY") {
-            frm.set_value("delivery_code", "EMPTY DELIVERY")
-        } else if (frm.doc.custom_code == "DDL") {
-            frm.set_value("delivery_code", "DIRECT DELIVERY")
-        } else if (frm.doc.custom_code == "DDLW") {
-            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
-        } else if (frm.doc.custom_code == "IDL") {
-            frm.set_value("delivery_code", "INSPECTION DELIVERY")
-        } else if (frm.doc.custom_code == "DLWS") {
-            frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
-        } else if (frm.doc.custom_code == "SPLIT-PORT") {
-            frm.set_value("delivery_code", "SPLIT-PORT")
-        } else if (!frm.doc.custom_code) {
-            frm.set_value("delivery_code", "")
-        }
-    },
+    //    custom_code: function(frm) {
+    //        if (frm.doc.custom_code == "MTY") {
+    //            frm.set_value("delivery_code", "EMPTY DELIVERY")
+    //        } else if (frm.doc.custom_code == "DDL") {
+    //            frm.set_value("delivery_code", "DIRECT DELIVERY")
+    //        } else if (frm.doc.custom_code == "DDLW") {
+    //            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
+    //        } else if (frm.doc.custom_code == "IDL") {
+    //            frm.set_value("delivery_code", "INSPECTION DELIVERY")
+    //        } else if (frm.doc.custom_code == "DLWS") {
+    //            frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
+    //        } else if (frm.doc.custom_code == "SPLIT-PORT") {
+    //            frm.set_value("delivery_code", "SPLIT-PORT")
+    //        } else if (!frm.doc.custom_code) {
+    //           frm.set_value("delivery_code", "")
+    //        }
+    //    },
 
     handling_fee_discount: function(frm) {
         if (frm.doc.handling_fee_discount == "YES") {
