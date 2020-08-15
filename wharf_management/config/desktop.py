@@ -6,7 +6,7 @@ def get_data():
 	return [
 		{
 			"module_name": "Wharf Management",
-			"category": "Domains",
+			"category": "Modules",
 			"label": _("Ports Management"),
 			"color": "blue",
 			"icon": "octicon octicon-tools",

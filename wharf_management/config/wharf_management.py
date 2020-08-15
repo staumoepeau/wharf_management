@@ -9,6 +9,7 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Wharf Payment Entry",
+					"onboard": 1,
 					"description": _("Wharf Payment Entry"),
 				},
 				{

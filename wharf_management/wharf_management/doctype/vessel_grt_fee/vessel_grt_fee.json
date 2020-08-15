@@ -1,5 +1,4 @@
 {
- "actions": [],
  "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2020-08-04 12:08:35.874944",
@@ -58,8 +57,7 @@
    "label": "Description"
   }
  ],
- "links": [],
- "modified": "2020-08-04 12:18:13.704357",
+ "modified": "2020-08-14 22:06:08.738790",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Vessel GRT Fee",
