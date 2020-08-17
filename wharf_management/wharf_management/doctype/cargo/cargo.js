@@ -5,7 +5,6 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-
         if (frappe.user.has_role("Cargo Operation Manager") || frappe.user.has_role("Operation Manifest User") || (frappe.user.has_role("System Manager"))) {
 
             cur_frm.set_df_property("consignee_details", "hidden", 0);
@@ -113,7 +112,7 @@ frappe.ui.form.on('Cargo', {
         }
 
 
-        if (frappe.user.has_role("Operation Manifest User")) {
+        if (frappe.user.has_role("Operation Manifest User") || frappe.user.has_role("System Manager")) {
 
             cur_frm.set_df_property("manifest_section", "hidden", 0);
             cur_frm.set_df_property("handling_fee", "read_only", 0);
@@ -128,15 +127,12 @@ frappe.ui.form.on('Cargo', {
         }
 
 
+
         if (frappe.user.has_role("Operation Manifest User") || frappe.user.has_role("System Manager")) {
-            cur_frm.set_df_property("cargo_status", "read_only", 0);
-            cur_frm.set_df_property("status_section", "read_only", 0);
-            cur_frm.set_df_property("empty_details", "hidden", 0)
+            frm.toggle_enable(['cargo_status', 'status_section', 'empty_details'], 0);
 
         } else {
-            cur_frm.set_df_property("cargo_status", "read_only", 1);
-            cur_frm.set_df_property("status_section", "read_only", 1);
-            cur_frm.set_df_property("empty_details", "hidden", 1)
+            frm.toggle_enable(['cargo_status', 'status_section', 'empty_details'], 1);
 
         }
         if (frm.doc.cargo_type == "Split Ports") {
@@ -194,10 +190,14 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.inspection_status == "Closed"
             )) {
             frm.add_custom_button(__('New Payment'), function() {
-                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1", {
+                frappe.route_options = {
+
                     "payment_type": "Receive",
-                    "customer": frm.doc.consignee
-                });
+                    "customer": frm.doc.consignee,
+
+                    "cdt.reference_doctype": "PMSC200700205"
+                }
+                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
             }).addClass("btn-success");
         }
 

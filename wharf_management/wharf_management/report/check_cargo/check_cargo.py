@@ -29,9 +29,9 @@ def get_columns():
 		_("Consignee") + ":Data:200",
 		_("Cargo Description") + ":Data:200",
 		_("Vessel") + ":Data:220",
-		_("Voyage No") + ":Data:80",
-		_("ETA") + ":Date:90",
-		_("ETD") + ":Date:90"		
+		_("Voyage No") + ":Data:70",
+		_("ETA") + ":Date:180",
+		_("ETD") + ":Date:180"		
 	]
 
 def get_conditions(filters):

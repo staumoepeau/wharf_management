@@ -12,7 +12,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-08-11 08:31:56.431004",
+ "modified": "2020-08-16 23:59:34.787096",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -29,13 +29,19 @@
    "type": "DocType"
   },
   {
+   "label": "Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\":\"Paid\", \"yard_slot\": NULL}",
+   "type": "DocType"
+  },
+  {
    "label": "Booked",
    "link_to": "Pre Advice",
    "type": "DocType"
   },
   {
-   "label": "Check Container",
-   "link_to": "Check Container",
+   "label": "Check Cargo",
+   "link_to": "Check Cargo",
    "type": "Report"
   }
  ],
