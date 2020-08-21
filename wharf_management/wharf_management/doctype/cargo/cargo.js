@@ -8,6 +8,7 @@ frappe.ui.form.on('Cargo', {
         if (frappe.user.has_role("Cargo Operation Manager") || frappe.user.has_role("Operation Manifest User") || (frappe.user.has_role("System Manager"))) {
 
             cur_frm.set_df_property("consignee_details", "hidden", 0);
+
             cur_frm.set_df_property("cargo_type", "read_only", 0);
             cur_frm.set_df_property("work_type", "read_only", 0);
             cur_frm.set_df_property("secondary_work_type", "read_only", 0);
@@ -126,8 +127,6 @@ frappe.ui.form.on('Cargo', {
 
         }
 
-
-
         if (frappe.user.has_role("Operation Manifest User") || frappe.user.has_role("System Manager")) {
             frm.toggle_enable(['cargo_status', 'status_section', 'empty_details'], 0);
 
@@ -155,19 +154,17 @@ frappe.ui.form.on('Cargo', {
     },
 
     refresh: function(frm) {
-        var cargo_ref = frm.doc.name;
-        cur_frm.add_fetch('container_type', 'size', 'container_size');
-        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
-        cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
-
-        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
-        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
-        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
-        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
-        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
-        cur_frm.add_fetch('booking_ref', 'pol', 'pol');
-        cur_frm.add_fetch('booking_ref', 'pod', 'pod');
-        cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
+        //        cur_frm.add_fetch('container_type', 'size', 'container_size');
+        //        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
+        //        cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
+        //        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
+        //        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
+        //        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
+        //        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
+        //        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
+        //        cur_frm.add_fetch('booking_ref', 'pol', 'pol');
+        //        cur_frm.add_fetch('booking_ref', 'pod', 'pod');
+        //        cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
 
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&

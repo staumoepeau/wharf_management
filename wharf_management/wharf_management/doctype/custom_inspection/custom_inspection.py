@@ -21,5 +21,5 @@ class CustomInspection(Document):
     def update_custom_inspection_status(self):
     
         frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed' where name=%s""", (self.cargo_ref))
-        frappe.db.sql("""Update `tabCustom Inspection` set movement='Completed' where name=%s""", (self.name))
+        frappe.db.sql("""Update `tabCustom Inspection` set movement='Completed', status="Delivered" where name=%s""", (self.name))
 

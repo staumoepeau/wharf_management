@@ -8,17 +8,44 @@
     </div>
 </div>
 ------------------------------------------------------------------------------------------------------------------>
+<script>
+    function allowDrop(theEvent) {
+        theEvent.preventDefault();
+    }
+
+    function drag(theEvent) {
+        theEvent.dataTransfer.setData("Text", theEvent.target.id);
+    }
+
+    function drop(theEvent) {
+        theEvent.preventDefault();
+        var data = theEvent.dataTransfer.getData("Text");
+        theEvent.target.appendChild(document.getElementById(data));
+    }
+
+    function dropIt(theEvent) {
+        //get a reference to the element being dragged
+        var theData = theEvent.dataTransfer.getData("Text");
+        //get the element
+        var theDraggedElement = document.getElementById(theData);
+        //add it to the drop element
+        theEvent.target.appendChild(theDraggedElement);
+        //instruct the browser to allow the drop
+        theEvent.preventDefault();
+    }
+</script>
+
 <div class="yard-planner-main">
     <div class="container-fluid p-3 my-3 border">
         <div class="row">
             {% for(var i=1, l=13; i
             <l; i++) { %} <div class="col-sm-1">
-                <div class="shipping_container ">
-                    <img class="shipping_container-img" src="/files/container_row.png" alt="container image cap">
-                    <div class="shipping_container-img-overlay">
-                        <h6 class="shipping_container-title text-center"><b>{%= [i] %}</b></h6>
-                    </div>
+
+                <img class="shipping_container-img" src="/files/container_row.png" alt="container image cap">
+                <div class="shipping_container-img-overlay">
+                    <h6 class="shipping_container-title text-center"><b>{%= [i] %}</b></h6>
                 </div>
+
         </div>
         {% } %}
     </div>
@@ -29,41 +56,41 @@
         {% for item in items %}{% if item.yard_section == "A" %}
         <div class="col-sm-1">
             {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="shipping_container ">
-                <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-                    </a>
-                </div>
+
+            <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
+                </a>
+
             </div>
             {% endif %} {% if item.status == "Custom Inspection" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %} {% if item.status == "Yard" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %} {% else %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-                </div>
+
+            <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
             </div>
+
             {% endif %}
         </div>
         {% endif %} {% endfor %}
@@ -75,41 +102,41 @@
         {% for item in items %}{% if item.yard_section == "B" %}
         <div class="col-sm-1">
             {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="shipping_container ">
-                <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-                    </a>
-                </div>
+
+            <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
+                </a>
+
             </div>
             {% endif %} {% if item.status == "Custom Inspection" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %}{% if item.status == "Yard" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %} {% else %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-                </div>
+
+            <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
             </div>
+
             {% endif %}
         </div>
         {% endif %} {% endfor %}
@@ -118,10 +145,11 @@
 <div class="container-fluid p-3 my-3 border">
     <div class="row">
         {% for item in items %}{% if item.yard_section == "C" %}
+
         <div class="col-sm-1">
             {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="shipping_container ">
-                <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
+            <div id="{{ item.yard_slot }}" ondrop="drop(event)" ondragover="event.preventDefault();">
+                <img id="{{ item.cargo_ref }}" class="shipping_container-img" src="/files/paid_container.png" draggable="true" ondragstart="dragIt(event)" alt="container image cap">
                 <div class="shipping_container-img-overlay">
                     <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
                         <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
@@ -129,27 +157,27 @@
                 </div>
             </div>
             {% endif %} {% if item.status == "Custom Inspection" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %}{% if item.status == "Yard" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %} {% else %}
-            <div class="shipping_container">
+            <div id="{{ item.yard_slot }}" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
                 <div class="shipping_container-img-overlay">
                     <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
@@ -157,6 +185,7 @@
             </div>
             {% endif %}
         </div>
+
         {% endif %} {% endfor %}
     </div>
 </div>
@@ -166,41 +195,41 @@
         {% for item in items %}{% if item.yard_section == "D" %}
         <div class="col-sm-1">
             {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="shipping_container ">
-                <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-                    </a>
-                </div>
+
+            <img class="shipping_container-img" src="/files/paid_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-red text-center">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
+                </a>
+
             </div>
             {% endif %} {% if item.status == "Custom Inspection" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/custom_inspection.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %}{% if item.status == "Yard" %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
 
-                    <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                        <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                    </a>
-                </div>
+            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+
+                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
+                </a>
+
             </div>
             {% endif %} {% else %}
-            <div class="shipping_container">
-                <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-                </div>
+
+            <img class="shipping_container-img" src="/files/no_container.png" alt="container image cap">
+            <div class="shipping_container-img-overlay">
+                <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
             </div>
+
             {% endif %}
         </div>
         {% endif %} {% endfor %}

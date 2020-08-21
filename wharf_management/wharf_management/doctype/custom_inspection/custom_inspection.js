@@ -10,6 +10,9 @@ frappe.ui.form.on('Custom Inspection', {
 
         }
     },
+    on_submit: function(frm) {
+
+    },
 
     onload: function(frm) {
         frappe.call({
@@ -30,7 +33,6 @@ frappe.ui.form.on('Custom Inspection', {
                 cur_frm.set_value("yard_slot", data.message["yard_slot"]);
                 cur_frm.set_value("container_size", data.message["container_size"]);
                 cur_frm.set_value("container_type", data.message["container_type"]);
-                //cur_frm.set_value("chasis_no", data.message["chasis_no"]);
 
                 cur_frm.set_df_property("cargo_ref", "read_only", 1);
                 cur_frm.set_df_property("yard_slot", "read_only", 1);

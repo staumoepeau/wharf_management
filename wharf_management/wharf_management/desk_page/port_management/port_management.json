@@ -12,7 +12,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-08-16 23:59:34.787096",
+ "modified": "2020-08-20 21:22:58.880458",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -31,7 +31,7 @@
   {
    "label": "Paid",
    "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Paid\", \"yard_slot\": NULL}",
+   "stats_filter": "{\"status\":\"Paid\"}",
    "type": "DocType"
   },
   {
@@ -40,9 +40,22 @@
    "type": "DocType"
   },
   {
+   "color": "#ff7846",
+   "format": "{} Open",
+   "label": "Custom Inspection",
+   "link_to": "Custom Inspection",
+   "stats_filter": "{\"status\":\"Inspection\"}",
+   "type": "DocType"
+  },
+  {
    "label": "Check Cargo",
    "link_to": "Check Cargo",
    "type": "Report"
+  },
+  {
+   "label": "Yard Planner",
+   "link_to": "yard-planner",
+   "type": "Page"
   }
  ],
  "shortcuts_label": "Port Management"
