@@ -779,7 +779,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nRe-stowing\nSplit Ports\nTranshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection",
+   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nRe-stowing\nSplit Ports\nTranshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection\nInspection Delivered",
    "print_hide": 1
   },
   {
@@ -889,7 +889,7 @@
  "image_field": "file_attach",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-02 19:29:56.460047",
+ "modified": "2020-08-23 20:58:44.084792",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

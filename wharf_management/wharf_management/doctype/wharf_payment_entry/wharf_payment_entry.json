@@ -28,6 +28,7 @@
   "column_break_19",
   "who_authorized_discount",
   "column_break_21",
+  "discount_percent",
   "discount_amount",
   "data_23",
   "net_total",
@@ -330,11 +331,17 @@
    "fieldname": "set_posting_time",
    "fieldtype": "Check",
    "label": "Edit Posting Date and Time"
+  },
+  {
+   "depends_on": "eval:doc.discount==\"YES\"",
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "Discount Percentage"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-16 22:26:57.161800",
+ "modified": "2020-08-26 22:02:48.754950",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",
@@ -389,6 +396,7 @@
  ],
  "search_fields": "customer",
  "show_name_in_global_search": 1,
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "customer",

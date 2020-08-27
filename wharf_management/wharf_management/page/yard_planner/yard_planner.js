@@ -10,8 +10,6 @@ frappe.pages['yard-planner'].on_page_load = function(wrapper) {
         return frappe.ui.toolbar.clear_cache();
     }, "icon-refresh")
 
-    frappe.breadcrumbs.add("Yard Plot");
-    let pid = '';
     //page.main.html(frappe.render_template("yard_planner", {}));
 
     //   var yard = frappe.ui.form.make_control({
@@ -34,7 +32,7 @@ frappe.pages['yard-planner'].on_page_load = function(wrapper) {
     //    });
     //    yard.refresh();
     show_yard_details(me);
-}
+};
 var show_yard_details = function(me) {
     frappe.call({
         method: "wharf_management.wharf_management.page.yard_planner.yard_planner.get_items",
@@ -59,4 +57,49 @@ var show_yard_details = function(me) {
             //           }
         }
     })
+};
+
+//function called when drag starts
+function dragIt(theEvent) {
+//tell the browser what to drag
+console.log("dragStart");
+theEvent.dataTransfer.setData("Text", theEvent.target.getAttribute("id"));
 }
+
+function dropIt(theEvent) {
+console.log("Drop");
+//get a reference to the element being dragged
+var theData = theEvent.dataTransfer.getData("Text");
+//get the element
+//var theDraggedElement = document.getElementById(theData);
+//add it to the drop element
+theEvent.target.appendChild(document.getElementById(theData));
+//instruct the browser to allow the drop
+theEvent.preventDefault();
+}
+
+//function dragStart(e) {
+    // Sets the operation allowed for a drag source
+//    e.dataTransfer.effectAllowed = "move";
+
+    // Sets the value and type of the dragged data
+//    e.dataTransfer.setData("Text", e.target.getAttribute("id"));
+//}
+
+//function dragOver(e) {
+    // Prevent the browser default handling of the data
+//    e.preventDefault();
+//    e.stopPropagation();
+//}
+
+//function drop(e) {
+    // Cancel this event for everyone else
+//    e.stopPropagation();
+//    e.preventDefault();
+
+    // Retrieve the dragged data by type
+//    var data = e.dataTransfer.getData("Text");
+
+    // Append image to the drop box
+//    e.target.appendChild(document.getElementById(data));
+//}

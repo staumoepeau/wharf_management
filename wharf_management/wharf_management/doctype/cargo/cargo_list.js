@@ -27,6 +27,7 @@ frappe.listview_settings['Cargo'] = {
                 "CCV": "black",
                 "Split Ports": "black",
                 "Custom Inspection": "orange",
+                "Inspection Delivered": "lightblue",
             }[doc.status];
             return indicator;
 

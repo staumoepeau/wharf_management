@@ -10,21 +10,21 @@ from frappe.model.document import Document
 
 
 class WharfPaymentEntry(Document):
-    
+
     def on_submit(self):
         self.check_duplicate_warrant_number()
         self.check_warrant_number()
         self.update_cargo_table()
 #        self.change_status()
 
-    
+
     def update_cargo_table(self):
         frappe.db.sql("""Update `tabCargo` INNER JOIN `tabCargo References` ON
 		`tabCargo`.name = `tabCargo References`.reference_doctype
-		set payment_status = 'Closed', 
-		custom_warrant=%s, custom_code=%s, 
-		delivery_code=%s, status='Paid' 
-		where `tabCargo References`.parent=%s""", 
+		set payment_status = 'Closed',
+		custom_warrant=%s, custom_code=%s,
+		delivery_code=%s, status='Paid'
+		where `tabCargo References`.parent=%s""",
 		(self.custom_warrant, self.delivery_code, self.delivery_information, self.name))
 
     def check_warrant_number(self):
@@ -47,7 +47,7 @@ def get_storage_days(eta_date, posting_date):
 
 def get_holidays(start_date, end_date):
     holiday_list = frappe.db.get_value("Company", "Ports Authority Tonga", "default_holiday_list")
-    holidays = frappe.db.sql_list('''select holiday_date  from `tabHoliday` where 
+    holidays = frappe.db.sql_list('''select holiday_date  from `tabHoliday` where
 		    parent=%(holiday_list)s
 		    and holiday_date >= %(start_date)s
 		    and holiday_date <= %(end_date)s''', {
@@ -58,25 +58,28 @@ def get_holidays(start_date, end_date):
     holidays = [cstr(i) for i in holidays]
     return holidays
 
-@frappe.whitelist()	
+@frappe.whitelist()
 def get_storage_fees(docname):
-    return frappe.db.sql("""select docB.item_code, docA.description, 
-		Sum(docB.charged_storage_days) as qty, 
-		Sum(docB.storage_fee_price) as price, 
-		Sum(docB.charged_storage_days * docB.storage_fee_price) as total 
-		from `tabCargo References` as docB, `tabStorage Fee` as docA  
-		where docB.item_code = docA.item_name and docB.parent = %s group by docB.item_code""", (docname), as_dict=1)
+    return frappe.db.sql("""select docB.item_code, docA.description,
+		Sum(docB.charged_storage_days) as qty,
+		Sum(docB.storage_fee_price) as price,
+		Sum(docB.storage_fee) as total
+		from `tabCargo References` as docB, `tabWharf Fees` as docA
+		WHERE docB.wharfage_item_code = docA.item_name AND docB.parent = %s group by docB.item_code""", (docname), as_dict=1)
 
-@frappe.whitelist()	
+@frappe.whitelist()
 def get_wharfage_fees(docname):
-    return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price, 
-		Count(docB.name) as qty,
+    return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
+        CASE 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo") THEN CASE WHEN docB.net_weight < docB.volume THEN docB.net_weight ELSE docB.volume END
+            WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
+            WHEN docB.cargo_type = "Tank Tainers" THEN docB.litre/1000
+        END AS qty,
 		Sum(docB.wharfage_fee_price) as total
-		from `tabCargo References` as docB, `tabWharfage Fee` as docA  
+		from `tabCargo References` as docB, `tabWharf Fees` as docA
 		where docB.wharfage_item_code = docA.item_name and docB.parent = %s group by docB.wharfage_item_code""", (docname), as_dict=1)
 
 @frappe.whitelist()
 def get_total_fees(docname):
     return frappe.db.sql("""select Sum(total) as total_fee
 		from `tabWharf Fee Item` WHERE parent = %s """, (docname), as_dict=1)
-    

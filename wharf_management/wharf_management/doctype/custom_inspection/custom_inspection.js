@@ -4,13 +4,21 @@
 frappe.ui.form.on('Custom Inspection', {
 
     refresh: function(frm) {
-        if (frm.doc.status == "Deliver") {
-            frappe.set_route("List", "Cargo", "List");
-            location.reload(true);
-
-        }
+        //        if (frm.doc.status == "Delivered") {
+        //            frappe.set_route("List", "Cargo", "List");
+        //            location.reload(true);
+        //        }
     },
-    on_submit: function(frm) {
+    before_submit: function(frm) {
+        //        var me = this;
+        //        this.frm.set_value("movement", "Completed");
+        //        this.frm.set_value("status", "Delivered");
+        //        this.frm.save();
+        //       this.refresh();
+        //        if (frm.doc.status == "Delivered") {
+        //            frappe.set_route("List", "Cargo", "List");
+        //            location.reload(true);
+        //        }
 
     },
 

@@ -5,9 +5,15 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-        if (frappe.user.has_role("Cargo Operation Manager") || frappe.user.has_role("Operation Manifest User") || (frappe.user.has_role("System Manager"))) {
-
+        if (frappe.user.has_role("Cargo Operation Manager") || frappe.user.has_role("Operation Manifest User") ||
+            frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")) {
+            cur_frm.set_df_property("empty_details", "hidden", 0);
             cur_frm.set_df_property("consignee_details", "hidden", 0);
+
+            cur_frm.set_df_property("net_weight", "hidden", 0);
+            cur_frm.set_df_property("volume", "hidden", 0);
+            cur_frm.set_df_property("litre", "hidden", 0);
+            cur_frm.set_df_property("pat_code", "hidden", 0);
 
             cur_frm.set_df_property("cargo_type", "read_only", 0);
             cur_frm.set_df_property("work_type", "read_only", 0);
@@ -57,6 +63,10 @@ frappe.ui.form.on('Cargo', {
 
 
         } else {
+            cur_frm.set_df_property("net_weight", "hidden", 1);
+            cur_frm.set_df_property("volume", "hidden", 1);
+            cur_frm.set_df_property("litre", "hidden", 1);
+            cur_frm.set_df_property("pat_code", "hidden", 1);
             cur_frm.set_df_property("cargo_information", "hidden", 1);
             cur_frm.set_df_property("cargo_work_type_section", "hidden", 1);
             cur_frm.set_df_property("cargo_status", "hidden", 1);
@@ -110,6 +120,7 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("commodity_code", "read_only", 1);
             cur_frm.set_df_property("chasis_no", "read_only", 1);
             cur_frm.set_df_property("qty", "read_only", 1);
+            cur_frm.set_df_property("empty_details", "hidden", 1);
         }
 
 
@@ -118,22 +129,21 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("manifest_section", "hidden", 0);
             cur_frm.set_df_property("handling_fee", "read_only", 0);
             cur_frm.set_df_property("wharfage_fee", "read_only", 0);
+            cur_frm.set_df_property("cargo_status", "hidden", 0);
+            cur_frm.set_df_property("status_section", "read_only", 0);
+
 
 
         } else {
             cur_frm.set_df_property("manifest_section", "hidden", 1);
             cur_frm.set_df_property("handling_fee", "read_only", 1);
             cur_frm.set_df_property("wharfage_fee", "read_only", 1);
+            cur_frm.set_df_property("cargo_status", "hidden", 1);
+            cur_frm.set_df_property("status_section", "read_only", 1);
+
 
         }
 
-        if (frappe.user.has_role("Operation Manifest User") || frappe.user.has_role("System Manager")) {
-            frm.toggle_enable(['cargo_status', 'status_section', 'empty_details'], 0);
-
-        } else {
-            frm.toggle_enable(['cargo_status', 'status_section', 'empty_details'], 1);
-
-        }
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);
 
@@ -188,11 +198,9 @@ frappe.ui.form.on('Cargo', {
             )) {
             frm.add_custom_button(__('New Payment'), function() {
                 frappe.route_options = {
-
                     "payment_type": "Receive",
                     "customer": frm.doc.consignee,
-
-                    "cdt.reference_doctype": "PMSC200700205"
+                    "reference_doctype": frm.doc.name
                 }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
             }).addClass("btn-success");
@@ -204,6 +212,9 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
+
+
+
 
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
@@ -223,6 +234,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
+
             frm.add_custom_button(__('Main Gate'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name,
@@ -258,7 +270,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed" &&
-                frm.doc.status != "Custom Inspection"
+                frm.doc.status != "Inspection Delivered"
 
             )) {
             frm.add_custom_button(__('Custom Inspection'), function() {

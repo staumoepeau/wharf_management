@@ -33,7 +33,7 @@ error_report_email = "support@tongaports.to"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/wharf_management/css/wharf_management.css"
-# web_include_js = "/assets/wharf_management/js/wharf_management.js"
+web_include_js = "/assets/js/wharf_management.js"
 
 # Home Pages
 # ----------

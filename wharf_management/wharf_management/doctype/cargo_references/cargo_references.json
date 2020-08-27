@@ -11,17 +11,17 @@
   "container_size",
   "work_type",
   "column_break_7",
-  "warrant_no",
   "container_content",
   "mark",
   "chasis_no",
   "secondary_work_type",
+  "bol",
   "column_break_12",
   "eta_date",
   "voyage_no",
-  "bol",
   "net_weight",
   "volume",
+  "litre",
   "section_break_12",
   "storage_days",
   "column_break_14",
@@ -234,11 +234,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "warrant_no",
-   "fieldtype": "Data",
-   "label": "Warrant No"
-  },
-  {
    "fetch_from": "reference_doctype.bol",
    "fieldname": "bol",
    "fieldtype": "Data",
@@ -251,11 +246,18 @@
    "fieldtype": "Data",
    "label": "Voyage",
    "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.litre",
+   "fieldname": "litre",
+   "fieldtype": "Data",
+   "label": "Litre",
+   "read_only": 1
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-07-30 15:48:44.234806",
+ "modified": "2020-08-24 22:50:15.874598",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo References",
