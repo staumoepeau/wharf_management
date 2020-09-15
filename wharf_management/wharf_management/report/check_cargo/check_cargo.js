@@ -13,11 +13,24 @@ frappe.query_reports["Check Cargo"] = {
     }, ],
 
     onload: function() {
-        var me = this;
-        this.page.remove_inner_button('Menu', 'Edit')
+        //        var me = this;
+        page.add_inner_button(__("Set Test"));
 
-        //       $(`.btn:contains("Menu"):visible`).hide();
-        //        $(page.remove_inner_button('Set Chart'))
-        //        frm.remove_custom_button("Installation Note", 'Make');
-    }
+        add_chart_buttons_to_toolbar(hide);
+
+        //        frappe.query_report._get_filters_html_for_print = frappe.query_report.filters;
+
+        //        frappe.query_report.get_filters_html_for_print = print_settings => {
+        //            const me = frappe.query_report,
+        //                encode = svg => 'data:image/svg+xml;base64,' + btoa((new XMLSerializer()).serializeToString(svg));
+        //            let filters = me._get_filters_html_for_print();
+
+        //            if (me.report_summary && me.report_summary.svg) {
+        //                filters += `<hr><img alt="${__('Report Summary')}" src="${encode(me.report_summary.svg)}" />`;
+        //            }
+
+        //            return filters;
+
+        //        };
+    },
 };

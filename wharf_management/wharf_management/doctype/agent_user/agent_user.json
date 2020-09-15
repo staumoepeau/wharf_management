@@ -1,40 +1,127 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2020-08-04 11:34:11.178204",
+ "autoname": "field:full_name",
+ "creation": "2017-04-01 08:56:21.961055",
  "doctype": "DocType",
  "document_type": "Setup",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "agent_information",
+  "enabled",
+  "agent",
+  "column_break_5",
+  "phone_no",
+  "address",
+  "contact_section",
   "user",
+  "column_break_9",
   "full_name"
  ],
  "fields": [
   {
-   "fieldname": "user",
+   "fieldname": "agent_information",
+   "fieldtype": "Section Break",
+   "label": "AGENT INFORMATION"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_section",
+   "fieldtype": "Section Break",
+   "label": "User Details"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "agent.phone_no",
+   "fieldname": "phone_no",
+   "fieldtype": "Read Only",
+   "label": "Phone No"
+  },
+  {
+   "fetch_from": "agent.address",
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "agent",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "User",
-   "options": "User"
+   "label": "Shipping Agent",
+   "options": "Shipping Agency",
+   "unique": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Agent User",
+   "options": "User",
+   "unique": 1
   },
   {
    "fetch_from": "user.full_name",
    "fieldname": "full_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Full Name"
+   "fieldtype": "Read Only",
+   "label": "Full Name",
+   "unique": 1
   }
  ],
  "hide_toolbar": 1,
- "istable": 1,
  "links": [],
- "modified": "2020-08-04 12:14:33.601396",
+ "modified": "2020-09-10 06:32:14.872521",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Agent User",
+ "name_case": "UPPER CASE",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent User",
+   "share": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1,

@@ -1,0 +1,139 @@
+{
+ "actions": [],
+ "creation": "2020-09-12 20:41:39.831213",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "booking_reference_doctype",
+  "voyage_no",
+  "vessel",
+  "vessel_type",
+  "eta_date",
+  "etd_date",
+  "vessel_grt",
+  "section_break_12",
+  "item_code",
+  "grt_fee",
+  "handling_fee",
+  "berthed_fee_code",
+  "berthed_fee",
+  "working_hours"
+ ],
+ "fields": [
+  {
+   "fetch_from": "booking_reference_doctype.vessel",
+   "fieldname": "vessel",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vessel",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.vessel_type",
+   "fieldname": "vessel_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vessel Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.eta_date",
+   "fieldname": "eta_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "ETA Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.etd_date",
+   "fieldname": "etd_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "ETD Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "booking_reference_doctype.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Voyage No",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "booking_reference_doctype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Reference",
+   "options": "Booking Request",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.grt",
+   "fieldname": "vessel_grt",
+   "fieldtype": "Data",
+   "label": "Vessel GRT",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.require_amount",
+   "fieldname": "handling_fee",
+   "fieldtype": "Currency",
+   "label": "Handling Fee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.berthed_half_amount",
+   "fieldname": "berthed_fee",
+   "fieldtype": "Currency",
+   "label": "Berthed Fee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "booking_reference_doctype.working_hours",
+   "fieldname": "working_hours",
+   "fieldtype": "Data",
+   "label": "Working Hours",
+   "read_only": 1
+  },
+  {
+   "default": "CARGO HANDLING FEE",
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grt_fee",
+   "fieldtype": "Currency",
+   "label": "GRT Fee",
+   "precision": "4",
+   "read_only": 1
+  },
+  {
+   "default": "CARGO VESSEL BERTHED FEE",
+   "fieldname": "berthed_fee_code",
+   "fieldtype": "Data",
+   "label": "Berthed Fee Code",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2020-09-13 11:04:56.130874",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Booking Request References",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

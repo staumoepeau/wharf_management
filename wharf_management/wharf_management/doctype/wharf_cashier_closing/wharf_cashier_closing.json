@@ -1,0 +1,272 @@
+{
+ "actions": [],
+ "autoname": "CCV.YY.-.#####",
+ "creation": "2020-08-27 19:43:44.133057",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "section_break_2",
+  "user",
+  "column_break_3",
+  "posting_date",
+  "pos_opening_entry",
+  "cash_reconciliation_section",
+  "cash_denomination",
+  "section_break_10",
+  "column_break_7",
+  "column_break_8",
+  "total_cash",
+  "section_break_12",
+  "updates",
+  "cheque_details",
+  "section_break_14",
+  "data_1",
+  "data_15",
+  "total_cheques",
+  "gov_voucher_section",
+  "gov_voucher",
+  "section_break_22",
+  "data_22",
+  "data_23",
+  "total_voucher",
+  "section_break_11",
+  "payment_reconciliation",
+  "section_break_141",
+  "column_break_16",
+  "column_break_22",
+  "grand_total",
+  "section_break_13",
+  "get_transactions",
+  "wharf_payment_list",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pos_opening_entry",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "POS Opening Entry"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "User",
+   "fetch_from": "pos_opening_entry.user",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Cashier",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break",
+   "label": "Modes of Payment"
+  },
+  {
+   "fieldname": "payment_reconciliation",
+   "fieldtype": "Table",
+   "label": "Payment Reconciliation",
+   "options": "Wharf Payment Reconciliation"
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.docstatus==0",
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Wharf Cashier Closing",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "cash_reconciliation_section",
+   "fieldtype": "Section Break",
+   "label": "Cash Reconciliation"
+  },
+  {
+   "fieldname": "cash_denomination",
+   "fieldtype": "Table",
+   "label": "Cash Denomination",
+   "options": "Cash Denomination Table"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_cash",
+   "fieldtype": "Currency",
+   "label": "Total Cash",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cheque_details",
+   "fieldtype": "Table",
+   "label": "Cheque Details",
+   "options": "Cheque Details"
+  },
+  {
+   "fieldname": "data_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_cheques",
+   "fieldtype": "Currency",
+   "label": "Total Cheques",
+   "read_only": 1
+  },
+  {
+   "fieldname": "data_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_141",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "gov_voucher_section",
+   "fieldtype": "Section Break",
+   "label": "Gov Voucher"
+  },
+  {
+   "fieldname": "gov_voucher",
+   "fieldtype": "Table",
+   "label": "Gov Voucher",
+   "options": "Gov Voucher Table"
+  },
+  {
+   "fieldname": "data_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_voucher",
+   "fieldtype": "Currency",
+   "label": "Total Voucher",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "wharf_payment_list",
+   "fieldtype": "Table",
+   "label": "Wharf Payment List",
+   "options": "Wharf Payment Entry Reference"
+  },
+  {
+   "fieldname": "get_transactions",
+   "fieldtype": "Button",
+   "label": "Get Transactions"
+  },
+  {
+   "fieldname": "updates",
+   "fieldtype": "Button",
+   "label": "Update"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-09-04 06:09:32.127542",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Wharf Cashier Closing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Cashier",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -175,7 +175,7 @@
    "fieldname": "agents",
    "fieldtype": "Link",
    "label": "Shipping Line Angeny",
-   "options": "Agents"
+   "options": "Agent User"
   },
   {
    "fieldname": "etd_date",
@@ -698,7 +698,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-25 23:57:33.047236",
+ "modified": "2020-09-10 06:15:19.243800",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Pre Advice",

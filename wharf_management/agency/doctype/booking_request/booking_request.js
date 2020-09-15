@@ -3,63 +3,71 @@
 
 frappe.ui.form.on('Booking Request', {
 
-    setup: function(frm) {
-        frm.get_field('ship_requirements_link').grid.editable_fields = [
-            { fieldname: 'ship_requirements', columns: 2 },
-            { fieldname: 'ship_requirements_yes_no', columns: 2 },
-            { fieldname: 'ship_requirements_specify', columns: 2 }
-        ];
+    onload: function(frm) {
 
-        frm.get_field('cargo_booking_manifest_table').grid.editable_fields = [
-            { fieldname: 'cargo_type', columns: 1 },
-            { fieldname: 'container_size', columns: 1 },
-            { fieldname: 'cargo_content', columns: 1 },
-            { fieldname: 'work_type', columns: 1 },
-            { fieldname: 'qty', columns: 1 },
-            { fieldname: 'total_weight', columns: 1 }
-        ];
+        frm.set_query("user", function(doc) {
+            return {
+                filters: {
+                    'user': frappe.session.user
+                }
+            };
+        });
+    },
 
-        frm.get_field('forklift_table').grid.editable_fields = [
-            { fieldname: 'forklift_require', columns: 1 },
-            { fieldname: 'forklift_qty', columns: 1 }
-        ];
+    user: function(frm) {
+
+        frappe.call({
+            "method": "frappe.client.get",
+            args: {
+                doctype: "Agent User",
+                filters: { user: frm.doc.user }
+            },
+            callback: function(data) {
+                if (frappe.session.user == data.message["user"]) {
+                    cur_frm.set_value("agents", data.message["agent"])
+                }
+            }
+        })
 
     },
 
+    eta_date: function(frm) {
+        if (frm.doc.etd_date) {
+            calculate_working_hours(frm)
+        }
+    },
+
+    etd_date: function(frm) {
+
+        calculate_working_hours(frm)
+        calculate_berthed_half_amount(frm)
+
+    },
+
+    vessel_type: function(frm) {
+        if (frm.doc.etd_date) {
+            calculate_berthed_half_amount(frm)
+        }
+    },
+
+    berthed_half_amount: function(frm) {
+        calculate_berthed_half_amount(frm)
+    },
 
     refresh: function(frm) {
 
-        if (!frm.doc.__islocal) {
-            cur_frm.set_df_property("agents", "read_only", 1);
-            cur_frm.set_df_property("voyage_no", "read_only", 1);
-            cur_frm.set_df_property("vessel", "read_only", 1);
-            cur_frm.set_df_property("vessel_type", "read_only", 1);
+        if (((frm.doc.payment_status != "Closed")) && (frm.doc.status != "Paid") &&
+            (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
+            frm.add_custom_button(__('Payment'), function() {
 
-        }
+                frappe.route_options = {
+                    "payment_type": "Receive",
+                    "customer": frm.doc.agents,
+                    "reference_doctype": "Booking Request"
+                }
 
-        if (((frm.doc.payment_status != "Paid")) && (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("Wharf Operation Manager"))) {
-            frm.add_custom_button(__('Make Payment'), function() {
-                return frappe.call({
-                    method: "create_sales_invoices",
-                    doc: frm.doc,
-                    callback: function(sales_invoices) {
-                        frm.refresh_fields();
-                        console.log(sales_invoices);
-                        frm.reload_doc()
-                    }
-
-                });
-
-                //                frappe.route_options = {
-                //                    "booking_ref": frm.doc.name
-                //                }
-                //                frappe.new_doc("Wharf Payment Entry");
-                //                frappe.set_route("Form", "Wharf Payment Entry", doc.name);
+                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
             }).addClass("btn-success");
-            //            frappe.throw("You cannot makes changes to this item.");
-            //            frappe.set_route("List", "Booking Request");
-            //            cur_frm.refresh();
-
         }
         var Current_User = user
         if ((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) {
@@ -72,111 +80,46 @@ frappe.ui.form.on('Booking Request', {
 
             }).addClass("btn-success");
         }
-        if ((!frm.doc.security_status) && (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer"))) {
+        if ((frm.doc.security_status == "Pending") && (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer"))) {
             frm.add_custom_button(__('Security'), function() {
                 frappe.route_options = {
-                    "booking_ref": frm.doc.name
+                    "booking_ref": frm.doc.name,
+                    "voyage_no": frm.doc.voyage_no,
+                    "vessel": frm.doc.vessel,
+                    "agent": frm.doc.agents,
+                    "agent_user": frm.doc.user
                 }
-                frappe.new_doc("Security Check");
-                frappe.set_route("Form", "Security Check", doc.name);
-
-            }).addClass("btn-success");
+                frappe.set_route("Form", "Security Check", "New Security Check 1");
+            }).addClass("btn-primary");
         }
-
-
-    },
-    onload: function(frm) {
-
-        if (frappe.user.has_role("Wharf Security Supervisor") || frappe.user.has_role("Wharf Security Officer") || frappe.user.has_role("Agent User")) {
-            cur_frm.set_df_property("security_documents", "hidden", 0);
-
-        } else {
-            cur_frm.set_df_property("security_documents", "hidden", 1);
-        }
-
-        if (frappe.user.has_role("Pilot Operation Manager") || frappe.user.has_role("Pilot Operation User")) {
-
-            cur_frm.set_df_property("grt", "hidden", 0);
-
-        } else {
-            cur_frm.set_df_property("grt", "hidden", 1);
-        }
-
-        if (frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")) {
-
-            cur_frm.set_df_property("mode_of_payment", "hidden", 0);
-            cur_frm.set_df_property("paid_amount", "hidden", 0);
-
-        } else {
-            cur_frm.set_df_property("mode_of_payment", "hidden", 1);
-            cur_frm.set_df_property("paid_amount", "hidden", 1);
-        }
-        if (frm.doc.vessel_type == "Cargo") {
-            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
-            cur_frm.set_df_property("section_break_57", "hidden", 0);
-            cur_frm.set_df_property("section_break_54", "hidden", 0);
-            cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
-            cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
-        } else {
-            cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0)
-            cur_frm.set_df_property("section_break_57", "hidden", 1);
-            cur_frm.set_df_property("section_break_54", "hidden", 1);
-            cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
-            cur_frm.set_df_property("cargo_ops_start_date", "hidden", 1);
-
-        }
-
-    },
-    mode_of_payment: function(frm) {
-
-        if (frm.doc.mode_of_payment == "Credit") {
-            cur_frm.set_value("paid_amount", 0)
-        } else if (frm.doc.mode_of_payment != "Credit") {
-            cur_frm.set_value("paid_amount", frm.doc.total_amount)
-        }
-
-    },
-
-    vessel: function(frm) {
-        frappe.call({
-            "method": "frappe.client.get",
-            args: {
-                doctype: "Vessels",
-                filters: { 'name': frm.doc.vessel }
-            },
-            callback: function(data) {
-                console.log(data);
-                cur_frm.set_value("vessel_type", data.message["vessel_type"])
-                if (data.message["vessel_type"] == "Cargo") {
-                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0);
-                    cur_frm.set_df_property("section_break_57", "hidden", 0);
-                    cur_frm.set_df_property("section_break_54", "hidden", 0);
-                    cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 0);
-                    cur_frm.set_df_property("cargo_ops_start_date", "hidden", 0);
-                } else {
-                    cur_frm.set_df_property("cargo_booking_manifest_table", "hidden", 0)
-                    cur_frm.set_df_property("section_break_57", "hidden", 1);
-                    cur_frm.set_df_property("section_break_54", "hidden", 1);
-                    cur_frm.set_df_property("cargo_ops_completed_date", "hidden", 1);
-                    cur_frm.set_df_property("cargo_ops_start_date", "hidden", 1);
-
+        if ((frm.doc.status == "Paid") && (frappe.user.has_role("Pilot Operation Manager"))) {
+            frm.add_custom_button(__('Port Master'), function() {
+                frappe.route_options = {
+                    "booking_ref": frm.doc.name,
+                    "voyage_no": frm.doc.voyage_no,
+                    "vessel": frm.doc.vessel,
+                    "agent": frm.doc.agents,
+                    "agent_user": frm.doc.user
                 }
-                cur_frm.set_value("grt", data.message["vessel_gross_tonnage"])
-            }
-        })
-    },
+                frappe.set_route("Form", "Port Master", "New Port Master 1");
+            }).addClass("btn-primary");
+        }
 
+
+    },
 });
+
 
 frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, cdn) {
     var dc = locals[cdt][cdn];
-
-    if (dc.cargo_type == "Loose Cargo" || dc.cargo_type == "Heavy Vehicles" || dc.cargo_type == "Break Bulk") {
+    var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
+    if (cargo_b.includes(dc.cargo_type)) {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "Wharf Handling Fee",
+                doctype: "Wharf Fees",
                 filters: {
+                    wharf_fee_category: "Wharfage Fee",
                     cargo_type: dc.cargo_type,
                     work_type: dc.work_type
                 },
@@ -189,12 +132,14 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             }
         });
     }
-    if (dc.cargo_type == "Container" || dc.cargo_type == "Tank Tainers" || dc.cargo_type == "Flatrack") {
+    var cargo_c = ["Container", "Tank Tainers"];
+    if (cargo_c.includes(dc.cargo_type)) {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "Wharf Handling Fee",
+                doctype: "Wharf Fees",
                 filters: {
+                    wharf_fee_category: "Wharfage Fee",
                     cargo_type: dc.cargo_type,
                     container_size: dc.container_size,
                     container_content: dc.cargo_content,
@@ -209,12 +154,37 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
             }
         });
     }
+
+    if (dc.cargo_type == "Flatrack") {
+        frappe.call({
+            method: "frappe.client.get",
+            args: {
+                doctype: "Wharf Fees",
+                filters: {
+                    wharf_fee_category: "Wharfage Fee",
+                    cargo_type: dc.cargo_type,
+                    container_size: dc.container_size,
+                    container_content: dc.cargo_content,
+                    work_type: dc.work_type
+                },
+            },
+            callback: function(r) {
+                console.log(r);
+                frappe.model.set_value(dc.doctype, dc.name, "fee", r.message["fee_amount"]);
+                frappe.model.set_value(dc.doctype, dc.name, "sub_total_fee", (r.message["fee_amount"] * dc.qty));
+                calculate_total_amount(frm);
+            }
+        });
+    }
+
+
     if (dc.cargo_type == "Vehicles") {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "Wharf Handling Fee",
+                doctype: "Wharf Fees",
                 filters: {
+                    wharf_fee_category: "Wharfage Fee",
                     cargo_type: dc.cargo_type,
                     work_type: dc.work_type
                 },
@@ -244,4 +214,36 @@ var calculate_total_amount = function(frm) {
     frm.set_value("require_amount", total_fee);
     frm.set_value("total_weight_amount", total_weight_amount);
     frm.refresh_fields("total_weight_amount");
+    calculate_berthed_half_amount(frm)
+}
+
+var calculate_working_hours = function(frm) {
+
+    var total_hours = frappe.datetime.get_hour_diff(frm.doc.etd_date, frm.doc.eta_date)
+    frm.set_value("working_hours", total_hours)
+    frm.refresh_fields("working_hours")
+}
+
+var calculate_berthed_half_amount = function(frm) {
+
+    frappe.call({
+        method: "frappe.client.get",
+        args: {
+            doctype: "Wharf Fees",
+            filters: {
+                wharf_fee_category: "BERTHED Fee",
+                vessel_type: frm.doc.vessel_type,
+            },
+        },
+        callback: function(r) {
+            console.log(r);
+            frm.set_value("grt_fee", r.message["fee_amount"]);
+            frm.set_value("berthed_half_amount", ((frm.doc.working_hours * frm.doc.grt) * r.message["fee_amount"]))
+
+        }
+    });
+    if (frm.doc.require_amount) {
+        frm.set_value("total_amount", (frm.doc.berthed_half_amount + frm.doc.require_amount) / 2)
+    }
+
 }

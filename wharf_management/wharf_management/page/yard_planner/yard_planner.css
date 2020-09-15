@@ -59,7 +59,7 @@ h5,
 
 h6,
 .h6 {
-    font-size: 1rem;
+    font-size: 0.85rem;
 }
 
 img {
@@ -119,7 +119,7 @@ img {
 }
 
 .shipping_container-title {
-    margin-bottom: 0.75rem;
+    margin-top: 0.5px;
 }
 
 .text-center {
@@ -162,4 +162,43 @@ img {
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 100px;
     grid-gap: 10px;
+}
+
+.pat_container-yard {
+    float: left;
+    width: 100%;
+    height: 40px;
+    margin: 5px;
+    padding: 1px;
+    border: 1px solid blue;
+    box-shadow: 3px 3px blue;
+}
+
+.pat_container {
+    float: left;
+    width: 100%;
+    height: 40px;
+    margin: 5px;
+    padding: 1px;
+    border: 1px solid #aaaaaa;
+}
+
+.pat_container-paid {
+    float: left;
+    width: 100%;
+    height: 40px;
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid green;
+    box-shadow: 3px 3px green;
+}
+
+.pat_container-inspection {
+    float: left;
+    width: 100%;
+    height: 40px;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid green;
+    box-shadow: 3px 3px orange;
 }

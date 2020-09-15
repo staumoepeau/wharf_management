@@ -11,10 +11,23 @@ from frappe.model.document import Document
 
 class WharfPaymentEntry(Document):
 
-    def on_submit(self):
-        self.check_duplicate_warrant_number()
-        self.check_warrant_number()
-        self.update_cargo_table()
+    def on_submit(self):  
+        
+        if self.reference_doctype == "Cargo":
+            self.check_warrant_number()
+            self.check_duplicate_warrant_number()
+            self.update_cargo_table()
+        
+        if self.reference_doctype == "Booking Request":
+            self.update_booking_request()
+    
+    def update_booking_request(self):
+        frappe.db.sql("""Update `tabBooking Request` INNER JOIN `tabBooking Request References` ON
+		`tabBooking Request`.name = `tabBooking Request References`.booking_reference_doctype
+		set payment_status = 'Closed',
+		status='Paid'
+		where `tabBooking Request References`.parent=%s""",
+		(self.name))
 #        self.change_status()
 
 
@@ -59,6 +72,18 @@ def get_holidays(start_date, end_date):
     return holidays
 
 @frappe.whitelist()
+def get_booking_handling_fee(docname):
+    return frappe.db.sql("""SELECT item_code, handling_fee
+		FROM `tabBooking Request References`
+		WHERE parent = %s""", (docname), as_dict=1)
+
+@frappe.whitelist()
+def get_booking_berthed_fee(docname):
+    return frappe.db.sql("""select berthed_fee_code, berthed_fee
+		from `tabBooking Request References`
+		WHERE parent = %s""", (docname), as_dict=1)
+
+@frappe.whitelist()
 def get_storage_fees(docname):
     return frappe.db.sql("""select docB.item_code, docA.description,
 		Sum(docB.charged_storage_days) as qty,
@@ -71,11 +96,11 @@ def get_storage_fees(docname):
 def get_wharfage_fees(docname):
     return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo") THEN CASE WHEN docB.net_weight < docB.volume THEN docB.net_weight ELSE docB.volume END
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles") THEN CASE WHEN docB.net_weight > docB.volume THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
             WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
-            WHEN docB.cargo_type = "Tank Tainers" THEN docB.litre/1000
+            WHEN docB.cargo_type = "Tank Tainers" THEN Sum(docB.litre/1000)
         END AS qty,
-		Sum(docB.wharfage_fee_price) as total
+        Sum(docB.wharfage_fee) as total
 		from `tabCargo References` as docB, `tabWharf Fees` as docA
 		where docB.wharfage_item_code = docA.item_name and docB.parent = %s group by docB.wharfage_item_code""", (docname), as_dict=1)
 

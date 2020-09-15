@@ -6,7 +6,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "type_of_payment",
+  "section_break_1",
+  "barcode_image",
+  "column_break_2",
+  "barcode_svg",
+  "section_break_3",
   "company",
   "company_currency",
   "naming_series",
@@ -20,6 +24,7 @@
   "customer",
   "reference_section",
   "cargo_references_table",
+  "booking_request_table",
   "fees_section",
   "insert_fees_button",
   "wharf_fee_item",
@@ -28,13 +33,10 @@
   "column_break_19",
   "who_authorized_discount",
   "column_break_21",
-  "discount_percent",
-  "discount_amount",
-  "data_23",
   "net_total",
+  "amount_to_paid",
   "total_amount",
   "section_break_11",
-  "column_break_27",
   "section_break_28",
   "payment_method",
   "payment_amounts_section",
@@ -53,15 +55,12 @@
   "custom_warrant",
   "section_break_42",
   "status",
+  "column_break_44",
+  "section_break_45",
+  "reference_doctype",
   "amended_from"
  ],
  "fields": [
-  {
-   "fieldname": "type_of_payment",
-   "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Type of Payment"
-  },
   {
    "fieldname": "company",
    "fieldtype": "Link",
@@ -199,25 +198,11 @@
    "label": "Who Authorized Discount"
   },
   {
-   "depends_on": "eval:doc.discount==\"YES\"",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount"
-  },
-  {
-   "fieldname": "data_23",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "GRAND TOTAL",
    "read_only": 1
-  },
-  {
-   "fieldname": "column_break_27",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "total_section",
@@ -248,6 +233,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "outstanding_amount",
    "fieldtype": "Currency",
    "label": "Outstanding Amount",
@@ -275,10 +261,12 @@
   {
    "fetch_from": "delivery_code.delivery_information",
    "fieldname": "delivery_information",
-   "fieldtype": "Read Only",
-   "label": "Delivery Information"
+   "fieldtype": "Data",
+   "label": "Delivery Information",
+   "read_only": 1
   },
   {
+   "depends_on": "eval:doc.reference_doctype != \"Booking Request\"",
    "fieldname": "cargo_references_table",
    "fieldtype": "Table",
    "label": "Cargo References",
@@ -333,15 +321,61 @@
    "label": "Edit Posting Date and Time"
   },
   {
-   "depends_on": "eval:doc.discount==\"YES\"",
-   "fieldname": "discount_percent",
-   "fieldtype": "Percent",
-   "label": "Discount Percentage"
+   "fieldname": "column_break_44",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_45",
+   "fieldtype": "Section Break",
+   "label": "Doctype Reference"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Data",
+   "label": "Reference Doctype",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.reference_doctype == \"Booking Request\"",
+   "fieldname": "booking_request_table",
+   "fieldtype": "Table",
+   "label": "Booking Request References",
+   "options": "Booking Request References"
+  },
+  {
+   "fieldname": "amount_to_paid",
+   "fieldtype": "Currency",
+   "label": "AMOUNT TO PAID - 50%",
+   "read_only": 1
+  },
+  {
+   "fieldname": "barcode_image",
+   "fieldtype": "Image",
+   "label": "Barcode Image"
+  },
+  {
+   "fieldname": "barcode_svg",
+   "fieldtype": "Code",
+   "label": "Barcode SCG"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "hidden": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-26 22:02:48.754950",
+ "modified": "2020-09-14 06:45:15.752728",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",

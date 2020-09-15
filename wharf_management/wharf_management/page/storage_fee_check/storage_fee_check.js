@@ -1,61 +1,46 @@
-frappe.provide("frappe.storage-fee-check");
-frappe.pages['storage-fee-check'].on_page_load = function(wrapper) {
-    var me = this;
+frappe.pages['storage-fee-check'].on_page_load = (wrapper) => {
     var page = frappe.ui.make_app_page({
         parent: wrapper,
-        title: 'Check for Storage Fee',
+        title: __('Check for Storage Fee'),
         single_column: true
     });
 
     frappe.breadcrumbs.add("Cargo");
-    let pid = '';
-    page.main.html(frappe.render_template("storage_fee_check", {}));
-    var me = this;
-    this.cargo = frappe.ui.form.make_control({
-        df: {
-            fieldtype: "Link",
-            options: "Cargo",
-            fieldname: "cargo",
-            filters: { "status": "Yard" },
-        },
-        only_input: true,
-        parent: page.main.find(".cargo"),
-    });
-    this.cargo.make_input();
-    this.cargo.$input.on("change", function() {
-        var cargo = me.cargo.$input.val();
-        get_container_info(cargo)
-    });
 
-    this.eta = frappe.ui.form.make_control({
-        df: {
-            "fieldname": "to_date",
-            "label": __("To Date"),
-            "fieldtype": "Date",
-            "default": frappe.datetime.get_today(),
-            "reqd": 1,
-            "width": "80"
-        },
-        only_input: true,
-        parent: page.main.find(".date"),
-    });
-    this.cargo.make_input();
-    this.cargo.$input.on("change", function() {
-        var cargo = me.cargo.$input.val();
-        get_container_info(cargo)
-    });
+    $("<div class='storagefee-engine' style='min-height: 200px; padding: 15px;'></div>").appendTo(page.main);
+    $(frappe.render_template("storage-fee-check", {})).appendTo(page.main);
+    wrapper.storagefee_engine = new frappe.StoragefeeEngine(wrapper);
 };
 
-var get_container_info = function(cargo, me) {
-    frappe.call({
-        "method": "wharf_management.wharf_management.page.storage_fee_check.storage_fee_check.get_container_info",
-        args: {
-            "cargo_ref": cargo,
-        },
-        callback: function(r) {
-            var data = r.message;
-            console(data)
-            parent: page.main.find(".cargo_details")
-        }
-    });
-}
+frappe.pages['storage-fee-check'].refresh = function(wrapper) {
+    wrapper.storagefee_engine.set_from_route();
+};
+
+frappe.StoragefeeEngine = Class.extend({
+
+    init: function(wrapper) {
+        this.wrapper = wrapper;
+        this.page = wrapper.page;
+        this.body = $(this.wrapper).find(".storagefee-engine");
+        this.setup_page();
+
+    },
+
+    setup_page: function() {
+        var me = this;
+        this.doctype_select = this.wrapper.page.add_select(__("Cargo"), [{ value: "", label: __("Select Cargo") + "..." }].concat(this.options.cargo))
+            .change(function() {
+                frappe.set_route("storage-fee-check", $(this).val());
+            });
+        //        this.role_select = this.wrapper.page.add_select(__("Roles"), [__("Select Role") + "..."].concat(this.options.roles))
+        //            .change(function() {
+        //                me.refresh();
+        //            });
+
+        //        this.page.add_inner_button(__('Set User Permissions'), () => {
+        //            return frappe.set_route('List', 'User Permission');
+        //        });
+        //        this.set_from_route();
+    },
+
+});

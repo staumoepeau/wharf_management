@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "field:item_name",
  "creation": "2020-08-26 06:29:17.269044",
  "description": "Handling of Containers, Break bulk and Motor Vehicles (from wharf apron to stacking area and vice versa)",
@@ -10,9 +11,12 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "item_code",
+  "column_break_3",
   "item_name",
   "section_break_3",
   "wharf_fee_category",
+  "vessel_type",
   "cargo_type",
   "grace_days",
   "data_2",
@@ -95,7 +99,8 @@
    "fieldname": "fee_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Amount"
+   "label": "Amount",
+   "precision": "4"
   },
   {
    "fieldname": "data_4",
@@ -116,10 +121,26 @@
    "in_standard_filter": 1,
    "label": "Work Type",
    "options": "Work Type"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vessel_type",
+   "fieldtype": "Link",
+   "label": "Vessel Type",
+   "options": "Vessel Type"
   }
  ],
  "links": [],
- "modified": "2020-08-26 20:21:29.401466",
+ "modified": "2020-09-13 02:44:22.989529",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fees",
@@ -137,6 +158,24 @@
    "role": "Wharf Operation Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Cashier",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent User",
+   "share": 1
   }
  ],
  "search_fields": "item_name",

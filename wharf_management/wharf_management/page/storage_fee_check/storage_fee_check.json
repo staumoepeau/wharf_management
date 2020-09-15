@@ -4,14 +4,24 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2020-08-02 20:53:19.281723",
+ "modified": "2020-09-11 18:49:57.049181",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "storage-fee-check",
  "owner": "Administrator",
  "page_name": "storage-fee-check",
  "restrict_to_domain": "Services",
- "roles": [],
+ "roles": [
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Wharf Operation Manifest User"
+  },
+  {
+   "role": "Agent User"
+  }
+ ],
  "script": null,
  "standard": "Yes",
  "style": null,

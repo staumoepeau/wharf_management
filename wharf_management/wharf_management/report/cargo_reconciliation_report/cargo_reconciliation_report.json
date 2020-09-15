@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "creation": "2020-09-09 20:07:40.662512",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Ports Authority Tonga",
+ "modified": "2020-09-09 20:45:50.133694",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo Reconciliation Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Cargo",
+ "report_name": "Cargo Reconciliation Report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Wharf Operation User"
+  },
+  {
+   "role": "Cargo Operation User"
+  },
+  {
+   "role": "Wharf Operation Cashier"
+  },
+  {
+   "role": "Wharf Operation Manifest User"
+  }
+ ]
+}

@@ -86,6 +86,8 @@
   "secondary_work_type",
   "work_type_break",
   "additional_work",
+  "column_break_79",
+  "last_work",
   "section_break_44",
   "cargo_description",
   "section_break_30",
@@ -124,15 +126,18 @@
   "final_work_type",
   "yard_slot_1",
   "column_break_93",
-  "bulk_payment",
-  "yard_slot_2",
-  "column_break_96",
-  "bulk_payment_code",
   "custom_inspection_status",
+  "yard_slot_2",
   "gate_section",
   "gate1_in",
   "column_break_112",
   "maingate_in",
+  "stock_reconciliation_section",
+  "stock_count",
+  "column_break_125",
+  "stock_take_by",
+  "column_break_127",
+  "stock_date",
   "amended_from"
  ],
  "fields": [
@@ -289,7 +294,7 @@
    "fieldname": "agents",
    "fieldtype": "Link",
    "label": "Shipping Line Angeny",
-   "options": "Agents"
+   "options": "Shipping Agency"
   },
   {
    "allow_in_quick_entry": 1,
@@ -592,7 +597,7 @@
    "allow_on_submit": 1,
    "fieldname": "secondary_work_type",
    "fieldtype": "Link",
-   "label": "Secondary",
+   "label": "Secondary Work",
    "options": "Work Type"
   },
   {
@@ -600,9 +605,11 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "additional_work",
-   "fieldtype": "Data",
-   "label": "Additional Work"
+   "fieldtype": "Link",
+   "label": "Additional Work",
+   "options": "Work Type"
   },
   {
    "fieldname": "section_break_44",
@@ -621,6 +628,7 @@
    "label": "CUSTOM DETAILS"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "custom_warrant",
    "fieldtype": "Data",
    "label": "Custom Warrant"
@@ -820,23 +828,9 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "bulk_payment",
-   "fieldtype": "Data",
-   "label": "Bulk Payment"
-  },
-  {
    "fieldname": "yard_slot_2",
    "fieldtype": "Data",
    "label": "Yard Slot 2"
-  },
-  {
-   "fieldname": "column_break_96",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "bulk_payment_code",
-   "fieldtype": "Data",
-   "label": "Bulk Payment Code"
   },
   {
    "fieldname": "custom_inspection_status",
@@ -884,12 +878,53 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "PMSC.YY.MM.#####"
+  },
+  {
+   "fieldname": "stock_reconciliation_section",
+   "fieldtype": "Section Break",
+   "label": "Stock Reconciliation"
+  },
+  {
+   "default": "0",
+   "fieldname": "stock_count",
+   "fieldtype": "Check",
+   "label": "Stock Count"
+  },
+  {
+   "fieldname": "column_break_125",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "stock_date",
+   "fieldtype": "Date",
+   "label": "Stock Date"
+  },
+  {
+   "fieldname": "stock_take_by",
+   "fieldtype": "Link",
+   "label": "Stock Take By",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_127",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_79",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "last_work",
+   "fieldtype": "Link",
+   "label": "Last Work",
+   "options": "Work Type"
   }
  ],
  "image_field": "file_attach",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-23 20:58:44.084792",
+ "modified": "2020-09-11 17:03:12.390092",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
@@ -944,6 +979,16 @@
    "report": 1,
    "role": "Yard Operation User",
    "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent User",
+   "share": 1,
+   "write": 1
   }
  ],
  "route": "cargo",

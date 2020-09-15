@@ -36,31 +36,6 @@ frappe.ui.form.on('Cargo', {
             cur_frm.set_df_property("gate1_in", "read_only", 0);
 
 
-            //            cur_frm.set_df_property("etd_date", "read_only", 0);
-            //            cur_frm.set_df_property("pol", "read_only", 0);
-            //            cur_frm.set_df_property("pod", "read_only", 0);
-            //            cur_frm.set_df_property("final_dest_port", "read_only", 0);
-            //            cur_frm.set_df_property("consignee", "read_only", 0);
-            //            cur_frm.set_df_property("master_bol", "read_only", 0);
-            //            cur_frm.set_df_property("bol", "read_only", 0);
-            //            cur_frm.set_df_property("last_port", "read_only", 0);
-            //            cur_frm.set_df_property("container_size", "read_only", 0);
-            //            cur_frm.set_df_property("container_content", "read_only", 0);
-            //            cur_frm.set_df_property("net_weight", "read_only", 0);
-            //            cur_frm.set_df_property("seal_1", "read_only", 0);
-            //            cur_frm.set_df_property("container_no", "read_only", 0);
-
-            //            cur_frm.set_df_property("pat_code", "read_only", 0);
-            //            cur_frm.set_df_property("volume", "read_only", 0);
-            //            cur_frm.set_df_property("seal_2", "read_only", 0);
-            //            cur_frm.set_df_property("mark", "read_only", 0);
-            //            cur_frm.set_df_property("container_type", "read_only", 0);
-            //            cur_frm.set_df_property("yard_slot", "read_only", 0);
-            //            cur_frm.set_df_property("temperature", "read_only", 0);
-            //            cur_frm.set_df_property("commodity_code", "read_only", 0);
-            //            cur_frm.set_df_property("chasis_no", "read_only", 0);
-            //            cur_frm.set_df_property("qty", "read_only", 0);
-
 
         } else {
             cur_frm.set_df_property("net_weight", "hidden", 1);
@@ -164,18 +139,6 @@ frappe.ui.form.on('Cargo', {
     },
 
     refresh: function(frm) {
-        //        cur_frm.add_fetch('container_type', 'size', 'container_size');
-        //        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
-        //        cur_frm.add_fetch('vessel', 'vessel_type', 'vessel_type');
-        //        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
-        //        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
-        //        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
-        //        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
-        //        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
-        //        cur_frm.add_fetch('booking_ref', 'pol', 'pol');
-        //        cur_frm.add_fetch('booking_ref', 'pod', 'pod');
-        //        cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
-
 
         if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
@@ -200,7 +163,7 @@ frappe.ui.form.on('Cargo', {
                 frappe.route_options = {
                     "payment_type": "Receive",
                     "customer": frm.doc.consignee,
-                    "reference_doctype": frm.doc.name
+                    "reference_doctype": "Cargo"
                 }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
             }).addClass("btn-success");

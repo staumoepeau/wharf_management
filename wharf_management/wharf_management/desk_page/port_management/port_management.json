@@ -2,14 +2,49 @@
  "cards": [
   {
    "hidden": 0,
+   "label": "Cargo Operation",
+   "links": "[\n    {\n        \"description\": \"Pre Advise\",\n        \"label\": \"Pre Advise\",\n        \"name\": \"Pre Advice\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cargo\",\n        \"label\": \"Cargo\",\n        \"name\": \"Cargo\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cargo Manifest\",\n        \"label\": \"Cargo Manifest\",\n        \"name\": \"Cargo Manifest\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cargo Operation Planning\",\n        \"label\": \"Cargo Operation Planning\",\n        \"name\": \"Cargo Operation Planning\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Cargo Payment",
+   "links": "[\n    {\n        \"description\": \"Cargo Payment\",\n        \"label\": \"Cargo Payment\",\n        \"name\": \"Wharf Payment Entry\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cashier Closing Voucher\",\n        \"label\": \"Cashier Closing Voucher\",\n        \"name\": \"Wharf Cashier Closing\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]\n\n"
+  },
+  {
+   "hidden": 0,
+   "label": "Cargo Stock",
+   "links": "[\n    {\n        \"description\": \"Cargo Stock Reconciliation\",\n        \"label\": \"Cargo Stock Reconciliation\",\n        \"name\": \"Cargo Stock Reconciliation\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"dependencies\": [\n            \"Cargo\"\n        ],\n        \"doctype\": \"Cargo\",\n        \"is_query_report\": true,\n        \"label\": \"Cargo Reconciliation Report\",\n        \"name\": \"Cargo Reconciliation Report\",\n        \"type\": \"report\"\n    }\n]\n"
+  },
+  {
+   "hidden": 0,
+   "label": "Warehouse",
+   "links": "[\n    {\n        \"description\": \"Cargo Warehouse\",\n        \"label\": \"Cargo Warehouse\",\n        \"name\": \"Cargo Warehouse\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Inspection\",\n        \"label\": \"Warehouse Inspection\",\n        \"name\": \"Warehouse Inspection\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Shipping Agency",
+   "links": "[\n    {\n        \"description\": \"Booking Request\",\n        \"label\": \"Shipping Booking Request\",\n        \"name\": \"Booking Request\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
    "label": "Settings",
-   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Setup",
+   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Reports",
+   "links": "[\n    {\n        \"dependencies\": [\n            \"Booking Request\"\n        ],\n        \"doctype\": \"Vessels Report\",\n        \"is_query_report\": true,\n        \"label\": \"Vessels Report\",\n        \"name\": \"Vessels Report\",\n        \"type\": \"report\"\n    }\n]"
   }
  ],
  "category": "Modules",
  "charts": [],
  "creation": "2020-07-26 00:16:45.337613",
- "developer_mode_only": 1,
+ "developer_mode_only": 0,
  "disable_user_customization": 1,
  "docstatus": 0,
  "doctype": "Desk Page",
@@ -18,7 +53,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-08-26 19:41:07.717820",
+ "modified": "2020-09-14 17:53:02.729222",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -28,40 +63,110 @@
  "shortcuts": [
   {
    "color": "#4d4da8",
-   "format": "{} Yard",
-   "label": "Yard",
+   "format": "{}",
+   "icon": "",
+   "label": "Cargo at the Yard",
    "link_to": "Cargo",
    "stats_filter": "{\"status\":\"Yard\"}",
    "type": "DocType"
   },
   {
-   "label": "Paid",
+   "color": "#428b46",
+   "icon": "fa fa-money",
+   "label": "Cargo Already Paid",
    "link_to": "Cargo",
    "stats_filter": "{\"status\":\"Paid\"}",
    "type": "DocType"
   },
   {
+   "color": "#5e3aa8",
+   "format": "{}",
    "label": "Booked",
    "link_to": "Pre Advice",
+   "stats_filter": "{\"status\": \"Booked\"}",
    "type": "DocType"
   },
   {
-   "color": "#ff7846",
-   "format": "{} Open",
+   "color": "#ffb868",
+   "format": "{} To Deliver",
+   "icon": "fa  fa-check-circle",
    "label": "Custom Inspection",
    "link_to": "Custom Inspection",
    "stats_filter": "{\"status\":\"Inspection\"}",
    "type": "DocType"
   },
   {
+   "color": "#7575ff",
+   "format": "{}",
+   "icon": "fa fa-cube",
+   "label": " 20\" FULL Yard",
+   "link_to": "Cargo",
+   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#428b46",
+   "format": "{}",
+   "icon": "fa fa-cube",
+   "label": "20\" FULL Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#5e3aa8",
+   "format": "{}",
+   "icon": "octicon octicon-package",
+   "label": "40\" FULL Yard",
+   "link_to": "Cargo",
+   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#428b46",
+   "format": "{}",
+   "icon": "octicon octicon-package",
+   "label": "40\" FULL Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#fff168",
+   "icon": "fa fa-car",
+   "label": "Vehilces Yard",
+   "link_to": "Cargo",
+   "stats_filter": "{\"cargo_type\":\"Vehicles\", \"status\": \"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#428b46",
+   "icon": "fa fa-car",
+   "label": "Vehicles Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"cargo_type\":\"Vehicles\", \"status\": \"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "icon": "fa fa-check-square-o",
    "label": "Check Cargo",
    "link_to": "Check Cargo",
    "type": "Report"
   },
   {
+   "icon": "fa fa-braille",
    "label": "Yard Planner",
    "link_to": "yard-planner",
    "type": "Page"
+  },
+  {
+   "color": "#ff4d4d",
+   "format": "{}",
+   "icon": "fa fa-calendar",
+   "label": "Shipping Agency Booking",
+   "link_to": "Booking Request",
+   "stats_filter": "{\"status\":\"Pending\"}",
+   "type": "DocType"
   }
  ],
  "shortcuts_label": "Port Management"

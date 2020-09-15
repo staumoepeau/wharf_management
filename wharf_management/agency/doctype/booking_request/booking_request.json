@@ -8,30 +8,29 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "compnay",
-  "booking_request",
   "naming_series",
+  "booking_request",
+  "compnay",
   "title",
   "column_break_4",
   "status",
-  "payment",
-  "mode_of_payment",
-  "paid_amount",
-  "payment_break",
-  "cheque_no",
-  "cheque_date",
+  "section_break_13",
+  "user",
+  "agents",
+  "column_break_16",
+  "booking_date",
+  "total_amount",
   "section_break_8",
   "berthed_half_amount",
   "require_amount",
   "column_break_10",
-  "total_amount",
   "working_hours",
+  "grt_fee",
   "basic_information",
-  "agents",
+  "vessel",
   "vessel_type",
   "column_break_9",
   "voyage_no",
-  "vessel",
   "grt",
   "section_break_12",
   "pol",
@@ -52,11 +51,9 @@
   "lines_boat_date",
   "section_break_22",
   "tugboat_standby_date",
-  "column_break_20",
   "ship_clearance_date",
-  "column_break_23",
+  "column_break_20",
   "cargo_ops_start_date",
-  "column_break_26",
   "cargo_ops_completed_date",
   "section_break_29",
   "ship_clearance",
@@ -86,7 +83,7 @@
   "other_requirement_section",
   "other_requirements",
   "section_break_67",
-  "comments",
+  "security_comment",
   "security_documents",
   "form_a",
   "form_c",
@@ -94,10 +91,12 @@
   "security_column_break",
   "form_b",
   "form_d",
-  "securitycheck",
+  "port_master_and_security",
   "security_status",
+  "port_master_status",
   "column_break_76",
-  "reject_comments",
+  "security_comments",
+  "port_master_comments",
   "status_section",
   "payment_status",
   "old_eta_values",
@@ -112,7 +111,6 @@
   {
    "fieldname": "compnay",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Company",
    "options": "Company",
    "read_only": 1
@@ -124,6 +122,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "options": "PMSB.YY.MM.######",
    "read_only": 1
@@ -139,44 +138,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
    "options": "Pending\nSecurity Check\nPaid\nPort Master Approved\nRejected by Security\nRejected by Port Master",
    "read_only": 1
-  },
-  {
-   "fieldname": "payment",
-   "fieldtype": "Section Break",
-   "label": "Payment"
-  },
-  {
-   "fieldname": "mode_of_payment",
-   "fieldtype": "Link",
-   "label": "Mode of Payment",
-   "options": "Mode of Payment"
-  },
-  {
-   "fieldname": "paid_amount",
-   "fieldtype": "Currency",
-   "label": "Paid Amount"
-  },
-  {
-   "fieldname": "payment_break",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.mode_of_payment==\"Cheque\"",
-   "fieldname": "cheque_no",
-   "fieldtype": "Data",
-   "label": "Cheque No"
-  },
-  {
-   "depends_on": "eval:doc.mode_of_payment==\"Cheque\"",
-   "fieldname": "cheque_date",
-   "fieldtype": "Date",
-   "label": "Cheque Date"
   },
   {
    "fieldname": "section_break_8",
@@ -202,12 +170,12 @@
    "bold": 1,
    "fieldname": "total_amount",
    "fieldtype": "Currency",
-   "label": "HALF TOTAL AMOUNT",
+   "label": "AMOUNT TO PAID",
    "read_only": 1
   },
   {
    "fieldname": "working_hours",
-   "fieldtype": "Data",
+   "fieldtype": "Read Only",
    "label": "Hours"
   },
   {
@@ -217,19 +185,17 @@
   },
   {
    "fieldname": "agents",
-   "fieldtype": "Link",
+   "fieldtype": "Read Only",
    "in_filter": 1,
    "in_global_search": 1,
    "in_standard_filter": 1,
-   "label": "Agency",
-   "options": "Agents",
-   "reqd": 1
+   "label": "Agency"
   },
   {
+   "fetch_from": "vessel.vessel_type",
    "fieldname": "vessel_type",
-   "fieldtype": "Link",
+   "fieldtype": "Read Only",
    "label": "Vessel Type",
-   "options": "Vessel Type",
    "read_only": 1
   },
   {
@@ -258,8 +224,9 @@
    "reqd": 1
   },
   {
+   "fetch_from": "vessel.vessel_gross_tonnage",
    "fieldname": "grt",
-   "fieldtype": "Data",
+   "fieldtype": "Read Only",
    "hidden": 1,
    "label": "GRT",
    "read_only": 1
@@ -375,21 +342,13 @@
    "label": "Ship Clearance Date"
   },
   {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.vessel_type==\"Cargo\"",
+   "depends_on": "eval:doc.vessel_type==\"CARGO\"",
    "fieldname": "cargo_ops_start_date",
    "fieldtype": "Datetime",
    "label": "Cargo Ops Start Date"
   },
   {
-   "fieldname": "column_break_26",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.vessel_type==\"Cargo\"",
+   "depends_on": "eval:doc.vessel_type==\"CARGO\"",
    "fieldname": "cargo_ops_completed_date",
    "fieldtype": "Datetime",
    "label": "Cargo Ops Completed Date"
@@ -468,14 +427,14 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.vessel_type==\"Cargo\"",
+   "depends_on": "eval:doc.vessel_type==\"CARGO\"",
    "fieldname": "total_required_amount",
    "fieldtype": "Currency",
    "label": "TOTAL REQUIRED AMOUNT",
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.vessel_type==\"Cargo\"",
+   "depends_on": "eval:doc.vessel_type==\"CARGO\"",
    "fieldname": "total_weight_amount",
    "fieldtype": "Data",
    "label": "TOTAL WEIGHT",
@@ -537,26 +496,24 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "comments",
-   "fieldtype": "Small Text",
-   "label": "Comments"
-  },
-  {
    "fieldname": "security_documents",
    "fieldtype": "Section Break",
    "label": "SECURITY DOCUMENTS"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "form_a",
    "fieldtype": "Attach",
    "label": "PAT Maritime Security Form"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "form_c",
    "fieldtype": "Attach",
    "label": "Ports of Call"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "form_e",
    "fieldtype": "Attach",
    "label": "Dangerous Goods"
@@ -566,25 +523,29 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "form_b",
    "fieldtype": "Attach",
    "label": "Crew/Passenger List"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "form_d",
    "fieldtype": "Attach",
    "label": "Health Declaration"
   },
   {
-   "fieldname": "securitycheck",
-   "fieldtype": "Section Break",
-   "label": "SECURITY CHECK"
-  },
-  {
+   "allow_in_quick_entry": 1,
+   "allow_on_submit": 1,
+   "default": "Pending",
    "fieldname": "security_status",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Security Status",
-   "options": "\nCheck\nReject",
+   "options": "\nPending\nChecked\nReject",
    "read_only": 1
   },
   {
@@ -592,21 +553,17 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "reject_comments",
-   "fieldtype": "Data",
-   "label": "Comments",
-   "read_only": 1
-  },
-  {
    "fieldname": "status_section",
    "fieldtype": "Section Break",
    "label": "Status Section"
   },
   {
+   "default": "Open",
    "fieldname": "payment_status",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "hidden": 1,
-   "label": "Payment Status"
+   "label": "Payment Status",
+   "options": "\nOpen\nClosed"
   },
   {
    "fieldname": "old_eta_values",
@@ -646,12 +603,74 @@
    "options": "Booking Request",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "User",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "security_comment",
+   "fieldtype": "Small Text",
+   "label": "Security Comments"
+  },
+  {
+   "fieldname": "grt_fee",
+   "fieldtype": "Currency",
+   "label": "GRT Fee",
+   "precision": "4",
+   "read_only": 1
+  },
+  {
+   "fieldname": "port_master_and_security",
+   "fieldtype": "Section Break",
+   "label": "SECURITY  & PORT MASTER"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Pending",
+   "fieldname": "port_master_status",
+   "fieldtype": "Select",
+   "label": "Port Master Status",
+   "options": "\nPending\nChecked\nReject",
+   "read_only": 1
+  },
+  {
+   "fieldname": "security_comments",
+   "fieldtype": "Small Text",
+   "label": "Security Comments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "port_master_comments",
+   "fieldtype": "Small Text",
+   "label": "Port Master Comments"
   }
  ],
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-25 03:32:30.602500",
+ "modified": "2020-09-15 05:25:56.787772",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Booking Request",
@@ -693,15 +712,6 @@
    "write": 1
   },
   {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1
-  },
-  {
    "amend": 1,
    "cancel": 1,
    "create": 1,
@@ -718,18 +728,13 @@
    "write": 1
   },
   {
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Pilot Operation Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
+   "share": 1
   },
   {
    "create": 1,

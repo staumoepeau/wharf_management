@@ -36,10 +36,10 @@
    "bold": 1,
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "options": "STK-YY.#####",
    "print_hide": 1,
-   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -94,7 +94,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-03 08:56:02.606860",
+ "modified": "2020-09-09 07:23:25.893519",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Stock Reconciliation",
