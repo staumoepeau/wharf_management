@@ -33,12 +33,22 @@
   {
    "hidden": 0,
    "label": "Setup",
-   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Self Analytics\",\n        \"label\": \"Self Analytics\",\n        \"name\": \"Self Analytics\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
    "label": "Reports",
-   "links": "[\n    {\n        \"dependencies\": [\n            \"Booking Request\"\n        ],\n        \"doctype\": \"Vessels Report\",\n        \"is_query_report\": true,\n        \"label\": \"Vessels Report\",\n        \"name\": \"Vessels Report\",\n        \"type\": \"report\"\n    }\n]"
+   "links": "[\n    {\n        \"dependencies\": [\n            \"Cargo Movement\"\n        ],\n        \"doctype\": \"Cargo Movement\",\n        \"is_query_report\": true,\n        \"label\": \"Cargo Movement Report\",\n        \"name\": \"Cargo Movement\",\n        \"type\": \"report\"\n        \n    },\n    {\n        \"dependencies\": [\n            \"Booking Request\"\n        ],\n        \"doctype\": \"Vessels Report\",\n        \"is_query_report\": true,\n        \"label\": \"Vessels Report\",\n        \"name\": \"Vessels Report\",\n        \"type\": \"report\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Transaction History",
+   "links": "[\n    {\n        \"description\": \"Pre Advise History\",\n        \"label\": \"Pre Advise History\",\n        \"name\": \"Pre Advise History\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Security",
+   "links": "[\n    {\n        \"description\": \"GATE 1\",\n        \"label\": \"GATE 1\",\n        \"name\": \"Gate1\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 2\",\n        \"label\": \"GATE 2\",\n        \"name\": \"Gate2\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   }
  ],
  "category": "Modules",
@@ -53,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-09-14 17:53:02.729222",
+ "modified": "2020-09-23 11:12:53.024935",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -166,6 +176,15 @@
    "label": "Shipping Agency Booking",
    "link_to": "Booking Request",
    "stats_filter": "{\"status\":\"Pending\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#49937e",
+   "format": "",
+   "icon": "fa fa-lock",
+   "label": "Security Gate 1",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
    "type": "DocType"
   }
  ],

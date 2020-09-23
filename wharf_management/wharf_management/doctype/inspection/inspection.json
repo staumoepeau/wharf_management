@@ -7,6 +7,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "booking_ref",
   "cargo_ref",
   "vessel",
   "last_port",
@@ -37,14 +38,17 @@
   "file_attach_03",
   "data_16",
   "cargo_condition",
+  "section_break_31",
+  "work_information",
+  "section_break_33",
   "qty",
   "amended_from"
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "cargo_ref",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Cargo Refrence"
   },
   {
@@ -211,20 +215,66 @@
    "options": "Inspection",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_31",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "work_information",
+   "fieldtype": "Data",
+   "label": "Work Information"
+  },
+  {
+   "fieldname": "section_break_33",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "booking_ref",
+   "fieldtype": "Data",
+   "label": "Booking Reference",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-26 00:02:45.263385",
+ "modified": "2020-09-23 14:24:00.064655",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Inspection",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -243,31 +293,6 @@
    "read": 1,
    "report": 1,
    "role": "Yard Inspection User",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation Manager",
    "share": 1,
    "submit": 1,
    "write": 1

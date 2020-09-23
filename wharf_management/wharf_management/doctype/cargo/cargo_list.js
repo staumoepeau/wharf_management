@@ -39,5 +39,20 @@ frappe.listview_settings['Cargo'] = {
             }[doc.container_content];
             return indicator;
         }
+    },
+    refresh: function(frm) {
+
+        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor',
+                'Yard Inspection User')) {
+
+            frm.page.sidebar.hide(); // this removes the sidebar
+            $(".timeline").hide()
+            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        }
+        if (frappe.user.has_role("System Manager", "Operation Manifest User")) {
+            frm.page.sidebar.show(); // this removes the sidebar
+            $(".timeline").show()
+            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+        }
     }
 };

@@ -62,7 +62,7 @@
  ],
  "hide_toolbar": 1,
  "links": [],
- "modified": "2020-09-10 06:26:06.255412",
+ "modified": "2020-09-19 09:17:38.172074",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Shipping Agency",
@@ -99,6 +99,15 @@
    "read": 1,
    "report": 1,
    "role": "Agent User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
    "share": 1
   }
  ],

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "field:work_type",
  "creation": "2017-04-01 09:11:44.267842",
  "doctype": "DocType",
@@ -21,9 +22,13 @@
    "unique": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "default": "0",
    "fieldname": "work_type_enable",
    "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Enable"
   },
   {
@@ -35,7 +40,7 @@
  ],
  "hide_toolbar": 1,
  "links": [],
- "modified": "2020-08-03 09:52:26.017562",
+ "modified": "2020-09-17 07:35:20.721915",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Work Type",

@@ -28,15 +28,17 @@ class Gate2(Document):
 #			frappe.db.sql("""Delete `tabCargo` where name=%s""", (self.cargo_ref))
 			
 	def update_empty_containers_movement(self):		
-		frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content="EMPTY", main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s 
-		where refrence=%s""", (self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+		frappe.db.sql("""UPDATE `tabCargo Movement` 
+		SET main_gate_status='OUT', main_gate_content="EMPTY", 
+		main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s 
+		WHERE refrence=%s""", (self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
 
-		frappe.db.sql("""Update `tabEmpty Containers` set gate1_date=%s, status='OUT' where name=%s""", (self.modified, self.cargo_ref))
+		frappe.db.sql("""UPDATE `tabEmpty Containers` SET gate1_date=%s, status='OUT' WHERE name=%s""", (self.modified, self.cargo_ref))
 
 
 	def update_cargo_movement(self):
 
-		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","custom_code"], as_dict=True)
+#		val = frappe.db.get_value("Cargo", {"name": self.cargo_ref}, ["pat_code","cargo_type","container_no","custom_code"], as_dict=True)
 
 		if self.custom_code == "MTY" or self.custom_code == "DLWS" or self.custom_code == "DDLW":
 			gate_content = "EMPTY"
@@ -44,14 +46,23 @@ class Gate2(Document):
 			gate_content = "FULL"
 		
 		if self.cargo_type in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
-			vals = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no}, ["refrence"], as_dict=True)
+			vals = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no, "cargo_ref": self.cargo_ref}, ["refrence"], as_dict=True)
 
 			if not vals.refrence:
-				frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where container_no=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.container_no))
+				frappe.db.sql("""UPDATE `tabCargo Movement` 
+				SET main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, 
+				truck=%s, truck_driver=%s WHERE container_no=%s""", 
+				(gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.container_no))
 		
 			if vals.refrence:
-				frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+				frappe.db.sql("""UPDATE `tabCargo Movement` 
+				SET main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, 
+				truck=%s, truck_driver=%s WHERE refrence=%s""", 
+				(gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
 		
 		if self.cargo_type not in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
-			frappe.db.sql("""Update `tabCargo Movement` set main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, truck=%s, truck_driver=%s where refrence=%s""", (gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+			frappe.db.sql("""UPDATE `tabCargo Movement` 
+			SET main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, 
+			main_gate_time=%s, truck=%s, truck_driver=%s WHERE refrence=%s""", 
+			(gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
 		

@@ -33,7 +33,7 @@ def get_columns():
 		_("Efficiency") + ":Time:130"
 #		_("Warrant No") + ":Data:90",
 #		_("Consignee") + ":Data:120",
-#		_("Agents") + ":Data:120",
+#		_("Shipping Agency") + ":Data:120",
 #		_("Chasis No") + ":Data:120",
 #		_("Mark") + ":Data:60",
 #		_("Gate 1 Status") + ":Data:110",

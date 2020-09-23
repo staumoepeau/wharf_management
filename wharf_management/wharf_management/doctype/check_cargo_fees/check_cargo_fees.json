@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "creation": "2020-09-18 06:11:33.676060",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cargo_ref",
+  "column_break_2",
+  "container_no",
+  "chassis_no",
+  "mark",
+  "cargo_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "cargo_ref",
+   "fieldtype": "Link",
+   "label": "Cargo",
+   "options": "Cargo"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.cargo_type == \"Container\"",
+   "fetch_from": "cargo_ref.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "label": "Container No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_ref.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cargo Type",
+   "options": "Cargo Type"
+  },
+  {
+   "depends_on": "eval:doc.cargo_type == \"Vehicle\"",
+   "fetch_from": "cargo_ref.chasis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_ref.mark",
+   "fieldname": "mark",
+   "fieldtype": "Data",
+   "label": "Mark",
+   "read_only": 1
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2020-09-18 06:30:57.489858",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Check Cargo Fees",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

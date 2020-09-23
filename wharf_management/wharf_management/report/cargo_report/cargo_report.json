@@ -8,7 +8,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letter_head": "Ports Authority Tonga",
- "modified": "2019-11-04 08:47:23.073132",
+ "modified": "2020-09-21 14:21:14.619138",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Report",
@@ -17,7 +17,7 @@
  "query": "",
  "ref_doctype": "Cargo",
  "report_name": "Cargo Report",
- "report_type": "Script Report",
+ "report_type": "Query Report",
  "roles": [
   {
    "role": "Wharf Operation Manager"

@@ -72,14 +72,6 @@
   "column_break_60",
   "total_required_amount",
   "total_weight_amount",
-  "section_break_57",
-  "forklift_table",
-  "section_break_59",
-  "labour_requirements",
-  "column_break_61",
-  "gear_requirements",
-  "column_break_62",
-  "crew_transport",
   "other_requirement_section",
   "other_requirements",
   "section_break_67",
@@ -441,47 +433,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_57",
-   "fieldtype": "Section Break",
-   "label": "FORKLIFT REQUIREMENTS"
-  },
-  {
-   "fieldname": "forklift_table",
-   "fieldtype": "Table",
-   "label": "Forklift Require",
-   "options": "Forklift Table"
-  },
-  {
-   "collapsible_depends_on": "eval:doc.vessel_type==\"Cargo\"",
-   "fieldname": "section_break_59",
-   "fieldtype": "Section Break",
-   "label": "LABOUR REQUIREMENTS"
-  },
-  {
-   "fieldname": "labour_requirements",
-   "fieldtype": "Select",
-   "label": "Labour Requirements (# of Gangs Required)",
-   "options": "\n1\n2"
-  },
-  {
-   "fieldname": "column_break_61",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "gear_requirements",
-   "fieldtype": "Data",
-   "label": "Gear Requirements"
-  },
-  {
-   "fieldname": "column_break_62",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "crew_transport",
-   "fieldtype": "Data",
-   "label": "Crew Transport"
-  },
-  {
    "fieldname": "other_requirement_section",
    "fieldtype": "Section Break",
    "label": "OTHER REQUIREMENTS"
@@ -670,7 +621,7 @@
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-15 05:25:56.787772",
+ "modified": "2020-09-16 14:01:42.221815",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Booking Request",
@@ -726,15 +677,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Pilot Operation Manager",
-   "share": 1
   },
   {
    "create": 1,

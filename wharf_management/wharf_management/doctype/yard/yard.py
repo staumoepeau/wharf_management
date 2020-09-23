@@ -20,6 +20,8 @@ class Yard(Document):
 	def on_submit(self):
 		self.update_yard_timestamp()
 		self.create_cargo_list_items()
+		self.create_preadvise_history()
+		self.update_preadvise()
 
 
 	def validate_yard_slot(self):
@@ -49,21 +51,17 @@ class Yard(Document):
 		
 		doc = frappe.new_doc("Cargo")
 		doc.update({
-	#				"company" : self.company,
 					"docstatus" : 1,
 					"booking_ref" : val.booking_ref,
 					"pat_code" : val.pat_code,
 					"net_weight" : val.net_weight,
-		#			"export_status" : self.export_status,
 					"cargo_type" : val.cargo_type,
-		#			"pre_advise_status" : self.pre_advise_status,
 					"qty" : val.qty,
 					"container_no" : val.container_no,
 					"voyage_no" : val.voyage_no,
 					"bol" : val.bol,
 					"work_type" : val.work_type,
 					"secondary_work_type" : val.secondary_work_type,
-		#			"third_work_type" : self.third_work_type,
 					"pol" : val.pol,
 					"agents" : val.agents,
 					"commodity_code" : val.commodity_code,
@@ -74,7 +72,60 @@ class Yard(Document):
 					"mark" : val.mark,
 					"final_dest_port" : val.final_dest_port,
 					"volume" : val.volume,
-		#			"export_arrival_date" : self.export_arrival_date,
+					"container_size" : val.container_size,
+					"consignee" : val.consignee,
+					"container_content" : val.container_content,
+					"stowage" : val.stowage,
+					"hazardous" : val.hazardous,
+					"hazardous_code" : val.hazardous_code,
+					"status" : "Yard",
+					"seal_1" : val.seal_1,
+					"seal_2" : val.seal_2,
+					"eta_date" : val.eta_date,
+					"cargo_description" : val.cargo_description,
+					"etd_date" : val.etd_date,
+					"chasis_no" : val.chasis_no,
+					"yard_slot" : val.yard_slot,
+					"inspection_status" : val.inspection_status,
+					"yard_status" : val.yard_status,
+					"final_status" : val.final_status,
+					"break_bulk_item_count" : val.break_bulk_item_count,
+					"security_item_count" : val.security_item_count
+				})
+		doc.insert()
+		doc.submit()
+
+
+	def create_preadvise_history(self):
+
+		val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty","container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
+		"container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
+		"status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status",
+		"break_bulk_item_count","security_item_count"], as_dict=True)
+		
+		doc = frappe.new_doc("Pre Advise History")
+		doc.update({
+					"docstatus" : 1,
+					"booking_ref" : val.booking_ref,
+					"pat_code" : val.pat_code,
+					"net_weight" : val.net_weight,
+					"cargo_type" : val.cargo_type,
+					"qty" : val.qty,
+					"container_no" : val.container_no,
+					"voyage_no" : val.voyage_no,
+					"bol" : val.bol,
+					"work_type" : val.work_type,
+					"secondary_work_type" : val.secondary_work_type,
+					"pol" : val.pol,
+					"agents" : val.agents,
+					"commodity_code" : val.commodity_code,
+					"vessel" : val.vessel,
+					"pod" : val.pod,
+					"temperature" : val.temperature,
+					"container_type" : val.container_type,
+					"mark" : val.mark,
+					"final_dest_port" : val.final_dest_port,
+					"volume" : val.volume,
 					"container_size" : val.container_size,
 					"consignee" : val.consignee,
 					"container_content" : val.container_content,

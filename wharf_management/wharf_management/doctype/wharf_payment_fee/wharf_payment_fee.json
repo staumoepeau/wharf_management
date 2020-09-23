@@ -1,607 +1,605 @@
 {
- "actions": [],
- "autoname": "naming_series:",
- "creation": "2017-04-15 18:29:36.918500",
- "doctype": "DocType",
- "document_type": "Document",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "fee_payment",
-  "naming_series",
-  "company",
-  "bulk",
-  "fee_payment_section",
-  "posting_date",
-  "column_break_5",
-  "cargo_ref",
-  "company_name",
-  "agents",
-  "column_break_9",
-  "eta_date",
-  "section_break_2",
-  "voyage_no",
-  "container_no",
-  "column_break_2",
-  "vessel",
-  "cargo_type",
-  "column_break_4",
-  "consignee",
-  "yard_slot",
-  "section_break_10",
-  "container_type",
-  "storage_days",
-  "column_break_18",
-  "container_size",
-  "free_storage_days",
-  "column_break_13",
-  "container_content",
-  "storage_days_charged",
-  "column_break_30",
-  "weight",
-  "volume",
-  "litre",
-  "fees_section",
-  "work_type",
-  "devan_space2",
-  "secondary_work_type",
-  "devan_space3",
-  "chasis_no",
-  "column_break_40",
-  "bol",
-  "section_break_31",
-  "insert_fees_button",
-  "wharf_fee_item",
-  "section_break_34",
-  "total_fee_space1",
-  "total_fee_space2",
-  "total_fee_space3",
-  "total_fee_space4",
-  "total_fee",
-  "section_break_46",
-  "column_break_27",
-  "discount",
-  "column_break_29",
-  "authorized_discount",
-  "column_break_31",
-  "discount_amount",
-  "column_break_50",
-  "total_amount",
-  "payment",
-  "payment_type",
-  "section_break_63",
-  "credit_amount",
-  "deliver_empty",
-  "column_break_55",
-  "paid_amount",
-  "change_amount",
-  "outstanding_amount",
-  "column_break_59",
-  "column_warrant",
-  "column_break_67",
-  "custom_warrant",
-  "section_break_69",
-  "bulk_payment",
-  "bulk_item",
-  "custom_information",
-  "different_warrant",
-  "bulk_payment_code",
-  "section_break_75",
-  "custom_code",
-  "column_break_49",
-  "delivery_code",
-  "section_break_43",
-  "column_break_80",
-  "column_break_53",
-  "status",
-  "amended_from"
- ],
- "fields": [
-  {
-   "fieldname": "fee_payment",
-   "fieldtype": "Heading",
-   "label": "FEE PAYMENT"
-  },
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "RCPT-.YY.MM.-.####",
-   "read_only": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Company",
-   "options": "Company",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "bulk.####",
-   "fieldname": "bulk",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Bulk"
-  },
-  {
-   "fieldname": "fee_payment_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_5",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "cargo_ref",
-   "fieldtype": "Data",
-   "label": "Cargo Refrence",
-   "read_only": 1
-  },
-  {
-   "fieldname": "company_name",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "agents",
-   "fieldtype": "Data",
-   "label": "Agents"
-  },
-  {
-   "fieldname": "column_break_9",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "eta_date",
-   "fieldtype": "Date",
-   "label": "Arrival Date"
-  },
-  {
-   "fieldname": "section_break_2",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "voyage_no",
-   "fieldtype": "Data",
-   "label": "Voyage No"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "container_no",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Container No"
-  },
-  {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "vessel",
-   "fieldtype": "Data",
-   "label": "Vessel"
-  },
-  {
-   "fieldname": "cargo_type",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_standard_filter": 1,
-   "label": "Cargo Type"
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "consignee",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Consignee"
-  },
-  {
-   "fieldname": "yard_slot",
-   "fieldtype": "Data",
-   "label": "Yard Slot"
-  },
-  {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "container_type",
-   "fieldtype": "Data",
-   "label": "Container Type"
-  },
-  {
-   "fieldname": "storage_days",
-   "fieldtype": "Data",
-   "label": "Storage Days",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_18",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "container_size",
-   "fieldtype": "Data",
-   "label": "Container Size"
-  },
-  {
-   "fieldname": "free_storage_days",
-   "fieldtype": "Data",
-   "label": "Free Storage Days"
-  },
-  {
-   "fieldname": "column_break_13",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "container_content",
-   "fieldtype": "Data",
-   "label": "Container Content"
-  },
-  {
-   "fieldname": "storage_days_charged",
-   "fieldtype": "Int",
-   "label": "Storage Days Charged",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_30",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "weight",
-   "fieldtype": "Float",
-   "label": "Weight"
-  },
-  {
-   "fieldname": "volume",
-   "fieldtype": "Float",
-   "label": "Volume"
-  },
-  {
-   "fieldname": "litre",
-   "fieldtype": "Float",
-   "label": "Litre"
-  },
-  {
-   "fieldname": "fees_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "work_type",
-   "fieldtype": "Link",
-   "label": "Primary Work",
-   "options": "Work Type"
-  },
-  {
-   "fieldname": "devan_space2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "secondary_work_type",
-   "fieldtype": "Link",
-   "label": "Secondary Work",
-   "options": "Work Type"
-  },
-  {
-   "fieldname": "devan_space3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "chasis_no",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Chasis No"
-  },
-  {
-   "fieldname": "column_break_40",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "bol",
-   "fieldtype": "Data",
-   "label": "BOL"
-  },
-  {
-   "fieldname": "section_break_31",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "insert_fees_button",
-   "fieldtype": "Button",
-   "label": "Insert Fees"
-  },
-  {
-   "fieldname": "wharf_fee_item",
-   "fieldtype": "Table",
-   "label": "Fees",
-   "options": "Wharf Fee Item"
-  },
-  {
-   "fieldname": "section_break_34",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "total_fee_space1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_fee_space2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_fee_space3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_fee_space4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_fee",
-   "fieldtype": "Currency",
-   "label": "NET TOTAL",
-   "read_only": 1
-  },
-  {
-   "fieldname": "section_break_46",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_27",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "discount",
-   "fieldtype": "Select",
-   "label": "Discount",
-   "options": "\nYes\nNo"
-  },
-  {
-   "fieldname": "column_break_29",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.discount == \"Yes\"",
-   "fieldname": "authorized_discount",
-   "fieldtype": "Data",
-   "label": "Who Authorized Discount"
-  },
-  {
-   "fieldname": "column_break_31",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.discount == \"Yes\"",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount"
-  },
-  {
-   "fieldname": "column_break_50",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_amount",
-   "fieldtype": "Currency",
-   "label": "TOTAL",
-   "read_only": 1
-  },
-  {
-   "fieldname": "payment",
-   "fieldtype": "Section Break",
-   "label": "PAYMENT"
-  },
-  {
-   "fieldname": "credit_amount",
-   "fieldtype": "Currency",
-   "hidden": 1,
-   "label": "Credit Amount"
-  },
-  {
-   "depends_on": "eval:doc.payment_method==\"Credit\"",
-   "fieldname": "deliver_empty",
-   "fieldtype": "Select",
-   "label": "Empty Delivery",
-   "options": "\nNo\nYes"
-  },
-  {
-   "fieldname": "column_break_55",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "paid_amount",
-   "fieldtype": "Currency",
-   "label": "Payment Amount"
-  },
-  {
-   "fieldname": "change_amount",
-   "fieldtype": "Currency",
-   "label": "Change"
-  },
-  {
-   "fieldname": "outstanding_amount",
-   "fieldtype": "Currency",
-   "label": "Outstanding Amount"
-  },
-  {
-   "fieldname": "column_break_59",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_warrant",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_67",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "custom_warrant",
-   "fieldtype": "Data",
-   "label": "Custom Warrant"
-  },
-  {
-   "fieldname": "section_break_69",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "bulk_payment",
-   "fieldtype": "Select",
-   "label": "Bulk Payment",
-   "options": "\nNo\nYes"
-  },
-  {
-   "depends_on": "eval:doc.bulk_payment == \"Yes\"",
-   "fieldname": "bulk_item",
-   "fieldtype": "Select",
-   "label": "Bulk Item",
-   "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50"
-  },
-  {
-   "fieldname": "custom_information",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.bulk_payment==\"Yes\"",
-   "fieldname": "different_warrant",
-   "fieldtype": "Select",
-   "label": "Different Warrant Number",
-   "options": "\nNo\nYes"
-  },
-  {
-   "depends_on": "eval:doc.bulk_payment==\"Yes\"",
-   "fieldname": "bulk_payment_code",
-   "fieldtype": "Data",
-   "label": "Bulk Payment Code"
-  },
-  {
-   "fieldname": "section_break_75",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "custom_code",
-   "fieldtype": "Select",
-   "label": "Delivery Code",
-   "options": "\nDDL\nDDLW\nIDL\nDLWS\nMTY\nSPLIT-PORT"
-  },
-  {
-   "fieldname": "column_break_49",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "delivery_code",
-   "fieldtype": "Read Only",
-   "label": "Delivery Information"
-  },
-  {
-   "fieldname": "section_break_43",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_80",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_53",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "\nPaid\nUnpaid",
-   "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Wharf Payment Fee",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "payment_type",
-   "fieldtype": "Table",
-   "label": "Payment Method",
-   "options": "Payment Method"
-  },
-  {
-   "fieldname": "section_break_63",
-   "fieldtype": "Section Break"
-  }
- ],
- "in_create": 1,
- "is_submittable": 1,
- "links": [],
- "modified": "2020-07-30 15:03:16.105317",
- "modified_by": "Administrator",
- "module": "Wharf Management",
- "name": "Wharf Payment Fee",
- "owner": "Administrator",
- "permissions": [
-  {
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation User",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Cargo Operation User",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  }
- ],
- "show_name_in_global_search": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
- "title_field": "consignee",
- "track_changes": 1,
- "track_seen": 1
+    "actions": [],
+    "autoname": "naming_series:",
+    "creation": "2017-04-15 18:29:36.918500",
+    "doctype": "DocType",
+    "document_type": "Document",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "fee_payment",
+        "naming_series",
+        "company",
+        "bulk",
+        "fee_payment_section",
+        "posting_date",
+        "column_break_5",
+        "cargo_ref",
+        "company_name",
+        "agents",
+        "column_break_9",
+        "eta_date",
+        "section_break_2",
+        "voyage_no",
+        "container_no",
+        "column_break_2",
+        "vessel",
+        "cargo_type",
+        "column_break_4",
+        "consignee",
+        "yard_slot",
+        "section_break_10",
+        "container_type",
+        "storage_days",
+        "column_break_18",
+        "container_size",
+        "free_storage_days",
+        "column_break_13",
+        "container_content",
+        "storage_days_charged",
+        "column_break_30",
+        "weight",
+        "volume",
+        "litre",
+        "fees_section",
+        "work_type",
+        "devan_space2",
+        "secondary_work_type",
+        "devan_space3",
+        "chasis_no",
+        "column_break_40",
+        "bol",
+        "section_break_31",
+        "insert_fees_button",
+        "wharf_fee_item",
+        "section_break_34",
+        "total_fee_space1",
+        "total_fee_space2",
+        "total_fee_space3",
+        "total_fee_space4",
+        "total_fee",
+        "section_break_46",
+        "column_break_27",
+        "discount",
+        "column_break_29",
+        "authorized_discount",
+        "column_break_31",
+        "discount_amount",
+        "column_break_50",
+        "total_amount",
+        "payment",
+        "payment_type",
+        "section_break_63",
+        "credit_amount",
+        "deliver_empty",
+        "column_break_55",
+        "paid_amount",
+        "change_amount",
+        "outstanding_amount",
+        "column_break_59",
+        "column_warrant",
+        "column_break_67",
+        "custom_warrant",
+        "section_break_69",
+        "bulk_payment",
+        "bulk_item",
+        "custom_information",
+        "different_warrant",
+        "bulk_payment_code",
+        "section_break_75",
+        "custom_code",
+        "column_break_49",
+        "delivery_code",
+        "section_break_43",
+        "column_break_80",
+        "column_break_53",
+        "status",
+        "amended_from"
+    ],
+    "fields": [{
+            "fieldname": "fee_payment",
+            "fieldtype": "Heading",
+            "label": "FEE PAYMENT"
+        },
+        {
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "RCPT-.YY.MM.-.####",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "hidden": 1,
+            "label": "Company",
+            "options": "Company",
+            "read_only": 1
+        },
+        {
+            "fetch_from": "bulk.####",
+            "fieldname": "bulk",
+            "fieldtype": "Data",
+            "hidden": 1,
+            "label": "Bulk"
+        },
+        {
+            "fieldname": "fee_payment_section",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "posting_date",
+            "fieldtype": "Date",
+            "label": "Posting Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_5",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "cargo_ref",
+            "fieldtype": "Data",
+            "label": "Cargo Refrence",
+            "read_only": 1
+        },
+        {
+            "fieldname": "company_name",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "agents",
+            "fieldtype": "Data",
+            "label": "Shipping Agency"
+        },
+        {
+            "fieldname": "column_break_9",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "eta_date",
+            "fieldtype": "Date",
+            "label": "Arrival Date"
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "voyage_no",
+            "fieldtype": "Data",
+            "label": "Voyage No"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "container_no",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Container No"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "vessel",
+            "fieldtype": "Data",
+            "label": "Vessel"
+        },
+        {
+            "fieldname": "cargo_type",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_standard_filter": 1,
+            "label": "Cargo Type"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "consignee",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Consignee"
+        },
+        {
+            "fieldname": "yard_slot",
+            "fieldtype": "Data",
+            "label": "Yard Slot"
+        },
+        {
+            "fieldname": "section_break_10",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "container_type",
+            "fieldtype": "Data",
+            "label": "Container Type"
+        },
+        {
+            "fieldname": "storage_days",
+            "fieldtype": "Data",
+            "label": "Storage Days",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_18",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "container_size",
+            "fieldtype": "Data",
+            "label": "Container Size"
+        },
+        {
+            "fieldname": "free_storage_days",
+            "fieldtype": "Data",
+            "label": "Free Storage Days"
+        },
+        {
+            "fieldname": "column_break_13",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "container_content",
+            "fieldtype": "Data",
+            "label": "Container Content"
+        },
+        {
+            "fieldname": "storage_days_charged",
+            "fieldtype": "Int",
+            "label": "Storage Days Charged",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_30",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "weight",
+            "fieldtype": "Float",
+            "label": "Weight"
+        },
+        {
+            "fieldname": "volume",
+            "fieldtype": "Float",
+            "label": "Volume"
+        },
+        {
+            "fieldname": "litre",
+            "fieldtype": "Float",
+            "label": "Litre"
+        },
+        {
+            "fieldname": "fees_section",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "work_type",
+            "fieldtype": "Link",
+            "label": "Primary Work",
+            "options": "Work Type"
+        },
+        {
+            "fieldname": "devan_space2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "secondary_work_type",
+            "fieldtype": "Link",
+            "label": "Secondary Work",
+            "options": "Work Type"
+        },
+        {
+            "fieldname": "devan_space3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "chasis_no",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Chasis No"
+        },
+        {
+            "fieldname": "column_break_40",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "bol",
+            "fieldtype": "Data",
+            "label": "BOL"
+        },
+        {
+            "fieldname": "section_break_31",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "insert_fees_button",
+            "fieldtype": "Button",
+            "label": "Insert Fees"
+        },
+        {
+            "fieldname": "wharf_fee_item",
+            "fieldtype": "Table",
+            "label": "Fees",
+            "options": "Wharf Fee Item"
+        },
+        {
+            "fieldname": "section_break_34",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "total_fee_space1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_fee_space2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_fee_space3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_fee_space4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_fee",
+            "fieldtype": "Currency",
+            "label": "NET TOTAL",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_46",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_break_27",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "discount",
+            "fieldtype": "Select",
+            "label": "Discount",
+            "options": "\nYes\nNo"
+        },
+        {
+            "fieldname": "column_break_29",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.discount == \"Yes\"",
+            "fieldname": "authorized_discount",
+            "fieldtype": "Data",
+            "label": "Who Authorized Discount"
+        },
+        {
+            "fieldname": "column_break_31",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.discount == \"Yes\"",
+            "fieldname": "discount_amount",
+            "fieldtype": "Currency",
+            "label": "Discount Amount"
+        },
+        {
+            "fieldname": "column_break_50",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_amount",
+            "fieldtype": "Currency",
+            "label": "TOTAL",
+            "read_only": 1
+        },
+        {
+            "fieldname": "payment",
+            "fieldtype": "Section Break",
+            "label": "PAYMENT"
+        },
+        {
+            "fieldname": "credit_amount",
+            "fieldtype": "Currency",
+            "hidden": 1,
+            "label": "Credit Amount"
+        },
+        {
+            "depends_on": "eval:doc.payment_method==\"Credit\"",
+            "fieldname": "deliver_empty",
+            "fieldtype": "Select",
+            "label": "Empty Delivery",
+            "options": "\nNo\nYes"
+        },
+        {
+            "fieldname": "column_break_55",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "paid_amount",
+            "fieldtype": "Currency",
+            "label": "Payment Amount"
+        },
+        {
+            "fieldname": "change_amount",
+            "fieldtype": "Currency",
+            "label": "Change"
+        },
+        {
+            "fieldname": "outstanding_amount",
+            "fieldtype": "Currency",
+            "label": "Outstanding Amount"
+        },
+        {
+            "fieldname": "column_break_59",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_warrant",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_67",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "custom_warrant",
+            "fieldtype": "Data",
+            "label": "Custom Warrant"
+        },
+        {
+            "fieldname": "section_break_69",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "bulk_payment",
+            "fieldtype": "Select",
+            "label": "Bulk Payment",
+            "options": "\nNo\nYes"
+        },
+        {
+            "depends_on": "eval:doc.bulk_payment == \"Yes\"",
+            "fieldname": "bulk_item",
+            "fieldtype": "Select",
+            "label": "Bulk Item",
+            "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50"
+        },
+        {
+            "fieldname": "custom_information",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.bulk_payment==\"Yes\"",
+            "fieldname": "different_warrant",
+            "fieldtype": "Select",
+            "label": "Different Warrant Number",
+            "options": "\nNo\nYes"
+        },
+        {
+            "depends_on": "eval:doc.bulk_payment==\"Yes\"",
+            "fieldname": "bulk_payment_code",
+            "fieldtype": "Data",
+            "label": "Bulk Payment Code"
+        },
+        {
+            "fieldname": "section_break_75",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "custom_code",
+            "fieldtype": "Select",
+            "label": "Delivery Code",
+            "options": "\nDDL\nDDLW\nIDL\nDLWS\nMTY\nSPLIT-PORT"
+        },
+        {
+            "fieldname": "column_break_49",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "delivery_code",
+            "fieldtype": "Read Only",
+            "label": "Delivery Information"
+        },
+        {
+            "fieldname": "section_break_43",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_break_80",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_53",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "\nPaid\nUnpaid",
+            "read_only": 1
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Wharf Payment Fee",
+            "print_hide": 1,
+            "read_only": 1
+        },
+        {
+            "fieldname": "payment_type",
+            "fieldtype": "Table",
+            "label": "Payment Method",
+            "options": "Payment Method"
+        },
+        {
+            "fieldname": "section_break_63",
+            "fieldtype": "Section Break"
+        }
+    ],
+    "in_create": 1,
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2020-07-30 15:03:16.105317",
+    "modified_by": "Administrator",
+    "module": "Wharf Management",
+    "name": "Wharf Payment Fee",
+    "owner": "Administrator",
+    "permissions": [{
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Wharf Operation Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Wharf Operation User",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Cargo Operation User",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        }
+    ],
+    "show_name_in_global_search": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "title_field": "consignee",
+    "track_changes": 1,
+    "track_seen": 1
 }

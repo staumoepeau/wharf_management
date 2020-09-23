@@ -5,161 +5,67 @@ frappe.ui.form.on('Cargo', {
 
     onload: function(frm) {
 
-        if (frappe.user.has_role("Cargo Operation Manager") || frappe.user.has_role("Operation Manifest User") ||
-            frappe.user.has_role("Wharf Operation Cashier") || frappe.user.has_role("System Manager")) {
-            cur_frm.set_df_property("empty_details", "hidden", 0);
-            cur_frm.set_df_property("consignee_details", "hidden", 0);
+        let is_allowed = frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User', 'Wharf Operation Cashier');
+        frm.toggle_enable(['cargo_type', 'work_type', 'secondary_work_type', 'booking_ref', 'inspection_status', 'yard_status', 'payment_status', 'final_eta', 'final_etd',
+            'gate1_status', 'gate2_status', 'final_status', 'status', 'custom_code', 'delivery_code', 'gate1_in', 'eta_date', 'etd_date', 'pol', 'pod',
+            'final_dest_port', 'consignee', 'master_bol', 'bol', 'last_port', 'container_size', 'container_content', 'net_weight', 'litre', 'seal_1',
+            'container_no', 'pat_code', 'volume', 'seal_2', 'mark', 'container_type', 'yard_slot', 'temperature', 'commodity_code', 'chasis_no', 'qty',
+        ], is_allowed);
 
-            cur_frm.set_df_property("net_weight", "hidden", 0);
-            cur_frm.set_df_property("volume", "hidden", 0);
-            cur_frm.set_df_property("litre", "hidden", 0);
-            cur_frm.set_df_property("pat_code", "hidden", 0);
+        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
+            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
+            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
+        ], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User', 'Wharf Operation Cashier'));
 
-            cur_frm.set_df_property("cargo_type", "read_only", 0);
-            cur_frm.set_df_property("work_type", "read_only", 0);
-            cur_frm.set_df_property("secondary_work_type", "read_only", 0);
-            cur_frm.set_df_property("booking_ref", "read_only", 0);
+        frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section'],
+            frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User'));
 
-            cur_frm.set_df_property("inspection_status", "read_only", 0);
-            cur_frm.set_df_property("yard_status", "read_only", 0);
-            cur_frm.set_df_property("payment_status", "read_only", 0);
-            cur_frm.set_df_property("gate1_status", "read_only", 0);
-            cur_frm.set_df_property("gate2_status", "read_only", 0);
-            cur_frm.set_df_property("final_status", "read_only", 0);
-            cur_frm.set_df_property("status", "read_only", 0);
-            cur_frm.set_df_property("final_eta", "hidden", 0);
-            cur_frm.set_df_property("final_etd", "hidden", 0);
+        frm.toggle_display(['break_bulk_items'], frm.doc.qty > 1);
 
-            cur_frm.set_df_property("custom_code", "read_only", 0);
-            cur_frm.set_df_property("custom_warrant", "hidden", 0);
-            cur_frm.set_df_property("delivery_code", "read_only", 0);
-            cur_frm.set_df_property("gate1_in", "read_only", 0);
+        frm.toggle_display(['last_port'], frm.doc.cargo_type === "Split Ports");
 
-
-
-        } else {
-            cur_frm.set_df_property("net_weight", "hidden", 1);
-            cur_frm.set_df_property("volume", "hidden", 1);
-            cur_frm.set_df_property("litre", "hidden", 1);
-            cur_frm.set_df_property("pat_code", "hidden", 1);
-            cur_frm.set_df_property("cargo_information", "hidden", 1);
-            cur_frm.set_df_property("cargo_work_type_section", "hidden", 1);
-            cur_frm.set_df_property("cargo_status", "hidden", 1);
-            cur_frm.set_df_property("status_section", "hidden", 1);
-            cur_frm.set_df_property("ports_details", "hidden", 1);
-            cur_frm.set_df_property("consignee_details", "hidden", 1);
-
-            cur_frm.set_df_property("cargo_type", "read_only", 1);
-            cur_frm.set_df_property("work_type", "read_only", 1);
-            cur_frm.set_df_property("secondary_work_type", "read_only", 1);
-            cur_frm.set_df_property("booking_ref", "read_only", 1);
-
-            cur_frm.set_df_property("inspection_status", "read_only", 1);
-            cur_frm.set_df_property("yard_status", "read_only", 1);
-            cur_frm.set_df_property("payment_status", "read_only", 1);
-            cur_frm.set_df_property("gate1_status", "read_only", 1);
-            cur_frm.set_df_property("gate2_status", "read_only", 1);
-            cur_frm.set_df_property("final_status", "read_only", 1);
-            cur_frm.set_df_property("status", "read_only", 1);
-            cur_frm.set_df_property("final_eta", "hidden", 1);
-            cur_frm.set_df_property("final_etd", "hidden", 1);
-
-            cur_frm.set_df_property("custom_code", "read_only", 1);
-            cur_frm.set_df_property("custom_warrant", "hidden", 1);
-            cur_frm.set_df_property("delivery_code", "read_only", 1);
-            cur_frm.set_df_property("gate1_in", "read_only", 1);
-
-            cur_frm.set_df_property("eta_date", "read_only", 1);
-            cur_frm.set_df_property("etd_date", "read_only", 1);
-            cur_frm.set_df_property("pol", "read_only", 1);
-            cur_frm.set_df_property("pod", "read_only", 1);
-            cur_frm.set_df_property("final_dest_port", "read_only", 1);
-            cur_frm.set_df_property("consignee", "read_only", 1);
-            cur_frm.set_df_property("master_bol", "read_only", 1);
-            cur_frm.set_df_property("bol", "read_only", 1);
-            cur_frm.set_df_property("last_port", "read_only", 1);
-            cur_frm.set_df_property("container_size", "read_only", 1);
-            cur_frm.set_df_property("container_content", "read_only", 1);
-            cur_frm.set_df_property("net_weight", "read_only", 1);
-            cur_frm.set_df_property("litre", "read_only", 1);
-            cur_frm.set_df_property("seal_1", "read_only", 1);
-            cur_frm.set_df_property("container_no", "read_only", 1);
-
-            cur_frm.set_df_property("pat_code", "read_only", 1);
-            cur_frm.set_df_property("volume", "read_only", 1);
-            cur_frm.set_df_property("seal_2", "read_only", 1);
-            cur_frm.set_df_property("mark", "read_only", 1);
-            cur_frm.set_df_property("container_type", "read_only", 1);
-            cur_frm.set_df_property("yard_slot", "read_only", 1);
-            cur_frm.set_df_property("temperature", "read_only", 1);
-            cur_frm.set_df_property("commodity_code", "read_only", 1);
-            cur_frm.set_df_property("chasis_no", "read_only", 1);
-            cur_frm.set_df_property("qty", "read_only", 1);
-            cur_frm.set_df_property("empty_details", "hidden", 1);
-        }
-
-
-        if (frappe.user.has_role("Operation Manifest User") || frappe.user.has_role("System Manager")) {
-
-            cur_frm.set_df_property("manifest_section", "hidden", 0);
-            cur_frm.set_df_property("handling_fee", "read_only", 0);
-            cur_frm.set_df_property("wharfage_fee", "read_only", 0);
-            cur_frm.set_df_property("cargo_status", "hidden", 0);
-            cur_frm.set_df_property("status_section", "read_only", 0);
-
-
-
-        } else {
-            cur_frm.set_df_property("manifest_section", "hidden", 1);
-            cur_frm.set_df_property("handling_fee", "read_only", 1);
-            cur_frm.set_df_property("wharfage_fee", "read_only", 1);
-            cur_frm.set_df_property("cargo_status", "hidden", 1);
-            cur_frm.set_df_property("status_section", "read_only", 1);
-
-
-        }
-
-        if (frm.doc.cargo_type == "Split Ports") {
-            cur_frm.set_df_property("last_port", "hidden", 0);
-
-        } else if (frm.doc.cargo_type != "Split Ports") {
-            cur_frm.set_df_property("last_port", "hidden", 1);
-        }
 
     },
 
     cargo_type: function(frm) {
-        if (frm.doc.cargo_type == "Split Ports") {
-            cur_frm.set_df_property("last_port", "hidden", 0);
 
-        } else if (frm.doc.cargo_type != "Split Ports") {
-            cur_frm.set_df_property("last_port", "hidden", 1);
-        }
-
+        frm.toggle_display(['last_port'], frm.doc.cargo_type === "Split Ports");
     },
 
     refresh: function(frm) {
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
+        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
+
+            frm.page.sidebar.hide(); // this removes the sidebar
+            $(".timeline").hide()
+            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        }
+        if (frappe.user.has_role("System Manager")) {
+            frm.page.sidebar.show(); // this removes the sidebar
+            $(".timeline").show()
+            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+        }
+
+        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
+        //                frm.doc.payment_status != "Closed" &&
+        //                frm.doc.yard_status == "Closed" &&
+        //                frm.doc.inspection_status == "Closed"
+        //            )) {
+        //            frm.add_custom_button(__('Payment'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frappe.new_doc("Wharf Payment Fee");
+        //                frappe.set_route("Form", "Wharf Payment Fee", doc.name);
+        //            }).addClass("btn-primary");
+        //        }
+
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
             frm.add_custom_button(__('Payment'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name
-                }
-                frappe.new_doc("Wharf Payment Fee");
-                frappe.set_route("Form", "Wharf Payment Fee", doc.name);
-            }).addClass("btn-primary");
-        }
-
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
-                frm.doc.payment_status != "Closed" &&
-                frm.doc.yard_status == "Closed" &&
-                frm.doc.inspection_status == "Closed"
-            )) {
-            frm.add_custom_button(__('New Payment'), function() {
                 frappe.route_options = {
                     "payment_type": "Receive",
                     "customer": frm.doc.consignee,
@@ -169,28 +75,35 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-success");
         }
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.gate1_status != "Closed" &&
                 frm.doc.payment_status == "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
 
-
-
-
             frm.add_custom_button(__('Gate 1'), function() {
                 frappe.route_options = {
                     "cargo_ref": frm.doc.name,
+                    "customer": frm.doc.consignee,
+                    "container_no": frm.doc.container_no,
+                    "custom_warrant": frm.doc.custom_warrant,
+                    "custom_code": frm.doc.custom_code,
+                    "delivery_code": frm.doc.delivery_code,
+                    "cargo_type": frm.doc.cargo_type,
+                    "cargo_description": frm.doc.cargo_description,
+                    "chasis_no": frm.doc.chasis_no,
+                    "qty": frm.doc.qty,
+                    "container_content": frm.doc.container_content,
+                    "work_type": frm.doc.work_type,
                     "mydoctype": "CARGO"
                 }
-                frappe.new_doc("Gate1");
-                frappe.set_route("Form", "Gate1", doc.name);
+                frappe.set_route("Form", "Gate1", "New Gate1 1");
             }).addClass("btn-primary");
 
         }
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
                 frm.doc.gate2_status != "Closed" &&
                 frm.doc.gate1_status == "Closed" &&
                 frm.doc.payment_status == "Closed" &&
@@ -208,7 +121,7 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-primary");
         }
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.gate2_status != "Closed" &&
             frm.doc.gate1_status != "Closed" &&
             frm.doc.payment_status != "Closed" &&
@@ -229,7 +142,7 @@ frappe.ui.form.on('Cargo', {
 
 
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Operation Cashier") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed" &&
@@ -245,7 +158,7 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-danger");
         }
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Wharf Security Officer") &&
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.inspection_status == "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.payment_status == "Closed" &&
@@ -264,24 +177,6 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-warning");
         }
     },
-
-    //    custom_code: function(frm) {
-    //        if (frm.doc.custom_code == "MTY") {
-    //            frm.set_value("delivery_code", "EMPTY DELIVERY")
-    //        } else if (frm.doc.custom_code == "DDL") {
-    //            frm.set_value("delivery_code", "DIRECT DELIVERY")
-    //        } else if (frm.doc.custom_code == "DDLW") {
-    //            frm.set_value("delivery_code", "DIRECT DELIVERY WAREHOUSE")
-    //        } else if (frm.doc.custom_code == "IDL") {
-    //            frm.set_value("delivery_code", "INSPECTION DELIVERY")
-    //        } else if (frm.doc.custom_code == "DLWS") {
-    //            frm.set_value("delivery_code", "DELIVERY PAT WAREHOUSE")
-    //        } else if (frm.doc.custom_code == "SPLIT-PORT") {
-    //            frm.set_value("delivery_code", "SPLIT-PORT")
-    //        } else if (!frm.doc.custom_code) {
-    //           frm.set_value("delivery_code", "")
-    //        }
-    //    },
 
     handling_fee_discount: function(frm) {
         if (frm.doc.handling_fee_discount == "YES") {
@@ -394,5 +289,4 @@ frappe.ui.form.on('Cargo', {
             }
         }
     }
-
 });

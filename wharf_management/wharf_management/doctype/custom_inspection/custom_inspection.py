@@ -16,10 +16,13 @@ class CustomInspection(Document):
         self.update_status()
 
     def update_status(self):
-            frappe.db.sql("""Update `tabCargo` set status='Custom Inspection' where name=%s""", (self.cargo_ref))
+        frappe.db.sql("""Update `tabCargo` set status='Custom Inspection' where name=%s""", (self.cargo_ref))
+
 
     def update_custom_inspection_status(self):
-#        if self.docstatus != 1:
-         frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed', status="Inspection Delivered"  where name=%s""", (self.cargo_ref))
-#         frappe.db.sql("""Update `tabCustom Inspection` status="Delivered" where name=%s""", (self.name))
+        frappe.db.sql("""Update `tabCargo` set yard_slot=NULL, custom_inspection_status='Closed', status="Inspection Delivered"  where name=%s""", (self.cargo_ref))
 
+
+@frappe.whitelist()
+def update_custom_inspection(status, docname):
+    return frappe.db.sql("""Update `tabCustom Inspection` set status=%s  where name=%s""", (status, docname))

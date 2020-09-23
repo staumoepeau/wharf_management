@@ -121,12 +121,26 @@
  "in_create": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-08-23 21:58:46.347131",
+ "modified": "2020-09-17 20:53:26.045288",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Custom Inspection",
  "owner": "Administrator",
  "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
   {
    "create": 1,
    "email": 1,
@@ -139,26 +153,14 @@
    "write": 1
   },
   {
-   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Cargo Operation Manager",
+   "role": "Wharf Security Supervisor",
    "share": 1,
    "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation Manager",
-   "share": 1,
    "write": 1
   },
   {
@@ -168,17 +170,6 @@
    "read": 1,
    "report": 1,
    "role": "Wharf Security Officer",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Security Supervisor",
    "share": 1,
    "submit": 1,
    "write": 1

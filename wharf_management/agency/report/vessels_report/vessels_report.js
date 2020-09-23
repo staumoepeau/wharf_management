@@ -5,19 +5,19 @@
 frappe.query_reports["Vessels Report"] = {
     "filters": [
 
-        {
-            "fieldname": "periodicity",
-            "label": __("Periodicity"),
-            "fieldtype": "Select",
-            "options": [
-                { "value": "Monthly", "label": __("Monthly") },
-                { "value": "Quarterly", "label": __("Quarterly") },
-                { "value": "Half-Yearly", "label": __("Half-Yearly") },
-                { "value": "Yearly", "label": __("Yearly") }
-            ],
-            "default": "Yearly",
-            "reqd": 1
-        },
+        //        {
+        //            "fieldname": "periodicity",
+        //            "label": __("Periodicity"),
+        //            "fieldtype": "Select",
+        //            "options": [
+        //                { "value": "Monthly", "label": __("Monthly") },
+        //                { "value": "Quarterly", "label": __("Quarterly") },
+        //                { "value": "Half-Yearly", "label": __("Half-Yearly") },
+        //                { "value": "Yearly", "label": __("Yearly") }
+        //            ],
+        //            "default": "Yearly",
+        //            "reqd": 1
+        //        },
         //		{
         //            "fieldname": "month",
         //            "label": __("Month"),

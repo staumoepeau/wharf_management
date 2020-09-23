@@ -15,6 +15,10 @@
   "column_break_3",
   "item_name",
   "section_break_3",
+  "tarrif_start_date",
+  "column_break_7",
+  "tarrif_end_date",
+  "section_break_9",
   "wharf_fee_category",
   "vessel_type",
   "cargo_type",
@@ -24,8 +28,11 @@
   "container_size",
   "container_content",
   "work_type",
+  "tarrif_description_section",
+  "description",
   "data_4",
-  "description"
+  "receivable_account",
+  "income_account"
  ],
  "fields": [
   {
@@ -104,7 +111,8 @@
   },
   {
    "fieldname": "data_4",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Account Details"
   },
   {
    "fieldname": "description",
@@ -137,10 +145,46 @@
    "fieldtype": "Link",
    "label": "Vessel Type",
    "options": "Vessel Type"
+  },
+  {
+   "fieldname": "tarrif_start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tarrif_end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break",
+   "label": "Tarrif Details"
+  },
+  {
+   "fieldname": "receivable_account",
+   "fieldtype": "Link",
+   "label": "Receivable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "income_account",
+   "fieldtype": "Link",
+   "label": "Income Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "tarrif_description_section",
+   "fieldtype": "Section Break",
+   "label": "Tarrif Description"
   }
  ],
  "links": [],
- "modified": "2020-09-13 02:44:22.989529",
+ "modified": "2020-09-18 04:50:10.075967",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fees",

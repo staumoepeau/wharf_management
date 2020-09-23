@@ -144,8 +144,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nGate 1\nMain Gate\nOUT\nPAID"
   },
@@ -161,7 +166,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-10 06:15:18.871031",
+ "modified": "2020-09-18 09:45:28.431701",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Empty Containers",

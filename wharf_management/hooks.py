@@ -22,6 +22,14 @@ error_report_email = "support@tongaports.to"
 
 
 #app_include_css = ["assets/css/wharf_management.css"]
+app_include_css = "/assets/wharf_management/js/lib/pivottable/pivot.min.css"
+# app_include_js = "/assets/pivot_table/js/pivot_table.js"
+app_include_js = [
+    "/assets/wharf_management/js/lib/pivottable/pivot.min.js",
+    "/assets/wharf_management/js/lib/jquery-ui.min.js",
+	"/assets/wharf_management/js/pivot_table.min.js",
+    "/assets/wharf_management/js/query_report_pivot_table.js"
+]
 
 
 # Includes in <head>
@@ -33,7 +41,7 @@ error_report_email = "support@tongaports.to"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/wharf_management/css/wharf_management.css"
-web_include_js = "/assets/js/wharf_management.js"
+#web_include_js = "/assets/js/wharf_management.js"
 
 # Home Pages
 # ----------

@@ -18,7 +18,7 @@ def get_columns():
 		_("Cargo Description") + ":Data:120",
 		_("Warrant No") + ":Data:90",
 		_("Consignee") + ":Data:120",
-		_("Agents") + ":Data:120",
+		_("Shipping Agency") + ":Data:120",
 		_("Chasis No") + ":Data:120",
 		_("Mark") + ":Data:60",
 		_("Delivery Status") + ":Data:110",
