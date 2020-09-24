@@ -33,7 +33,7 @@
   {
    "hidden": 0,
    "label": "Setup",
-   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Self Analytics\",\n        \"label\": \"Self Analytics\",\n        \"name\": \"Self Analytics\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Booking Request Status\",\n        \"label\": \"Booking Request Status\",\n        \"name\": \"Booking Request Status\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Self Analytics\",\n        \"label\": \"Self Analytics\",\n        \"name\": \"Self Analytics\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -63,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-09-23 11:12:53.024935",
+ "modified": "2020-09-24 11:07:06.544832",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",

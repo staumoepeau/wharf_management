@@ -89,6 +89,14 @@ notification_config = "wharf_management.notifications.get_notification_config"
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
+permission_query_conditions = {
+ 	"Booking Request": "wharf_management.agency.doctype.booking_request.booking_request.get_permission_query_conditions",
+}
+
+has_permission = {
+ 	"Booking Request": "wharf_management.agency.doctype.booking_request.booking_request.has_permission",
+}
+
 # Document Events
 # ---------------
 # Hook on document methods and events

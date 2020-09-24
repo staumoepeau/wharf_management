@@ -133,9 +133,9 @@
    "allow_on_submit": 1,
    "default": "Pending",
    "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Status",
-   "options": "Pending\nSecurity Check\nPaid\nPort Master Approved\nRejected by Security\nRejected by Port Master",
+   "options": "Booking Request Status",
    "read_only": 1
   },
   {
@@ -177,11 +177,13 @@
   },
   {
    "fieldname": "agents",
-   "fieldtype": "Read Only",
+   "fieldtype": "Link",
    "in_filter": 1,
    "in_global_search": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Agency"
+   "label": "Agency",
+   "options": "Shipping Agency"
   },
   {
    "fetch_from": "vessel.vessel_type",
@@ -621,7 +623,7 @@
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-16 14:01:42.221815",
+ "modified": "2020-09-24 13:15:14.052833",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Booking Request",

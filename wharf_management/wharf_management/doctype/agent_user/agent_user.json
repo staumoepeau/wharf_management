@@ -62,8 +62,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Shipping Agent",
-   "options": "Shipping Agency",
-   "unique": 1
+   "options": "Shipping Agency"
   },
   {
    "fieldname": "user",
@@ -82,7 +81,7 @@
  ],
  "hide_toolbar": 1,
  "links": [],
- "modified": "2020-09-10 06:32:14.872521",
+ "modified": "2020-09-24 15:23:46.709856",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Agent User",
