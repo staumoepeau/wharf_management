@@ -26,9 +26,7 @@ class WharfPaymentEntry(Document):
 		`tabBooking Request`.name = `tabBooking Request References`.booking_reference_doctype
 		set payment_status = 'Closed',
 		status='Paid'
-		where `tabBooking Request References`.parent=%s""",
-		(self.name))
-#        self.change_status()
+		where `tabBooking Request References`.parent=%s""", (self.name))
 
 
     def update_cargo_table(self):
@@ -48,7 +46,7 @@ class WharfPaymentEntry(Document):
     def check_duplicate_warrant_number(self):
         check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWharf Payment Entry` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
         if check_duplicate:
-            frappe.throw(_("Sorry You are duplicating this Warrant No "))
+            frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
 
 @frappe.whitelist()
 def get_storage_days(eta_date, posting_date):

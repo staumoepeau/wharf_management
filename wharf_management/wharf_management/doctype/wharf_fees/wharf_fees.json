@@ -134,7 +134,8 @@
    "fieldname": "item_code",
    "fieldtype": "Data",
    "label": "Item Code",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "column_break_3",
@@ -183,8 +184,9 @@
    "label": "Tarrif Description"
   }
  ],
+ "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-09-18 04:50:10.075967",
+ "modified": "2020-09-26 22:26:11.670796",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fees",
@@ -222,7 +224,7 @@
    "share": 1
   }
  ],
- "search_fields": "item_name",
+ "search_fields": "item_code, item_name",
  "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

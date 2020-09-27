@@ -47,6 +47,8 @@ frappe.ui.form.on('Wharf Payment Entry', {
     },
     onload: function(frm) {
 
+
+
         if (frm.doc.reference_doctype == "Cargo") {
             wharf_management.wharf_payment_entry.setup_cargo_queries(frm);
             frm.set_df_property('delivery_code', 'hidden', 0);
@@ -255,7 +257,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered']],
+                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports']],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
                 ]
             }
@@ -387,7 +389,7 @@ frappe.ui.form.on("Booking Request References", "booking_reference_doctype", fun
 
 frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
-    var cargo_a = ["Container", "Tank Tainers", "Flatrack"];
+    var cargo_a = ["Container", "Tank Tainers", "Flatrack", "Split Ports"];
 
     if (d.reference_doctype) {
 
@@ -413,7 +415,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 }
             })
 
-            var cargo_c = ["Container", "Tank Tainers"];
+            var cargo_c = ["Container", "Tank Tainers", "Split Ports"];
             if (cargo_c.includes(d.cargo_type)) {
                 frappe.call({
                     "method": "frappe.client.get",
@@ -427,7 +429,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                     },
                     callback: function(data) {
                         if (data.message) {
-                            if (d.cargo_type == "Container") {
+                            if (d.cargo_type == "Container" || d.cargo_type == "Split Ports") {
                                 frappe.model.set_value(d.doctype, d.name, "wharfage_item_code", data.message["item_name"]);
                                 frappe.model.set_value(d.doctype, d.name, "wharfage_fee_price", data.message["fee_amount"]);
                                 frappe.model.set_value(d.doctype, d.name, "wharfage_fee", data.message["fee_amount"]);

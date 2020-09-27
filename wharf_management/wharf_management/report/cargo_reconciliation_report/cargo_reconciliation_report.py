@@ -32,16 +32,15 @@ def get_cargo_stock_data(filters, columns):
 	cargo_stock_data = get_cargo_stoc_reconciliation(filters)
 
 	for cont in cargo_stock_data:
-#		owner_posting_date = container["owner"]+cstr(container["posting_date"])
 		row = [cont.name, cont.cargo_type, cont.container_no, cont.yard_slot, 
 		cont.chasis_no, cont.mark, cont.status, cont.stock_date, cont.stock_count, cont.stock_take_by]
 		data.append(row)
 	return data
 
 def get_conditions(filters):
-	conditions = "1=1"
+	conditions = " "
 	if filters.get("stock_date"): conditions += " and stock_date >= %(stock_date)s"
-	if filters.get("status"): conditions += " and status = %(status)s"
+	if filters.get("stock_count"): conditions += " and stock_count = %(stock_count)s"
 #	if filters.get("owner"): conditions += " and a.owner = %(owner)s"
 #	if filters.get("pos_profile"): conditions += " and a.is_pos = %(pos_profile)s"
 #	if filters.get("status"): conditions += " and a.status = %(status)s"
@@ -52,8 +51,12 @@ def get_cargo_stoc_reconciliation(filters):
 	conditions = get_conditions(filters)
 	return frappe.db.sql("""
 		select
-			name, cargo_type, cargo_description, container_no, yard_slot, 
-			chasis_no, mark, status, stock_date, stock_count, stock_take_by
+		name, cargo_type, cargo_description, container_no, yard_slot, 
+		chasis_no, mark, status, stock_date, stock_take_by, stock_count,
+		CASE
+    		WHEN stock_count = 0 THEN "No"
+    		WHEN stock_count = 1 THEN "Yes"
+		END
 		from `tabCargo`
 		where docstatus < 2
 			and {conditions}			

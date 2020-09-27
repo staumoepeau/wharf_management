@@ -13,7 +13,7 @@ frappe.ui.form.on('Custom Inspection', {
             $(".timeline").hide()
             frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
         }
-        if (frappe.user.has_role("System Manager")) {
+        if (frappe.user_roles.includes("System Manager")) {
             frm.page.sidebar.show(); // this removes the sidebar
             $(".timeline").show()
             frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");

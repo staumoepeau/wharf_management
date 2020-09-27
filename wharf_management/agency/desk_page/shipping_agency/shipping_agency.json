@@ -12,7 +12,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Shipping Agency",
- "modified": "2020-09-14 17:51:37.088080",
+ "modified": "2020-09-26 06:20:06.731503",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Shipping Agency",
@@ -34,6 +34,12 @@
    "label": "Check Cargo",
    "link_to": "Check Cargo",
    "type": "Report"
+  },
+  {
+   "icon": "fa fa-check-square-o",
+   "label": "Check Cargo Fees",
+   "link_to": "Check Cargo Fees",
+   "type": "DocType"
   }
  ]
 }

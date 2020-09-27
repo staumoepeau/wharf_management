@@ -9,6 +9,7 @@ import frappe.defaults
 from frappe.model.document import Document
 from frappe.utils import cstr, flt, fmt_money, formatdate
 from frappe import msgprint, _, scrub
+from wharf_management.wharf_management.utils import get_create_cargo
 
 class Gate2(Document):
 	
@@ -47,6 +48,7 @@ class Gate2(Document):
 		
 		if self.cargo_type in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
 			vals = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no, "cargo_ref": self.cargo_ref}, ["refrence"], as_dict=True)
+			val = frappe.db.get_value("Cargo", {"container_no": self.container_no, "cargo_ref": self.cargo_ref}, ["last_port"], as_dict=True)
 
 			if not vals.refrence:
 				frappe.db.sql("""UPDATE `tabCargo Movement` 
@@ -59,6 +61,9 @@ class Gate2(Document):
 				SET main_gate_status='OUT', main_gate_content=%s, main_gate_date=%s, main_gate_time=%s, 
 				truck=%s, truck_driver=%s WHERE refrence=%s""", 
 				(gate_content, self.modified, self.modified, self.truck_licenses_plate, self.drivers_information, self.cargo_ref))
+			
+			if self.cargo_type == "Split Ports" and val.last_port == "YES":
+    				get_create_cargo(self.cargo_ref, "Loading", " ", self.cargo_type)
 		
 		if self.cargo_type not in ["Container", "Tank Tainer", "Split Ports", "Tanker"]:
 			frappe.db.sql("""UPDATE `tabCargo Movement` 

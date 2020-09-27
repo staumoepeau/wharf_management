@@ -121,6 +121,27 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-primary");
         }
 
+        // Create Button for the Split Port INWARD
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
+                frm.doc.gate2_status == "Open" &&
+                frm.doc.gate1_status == "Open" &&
+                frm.doc.payment_status == "Closed" &&
+                frm.doc.yard_status == "Open" &&
+                frm.doc.inspection_status == "Open" &&
+                frm.doc.cargo_type == "Split Port" &&
+                frm.doc.last_port == "YES"
+            )) {
+
+            frm.add_custom_button(__('Main Gate'), function() {
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name,
+                    "mydoctype": "CARGO"
+                }
+                frappe.new_doc("Gate2");
+                frappe.set_route("Form", "Gate2", doc.name);
+            }).addClass("btn-primary");
+        }
+
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.gate2_status != "Closed" &&
             frm.doc.gate1_status != "Closed" &&

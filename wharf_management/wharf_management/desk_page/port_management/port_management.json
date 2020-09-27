@@ -17,6 +17,11 @@
   },
   {
    "hidden": 0,
+   "label": "Export",
+   "links": "[\n    {\n        \"description\": \"Export\",\n        \"label\": \"Export\",\n        \"name\": \"Export\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
    "label": "Warehouse",
    "links": "[\n    {\n        \"description\": \"Cargo Warehouse\",\n        \"label\": \"Cargo Warehouse\",\n        \"name\": \"Cargo Warehouse\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Inspection\",\n        \"label\": \"Warehouse Inspection\",\n        \"name\": \"Warehouse Inspection\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
@@ -63,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-09-24 11:07:06.544832",
+ "modified": "2020-09-27 20:00:17.522815",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -78,6 +83,14 @@
    "label": "Cargo at the Yard",
    "link_to": "Cargo",
    "stats_filter": "{\"status\":\"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4d4da8",
+   "format": "{}",
+   "label": "Split Ports",
+   "link_to": "Cargo",
+   "stats_filter": "{ \"status\": \"Split Ports\", \"last_port\": \"NO\" }",
    "type": "DocType"
   },
   {
@@ -159,9 +172,9 @@
   },
   {
    "icon": "fa fa-check-square-o",
-   "label": "Check Cargo",
-   "link_to": "Check Cargo",
-   "type": "Report"
+   "label": "Check Cargo Fees",
+   "link_to": "Check Cargo Fees",
+   "type": "DocType"
   },
   {
    "icon": "fa fa-braille",

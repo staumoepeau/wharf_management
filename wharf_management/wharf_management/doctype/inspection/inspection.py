@@ -7,6 +7,8 @@ import frappe, erpnext, json
 from frappe import msgprint, _, scrub
 from frappe.model.document import Document
 from frappe.utils import cstr, formatdate, cint, getdate, date_diff, add_days, now
+from wharf_management.wharf_management.utils import get_create_cargo
+
 
 class Inspection(Document):
 
@@ -16,7 +18,6 @@ class Inspection(Document):
 
     def on_submit(self):
         self.check_work_type()
-    
 
 
     def check_work_type(self):
@@ -39,9 +40,11 @@ class Inspection(Document):
             self.create_cargo()
             self.update_restow_status()
 
-        elif self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type:
-            self.check_discharged_split_port()
+        elif self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type and self.cargo_type != "Split Ports":
+            self.update_inspection_status()
 
+        elif self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type and self.cargo_type == "Split Ports":
+            self.check_discharged_split_port()
 
 #        if self.final_work_type == "Devanning" and not self.secondary_work_type and not self.third_work_type:
 #            self.update_inspection_status()
@@ -50,6 +53,7 @@ class Inspection(Document):
             self.loading_restowing()
             self.moveto_preadvise_history()
 
+        if self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and self.work_information == "Split Port":
             if self.cargo_type == "Split Ports" and self.last_port == "NO":
                 self.create_cargo_item()
                 self.update_final_status()
@@ -68,14 +72,14 @@ class Inspection(Document):
 #            self.create_empty_on_cargo()
     
     def check_discharged_split_port(self):
-        if self.cargo_type != "Split Ports":
-            self.update_inspection_status()
-        if self.cargo_type == "Split Ports" and self.last_port == "NO":
+        if self.last_port == "NO":
             self.create_cargo()
-            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Open", status="Booked", final_status="Loading", work_type="Loading", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
-#           self.update_inspection_status()
-        if self.cargo_type == "Split Ports" and self.last_port == "YES":
-            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Open", status="Booked", final_status="Loading",
+            work_information="Split Port", work_type="Loading", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
+
+        if self.last_port == "YES":
+            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Closed", final_status="Discharged", 
+            status="Inspection", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.file_attach, self.cargo_condition, self.cargo_ref))
 #            self.update_inspection_status()
 
 
@@ -89,7 +93,8 @@ class Inspection(Document):
                 msgprint(_("Crane No is Manadory").format(self.crane_no), raise_exception = 1)
     
     def update_restow_status(self):
-        frappe.db.sql("""UPDATE `tabPre Advice` SET work_type='Loading', secondary_work_type=' ', work_information='Re-stowing', status='Booked' WHERE name=%s""", (self.cargo_ref))
+        frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Open", work_type='Loading', secondary_work_type=' ', 
+        work_information='Re-stowing', status='Booked' WHERE name=%s""", (self.cargo_ref))
 
     def loading_restowing(self):
         frappe.db.sql("""UPDATE `tabCargo` SET last_work="Loading", last_work_date=%s WHERE cargo_ref=%s""", (now(), self.cargo_ref))
@@ -118,20 +123,24 @@ class Inspection(Document):
 #        frappe.db.sql("""UPDATE `tabPre Advice` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Discharged", status="Transfer" where name=%s""", (self.cargo_ref))
  #        frappe.db.sql("""Update `tabPre Advice` set secondary_work_type="Devanning " where name=%s""", (self.cargo_ref))
 
+# Ceare Cargo Item for Res-Stowing,
     def create_cargo(self):
-        worktype,movement,payment,gate = "", "", "", ""
-        val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
-        "container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
-        "status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+
+        get_create_cargo(self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type)
+
+#        worktype,movement,payment,gate = "", "", "", ""
+#        val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
+#        "container_type","mark","final_dest_port","volume","container_size","consignee","container_content","stowage","hazardous","hazardous_code",
+#        "status","seal_1","seal_2","eta_date","cargo_description","etd_date","chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
         
-        if not val.consignee:
-            consignee = val.agents
+#        if not val.consignee:
+#            val.consignee = val.agents
         
-        if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing":
-            worktype = "Re-stowing"
-            movement = "Re-stowing"
-            payment = "Closed"
-            gate = "Closed"
+#        if self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing":
+#            worktype = "Re-stowing"
+#            movement = "Re-stowing"
+#            payment = "Closed"
+#            gate = "Closed"
        
 #            elif self.secondary_work_type == "Transhipment":
 #                worktype = "Transhipment"
@@ -139,66 +148,61 @@ class Inspection(Document):
 #                payment = "Closed"
 #                gate = "Closed"
 
-        elif not self.secondary_work_type and self.cargo_type == "Split Ports":
-            worktype = self.final_work_type
-            movement = "Split Ports"
-            payment = "Open"
-            gate = "Open"
-#       elif self.final_work_type == "Re-stowing":
-#                worktype = "Re-stowing"
-#                movement = "Outbound"
-#                payment = "Closed"
-#                gate = "Closed"
-
-        doc = frappe.new_doc("Cargo")
-        doc.update({
-                    "docstatus" : 1,
-                    "cargo_ref": self.cargo_ref,
-                    "booking_ref" : val.booking_ref,
-                    "pat_code" : val.pat_code,
-                    "net_weight" : val.net_weight,
-                    "cargo_type" : val.cargo_type,
-                    "qty" : val.qty,
-                    "container_no" : val.container_no,
-                    "voyage_no" : val.voyage_no,
-                    "bol" : val.bol,
-                    "work_type" : self.final_work_type,
-                    "work_type_date": now(),
-                    "secondary_work_type" : worktype,
-                    "pol" : val.pol,
-                    "agents" : val.agents,
-                    "commodity_code" : val.commodity_code,
-                    "vessel" : val.vessel,
-                    "pod" : val.pod,
-                    "temperature" : val.temperature,
-                    "container_type" : val.container_type,
-                    "mark" : val.mark,
-                    "final_dest_port" : val.final_dest_port,
-                    "volume" : val.volume,
-                    "container_size" : val.container_size,
-                    "consignee" : consignee,
-                    "container_content" : val.container_content,
-                    "stowage" : val.stowage,
-                    "hazardous" : val.hazardous,
-                    "hazardous_code" : val.hazardous_code,
-                    "status" : movement,
-                    "seal_1" : val.seal_1,
-                    "seal_2" : val.seal_2,
-                    "eta_date" : val.eta_date,
-                    "cargo_description" : val.cargo_description,
-                    "etd_date" : val.etd_date,
-                    "chasis_no" : val.chasis_no,
-                    "inspection_status" : "Closed",
-                    "yard_status" : "Closed",
-                    "final_status" : self.final_work_type,
-                    "payment_status" : payment,
-                    "gate1_status" : gate,
-                    "gate2_status" : gate,
+#        elif self.cargo_type == "Split Ports":
+#            worktype = self.secondary_work_type
+#            movement = "Split Ports"
+#            payment = "Open"
+#            gate = "Open"
 
 
-                })
-        doc.insert(ignore_permissions=True)
-        doc.submit()
+#       doc = frappe.new_doc("Cargo")
+#        doc.update({
+            
+#                    "docstatus" : 1,
+#                    "cargo_ref": self.cargo_ref,
+#                    "booking_ref" : val.booking_ref,
+#                    "pat_code" : val.pat_code,
+#                    "net_weight" : val.net_weight,
+#                    "cargo_type" : val.cargo_type,
+#                    "qty" : val.qty,
+#                    "container_no" : val.container_no,
+#                    "voyage_no" : val.voyage_no,
+#                    "bol" : val.bol,
+#                    "work_type" : self.final_work_type,
+#                    "work_type_date": now(),
+#                    "secondary_work_type" : worktype,
+#                    "pol" : val.pol,
+#                    "agents" : val.agents,
+#                    "commodity_code" : val.commodity_code,
+#                    "vessel" : val.vessel,
+#                    "pod" : val.pod,
+#                    "temperature" : val.temperature,
+#                    "container_type" : val.container_type,
+#                    "mark" : val.mark,
+#                    "final_dest_port" : val.final_dest_port,
+#                    "volume" : val.volume,
+#                    "container_size" : val.container_size,
+#                    "consignee" : val.consignee,
+#                    "container_content" : val.container_content,
+#                    "stowage" : val.stowage,
+#                    "hazardous" : val.hazardous,
+#                    "hazardous_code" : val.hazardous_code,
+#                    "status" : movement,
+#                    "seal_1" : val.seal_1,
+#                    "seal_2" : val.seal_2,
+#                    "eta_date" : val.eta_date,
+#                    "cargo_description" : val.cargo_description,
+#                    "etd_date" : val.etd_date,
+#                    "chasis_no" : val.chasis_no,
+#                    "inspection_status" : "Closed",
+#                    "yard_status" : "Closed",
+#                    "final_status" : self.final_work_type,
+#                    "payment_status" : payment,
+#                    "gate1_status" : gate,
+#                    "gate2_status" : gate,
+#                })
+#        doc.insert(ignore_permissions=True)
+#        doc.submit()
 
     def create_transhipment_cargo(self):
         val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty",
@@ -571,7 +575,7 @@ class Inspection(Document):
         if container_number:
             frappe.db.sql("""delete from `tabTranshipment Cargo` where container_no=%s""", self.container_no)
 
-
+# Move Pre Advice Transaction to Pre Advice History
     def moveto_preadvise_history(self):
 
         val = frappe.db.get_value("Pre Advice", {"name": self.cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","qty","container_no","voyage_no","bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature",
@@ -626,5 +630,3 @@ class Inspection(Document):
         doc.insert(ignore_permissions=True)
         doc.submit()      
         frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
-#        frappe.throw(_("Delete"))
-#        frappe.db.sql("""DELETE FROM `tabPre Advice` WHERE name=%s""", (self.cargo_ref))
