@@ -31,18 +31,18 @@ frappe.ui.form.on('Wharf Payment Entry', {
 
     validate: function(frm) {
 
-        var cur_doc = frm.doc
-        $(frm.fields_dict["barcode_image"].wrapper).html("<svg id='code128'></svg>");
-        JsBarcode("#code128", cur_doc.name, {
-            height: 35,
-            fontSize: 14,
-            textAlign: "center",
-            lineColor: "#36414c",
-            width: 1,
-            margin: 0
-        });
-        var svg = $('#code128').parent().html();
-        frappe.model.set_value(cur_doc.doctype, cur_doc.name, "barcode_svg", svg);
+        //    var cur_doc = frm.doc
+        //    $(frm.fields_dict["barcode_image"].wrapper).html("<svg id='code128'></svg>");
+        //    JsBarcode("#code128", cur_doc.name, {
+        //        height: 35,
+        //        fontSize: 14,
+        //        textAlign: "center",
+        //        lineColor: "#36414c",
+        //        width: 1,
+        //        margin: 0
+        //    });
+        //    var svg = $('#code128').parent().html();
+        //   frappe.model.set_value(cur_doc.doctype, cur_doc.name, "barcode_svg", svg);
 
     },
     onload: function(frm) {
@@ -290,6 +290,7 @@ frappe.ui.form.on("Wharf Fee Item", {
         frm.set_value("total_amount", total);
         cur_frm.refresh();
     },
+
     discount: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
 
@@ -308,24 +309,23 @@ frappe.ui.form.on("Wharf Fee Item", {
 
         frappe.model.set_value(d.doctype, d.name, "total", (d.price * d.qty) - ((d.price * d.qty) * (d.discount_percent / 100)));
         frappe.model.set_value(d.doctype, d.name, "discount", ((d.price * d.qty) * (d.discount_percent / 100)));
-
         var total = 0;
         frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
-
         frm.set_value("net_total", total);
         frm.set_value("total_amount", total);
         cur_frm.refresh();
     },
+
+
     total: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
         frappe.model.set_value(d.doctype, d.name, "net_total", d.total);
         var total_fees = 0;
         frm.doc.wharf_fee_item.forEach(function(i) { total_fees += i.total; });
-
         frm.set_value("net_total", total_fees);
         frm.set_value("total_amount", total);
-
     },
+
     wharf_fee_item_remove: function(frm, cdt, cdn) {
         var total = 0;
         frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
@@ -415,7 +415,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 }
             })
 
-            var cargo_c = ["Container", "Tank Tainers", "Split Ports"];
+            var cargo_c = ["Container", "Tank Tainers"];
             if (cargo_c.includes(d.cargo_type)) {
                 frappe.call({
                     "method": "frappe.client.get",
@@ -446,6 +446,29 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 })
             }
             if (d.cargo_type == "Flatrack") {
+                frappe.call({
+                    "method": "frappe.client.get",
+                    args: {
+                        doctype: "Wharf Fees",
+                        filters: {
+                            wharf_fee_category: "Wharfage Fee",
+                            cargo_type: d.cargo_type,
+                            container_size: d.container_size,
+                        }
+                    },
+                    callback: function(data) {
+                        frappe.model.set_value(d.doctype, d.name, "wharfage_item_code", data.message["item_name"]);
+                        frappe.model.set_value(d.doctype, d.name, "wharfage_fee_price", data.message["fee_amount"]);
+                        if (d.net_weight > d.volume) {
+                            frappe.model.set_value(d.doctype, d.name, "wharfage_fee", (data.message["fee_amount"] * d.net_weight));
+                        }
+                        if (d.net_weight < d.volume) {
+                            frappe.model.set_value(d.doctype, d.name, "wharfage_fee", (data.message["fee_amount"] * d.volume));
+                        }
+                    }
+                })
+            }
+            if (d.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {

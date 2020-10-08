@@ -12,7 +12,6 @@ from frappe.model.document import Document
 class WharfPaymentEntry(Document):
 
     def on_submit(self):  
-        
         if self.reference_doctype == "Cargo":
             self.check_warrant_number()
             self.check_duplicate_warrant_number()
@@ -97,6 +96,7 @@ def get_wharfage_fees(docname):
             WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles") THEN CASE WHEN docB.net_weight > docB.volume THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
             WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
             WHEN docB.cargo_type = "Tank Tainers" THEN Sum(docB.litre/1000)
+            WHEN docB.cargo_type = "Spilt Ports" THEN CASE WHEN docB.net_weight > docB.volume THEN Sum(docB.net_weight) ELSE Sum(docB.volume)
         END AS qty,
         Sum(docB.wharfage_fee) as total
 		from `tabCargo References` as docB, `tabWharf Fees` as docA

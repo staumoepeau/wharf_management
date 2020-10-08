@@ -16,6 +16,14 @@ from jinja2 import Environment, FunctionLoader
 @frappe.whitelist()
 def get_items():
     items = []
-  
-    items = frappe.db.sql("SELECT `tabYard Settings`.name, `tabCargo`.status, `tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size FROM `tabYard Settings` LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot ORDER BY `tabYard Settings`.yard_slot" , as_dict=True)
+
+    items = frappe.db.sql("""SELECT `tabYard Settings`.name, `tabCargo`.status, `tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, 
+        `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous
+        FROM `tabYard Settings` 
+        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot
+        ORDER BY `tabYard Settings`.yard_slot""" , as_dict=True)
     return items
+
+#    yardlist = frappe.db.sql("""SELECT `tabYard Settings`.yard_section FROM `tabYard Settings` """, as_dict=True)
+
+#    return yardlist

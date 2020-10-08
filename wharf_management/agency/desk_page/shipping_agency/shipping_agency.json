@@ -12,7 +12,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Shipping Agency",
- "modified": "2020-09-26 06:20:06.731503",
+ "modified": "2020-09-28 11:13:19.609826",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Shipping Agency",
@@ -28,12 +28,6 @@
    "link_to": "Booking Request",
    "stats_filter": "{\"status\":\"Pending\"}",
    "type": "DocType"
-  },
-  {
-   "icon": "fa fa-check-square-o",
-   "label": "Check Cargo",
-   "link_to": "Check Cargo",
-   "type": "Report"
   },
   {
    "icon": "fa fa-check-square-o",

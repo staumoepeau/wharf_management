@@ -32,6 +32,15 @@ frappe.ui.form.on('Gate1', {
 
     onload: function(frm) {
 
+
+        let is_allowed = frappe.user_roles.includes('System Manager', 'Cargo Operation Manager');
+        frm.toggle_enable(['mydoctype', 'cargo_ref', 'container_no', 'customer', 'delivery_code', 'custom_code', 'custom_warrant',
+            'cargo_type', 'cargo_description', 'chasis_no', 'container_content', 'status', 'work_type',
+        ], is_allowed);
+
+
+        frm.toggle_display(['cargo_ref', 'in_reference', 'work_type', 'mydoctype'], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User'));
+
         if (frm.doc.docstatus != 1) {
 
             if (!frm.doc.truck_licenses_plate) {
@@ -51,29 +60,35 @@ frappe.ui.form.on('Gate1', {
                     },
                     callback: function(data) {
 
-                        cur_frm.set_df_property("mydoctype", "read_only", 1);
-                        cur_frm.set_df_property("cargo_ref", "read_only", 1);
-                        cur_frm.set_df_property("container_no", "read_only", 1);
-                        cur_frm.set_df_property("customer", "read_only", 1);
-                        cur_frm.set_df_property("delivery_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_warrant", "read_only", 1);
+                        if (data.message["cargo_type"] == "Split Ports" && data.message["last_port"] == "NO" && data.message["status"] != "Paid") {
+                            frm.set_value("cargo_type", data.message["cargo_type"]);
+                            frm.set_value("warrant_no", data.message["custom_warrant"]);
+                            frm.set_value("delivery_code", data.message["delivery_code"]);
+                            frm.set_value("custom_code", data.message["custom_code"]);
 
-                        cur_frm.set_df_property("cargo_type", "read_only", 1);
-                        cur_frm.set_df_property("cargo_description", "read_only", 1);
-                        cur_frm.set_df_property("chasis_no", "read_only", 1);
-                        cur_frm.set_df_property("container_content", "read_only", 1);
-
-                        cur_frm.set_df_property("status", "hidden", 1);
-                        cur_frm.set_df_property("work_type", "hidden", 1);
+                            frappe.call({
+                                "method": "frappe.client.get",
+                                args: {
+                                    doctype: "Gate2",
+                                    cargo_ref: frm.doc.cargo_ref,
+                                    filters: {
+                                        'docstatus': 1
+                                    },
+                                },
+                                callback: function(data) {
+                                    frm.set_value("truck_licenses_plate", data.message["truck_licenses_plate"]);
+                                    frm.set_value("company", data.message["company"]);
+                                    frm.set_value("drivers_information", data.message["drivers_information"]);
+                                    frm.set_value("in_reference", data.message["name"]);
+                                }
+                            });
+                        }
 
                         if ((frm.doc.cargo_type == "Loose Cargo") || (frm.doc.cargo_type == "Break Bulk")) {
                             cur_frm.set_df_property("qty", "hidden", 0);
                         } else {
                             cur_frm.set_df_property("qty", "hidden", 1);
                         }
-
-
                     }
                 })
             }
@@ -94,27 +109,7 @@ frappe.ui.form.on('Gate1', {
                         //                        cur_frm.set_value("agents", data.message["agents"]);
                         cur_frm.set_value("cargo_type", data.message["cargo_type"]);
                         cur_frm.set_value("container_content", data.message["container_content"]);
-                        //                        cur_frm.set_value("pat_code", data.message["pat_code"]);
 
-                        cur_frm.set_df_property("mydoctype", "read_only", 1);
-                        cur_frm.set_df_property("cargo_ref", "read_only", 1);
-                        cur_frm.set_df_property("delivery_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_warrant", "read_only", 1);
-                        cur_frm.set_df_property("warrant_no", "read_only", 1);
-                        cur_frm.set_df_property("custom_code_section", "hidden", 1);
-                        cur_frm.set_df_property("status", "hidden", 1);
-                        cur_frm.set_df_property("work_type", "hidden", 1);
-                        cur_frm.set_df_property("chasis_no", "hidden", 1);
-                        cur_frm.set_df_property("container_no", "read_only", 1);
-                        cur_frm.set_df_property("customer", "read_only", 1);
-                        cur_frm.set_df_property("delivery_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_code", "read_only", 1);
-                        cur_frm.set_df_property("custom_warrant", "read_only", 1);
-                        cur_frm.set_df_property("cargo_type", "read_only", 1);
-                        cur_frm.set_df_property("cargo_description", "read_only", 1);
-                        cur_frm.set_df_property("chasis_no", "read_only", 1);
-                        cur_frm.set_df_property("container_content", "read_only", 1);
                         cur_frm.set_df_property("qty", "hidden", 1);
 
                     }

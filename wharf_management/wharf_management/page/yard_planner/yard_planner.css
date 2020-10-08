@@ -1,142 +1,185 @@
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.cargo {
+    min-height: calc(100vh - 252px);
+    background-color: #fafbfc;
+    display: flex;
+    overflow: auto;
+}
+
+.cargo .cargo-column {
+    flex: 0 0 230px;
+    max-width: 230px;
+    background-color: #fafbfc;
+    border-right: 1px solid #d1d8dd;
+    padding: 15px;
+}
+
+.cargo .cargo-column.add-new-column {
+    order: 1;
+    border-right: none;
+}
+
+.cargo .cargo-column-title {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 15px;
+    position: relative;
+    font-weight: bold;
+    font-size: 12px;
 }
 
-p {
-    margin-top: 0;
-    margin-bottom: 1rem;
+.cargo .cargo-column-title .column-options .button-group {
+    display: flex;
+    padding: 12px 14px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-    margin-bottom: 0.5rem;
-    font-family: inherit;
-    font-weight: 500;
-    line-height: 1.2;
-    color: inherit;
+.cargo .cargo-column-title .column-options .button-group .btn.indicator {
+    flex: 1;
 }
 
-h1,
-.h1 {
-    font-size: 2.5rem;
+.cargo .cargo-column-title .column-options .indicator::before {
+    margin: 0;
 }
 
-h2,
-.h2 {
-    font-size: 2rem;
+.cargo .cargo-column-title:hover {
+    cursor: pointer;
 }
 
-h3,
-.h3 {
-    font-size: 1.75rem;
+.cargo .sortable-ghost>.cargo-card:not(.add-card) {
+    background: #ccc !important;
+    color: transparent;
 }
 
-h4,
-.h4 {
-    font-size: 1.5rem;
+.cargo .sortable-ghost>.cargo-card:not(.add-card) * {
+    background: transparent !important;
+    color: transparent !important;
 }
 
-h5,
-.h5 {
-    font-size: 1.25rem;
+.cargo .cargo-card {
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    padding: 6px 6px 6px 8px;
+    margin-top: 10px;
 }
 
-h6,
-.h6 {
-    font-size: 0.85rem;
+.cargo .cargo-card.add-card {
+    background-color: transparent;
+    box-shadow: none;
+    color: #8D99A6;
 }
 
-img {
-    max-width: 115%;
+.cargo .cargo-card.add-card:hover {
+    box-shadow: none;
+    color: #36414C;
+    cursor: pointer;
 }
 
-.row {
-    margin-right: -15px;
-    margin-left: -15px;
-    padding-bottom: 5px;
-    padding-top: 5px;
+.cargo .cargo-card.add-card .octicon-plus {
+    top: -1px;
+    font-size: 1em;
+    margin-right: 5px;
+    position: relative;
 }
 
-.border {
-    border: 1px solid #d1d8dd;
+.cargo .cargo-card-wrapper {
+    position: relative;
 }
 
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+.cargo .cargo-card:hover,
+.cargo .new-card-area,
+.cargo .edit-card-area {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cargo .cargo-card-wrapper:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cargo .cargo-card-wrapper:hover .cargo-card-edit {
+    opacity: 1;
+}
+
+.cargo .cargo-card-title {
+    max-width: 90%;
+    font-size: 12px;
+}
+
+.cargo .cargo-card-edit {
+    position: absolute;
+    right: 10px;
+    opacity: 0;
+    transition: 0.2s ease;
+}
+
+.cargo .new-card-area,
+.cargo .edit-card-area {
+    margin-bottom: 10px;
+}
+
+.cargo .new-card-area textarea,
+.cargo .edit-card-area textarea {
+    font-size: 12px;
+    resize: none;
+    border: none;
+    background: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.cargo .new-card-area textarea:focus,
+.cargo .edit-card-area textarea:focus {
+    outline: none;
+}
+
+.cargo .compose-column-form .new-column-title {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.cargo .add-new-column a:hover {
+    color: #36414C !important;
+}
+
+.cargo .cargo-card-meta {
+    margin-top: 8px;
+    text-align: right;
+}
+
+.cargo .cargo-card-meta .avatar {
+    width: 16px;
+    height: 16px;
+}
+
+.cargo .cargo-empty-state {
+    width: 100%;
+    line-height: 400px;
+}
+
+body[data-route*="cargo"] .modal .add-assignment:hover i {
+    color: #36414C !important;
+}
+
+.edit-card-title .h4 {
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.shipping_container {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+.edit-card-title span:hover {
+    background-color: #fffce7;
+    cursor: pointer;
 }
 
-.shipping_container-img {
-    width: 105%!important;
-    height: 100%!important;
-    object-fit: cover;
-    padding-bottom: 2px;
-    padding-top: 2px;
+.edit-card-title input {
+    border: none;
+    outline: none;
+    width: 100%;
 }
 
-.shipping_container-img-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 115%!important;
-    height: 100%!important;
-    padding: .70rem;
-}
-
-.shipping_container-title {
-    margin-top: 0.5px;
-}
-
-.text-center {
-    text-align: center !important;
-}
-
-.text-white {
-    color: #fff !important;
-}
-
-.text-red {
-    color: red !important;
-}
-
-.pt-3,
-.py-3 {
-    padding-top: 3rem !important;
+.container_svg {
+    width: 115;
+    height: 50
 }
 
 .yard-planner {
@@ -157,48 +200,11 @@ img {
     margin-left: auto;
 }
 
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 100px;
-    grid-gap: 10px;
-}
-
-.pat_container-yard {
-    float: left;
-    width: 100%;
-    height: 40px;
-    margin: 5px;
-    padding: 1px;
-    border: 1px solid blue;
-    box-shadow: 3px 3px blue;
-}
-
-.pat_container {
-    float: left;
-    width: 100%;
-    height: 40px;
-    margin: 5px;
-    padding: 1px;
-    border: 1px solid #aaaaaa;
-}
-
-.pat_container-paid {
-    float: left;
-    width: 100%;
-    height: 40px;
-    margin: 5px;
-    padding: 3px;
-    border: 1px solid green;
-    box-shadow: 3px 3px green;
-}
-
-.pat_container-inspection {
-    float: left;
-    width: 100%;
-    height: 40px;
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid green;
-    box-shadow: 3px 3px orange;
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 5px;
 }

@@ -10,28 +10,24 @@
   "yard_inspection",
   "section_break_10",
   "yard_slot",
-  "column_break_16",
   "yard_time_stamp",
   "column_work_type",
   "work_type",
+  "secondary_work_type",
   "section_break_2",
   "cargo_ref",
-  "column_break_5",
   "voyage_no",
   "column_break_2",
   "vessel",
-  "column_break_4",
   "eta_date",
   "section_break_6",
   "consignee",
   "cargo_type",
-  "column_break_8",
   "bol",
   "column_break_12",
   "container_no",
   "chasis_no",
   "status",
-  "column_break_22",
   "amended_from"
  ],
  "fields": [
@@ -57,10 +53,6 @@
    "label": "Cargo Refence"
   },
   {
-   "fieldname": "column_break_5",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "voyage_no",
    "fieldtype": "Data",
    "label": "Voyage No"
@@ -73,10 +65,6 @@
    "fieldname": "vessel",
    "fieldtype": "Data",
    "label": "Vessel"
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "eta_date",
@@ -97,10 +85,6 @@
    "fieldname": "cargo_type",
    "fieldtype": "Data",
    "label": "Cargo Type"
-  },
-  {
-   "fieldname": "column_break_8",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "bol",
@@ -133,10 +117,6 @@
    "options": "Yard Settings"
   },
   {
-   "fieldname": "column_break_16",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "yard_time_stamp",
    "fieldtype": "Datetime",
    "label": "Yard Time Stamp",
@@ -153,10 +133,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_22",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "work_type",
    "fieldtype": "Data",
    "label": "Loading/Discharged",
@@ -170,13 +146,19 @@
    "options": "Yard",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "secondary_work_type",
+   "fieldtype": "Data",
+   "label": "Secondary Work Type"
   }
  ],
  "hide_toolbar": 1,
  "in_create": 1,
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-26 02:47:28.030952",
+ "modified": "2020-10-01 19:40:35.686817",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard",

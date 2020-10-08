@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "allow_import": 1,
  "autoname": "field:yard_slot",
  "creation": "2019-11-15 06:13:18.339345",
@@ -6,9 +7,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "yard_slot",
   "yard_section",
+  "yard_slot_number",
+  "yard_slot",
   "column_break_4",
+  "yard_sub_section",
+  "occupy",
   "amended_from"
  ],
  "fields": [
@@ -16,10 +20,9 @@
    "fieldname": "yard_slot",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Yard Slot",
-   "reqd": 1,
+   "read_only": 1,
    "unique": 1
   },
   {
@@ -32,8 +35,13 @@
    "read_only": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "yard_section",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Yard Section",
    "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL",
    "reqd": 1
@@ -41,9 +49,41 @@
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "0",
+   "fieldname": "occupy",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Occupy"
+  },
+  {
+   "fieldname": "yard_sub_section",
+   "fieldtype": "Read Only",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Yard Sub Section"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "yard_slot_number",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Yard Slot Number",
+   "reqd": 1
   }
  ],
- "modified": "2020-07-19 16:00:26.174073",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2020-10-05 07:02:10.791194",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard Settings",
@@ -81,6 +121,16 @@
    "read": 1,
    "report": 1,
    "role": "Wharf Operation User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Yard Inspection User",
    "share": 1,
    "write": 1
   }

@@ -33,7 +33,7 @@
   {
    "hidden": 0,
    "label": "Settings",
-   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Settings Setup\",\n        \"label\": \"Yard Settings Setup\",\n        \"name\": \"Yard Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -44,11 +44,6 @@
    "hidden": 0,
    "label": "Reports",
    "links": "[\n    {\n        \"dependencies\": [\n            \"Cargo Movement\"\n        ],\n        \"doctype\": \"Cargo Movement\",\n        \"is_query_report\": true,\n        \"label\": \"Cargo Movement Report\",\n        \"name\": \"Cargo Movement\",\n        \"type\": \"report\"\n        \n    },\n    {\n        \"dependencies\": [\n            \"Booking Request\"\n        ],\n        \"doctype\": \"Vessels Report\",\n        \"is_query_report\": true,\n        \"label\": \"Vessels Report\",\n        \"name\": \"Vessels Report\",\n        \"type\": \"report\"\n    }\n]"
-  },
-  {
-   "hidden": 0,
-   "label": "Transaction History",
-   "links": "[\n    {\n        \"description\": \"Pre Advise History\",\n        \"label\": \"Pre Advise History\",\n        \"name\": \"Pre Advise History\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -68,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-09-27 20:00:17.522815",
+ "modified": "2020-10-06 10:49:54.103716",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -99,14 +94,6 @@
    "label": "Cargo Already Paid",
    "link_to": "Cargo",
    "stats_filter": "{\"status\":\"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#5e3aa8",
-   "format": "{}",
-   "label": "Booked",
-   "link_to": "Pre Advice",
-   "stats_filter": "{\"status\": \"Booked\"}",
    "type": "DocType"
   },
   {
@@ -198,6 +185,39 @@
    "label": "Security Gate 1",
    "link_to": "Cargo",
    "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
+   "type": "DocType"
+  },
+  {
+   "color": "#ff7846",
+   "format": "{} Booked",
+   "icon": "fa fa-cube",
+   "label": "Booked",
+   "link_to": "Pre Advice",
+   "stats_filter": "{ \"status\":\"Booked\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4f8ea8",
+   "format": "{} Inspection",
+   "icon": "fa fa-codepen",
+   "label": "Inspection",
+   "link_to": "Pre Advice",
+   "stats_filter": "{\"status\": \"Inspection\"}",
+   "type": "DocType"
+  },
+  {
+   "icon": "fa fa-caret-square-o-down",
+   "label": "Discharged",
+   "link_to": "Pre Advice",
+   "stats_filter": "{\"status\": \"Booked\", \"work_type\":\"Discharged\"}",
+   "type": "DocType"
+  },
+  {
+   "format": "{}",
+   "icon": "fa fa-caret-square-o-up",
+   "label": "Loading",
+   "link_to": "Pre Advice",
+   "stats_filter": "{\"status\": \"Booked\", \"work_type\": \"Loading\"}",
    "type": "DocType"
   }
  ],

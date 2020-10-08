@@ -8,6 +8,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "cargo_header",
   "company",
   "cargo_ref",
   "naming_series",
@@ -44,14 +45,13 @@
   "pod",
   "column_break_25",
   "final_dest_port",
+  "last_port",
   "cargo_details",
   "consignee",
   "column_yard",
-  "master_bol",
-  "column_break_32",
   "bol",
-  "column_break_45",
-  "last_port",
+  "column_break_32",
+  "master_bol",
   "cargo_details_section",
   "cargo_type",
   "container_size",
@@ -80,7 +80,7 @@
   "hazardous_goods",
   "hazardous",
   "column_break_44",
-  "hazdardous_code",
+  "hazardous_code",
   "cargo_work_type_section",
   "work_type",
   "work_type_date",
@@ -114,13 +114,19 @@
   "stowage",
   "cargo_status",
   "inspection_status",
+  "inspection_date",
   "yard_status",
+  "yard_date",
   "column_break_67",
   "payment_status",
+  "payment_date",
   "gate1_status",
+  "gate1_date",
   "column_break_70",
   "gate2_status",
+  "gate2_date",
   "final_status",
+  "final_status_date",
   "status_section",
   "status",
   "column_break_75",
@@ -391,10 +397,6 @@
    "label": "Bill of Lading"
   },
   {
-   "fieldname": "column_break_45",
-   "fieldtype": "Column Break"
-  },
-  {
    "allow_on_submit": 1,
    "default": "NO",
    "fieldname": "last_port",
@@ -589,15 +591,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.hazardous == \"Yes\"",
-   "fieldname": "hazdardous_code",
-   "fieldtype": "Data",
-   "label": "Hazardous Code"
-  },
-  {
    "allow_on_submit": 1,
    "fieldname": "work_type",
    "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Primary Work",
    "options": "Work Type"
   },
@@ -793,7 +793,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nRe-stowing\nSplit Ports\nTranshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection\nInspection Delivered",
+   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nGate IN\nINWARD\nRe-stowing\nSplit Ports\nTransshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection\nInspection Delivered",
    "print_hide": 1
   },
   {
@@ -936,6 +936,7 @@
   {
    "fieldname": "cargo_ref",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Cargo References"
   },
   {
@@ -961,13 +962,54 @@
    "fieldname": "last_work_date",
    "fieldtype": "Datetime",
    "label": "Last Work Date"
+  },
+  {
+   "depends_on": "eval:doc.hazardous == \"Yes\"",
+   "fieldname": "hazardous_code",
+   "fieldtype": "Data",
+   "label": "Hazardous Code"
+  },
+  {
+   "fieldname": "cargo_header",
+   "fieldtype": "Section Break",
+   "label": "Cargo Information"
+  },
+  {
+   "fieldname": "inspection_date",
+   "fieldtype": "Datetime",
+   "label": "Inspection Date"
+  },
+  {
+   "fieldname": "yard_date",
+   "fieldtype": "Datetime",
+   "label": "Yard Date"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Datetime",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "gate1_date",
+   "fieldtype": "Datetime",
+   "label": "Gate 1 Date"
+  },
+  {
+   "fieldname": "gate2_date",
+   "fieldtype": "Datetime",
+   "label": "Gate2 Date"
+  },
+  {
+   "fieldname": "final_status_date",
+   "fieldtype": "Datetime",
+   "label": "Final Status Date"
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-27 19:56:49.427764",
+ "modified": "2020-10-07 14:29:31.286175",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

@@ -6,25 +6,15 @@
  "engine": "InnoDB",
  "field_order": [
   "cargo_ref",
+  "user",
+  "full_name",
+  "agents",
   "column_break_2",
   "today_date",
-  "column_break_1",
-  "cargo_type",
-  "container_content",
-  "column_break_4",
-  "container_no",
-  "container_size",
-  "chassis_no",
-  "mark",
-  "section_break_8",
-  "column_break_12",
-  "section_break_9",
-  "consignee",
-  "voyage_no",
-  "column_break_13",
-  "vessel",
-  "eta_date",
+  "section_break_4",
+  "cargo_references_table",
   "fees_details_section",
+  "update_fees",
   "wharf_fee_item",
   "section_break_24",
   "column_break_25",
@@ -35,59 +25,12 @@
   {
    "fieldname": "cargo_ref",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Cargo",
    "options": "Cargo"
   },
   {
    "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.cargo_type == \"Container\"",
-   "fetch_from": "cargo_ref.container_no",
-   "fieldname": "container_no",
-   "fieldtype": "Data",
-   "label": "Container No",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "cargo_ref.cargo_type",
-   "fieldname": "cargo_type",
-   "fieldtype": "Data",
-   "label": "Cargo Type",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.cargo_type == \"Vehicle\"",
-   "fetch_from": "cargo_ref.chasis_no",
-   "fieldname": "chassis_no",
-   "fieldtype": "Data",
-   "label": "Chassis No",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:(doc.cargo_type == \"Break Bulk\" || doc.cargo_type == \"Loose Cargo\") ",
-   "fetch_from": "cargo_ref.mark",
-   "fieldname": "mark",
-   "fieldtype": "Data",
-   "label": "Mark",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_8",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_9",
-   "fieldtype": "Section Break",
-   "label": "Customer Details"
-  },
-  {
-   "fieldname": "column_break_12",
    "fieldtype": "Column Break"
   },
   {
@@ -97,56 +40,8 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_13",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "cargo_ref.consignee",
-   "fieldname": "consignee",
-   "fieldtype": "Data",
-   "label": "Consignee",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.cargo_type == \"Container\"",
-   "fetch_from": "cargo_ref.container_content",
-   "fieldname": "container_content",
-   "fieldtype": "Data",
-   "label": "Container Content",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.cargo_type == \"Container\"",
-   "fetch_from": "cargo_ref.container_size",
-   "fieldname": "container_size",
-   "fieldtype": "Data",
-   "label": "Container Size",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "cargo_ref.vessel",
-   "fieldname": "vessel",
-   "fieldtype": "Data",
-   "label": "Vessel",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "cargo_ref.voyage_no",
-   "fieldname": "voyage_no",
-   "fieldtype": "Data",
-   "label": "Voyage No",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_26",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "cargo_ref.eta_date",
-   "fieldname": "eta_date",
-   "fieldtype": "Date",
-   "label": "ETA",
-   "read_only": 1
   },
   {
    "default": "Today",
@@ -155,11 +50,7 @@
    "in_list_view": 1,
    "label": "Date",
    "no_copy": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_1",
-   "fieldtype": "Section Break"
+   "reqd": 1
   },
   {
    "fieldname": "wharf_fee_item",
@@ -179,12 +70,50 @@
    "fieldname": "fees_details_section",
    "fieldtype": "Section Break",
    "label": "Fees Details"
+  },
+  {
+   "fieldname": "cargo_references_table",
+   "fieldtype": "Table",
+   "label": "Cargo References",
+   "options": "Cargo References"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "User",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "user.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "User Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "agents",
+   "fieldtype": "Data",
+   "label": "Agency",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:!(doc.__islocal)",
+   "fieldname": "update_fees",
+   "fieldtype": "Button",
+   "label": "Update Fees"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2020-09-27 01:14:03.529155",
+ "modified": "2020-09-29 09:48:15.542352",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Check Cargo Fees",

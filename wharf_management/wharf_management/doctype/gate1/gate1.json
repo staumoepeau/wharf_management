@@ -11,6 +11,7 @@
   "mydoctype",
   "naming_series",
   "section_break_3",
+  "in_reference",
   "cargo_ref",
   "customer",
   "column_break_4",
@@ -239,12 +240,18 @@
    "options": "Gate1",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "in_reference",
+   "fieldtype": "Data",
+   "label": "Inward Reference"
   }
  ],
  "in_create": 1,
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-23 11:12:09.562687",
+ "modified": "2020-10-01 09:08:17.227587",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Gate1",

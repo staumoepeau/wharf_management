@@ -183,7 +183,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Agency",
-   "options": "Shipping Agency"
+   "options": "Shipping Agency",
+   "read_only": 1
   },
   {
    "fetch_from": "vessel.vessel_type",
@@ -369,8 +370,7 @@
   },
   {
    "fieldname": "ship_reuire_section",
-   "fieldtype": "Section Break",
-   "label": "SHIP REQUIREMENTS"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "ship_requirements_link",
@@ -380,8 +380,7 @@
   },
   {
    "fieldname": "section_break_54",
-   "fieldtype": "Section Break",
-   "label": "CARGO MANIFEST SUMMARY"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "cargo_booking_manifest_table",
@@ -436,8 +435,7 @@
   },
   {
    "fieldname": "other_requirement_section",
-   "fieldtype": "Section Break",
-   "label": "OTHER REQUIREMENTS"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "other_requirements",
@@ -624,7 +622,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-28 10:07:11.047196",
+ "modified": "2020-09-28 11:08:49.445271",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Booking Request",

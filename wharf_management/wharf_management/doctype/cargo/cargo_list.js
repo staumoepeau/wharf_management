@@ -28,10 +28,15 @@ frappe.listview_settings['Cargo'] = {
                 "Split Ports": "black",
                 "Custom Inspection": "orange",
                 "Inspection Delivered": "lightblue",
+                "Gate IN": "blue",
+                "INWARD": "green",
+                "FULL": "green"
+
             }[doc.status];
             return indicator;
 
-        } else if (doc.container_content) {
+        }
+        if (doc.container_content) {
             var indicator = [__(doc.container_content), frappe.utils.guess_colour(doc.container_content), "container_content,=," + doc.container_content];
             indicator[1] = {
                 "FULL": "green",

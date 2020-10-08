@@ -121,7 +121,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
                 filters: {
                     wharf_fee_category: "Wharfage Fee",
                     cargo_type: dc.cargo_type,
-                    work_type: dc.work_type
+                    //                    work_type: dc.work_type
                 },
             },
             callback: function(r) {
@@ -143,7 +143,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
                     cargo_type: dc.cargo_type,
                     container_size: dc.container_size,
                     container_content: dc.cargo_content,
-                    work_type: dc.work_type
+                    //                    work_type: dc.work_type
                 },
             },
             callback: function(r) {
@@ -165,7 +165,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
                     cargo_type: dc.cargo_type,
                     container_size: dc.container_size,
                     container_content: dc.cargo_content,
-                    work_type: dc.work_type
+                    //                    work_type: dc.work_type
                 },
             },
             callback: function(r) {
@@ -186,7 +186,7 @@ frappe.ui.form.on("Cargo Booking Manifest Table", "weight", function(frm, cdt, c
                 filters: {
                     wharf_fee_category: "Wharfage Fee",
                     cargo_type: dc.cargo_type,
-                    work_type: dc.work_type
+                    //                    work_type: dc.work_type
                 },
             },
             callback: function(r) {

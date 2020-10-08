@@ -42,7 +42,7 @@
   "container_size",
   "net_weight",
   "seal_1",
-  "mark",
+  "temperature",
   "column_break_20",
   "container_no",
   "pat_code",
@@ -52,7 +52,7 @@
   "column_break_22",
   "container_type",
   "container_content",
-  "temperature",
+  "mark",
   "commodity_code",
   "chasis_no",
   "break_bulk_items",
@@ -143,9 +143,10 @@
   },
   {
    "fieldname": "booking_ref",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_global_search": 1,
-   "label": "Booking Ref"
+   "label": "Booking Ref",
+   "options": "Booking Request"
   },
   {
    "bold": 1,
@@ -719,15 +720,17 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "work_information",
    "fieldtype": "Select",
    "label": "Information",
-   "options": "\nRe-stowing\nTranshipment"
+   "options": "\nRe-stowing\nTranshipment\nSplit Ports"
   }
  ],
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-19 10:45:07.901004",
+ "modified": "2020-10-06 19:25:07.634437",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Pre Advice",
@@ -776,13 +779,15 @@
    "share": 1
   },
   {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Yard Operation User",
-   "share": 1
+   "share": 1,
+   "write": 1
   }
  ],
  "route": "cargo",

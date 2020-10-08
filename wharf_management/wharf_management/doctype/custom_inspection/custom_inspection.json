@@ -119,9 +119,10 @@
  ],
  "icon": "octicon octicon-checklist",
  "in_create": 1,
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-17 20:53:26.045288",
+ "modified": "2020-09-28 14:34:36.929076",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Custom Inspection",
@@ -150,6 +151,7 @@
    "report": 1,
    "role": "Wharf Operation Cashier",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -171,7 +173,6 @@
    "report": 1,
    "role": "Wharf Security Officer",
    "share": 1,
-   "submit": 1,
    "write": 1
   },
   {

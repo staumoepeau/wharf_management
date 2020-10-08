@@ -4,6 +4,11 @@
 frappe.ui.form.on('Pre Advice', {
 
     on_submit: function(frm) {
+        frappe.msgprint({
+            title: __('Notification'),
+            indicator: 'green',
+            message: __('Document updated successfully')
+        });
         frappe.set_route("List", "Pre Advice");
         location.reload(true);
     },
@@ -16,15 +21,18 @@ frappe.ui.form.on('Pre Advice', {
             cur_frm.set_df_property("last_port", "hidden", 1);
         }
         // Toggle Fields to Read-Only
-        let is_allowed = frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Yard Operation Supervisor');
+        let is_allowed = (frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager"));
+
         frm.toggle_enable(['container_content', 'secondary_work_type', 'mark', 'cargo_type', 'final_work_type', 'cargo_ref',
             'vessel', 'vessel_arrival_date', 'bol', 'container_no', 'chasis_no', 'third_work_type', 'last_port', 'voyage_no', 'work_type'
         ], is_allowed);
-
         // Hide Fields
         frm.toggle_display(['consignee_details', 'hazardous_goods', 'import_status', 'break_bulk_items', 'net_weight', 'volume',
             'booking_ref', 'eta_date', 'etd_date', 'status_section', 'ports_details'
-        ], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Yard Operation Supervisor'));
+        ], is_allowed)
+
+        frm.toggle_display(['qty', 'break_bulk_items'], frm.doc.cargo_type == "Break Bulk" || is_allowed)
+
 
     },
 
@@ -205,21 +213,24 @@ frappe.ui.form.on('Pre Advice', {
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
                 frm.doc.yard_status != "Closed" &&
-                frm.doc.inspection_status == "Closed"
+                frm.doc.inspection_status == "Closed" &&
+                frm.doc.qty == frm.doc.break_bulk_item_count
             )) {
             frm.add_custom_button(__('Yard'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name,
-                    "container_no": frm.doc.container_no,
-                    "voyage_no": frm.doc.voyage_no,
-                    "vessel": frm.doc.vessel,
-                    "eta_date": frm.doc.eta_date,
-                    "bol": frm.doc.bol,
-                    "consignee": frm.doc.consignee,
-                    "chasis_no": frm.doc.chasis_no,
-                    "cargo_type": frm.doc.cargo_type,
-                }
-                frappe.set_route("Form", "Yard", "New Yard 1");
+                //                frappe.route_options = {
+                //                    "cargo_ref": frm.doc.name,
+                //                    "container_no": frm.doc.container_no,
+                //                    "voyage_no": frm.doc.voyage_no,
+                //                    "vessel": frm.doc.vessel,
+                //                    "eta_date": frm.doc.eta_date,
+                //                    "bol": frm.doc.bol,
+                //                    "consignee": frm.doc.consignee,
+                //                    "chasis_no": frm.doc.chasis_no,
+                //                    "cargo_type": frm.doc.cargo_type,
+                //                    "work_type": frm.doc.work_type,
+                //                }
+                //                frappe.set_route("Form", "Yard", "New Yard 1");
+                frm.events.get_yard_slot(frm)
 
             }).addClass("btn-primary");
         }
@@ -230,15 +241,134 @@ frappe.ui.form.on('Pre Advice', {
             frm.doc.break_bulk_item_count != frm.doc.qty
         ) {
             frm.add_custom_button(__('Bulk Item Count'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name,
-                    "mydoctype": "Pre Advice"
-                }
-                frappe.new_doc("Bulk Item Count");
-                frappe.set_route("Form", "Bulk Item Count", doc.name);
+                //                frappe.route_options = {
+                //                    "cargo_ref": frm.doc.name,
+                //                    "mydoctype": "Pre Advice"
+                //                }
+                //                frappe.new_doc("Bulk Item Count");
+                //                frappe.set_route("Form", "Bulk Item Count", doc.name);
+                frm.events.get_breakbulk_count(frm)
 
             }).addClass("btn-warning");
         }
+    },
+
+    get_breakbulk_count: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Enter details',
+            fields: [{
+                    label: 'Item Count',
+                    fieldname: 'item_count',
+                    fieldtype: 'Int',
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition',
+                    fieldname: 'cargo_condition',
+                    fieldtype: 'Select',
+                    options: ['NO',
+                        'YES'
+                    ],
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition Comment',
+                    fieldname: 'cargo_condition_comment',
+                    fieldtype: 'Small Text',
+                    depends_on: 'eval:doc.cargo_condition == "YES"'
+                }
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.item_count) {
+                    frappe.throw(__("Item Count is required"));
+                }
+                console.log(values);
+                let counter = values.item_count + frm.doc.break_bulk_item_count;
+
+                if (frm.doc.qty < counter) {
+                    frappe.msgprint(
+                        msg = 'Item Count is Greater than the QTY',
+                        title = 'Error',
+                        raise_exception = FileNotFoundError
+                    )
+                } else {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.pre_advice.pre_advice.update_breakbulk_inspection",
+                        args: {
+                            "name_ref": frm.doc.name,
+                            "counter": counter,
+                            "qty": frm.doc.qty
+                        },
+                        callback: function(r) {
+                            d.hide();
+                            refresh_field("item_count");
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
+    },
+
+    get_yard_slot: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Enter details',
+            fields: [{
+                    label: 'Yard Slot',
+                    fieldname: 'yard_slot',
+                    fieldtype: 'Link',
+                    options: 'Yard Settings',
+                    reqd: 1,
+                    get_query: function(doc) {
+                        return { filters: { occupy: 0 } };
+                    }
+                },
+                {
+                    label: 'Cargo Condition',
+                    fieldname: 'cargo_condition',
+                    fieldtype: 'Select',
+                    options: ['NO',
+                        'YES'
+                    ],
+                    reqd: 1
+                }
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.item_count) {
+                    frappe.throw(__("Item Count is required"));
+                }
+                console.log(values);
+                let counter = values.item_count + frm.doc.break_bulk_item_count;
+
+                if (frm.doc.qty < counter) {
+                    frappe.msgprint(
+                        msg = 'Item Count is Greater than the QTY',
+                        title = 'Error',
+                        raise_exception = FileNotFoundError
+                    )
+                } else {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.pre_advice.pre_advice.update_yard",
+                        args: {
+                            "name_ref": frm.doc.name,
+                            "counter": counter,
+                            "qty": frm.doc.qty
+                        },
+                        callback: function(r) {
+                            d.hide();
+                            refresh_field("item_count");
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
     },
 
 });

@@ -123,8 +123,8 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Header
---------------------------------------------------------------*/
+  # Header
+  --------------------------------------------------------------*/
 
 #header {
     height: 80px;
@@ -170,8 +170,8 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Intro Section
---------------------------------------------------------------*/
+  # Intro Section
+  --------------------------------------------------------------*/
 
 #intro {
     width: 100%;
@@ -241,8 +241,8 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Navigation Menu
---------------------------------------------------------------*/
+  # Navigation Menu
+  --------------------------------------------------------------*/
 
 
 /* Desktop Navigation */
@@ -455,12 +455,12 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Sections
---------------------------------------------------------------*/
+  # Sections
+  --------------------------------------------------------------*/
 
 
 /* Sections Header
---------------------------------*/
+  --------------------------------*/
 
 .section-header h3 {
     font-size: 36px;
@@ -481,7 +481,7 @@ h6 {
 
 
 /* Section with background
---------------------------------*/
+  --------------------------------*/
 
 .section-bg {
     background: #ecf5ff;
@@ -489,7 +489,7 @@ h6 {
 
 
 /* About Us Section
---------------------------------*/
+  --------------------------------*/
 
 #about {
     background: #fff;
@@ -593,7 +593,7 @@ h6 {
 
 
 /* Services Section
---------------------------------*/
+  --------------------------------*/
 
 #services {
     padding: 60px 0 40px 0;
@@ -726,7 +726,7 @@ h6 {
 
 
 /* Portfolio Section
---------------------------------*/
+  --------------------------------*/
 
 #portfolio {
     padding: 60px 0;
@@ -875,7 +875,7 @@ h6 {
 
 
 /* Testimonials Section
---------------------------------*/
+  --------------------------------*/
 
 #testimonials {
     padding: 60px 0;
@@ -934,7 +934,7 @@ h6 {
 
 
 /* Team Section
---------------------------------*/
+  --------------------------------*/
 
 #team {
     background: #fff;
@@ -1022,7 +1022,7 @@ h6 {
 
 
 /* Container Cargo Section
---------------------------------*/
+  --------------------------------*/
 
 .cargo {
     padding: 100px 0;
@@ -1077,7 +1077,7 @@ h6 {
 
 
 /* Contact Section
---------------------------------*/
+  --------------------------------*/
 
 #contact {
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
@@ -1207,8 +1207,8 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Footer
---------------------------------------------------------------*/
+  # Footer
+  --------------------------------------------------------------*/
 
 #footer {
     background: #00428a;
@@ -1355,8 +1355,8 @@ h6 {
 
 
 /*--------------------------------------------------------------
-# Responsive Media Queries
---------------------------------------------------------------*/
+  # Responsive Media Queries
+  --------------------------------------------------------------*/
 
 @media (min-width: 992px) {
     #testimonials .testimonial-item p {
@@ -1443,86 +1443,4 @@ h6 {
 
 .form-control {
     width: 250px;
-}
-
-
-/*--------------------------------------------------------------
-# Yard Planner
---------------------------------------------------------------*/
-
-.card {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-.card-img {
-    width: 140px!important;
-    height: 100%!important;
-    object-fit: cover;
-    padding-bottom: 2px;
-    padding-top: 2px;
-}
-
-.card-img-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1.25rem;
-}
-
-.card-title {
-    font-size: 12px;
-}
-
-.text-center {
-    text-align: center !important;
-}
-
-.text-white {
-    color: #fff !important;
-}
-
-.text-red {
-    color: red !important;
-}
-
-.pt-3,
-.py-3 {
-    padding-top: 3rem !important;
-}
-
-.yard-planner {
-    width: 100%;
-    padding: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.yard-planner-main {
-    width: 100%;
-    padding: 80px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 100px;
-    grid-gap: 10px;
 }

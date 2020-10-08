@@ -8,8 +8,9 @@
   "cargo_type",
   "container_size",
   "cargo_content",
-  "work_type",
   "qty",
+  "data_5",
+  "work_type",
   "weight",
   "total_weight",
   "fee",
@@ -43,6 +44,7 @@
   {
    "fieldname": "work_type",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Work Type",
    "options": "Work Type"
   },
@@ -85,11 +87,16 @@
    "print_hide_if_no_value": 1,
    "read_only": 1,
    "report_hide": 1
+  },
+  {
+   "fieldname": "data_5",
+   "fieldtype": "Data"
   }
  ],
+ "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-09-10 07:36:34.135660",
+ "modified": "2020-10-01 09:26:37.909102",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Booking Manifest Table",

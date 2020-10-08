@@ -19,12 +19,18 @@ frappe.ui.form.on('Custom Inspection', {
             frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
         }
     },
-    before_submit: function(frm) {
+    on_update: function(frm) {
+
+        frappe.show_alert({
+            message: __('Successfully Updated'),
+            indicator: 'green'
+        }, 5);
 
 
     },
     make_custom_buttons: function(frm) {
-        if (frm.doc.docstatus == 1 && frm.doc.status == "Inspection") {
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
+                frm.doc.docstatus == 1 && frm.doc.status == "Inspection")) {
             frm.add_custom_button(__("Deliver fo Inspection"),
                 () => {
                     frm.events.get_custom_inspection(frm)
@@ -98,9 +104,7 @@ frappe.ui.form.on('Custom Inspection', {
                 })
             }
         });
-
         d.show();
-
     },
 
 });

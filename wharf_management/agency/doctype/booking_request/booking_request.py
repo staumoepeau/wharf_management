@@ -134,10 +134,11 @@ def get_events(start, end, filters=None):
 @frappe.whitelist(allow_guest=True)
 def get_permission_query_conditions(user):
     if not user: user = frappe.session.user
-    user_role = frappe.db.get_value('Agent User', {'user': user}, 'agent')
-    if user == "Administrator" or user_role == "System Manager":
+#    user_role = frappe.get_roles(frappe.session.user)
+#    user_roles = frappe.get_roles()
+    if "System Manager" in frappe.get_roles():
         return None
-    elif user != "Administrator" or user_role != "System Manager":
+    else:
         return """(`tabBooking Request`.agents = '{user_data}')""" .format(user_data=frappe.db.get_value('Agent User', {'user': user}, 'agent'))
 
 @frappe.whitelist(allow_guest=True)

@@ -1,181 +1,84 @@
-<!---------------------------------------------------------------------------------------------------------------
-<div class="col-sm-12">
-    <div class="col-sm-3">
-        <p class="text-center">{%= __("Select Yard Section") %}</p>
-        <p class="yard" style="margin: auto; max-width: 300px; margin-bottom: 20px;"></p>
-        <div class="yard_details" style="z-index=0">
-        </div>
-    </div>
-</div>
------------------------------------------------------------------------------------------------------------------->
+
 <div class="yard-planner-main">
     <div class="container-fluid p-3 my-3 border">
         <div class="row">
-            {% for(var i=1, l=13; i
-            <l; i++) { %} <div class="col-sm-1">
 
-                <img class="shipping_container-img" src="/files/container_row.png" alt="container image cap">
-                <div class="shipping_container-img-overlay">
-                    <h6 class="shipping_container-title text-center"><b>{%= [i] %}</b></h6>
-                </div>
-
+            {% for(var i=1, l=13; i<l; i++) { %}
+            <div class="col-sm-1">
+              <svg width="115" height="20">
+                <rect width="115" height="20" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
+                <text x="50%" y="50%" font-size="12" dominant-baseline="middle" text-anchor="middle">
+                  {%= [i] %}
+                </text>
+            </svg>
         </div>
         {% } %}
+
     </div>
 </div>
 
 <div class="container-fluid p-3 my-3 border">
     <div class="row">
-        {% for item in items %}{% if item.yard_section == "A" %}
+{% var yardData = ["A","B","C","D","E","F","G"]; %}
+{% for item in items %}
 
-        <div class="col-sm-1">
-            {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="pat_container-paid" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <h6 class="shipping_container-title text-red text-center" id="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-            </div>
-            {% endif %} {% if item.status == "Custom Inspection" %}
+{% for (var y = 0; yardData.length; y++) { %}
 
+    {% if item.yard_section == yardData %}
 
-            <div class="shipping_container-img-overlay">
+      {% for (var i=3; i>= 0; i--){ %}
 
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
+        {% if item.yard_sub_section == "A"+[i] %}
 
-            </div>
-            {% endif %}{% if item.status == "Yard" %}
+            <div class="col-sm-1">
 
+                {% if item.container_no %}
+                  {% if item.status == "Paid" %}
+                <div id="{{ item.yard_slot}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <svg width="115" height="50">
+                    <image href="/files/green_contaier.svg"  height="50" width="115" class="draggable" onmousedown="selectElement(evt)"/>
+                    <text x="50%" y="25%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+                      <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
+                        {{ item.container_no }}
+                        <tspan x="55" y="25">{{ item.yard_slot }}</tspan>
+                        <tspan x="55" y="40">{{ item.container_size }}"FT</tspan><br>
+                    </a>
+                  </text>
+                </svg>
+                </div>
+                {% endif %}
 
-            <div class="shipping_container-img-overlay">
-
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
-
-            </div>
-            {% endif %} {% else %}
-            <div id="{{ item.yard_slot }}" class="droptarget pat_container" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-
-            </div>
-            {% endif %}
-        </div>
-
-        {% endif %} {% endfor %}
-    </div>
-</div>
-
-<div class="container-fluid p-3 my-3 border">
-    <div class="row">
-        {% for item in items %}{% if item.yard_section == "B" %}
-
-        <div class="col-sm-1">
-            {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="pat_container-paid" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <h6 class="shipping_container-title text-red text-center" id="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-            </div>
-            {% endif %} {% if item.status == "Custom Inspection" %}
-
-
-            <div class="shipping_container-img-overlay">
-                <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-            </div>
-            {% endif %}{% if item.status == "Yard" %}
-
-            <div class="pat_container-yard" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-            </div>
-            {% endif %} {% else %}
-            <div id="{{ item.yard_slot }}" class="droptarget pat_container" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
+                {% if item.hazardous == "Yes" %}
+                <div id="" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
+                    <svg width="115" height="50">
+                      <rect width="115" height="50" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
+                      <image href="/files/red_contaier.svg"  height="50" width="115" id="{{ item.yard_slot }}" draggable="true"/>
+                      <text x="50%" y="25%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+                        <a href="desk#Form/Cargo/{{ item.cargo_ref }}" >
+                          {{ item.container_no}}
+                          <tspan x="50" y="25">{{ item.yard_slot }}</tspan>
+                          <tspan x="50" y="40">{{ item.container_size }}"FT</tspan><br>
+                        </a>
+                        </text>
+                    </svg>
+                </div>
+                {% endif %}
+                {% else %}
+                <div id="empty1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <svg width="115" height="50">
+                      <rect width="115" height="50" id="{{ item.yard_slot }}" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
+                      <text x="50%" y="50%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+                        {{ item.yard_slot}}
+                     </text>
+                  </svg>
+                </div>
+                {% endif %}
 
             </div>
             {% endif %}
-        </div>
-
-        {% endif %} {% endfor %}
-    </div>
-</div>
-<div class="container-fluid p-3 my-3 border">
-    <div class="row">
-        {% for item in items %}{% if item.yard_section == "C" %}
-
-        <div class="col-sm-1">
-            {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="pat_container-paid" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <h6 class="shipping_container-title text-red text-center" id="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-            </div>
-            {% endif %} {% if item.status == "Custom Inspection" %}
-
-            <div class="shipping_container-img-overlay">
-
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
-
-            </div>
-            {% endif %}{% if item.status == "Yard" %}
-
-            <div class="shipping_container-img-overlay">
-
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
-
-            </div>
-            {% endif %} {% else %}
-            <div id="{{ item.yard_slot }}" class="droptarget pat_container" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-
-            </div>
-            {% endif %}
-        </div>
-
-        {% endif %} {% endfor %}
-    </div>
-</div>
-
-<div class="container-fluid p-3 my-3 border">
-    <div class="row">
-        {% for item in items %}{% if item.yard_section == "D" %}
-
-        <div class="col-sm-1">
-            {% if item.container_no %} {% if item.status == "Paid" %}
-            <div class="pat_container-paid" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <h6 class="shipping_container-title text-red text-center" id="dragtarget" ondragstart="dragStart(event)" ondrag="dragging(event)" draggable="true">{{ item.container_no }}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</h6>
-            </div>
-            {% endif %} {% if item.status == "Custom Inspection" %}
-
-            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-            <div class="shipping_container-img-overlay">
-
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
-
-            </div>
-            {% endif %}{% if item.status == "Yard" %}
-
-            <img class="shipping_container-img" src="/files/container.png" alt="container image cap">
-            <div class="shipping_container-img-overlay">
-
-                <a href="desk#Form/Cargo/{{ item.cargo_ref }}">
-                    <h6 class="shipping_container-title text-white text-center"><b>{{ item.container_no}}<br>{{ item.yard_slot }}<br>{{ item.container_size }}"FT</b></h6>
-                </a>
-
-            </div>
-            {% endif %} {% else %}
-            <div id="{{ item.yard_slot }}" class="droptarget pat_container" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                    <h6 class="shipping_container-title text-center">{{ item.yard_slot}}</h6>
-
-            </div>
-            {% endif %}
-        </div>
-
-        {% endif %} {% endfor %}
+          {% } %}
+        {% endif %}
+{% } %}
+  {% endfor %}
     </div>
 </div>
