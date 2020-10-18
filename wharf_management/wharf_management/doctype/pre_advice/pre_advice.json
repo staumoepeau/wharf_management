@@ -182,7 +182,7 @@
    "allow_on_submit": 1,
    "fieldname": "agents",
    "fieldtype": "Link",
-   "label": "Shipping Line Angeny",
+   "label": "Shipping Line Angency",
    "options": "Shipping Agency"
   },
   {

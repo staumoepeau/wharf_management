@@ -31,7 +31,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
 
     if final_work_type == "Discharged" and not secondary_work_type:
         inspection_status = "Closed"
-        movement = "Yard"
+        movement = "Inspection"
+        yard_status = "Open"
        
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
@@ -40,6 +41,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Closed"
         gate = "Closed"
         inspection_status = "Closed"
+        yard_status = "Open"
         
 
 #            elif self.secondary_work_type == "Transhipment":
@@ -54,6 +56,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Open"
         gate = "Open"
         inspection_status = "Closed"
+        yard_status = "Open"
         
 
     if cargo_type == "Split Ports" and final_work_type == "Loading" :
@@ -62,6 +65,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Closed"
         gate = "Open"
         inspection_status = "Open"
+        yard_status = "Closed"
   
 
 
@@ -106,7 +110,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "etd_date" : val.etd_date,
                 "chasis_no" : val.chasis_no,
                 "inspection_status" : inspection_status,
-                "yard_status" : "Closed",
+                "yard_status" : yard_status,
                 "final_status" : final_work_type,
                 "payment_status" : payment,
                 "gate1_status" : gate,

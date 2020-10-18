@@ -62,7 +62,7 @@
    "fieldname": "agents",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Shipping Line Angeny",
+   "label": "Shipping Line Angency",
    "options": "Agent User"
   },
   {

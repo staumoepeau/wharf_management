@@ -53,6 +53,20 @@ frappe.ui.form.on('Cargo', {
 
     refresh: function(frm) {
 
+        if (frm.doc.docstatus == 1) {
+            if (frm.doc.cargo_type == "Vehicles") {
+                frm.set_df_property("chasis_no", "reqd", 1);
+            }
+        }
+
+        if (frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) {
+            frm.disable_save();
+        }
+        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Manager")) {
+            frm.enable_save();
+        }
+
+
         if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
 
             frm.page.sidebar.hide(); // this removes the sidebar
@@ -70,15 +84,19 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
-            frm.add_custom_button(__('Payment'), function() {
+            //            frm.add_custom_button(__('Payment'), function() {
+            cur_frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
+
                 frappe.route_options = {
                     "payment_type": "Receive",
                     "customer": frm.doc.consignee,
                     "reference_doctype": "Cargo"
                 }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
-            }).addClass("btn-success");
+                //            }).addClass("btn-success");
+            });
         }
+
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.gate1_status != "Closed" &&

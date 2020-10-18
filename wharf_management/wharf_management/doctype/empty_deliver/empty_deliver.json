@@ -1,382 +1,380 @@
 {
- "actions": [],
- "allow_import": 1,
- "autoname": "EMTYDL.YY.MM.#####",
- "creation": "2018-09-12 02:25:48.104766",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "company",
-  "column_break_6",
-  "title",
-  "shipping_details",
-  "agents",
-  "cargo_details",
-  "cargo_type",
-  "container_no",
-  "container_type",
-  "cargo_description",
-  "column_break_20",
-  "container_size",
-  "pat_code",
-  "container_content",
-  "column_break_22",
-  "weight",
-  "seal_1",
-  "column_break_17",
-  "volume",
-  "yard_slot",
-  "section_break_15",
-  "status",
-  "export_movement",
-  "main_gate_start",
-  "main_gate_ends",
-  "column_break_maingate",
-  "gate1_start",
-  "gate1_ends",
-  "column_break_gate",
-  "driver_start",
-  "driver_ends",
-  "export_payment",
-  "customer",
-  "warrant_number",
-  "column_break_34",
-  "payment_method",
-  "paid_status",
-  "posting_date",
-  "section_break_40",
-  "amended_from"
- ],
- "fields": [
-  {
-   "default": "Ports Authority Tonga",
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Company",
-   "options": "Company"
-  },
-  {
-   "fieldname": "column_break_6",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Title"
-  },
-  {
-   "fieldname": "shipping_details",
-   "fieldtype": "Section Break",
-   "label": "SHIPPING DETAILS"
-  },
-  {
-   "fieldname": "agents",
-   "fieldtype": "Link",
-   "label": "Shipping Angeny",
-   "options": "Agent User"
-  },
-  {
-   "fieldname": "cargo_details",
-   "fieldtype": "Section Break",
-   "label": "CARGO DETAILS"
-  },
-  {
-   "fieldname": "cargo_type",
-   "fieldtype": "Link",
-   "label": "Cargo Type",
-   "options": "Cargo Type"
-  },
-  {
-   "fieldname": "container_no",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Container No"
-  },
-  {
-   "fieldname": "container_type",
-   "fieldtype": "Link",
-   "label": "ISO",
-   "options": "Container Type"
-  },
-  {
-   "fieldname": "cargo_description",
-   "fieldtype": "Data",
-   "label": "Cargo Description"
-  },
-  {
-   "fieldname": "column_break_20",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "container_size",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Container Size"
-  },
-  {
-   "fieldname": "pat_code",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "PAT Container Type"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "container_content",
-   "fieldtype": "Select",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Container Contents",
-   "options": "\nEMPTY\nFULL"
-  },
-  {
-   "fieldname": "column_break_22",
-   "fieldtype": "Section Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "weight",
-   "fieldtype": "Float",
-   "label": "Weight"
-  },
-  {
-   "fieldname": "seal_1",
-   "fieldtype": "Data",
-   "label": "Seal 1"
-  },
-  {
-   "fieldname": "column_break_17",
-   "fieldtype": "Column Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "volume",
-   "fieldtype": "Float",
-   "label": "Volume"
-  },
-  {
-   "fieldname": "yard_slot",
-   "fieldtype": "Data",
-   "label": "Yard Slot"
-  },
-  {
-   "fieldname": "section_break_15",
-   "fieldtype": "Section Break"
-  },
-  {
-   "default": "Export",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "\nExport\nMain Gate\nGate1\nYard\nOutward"
-  },
-  {
-   "fieldname": "export_movement",
-   "fieldtype": "Section Break",
-   "label": "Export Movement"
-  },
-  {
-   "fieldname": "main_gate_start",
-   "fieldtype": "Datetime",
-   "label": "Main Gate Start"
-  },
-  {
-   "fieldname": "main_gate_ends",
-   "fieldtype": "Datetime",
-   "label": "Main Gate Ends"
-  },
-  {
-   "fieldname": "column_break_maingate",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "gate1_start",
-   "fieldtype": "Datetime",
-   "label": "Gate 1 Start"
-  },
-  {
-   "fieldname": "gate1_ends",
-   "fieldtype": "Datetime",
-   "label": "Gate 1 Ends"
-  },
-  {
-   "fieldname": "column_break_gate",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "driver_start",
-   "fieldtype": "Datetime",
-   "label": "Driver Start"
-  },
-  {
-   "fieldname": "driver_ends",
-   "fieldtype": "Datetime",
-   "label": "Driver Ends"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "export_payment",
-   "fieldtype": "Section Break",
-   "label": "Payment"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "warrant_number",
-   "fieldtype": "Data",
-   "label": "Warrant #"
-  },
-  {
-   "fieldname": "column_break_34",
-   "fieldtype": "Column Break"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "payment_method",
-   "fieldtype": "Link",
-   "label": "Payment Method",
-   "options": "Mode of Payment"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "paid_status",
-   "fieldtype": "Select",
-   "label": "Payment Status",
-   "options": "\nUnpaid\nPaid"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date"
-  },
-  {
-   "fieldname": "section_break_40",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Empty Deliver",
-   "print_hide": 1,
-   "read_only": 1
-  }
- ],
- "is_submittable": 1,
- "links": [],
- "modified": "2020-09-10 06:15:17.979937",
- "modified_by": "Administrator",
- "module": "Wharf Management",
- "name": "Empty Deliver",
- "owner": "Administrator",
- "permissions": [
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "import": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation Cashier",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Wharf Operation User",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Yard Inspection User",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Yard Operation User",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "import": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Administrator",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  }
- ],
- "route": "cargo",
- "search_fields": "container_no, agents",
- "show_name_in_global_search": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
- "title_field": "agents",
- "track_changes": 1,
- "track_seen": 1
+    "actions": [],
+    "allow_import": 1,
+    "autoname": "EMTYDL.YY.MM.#####",
+    "creation": "2018-09-12 02:25:48.104766",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "company",
+        "column_break_6",
+        "title",
+        "shipping_details",
+        "agents",
+        "cargo_details",
+        "cargo_type",
+        "container_no",
+        "container_type",
+        "cargo_description",
+        "column_break_20",
+        "container_size",
+        "pat_code",
+        "container_content",
+        "column_break_22",
+        "weight",
+        "seal_1",
+        "column_break_17",
+        "volume",
+        "yard_slot",
+        "section_break_15",
+        "status",
+        "export_movement",
+        "main_gate_start",
+        "main_gate_ends",
+        "column_break_maingate",
+        "gate1_start",
+        "gate1_ends",
+        "column_break_gate",
+        "driver_start",
+        "driver_ends",
+        "export_payment",
+        "customer",
+        "warrant_number",
+        "column_break_34",
+        "payment_method",
+        "paid_status",
+        "posting_date",
+        "section_break_40",
+        "amended_from"
+    ],
+    "fields": [{
+            "default": "Ports Authority Tonga",
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "hidden": 1,
+            "label": "Company",
+            "options": "Company"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "hidden": 1,
+            "label": "Title"
+        },
+        {
+            "fieldname": "shipping_details",
+            "fieldtype": "Section Break",
+            "label": "SHIPPING DETAILS"
+        },
+        {
+            "fieldname": "agents",
+            "fieldtype": "Link",
+            "label": "Shipping Angency",
+            "options": "Agent User"
+        },
+        {
+            "fieldname": "cargo_details",
+            "fieldtype": "Section Break",
+            "label": "CARGO DETAILS"
+        },
+        {
+            "fieldname": "cargo_type",
+            "fieldtype": "Link",
+            "label": "Cargo Type",
+            "options": "Cargo Type"
+        },
+        {
+            "fieldname": "container_no",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Container No"
+        },
+        {
+            "fieldname": "container_type",
+            "fieldtype": "Link",
+            "label": "ISO",
+            "options": "Container Type"
+        },
+        {
+            "fieldname": "cargo_description",
+            "fieldtype": "Data",
+            "label": "Cargo Description"
+        },
+        {
+            "fieldname": "column_break_20",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "container_size",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Container Size"
+        },
+        {
+            "fieldname": "pat_code",
+            "fieldtype": "Data",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "PAT Container Type"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "container_content",
+            "fieldtype": "Select",
+            "in_global_search": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Container Contents",
+            "options": "\nEMPTY\nFULL"
+        },
+        {
+            "fieldname": "column_break_22",
+            "fieldtype": "Section Break"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "weight",
+            "fieldtype": "Float",
+            "label": "Weight"
+        },
+        {
+            "fieldname": "seal_1",
+            "fieldtype": "Data",
+            "label": "Seal 1"
+        },
+        {
+            "fieldname": "column_break_17",
+            "fieldtype": "Column Break"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "volume",
+            "fieldtype": "Float",
+            "label": "Volume"
+        },
+        {
+            "fieldname": "yard_slot",
+            "fieldtype": "Data",
+            "label": "Yard Slot"
+        },
+        {
+            "fieldname": "section_break_15",
+            "fieldtype": "Section Break"
+        },
+        {
+            "default": "Export",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "\nExport\nMain Gate\nGate1\nYard\nOutward"
+        },
+        {
+            "fieldname": "export_movement",
+            "fieldtype": "Section Break",
+            "label": "Export Movement"
+        },
+        {
+            "fieldname": "main_gate_start",
+            "fieldtype": "Datetime",
+            "label": "Main Gate Start"
+        },
+        {
+            "fieldname": "main_gate_ends",
+            "fieldtype": "Datetime",
+            "label": "Main Gate Ends"
+        },
+        {
+            "fieldname": "column_break_maingate",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "gate1_start",
+            "fieldtype": "Datetime",
+            "label": "Gate 1 Start"
+        },
+        {
+            "fieldname": "gate1_ends",
+            "fieldtype": "Datetime",
+            "label": "Gate 1 Ends"
+        },
+        {
+            "fieldname": "column_break_gate",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "driver_start",
+            "fieldtype": "Datetime",
+            "label": "Driver Start"
+        },
+        {
+            "fieldname": "driver_ends",
+            "fieldtype": "Datetime",
+            "label": "Driver Ends"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "export_payment",
+            "fieldtype": "Section Break",
+            "label": "Payment"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "label": "Customer",
+            "options": "Customer"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "warrant_number",
+            "fieldtype": "Data",
+            "label": "Warrant #"
+        },
+        {
+            "fieldname": "column_break_34",
+            "fieldtype": "Column Break"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "payment_method",
+            "fieldtype": "Link",
+            "label": "Payment Method",
+            "options": "Mode of Payment"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "paid_status",
+            "fieldtype": "Select",
+            "label": "Payment Status",
+            "options": "\nUnpaid\nPaid"
+        },
+        {
+            "allow_on_submit": 1,
+            "fieldname": "posting_date",
+            "fieldtype": "Date",
+            "label": "Posting Date"
+        },
+        {
+            "fieldname": "section_break_40",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Empty Deliver",
+            "print_hide": 1,
+            "read_only": 1
+        }
+    ],
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2020-09-10 06:15:17.979937",
+    "modified_by": "Administrator",
+    "module": "Wharf Management",
+    "name": "Empty Deliver",
+    "owner": "Administrator",
+    "permissions": [{
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "import": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Wharf Operation Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Wharf Operation Cashier",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Wharf Operation User",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Yard Inspection User",
+            "share": 1
+        },
+        {
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Yard Operation User",
+            "share": 1
+        },
+        {
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "All",
+            "share": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "import": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Administrator",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        }
+    ],
+    "route": "cargo",
+    "search_fields": "container_no, agents",
+    "show_name_in_global_search": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "title_field": "agents",
+    "track_changes": 1,
+    "track_seen": 1
 }

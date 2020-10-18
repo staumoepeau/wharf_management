@@ -22,16 +22,16 @@ class Gate1(Document):
 
         if self.mydoctype == "CARGO":
             self.update_status()
-            if self.status == 'Export':
-                self.update_export_status()
 
-            if not self.status == 'Export' and self.work_type == "Discharged":
+            if self.work_type == "Discharged" and self.status != 'Export':
                 self.update_movement_status()
                 create_cargo_movement(self.cargo_ref, self.work_type, "OUT", "Gate1")
             
-            if not self.status == 'Export' and self.cargo_type == "Split Ports" and self.work_type == "Loading":
- #               msgprint(_("Hello"), raise_exception=1)
+            if self.work_type == "Loading" and self.cargo_type == "Split Ports" and self.status != 'Export':
                 self.update_cargo_movement()
+            
+            if self.status == 'Export':
+                self.update_export_status()
 
         if self.mydoctype == "EMPTY CONTAINERS":
             self.update_empty_containers_movement()
@@ -59,27 +59,30 @@ class Gate1(Document):
 
     def update_movement_status(self):
 
+        yard = frappe.db.get_value('Cargo', self.cargo_ref, 'yard_slot')
+
         if self.cargo_type in ["Tank Tainers", "Container", "Flatrack", "Split Ports", "Vehicles", "Heavy Vehicles", "Petrolium"]:
-            frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+            if yard:
+                frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
+            frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' , yard_slot='' where name=%s""", (self.cargo_ref))
 
         if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
             if int(self.qty) > 1:
-                frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+               if yard:
+                   frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
+               frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1', yard_slot='' where name=%s""", (self.cargo_ref))
 
             if self.qty == 1:
-                frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' where name=%s""", (self.cargo_ref))
+                if yard:
+                    frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
+                frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1', yard_slot='' where name=%s""", (self.cargo_ref))
 
     def update_export_status(self):
-        if self.status == 'Export':
-            frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
+        frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))
 
     #Update Cargo Movement with the INWARD Split Ports
     def update_cargo_movement(self):
     
-#        if self.cargo_type == "Split Ports" and self.work_type == "Loading":
-#        val = frappe.db.get_value("Cargo Movement", {"container_no": self.container_no, "warrant_number": self.custom_warrant, "main_gate_status": "Gate IN"}, ["name"])
-
-#        if val.name:
         frappe.db.sql("""UPDATE `tabCargo Movement`
         SET gate_status='INWARD', movement_date=%s, gate1_time=%s,
         truck=%s, truck_driver=%s WHERE refrence=%s""",

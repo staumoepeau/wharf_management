@@ -311,7 +311,7 @@
    "allow_on_submit": 1,
    "fieldname": "agents",
    "fieldtype": "Link",
-   "label": "Shipping Line Angeny",
+   "label": "Shipping Line Angency",
    "options": "Shipping Agency"
   },
   {
@@ -581,6 +581,7 @@
    "label": "HAZARADOUS GOODS"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "hazardous",
    "fieldtype": "Select",
    "label": "Does the Container have Hazardous Goods?",
@@ -630,7 +631,7 @@
   {
    "allow_on_submit": 1,
    "fieldname": "cargo_description",
-   "fieldtype": "Small Text",
+   "fieldtype": "Text",
    "label": "Cargo Description"
   },
   {
@@ -975,26 +976,31 @@
    "label": "Cargo Information"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "inspection_date",
    "fieldtype": "Datetime",
    "label": "Inspection Date"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "yard_date",
    "fieldtype": "Datetime",
    "label": "Yard Date"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "payment_date",
    "fieldtype": "Datetime",
    "label": "Payment Date"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "gate1_date",
    "fieldtype": "Datetime",
    "label": "Gate 1 Date"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "gate2_date",
    "fieldtype": "Datetime",
    "label": "Gate2 Date"
@@ -1009,7 +1015,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-07 14:29:31.286175",
+ "modified": "2020-10-16 04:59:23.845110",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
@@ -1061,25 +1067,32 @@
   {
    "read": 1,
    "report": 1,
-   "role": "Wharf Operation User"
+   "role": "Wharf Operation User",
+   "write": 1
   },
   {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Yard Inspection User",
-   "share": 1
+   "share": 1,
+   "submit": 1,
+   "write": 1
   },
   {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Yard Operation User",
-   "share": 1
+   "share": 1,
+   "submit": 1,
+   "write": 1
   },
   {
    "email": 1,

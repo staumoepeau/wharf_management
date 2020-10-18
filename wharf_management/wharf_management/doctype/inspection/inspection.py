@@ -47,6 +47,10 @@ class Inspection(Document):
 
         elif self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type and self.cargo_type != "Split Ports":
             self.update_inspection_status()
+            self.create_cargo()
+            self.moveto_preadvise_history()
+            frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
+
 
         elif self.final_work_type == "Discharged" and not self.secondary_work_type and not self.third_work_type and self.cargo_type == "Split Ports":
             self.check_discharged_split_port()
@@ -95,8 +99,8 @@ class Inspection(Document):
 #            self.update_inspection_status()
 
     def update_pre_advice_loading(self, work_information):
-        if work_information == "Devanning/Loading":
-            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Open", status="Booked", final_status="Loading",
+        if work_information == "Devanning/Loading" and self.cargo_type != "Container":
+            frappe.db.sql("""UPDATE `tabPre Advice` SET inspection_status="Open", status="Booked", final_status="Loading", cargo_type = "Container",
             work_information=%s, work_type="Loading", secondary_work_type=" ", third_work_type= " ", image_01=%s, inspection_comment=%s WHERE name=%s""", (work_information, self.file_attach, self.cargo_condition, self.cargo_ref))
         
         if work_information == "Split Ports":
@@ -296,9 +300,9 @@ class Inspection(Document):
                     "container_no" : val.container_no,
                     "voyage_no" : val.voyage_no,
                     "bol" : val.bol,
-                    "work_type" : val.work_type,
+                    "work_type" : "Devanning",
                     "work_type_date": now(),
-                    "secondary_work_type" : val.secondary_work_type,
+                    "secondary_work_type" : None,
                     "pol" : val.pol,
                     "agents" : val.agents,
                     "commodity_code" : val.commodity_code,
@@ -315,7 +319,7 @@ class Inspection(Document):
                     "stowage" : val.stowage,
                     "hazardous" : val.hazardous,
                     "hazardous_code" : val.hazardous_code,
-                    "status" : "Devanning",
+                    "status" : "Inspection",
                     "seal_1" : val.seal_1,
                     "seal_2" : val.seal_2,
                     "eta_date" : val.eta_date,
@@ -324,7 +328,8 @@ class Inspection(Document):
                     "chasis_no" : val.chasis_no,
                     "yard_slot" : val.yard_slot,
                     "inspection_status" : "Closed",
-                    "yard_status" : "Closed",
+                    "inspection_date" : now(),
+                    "yard_status" : "Open",
                     "final_status" : "Discharged",
                     "payment_status" : "Closed",
                     "gate1_status" : "Closed",
@@ -369,16 +374,16 @@ class Inspection(Document):
                     "stowage" : val.stowage,
                     "hazardous" : val.hazardous,
                     "hazardous_code" : val.hazardous_code,
-                    "status" : "Yard",
+                    "status" : "Inspection",
                     "seal_1" : val.seal_1,
                     "seal_2" : val.seal_2,
                     "eta_date" : val.eta_date,
                     "cargo_description" : val.cargo_description,
                     "etd_date" : val.etd_date,
                     "chasis_no" : val.chasis_no,
-                    "yard_slot" : "MTY",
-                    "inspection_status" : "Closed",
-                    "yard_status" : "Closed",
+                    "yard_slot" : None,
+                    "inspection_status" : "Open",
+                    "yard_status" : "Open",
                     "final_status" : "Discharged",
                     "payment_status" : "Open",
                     "gate1_status" : "Open",

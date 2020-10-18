@@ -32,10 +32,11 @@ class WharfPaymentEntry(Document):
         frappe.db.sql("""Update `tabCargo` INNER JOIN `tabCargo References` ON
 		`tabCargo`.name = `tabCargo References`.reference_doctype
 		set payment_status = 'Closed',
+        payment_date = %s,
 		custom_warrant=%s, custom_code=%s,
 		delivery_code=%s, status='Paid'
 		where `tabCargo References`.parent=%s""",
-		(self.custom_warrant, self.delivery_code, self.delivery_information, self.name))
+		(self.modified, self.custom_warrant, self.delivery_code, self.delivery_information, self.name))
 
     def check_warrant_number(self):
         if not self.custom_warrant:
@@ -93,11 +94,21 @@ def get_storage_fees(docname):
 def get_wharfage_fees(docname):
     return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles") THEN CASE WHEN docB.net_weight > docB.volume THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
-            WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
-            WHEN docB.cargo_type = "Tank Tainers" THEN Sum(docB.litre/1000)
-            WHEN docB.cargo_type = "Spilt Ports" THEN CASE WHEN docB.net_weight > docB.volume THEN Sum(docB.net_weight) ELSE Sum(docB.volume)
-        END AS qty,
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles") THEN 
+                CASE 
+                    WHEN docB.net_weight > docB.volume THEN 
+                        Sum(docB.net_weight) ELSE 
+                            Sum(docB.volume) END
+            WHEN docB.cargo_type IN ("Container","Flatrack") 
+                THEN Count(docA.item_name)
+            WHEN docB.cargo_type IN ("Tank Tainers")
+                THEN Sum(docB.litre/1000)
+            WHEN docB.cargo_type IN ("Split Ports") THEN 
+                CASE 
+                    WHEN docB.net_weight > docB.volume THEN 
+                        Sum(docB.net_weight) ELSE 
+                            Sum(docB.volume) END
+                                END AS qty,
         Sum(docB.wharfage_fee) as total
 		from `tabCargo References` as docB, `tabWharf Fees` as docA
 		where docB.wharfage_item_code = docA.item_name and docB.parent = %s group by docB.wharfage_item_code""", (docname), as_dict=1)

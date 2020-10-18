@@ -11,6 +11,7 @@ frappe.pages['yard-planner'].on_page_load = function(wrapper) {
 
     show_yard_details(page);
 };
+
 var show_yard_details = function(page) {
     frappe.call({
         method: "wharf_management.wharf_management.page.yard_planner.yard_planner.get_items",
@@ -40,21 +41,86 @@ var show_yard_details = function(page) {
 };
 
 
+
+
+
+function dragStart(e) {
+    if (e.type === "touchstart") {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+    } else {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+    }
+
+    if (e.target === dragItem) {
+        active = true;
+    }
+}
+
+
+
+function drag(ev, ref) {
+
+
+    if (active) {
+
+        e.preventDefault();
+        ev.dataTransfer.setData('Text/html', ev.target.id);
+        objeto = ref.id;
+
+        yard_id = ev.target.id;
+        //    alert(yard_id)
+        if (frappe.db.get_value('Yard Settings', yard_id, 'occupy') == 1) {
+            frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
+        }
+
+        if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, dragItem);
+    }
+
+
+}
+
+function dragenter(ev) {
+
+    //    ev.target.style.border = "0.9px dotted red";
+}
+
+function drop(ev, target) {
+    ev.preventDefault();
+    //    ev.stopPropagation(); // stops the browser from redirecting.
+
+    console.log(objeto, ev.target.id)
+    var data = ev.dataTransfer.getData('Text/html');
+    destino = ev.target.id;
+
+    //    frappe.db.commit()
+    frappe.db.set_value('Cargo', objeto, 'yard_slot', destino);
+    ev.target.appendChild(document.getElementById(data));
+
+    update_yard_slot();
+}
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function drag(ev) {
-    ev.dataTransfer.setData('Text/html', ev.target.id);
+function update_yard_slot() {
+
+    frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
+    frappe.ui.toolbar.clear_cache();
 
 }
 
-//function drop(ev, target) {
-//    ev.preventDefault();
-//    ev.stopPropagation(); // stops the browser from redirecting.
-
-//    console.log(target.id, ev.target.id)
-//    var data = ev.dataTransfer.getData('Text/html');
-//    alert(data);
-//    ev.target.appendChild(document.getElementById(data));
-//}
+//------------------------- Stat touch function-------------------------------------------------------------------

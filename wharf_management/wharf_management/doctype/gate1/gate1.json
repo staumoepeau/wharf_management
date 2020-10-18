@@ -130,7 +130,7 @@
   },
   {
    "fieldname": "cargo_description",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Cargo Description"
   },
   {
@@ -251,7 +251,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-01 09:08:17.227587",
+ "modified": "2020-10-14 09:37:37.418964",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Gate1",

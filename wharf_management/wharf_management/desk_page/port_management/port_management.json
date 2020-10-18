@@ -63,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-10-06 10:49:54.103716",
+ "modified": "2020-10-19 11:37:32.379360",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -90,10 +90,18 @@
   },
   {
    "color": "#428b46",
-   "icon": "fa fa-money",
-   "label": "Cargo Already Paid",
+   "icon": "fa fa-sign-out",
+   "label": "Gate OUT",
    "link_to": "Cargo",
    "stats_filter": "{\"status\":\"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#ff8989",
+   "icon": "fa fa-sign-in",
+   "label": "Gate IN",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\":\"Gate IN\"}",
    "type": "DocType"
   },
   {
@@ -111,7 +119,7 @@
    "icon": "fa fa-cube",
    "label": " 20\" FULL Yard",
    "link_to": "Cargo",
-   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
+   "stats_filter": "{\"cargo_type\": \"Container\",\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
    "type": "DocType"
   },
   {
@@ -120,7 +128,7 @@
    "icon": "fa fa-cube",
    "label": "20\" FULL Paid",
    "link_to": "Cargo",
-   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
+   "stats_filter": "{\"cargo_type\":\"Container\",\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
    "type": "DocType"
   },
   {
@@ -164,6 +172,11 @@
    "type": "DocType"
   },
   {
+   "label": "Yard Operations",
+   "link_to": "yard-operations",
+   "type": "Page"
+  },
+  {
    "icon": "fa fa-braille",
    "label": "Yard Planner",
    "link_to": "yard-planner",
@@ -179,10 +192,19 @@
    "type": "DocType"
   },
   {
-   "color": "#49937e",
+   "color": "#ff8989",
    "format": "",
-   "icon": "fa fa-lock",
-   "label": "Security Gate 1",
+   "icon": "fa fa-sign-in",
+   "label": "Main Gate IN",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
+   "type": "DocType"
+  },
+  {
+   "color": "#428b46",
+   "format": "",
+   "icon": "fa fa-sign-out",
+   "label": "Main Gate OUT",
    "link_to": "Cargo",
    "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
    "type": "DocType"
@@ -201,7 +223,7 @@
    "format": "{} Inspection",
    "icon": "fa fa-codepen",
    "label": "Inspection",
-   "link_to": "Pre Advice",
+   "link_to": "Cargo",
    "stats_filter": "{\"status\": \"Inspection\"}",
    "type": "DocType"
   },
