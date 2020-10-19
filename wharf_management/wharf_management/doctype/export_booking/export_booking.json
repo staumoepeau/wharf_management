@@ -1,0 +1,187 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "Ex-Cargo.YY.MM.#####",
+ "creation": "2020-10-19 18:45:12.026975",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "shipping_details",
+  "booking_by",
+  "username",
+  "agents",
+  "column_break_4",
+  "booking_date",
+  "booking_time",
+  "cargo_details",
+  "export_cargo_tabel",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "shipping_details",
+   "fieldtype": "Section Break",
+   "label": "SHIPPING DETAILS"
+  },
+  {
+   "fieldname": "agents",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Shipping Angeny",
+   "options": "Shipping Agency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cargo_details",
+   "fieldtype": "Section Break",
+   "label": "CARGO DETAILS"
+  },
+  {
+   "fieldname": "export_cargo_tabel",
+   "fieldtype": "Table",
+   "label": "Export Cargo",
+   "options": "Export Cargo Table"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Export Booking",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_by",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Booking By",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Booking Date",
+   "options": "Today",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_time",
+   "fieldtype": "Time",
+   "label": "Booking Time",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "User.full_name",
+   "fieldname": "username",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "User Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-10-20 08:46:24.965546",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Export Booking",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Cashier",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Yard Inspection User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Yard Operation User",
+   "share": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "route": "cargo",
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "agents",
+ "track_changes": 1,
+ "track_seen": 1
+}

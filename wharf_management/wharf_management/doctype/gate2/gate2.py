@@ -31,11 +31,11 @@ class Gate2(Document):
 
 
     def update_gate2_status(self):
-        frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', yard_slot=NULL, status='Gate Out' where name=%s""", (self.cargo_ref))
+        frappe.db.sql("""Update `tabCargo` set gate1_status='Closed', gate2_status='Closed', gate1_date=%s, yard_slot=NULL, status='Gate Out' where name=%s""", (self.modified, self.cargo_ref))
 
     #Update Cargo Table with Inward Split Ports Cargo
     def update_gate2_status_inward(self):
-        frappe.db.sql("""Update `tabCargo` set gate2_status='Closed', status='Gate IN' where name=%s""", (self.cargo_ref))
+        frappe.db.sql("""Update `tabCargo` set gate2_status='Closed', gate1_date=%s, status='Gate IN' where name=%s""", (self.modified, self.cargo_ref))
 
 
     def create_movement_split_ports(self):

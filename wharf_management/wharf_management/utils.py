@@ -33,6 +33,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         inspection_status = "Closed"
         movement = "Inspection"
         yard_status = "Open"
+        yard_date = None
        
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
@@ -42,6 +43,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         gate = "Closed"
         inspection_status = "Closed"
         yard_status = "Open"
+        yard_date = None
         
 
 #            elif self.secondary_work_type == "Transhipment":
@@ -56,7 +58,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Open"
         gate = "Open"
         inspection_status = "Closed"
-        yard_status = "Open"
+        yard_status = "Closed"
+        yard_date = now()
         
 
     if cargo_type == "Split Ports" and final_work_type == "Loading" :
@@ -66,9 +69,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         gate = "Open"
         inspection_status = "Open"
         yard_status = "Closed"
+        yard_date = now()
   
-
-
 
     doc = frappe.new_doc("Cargo")
     doc.update({
@@ -111,6 +113,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "chasis_no" : val.chasis_no,
                 "inspection_status" : inspection_status,
                 "yard_status" : yard_status,
+                "yard_date" : yard_date,
                 "final_status" : final_work_type,
                 "payment_status" : payment,
                 "gate1_status" : gate,

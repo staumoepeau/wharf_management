@@ -64,18 +64,18 @@ class Gate1(Document):
         if self.cargo_type in ["Tank Tainers", "Container", "Flatrack", "Split Ports", "Vehicles", "Heavy Vehicles", "Petrolium"]:
             if yard:
                 frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
-            frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1' , yard_slot='' where name=%s""", (self.cargo_ref))
+            frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", gate1_date=%s status='Gate1' , yard_slot='' where name=%s""", (self.modified, self.cargo_ref))
 
         if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
             if int(self.qty) > 1:
                if yard:
                    frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
-               frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", status='Gate1', yard_slot='' where name=%s""", (self.cargo_ref))
+               frappe.db.sql("""Update `tabCargo` set security_item_count=1, gate1_status="Closed", gate1_date=%s, status='Gate1', yard_slot='' where name=%s""", (self.modified, self.cargo_ref))
 
             if self.qty == 1:
                 if yard:
                     frappe.db.set_value('Yard Settings', yard, 'occupy', 0)
-                frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", status='Gate1', yard_slot='' where name=%s""", (self.cargo_ref))
+                frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", gate1_date=%s, status='Gate1', yard_slot='' where name=%s""", (self.modified, self.cargo_ref))
 
     def update_export_status(self):
         frappe.db.sql("""Update `tabCargo` set export_status="Gate1", gate1_status="Open", gate2_status="Open", payment_status="Open", yard_status="Open", inspection_status="Open" where name=%s""", (self.cargo_ref))

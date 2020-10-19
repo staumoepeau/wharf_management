@@ -70,15 +70,6 @@ class Inspection(Document):
         elif self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and self.work_information == "Devanning/Loading":
             self.devanning_loading_update()
 
-#            if self.cargo_type in ["Container", "Flatrack", "Tanktainer"] and self.container_content == "EMPTY":
-
-#                self.update_final_status()
-
-#            if self.cargo_type != "Split Ports" :
-#                self.create_cargo_item()
-#                self.update_final_status()
-#                self.check_empty_container()
-#                self.load_transhipment_cargo()
 
     def devanning_loading_update(self):
         frappe.db.sql("""UPDATE `tabCargo` SET last_work="Loading", last_work_date=%s WHERE cargo_ref=%s""", (now(), self.cargo_ref))

@@ -1,0 +1,140 @@
+{
+ "actions": [],
+ "creation": "2020-10-19 18:35:50.792403",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cargo_type",
+  "container_no",
+  "iso",
+  "container_size",
+  "container_content",
+  "weight",
+  "volume",
+  "seal_1",
+  "seal_2",
+  "cargo_description",
+  "chasis_no",
+  "mark",
+  "work_type"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "cargo_type",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Type",
+   "options": "Cargo Type"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Container No"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "iso",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "ISO",
+   "options": "Container Type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo Description"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Weight"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Volume"
+  },
+  {
+   "fieldname": "seal_1",
+   "fieldtype": "Data",
+   "label": "Seal 1"
+  },
+  {
+   "fieldname": "seal_2",
+   "fieldtype": "Data",
+   "label": "Seal 2"
+  },
+  {
+   "fieldname": "chasis_no",
+   "fieldtype": "Data",
+   "label": "Chasis No"
+  },
+  {
+   "fieldname": "mark",
+   "fieldtype": "Data",
+   "label": "Mark"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "container_content",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Content",
+   "options": "\nFULL\nEMPTY"
+  },
+  {
+   "fieldname": "work_type",
+   "fieldtype": "Link",
+   "label": "Work Type",
+   "options": "Work Type"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "container_size",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Size",
+   "options": "\n20\n40"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2020-10-20 08:41:01.693220",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Export Cargo Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

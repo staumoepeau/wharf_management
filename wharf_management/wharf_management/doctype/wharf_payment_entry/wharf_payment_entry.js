@@ -61,6 +61,13 @@ frappe.ui.form.on('Wharf Payment Entry', {
             frm.set_df_property('delivery_information', 'hidden', 1);
             frm.set_df_property('custom_warrant', 'hidden', 1);
         }
+        if (frm.doc.reference_doctype == "Export") {
+            wharf_management.wharf_payment_entry.setup_export_booking_queries(frm);
+            frm.set_df_property('delivery_code', 'hidden', 1);
+            frm.set_df_property('delivery_information', 'hidden', 1);
+            frm.set_df_property('custom_warrant', 'hidden', 1);
+        }
+
 
         if (!frappe.user.has_role("Cargo Operation Manager")) {
             cur_frm.set_df_property("set_posting_time", "hidden", 1);
@@ -77,6 +84,10 @@ frappe.ui.form.on('Wharf Payment Entry', {
         if (frm.doc.reference_doctype == "Booking Request") {
             get_fees_booking(frm)
             get_berthed_fees(frm)
+        }
+        if (frm.doc.reference_doctype == "Export") {
+            get_fees_export(frm)
+            get_vgm_fees(frm)
         }
     },
 
@@ -273,6 +284,17 @@ $.extend(wharf_management.wharf_payment_entry, {
                 ]
             }
         }
+    },
+    setup_export_booking_queries: function(frm) {
+        frm.fields_dict['booking_request_table'].grid.get_field("booking_reference_doctype").get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['Export', 'docstatus', '=', 1],
+                    ['Export', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports']],
+                    ['Export', 'consignee', '=', frm.doc.customer],
+                ]
+            }
+        }
     }
 
 });
@@ -373,6 +395,29 @@ frappe.ui.form.on("Booking Request References", "booking_reference_doctype", fun
             doctype: "Wharf Fees",
             filters: {
                 wharf_fee_category: "BERTHED Fee",
+                vessel_type: d.vessel_type,
+            }
+        },
+        callback: function(data) {
+            console.log(data)
+
+            frappe.model.set_value(d.doctype, d.name, "grt_fee", data.message["fee_amount"]);
+            //            frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);
+
+        }
+    })
+
+});
+
+frappe.ui.form.on("Export Cargo Reference", "reference_doctype", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+
+    frappe.call({
+        "method": "frappe.client.get",
+        args: {
+            doctype: "Wharf Fees",
+            filters: {
+                wharf_fee_category: "Wharfage Fee",
                 vessel_type: d.vessel_type,
             }
         },

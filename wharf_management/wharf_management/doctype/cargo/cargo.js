@@ -10,7 +10,8 @@ frappe.ui.form.on('Cargo', {
         wharf_management.cargo.setup_yard_queries(frm);
 
 
-        let is_allowed = (frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager"));
+        let is_allowed = (frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager") ||
+            frappe.user_roles.includes("Cargo Operation Cashier") || frappe.user_roles.includes("Operation Manifest User"));
 
         frm.toggle_enable(['cargo_type', 'work_type', 'secondary_work_type', 'inspection_status', 'yard_status', 'payment_status', 'final_eta', 'final_etd',
             'gate1_status', 'gate2_status', 'final_status', 'status', 'custom_code', 'delivery_code', 'gate1_in', 'pol', 'pod', 'agents',
@@ -85,7 +86,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.inspection_status == "Closed"
             )) {
             //            frm.add_custom_button(__('Payment'), function() {
-            cur_frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
+            frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
                 frappe.route_options = {
                     "payment_type": "Receive",

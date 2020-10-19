@@ -76,6 +76,7 @@
                               </div>
                         </div>
                           {% endif %}
+
                           {% if item.status == "Yard" && item.hazardous != "Yes" && item.cargo_type == "Container" && item.container_content == "EMPTY" %}
                           <div id="{{ item.cargo_ref }}" ondrop="DnD.onDrop(event, this)" draggable="true" ondragstart="DnD.onDragStart(event, this)">
                                 <img src="/files/pink_contanier.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
@@ -86,6 +87,15 @@
                                 </div>
                           </div>
                             {% endif %}
+                            {% if item.status == "Yard" && item.cargo_type == "Break Bulk" %}
+                            <div id="{{ item.cargo_ref }}" ondrop="DnD.onDrop(event, this)" draggable="true" ondragstart="DnD.onDragStart(event, this)">
+                                  <img src="/files/blue_break_bulk.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
+                                  <div class="card-img-overlay">
+                                    <p class="container_no">{{ item.mark}}</p>
+                                    <p class="yard_slot" >{{ item.yard_slot }}</p>
+                                  </div>
+                            </div>
+                              {% endif %}
 
 
                         {% if item.status == "Yard" && item.cargo_type == "Vehicles" %}
