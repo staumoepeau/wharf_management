@@ -34,6 +34,15 @@ def get_inspection_items():
     return inspection_items
 
 
+
+@frappe.whitelist()
+def get_express_items():
+
+    express_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content
+        FROM `tabExport` WHERE status in ('Paid','Gate1 IN')""" , as_dict=True)
+    return express_items
+
+
 @frappe.whitelist()
 def update_yard(ref):
     

@@ -35,6 +35,31 @@ p.yard_slot {
     padding-bottom: 3px;
 }
 
+@media screen and (max-width: 720px) {
+    /* smartphones breakpoint */
+    html {
+        font-size: 12px
+    }
+}
+
+@media screen and (min-width: 720px) and (max-width: 1024px) {
+    /* tablets */
+    html {
+        font-size: 14px
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    /* laptops */
+    html {
+        font-size: 16px
+    }
+}
+
+h1 {
+    font-size: 2rem
+}
+
 
 /* Fluid typography formula */
 
@@ -99,11 +124,11 @@ p.yard_slot {
 }
 
 #wrapper.toggled-left {
-    padding-left: 180px;
+    padding-left: 120px;
 }
 
 #wrapper.toggled-right {
-    padding-right: 180px;
+    padding-right: 120px;
 }
 
 #sidebar-wrapper {
@@ -120,8 +145,26 @@ p.yard_slot {
     transition: all 0.5s ease;
 }
 
+#left-sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 200px;
+    width: 0;
+    height: 100%;
+    margin-left: -180px;
+    overflow-y: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
 #wrapper.toggled-right #sidebar-wrapper {
-    width: 180px;
+    width: 120px;
+}
+
+#wrapper.toggled-left #sidebar-wrapper {
+    width: 120px;
 }
 
 #page-content-wrapper {
@@ -197,6 +240,9 @@ p.yard_slot {
         padding-right: 0px;
     }
     #sidebar-wrapper {
+        width: 0;
+    }
+    #left-sidebar-wrapper {
         width: 0;
     }
     #wrapper.toggled-right #sidebar-wrapper {

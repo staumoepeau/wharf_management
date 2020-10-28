@@ -34,10 +34,7 @@ frappe.ui.form.on('Cargo', {
         //frappe.has_common(frappe.user_roles, ['System Manager', 'Cargo Operation Manager', 'Operation Manifest User', 'Wharf Operation Manager']))
 
         frm.toggle_display(['break_bulk_items'], frm.doc.qty > 1);
-
         frm.toggle_display(['last_port'], frm.doc.cargo_type === "Split Ports");
-
-
     },
 
     cargo_type: function(frm) {
@@ -67,14 +64,13 @@ frappe.ui.form.on('Cargo', {
             frm.enable_save();
         }
 
-
         if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
 
             frm.page.sidebar.hide(); // this removes the sidebar
             $(".timeline").hide()
             frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
         }
-        if (frappe.user.has_role("System Manager")) {
+        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Manager")) {
             frm.page.sidebar.show(); // this removes the sidebar
             $(".timeline").show()
             frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
@@ -237,21 +233,152 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.security_item_count != frm.doc.qty
             )) {
             frm.add_custom_button(__('Gate1 Count'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name,
-                    "mydoctype": "CARGO"
 
-                }
-                frappe.new_doc("Gate1 Item Count");
-                frappe.set_route("Form", "Gate1 Item Count", doc.name);
+                frm.events.get_gate_breakbulk_count(frm)
             }).addClass("btn-warning");
         }
+
+        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+            frm.doc.inspection_status == "Closed" &&
+            frm.doc.qty > 1 &&
+            frm.doc.break_bulk_item_count != frm.doc.qty
+        ) {
+            frm.add_custom_button(__('Bulk Item Count'), function() {
+
+                frm.events.get_breakbulk_count(frm)
+
+            }).addClass("btn-warning");
+        }
+    },
+
+    get_breakbulk_count: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Yard Inspection',
+            fields: [{
+                    label: 'Item Count',
+                    fieldname: 'item_count',
+                    fieldtype: 'Int',
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition',
+                    fieldname: 'cargo_condition',
+                    fieldtype: 'Select',
+                    options: ['OK',
+                        'Damage'
+                    ],
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition Comment',
+                    fieldname: 'cargo_condition_comment',
+                    fieldtype: 'Small Text',
+                    depends_on: 'eval:doc.cargo_condition == "Damage"'
+                }
+
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.item_count) {
+                    frappe.throw(__("Item Count is required"));
+                }
+                console.log(values);
+                let counter = values.item_count + frm.doc.break_bulk_item_count;
+                console.log(counter)
+                if (frm.doc.qty < counter) {
+                    frappe.msgprint(
+                        msg = 'Item Count is Greater than the QTY',
+                        title = 'Error',
+                        raise_exception = FileNotFoundError
+                    )
+                } else {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.cargo.cargo.update_breakbulk_inspection",
+                        args: {
+                            "name_ref": frm.doc.name,
+                            "counter": counter,
+                            "qty": frm.doc.qty
+                        },
+                        callback: function(r) {
+                            //                            alert(counter)
+                            d.hide();
+                            refresh_field("item_count");
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
+    },
+
+    get_gate_breakbulk_count: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Security Break Bulk Count',
+            fields: [{
+                    label: 'Item Count',
+                    fieldname: 'item_count',
+                    fieldtype: 'Int',
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition',
+                    fieldname: 'cargo_condition',
+                    fieldtype: 'Select',
+                    options: ['OK',
+                        'Damage'
+                    ],
+                    reqd: 1
+                },
+                {
+                    label: 'Cargo Condition Comment',
+                    fieldname: 'cargo_condition_comment',
+                    fieldtype: 'Small Text',
+                    depends_on: 'eval:doc.cargo_condition == "Damage"'
+                }
+
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.item_count) {
+                    frappe.throw(__("Item Count is required"));
+                }
+                console.log(values);
+                let counter = values.item_count + frm.doc.security_item_count;
+                console.log(counter)
+                if (frm.doc.qty < counter) {
+                    frappe.msgprint(
+                        msg = 'Item Count is Greater than the QTY',
+                        title = 'Error',
+                        raise_exception = FileNotFoundError
+                    )
+                } else {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.cargo.cargo.update_security_breakbulk",
+                        args: {
+                            "name_ref": frm.doc.name,
+                            "counter": counter,
+                            "qty": frm.doc.qty
+                        },
+                        callback: function(r) {
+                            //                            alert(counter)
+                            d.hide();
+                            refresh_field("item_count");
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
     },
 
     handling_fee_discount: function(frm) {
         if (frm.doc.handling_fee_discount == "YES") {
 
-            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Split Ports") {
+            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Tanktainers" || frm.doc.cargo_type == "Flatrack" || frm.doc.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
@@ -290,7 +417,7 @@ frappe.ui.form.on('Cargo', {
 
         } else if (frm.doc.handling_fee_discount == "NO") {
 
-            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Split Ports") {
+            if (frm.doc.cargo_type == "Container" || frm.doc.cargo_type == "Tank Tainers" || frm.doc.cargo_type == "Flatrack" || frm.doc.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {
@@ -319,7 +446,7 @@ frappe.ui.form.on('Cargo', {
                         cur_frm.set_value("handling_fee", data.message["fee_amount"]);
                     }
                 })
-            } else if (frm.doc.cargo_type != "Container" || frm.doc.cargo_type != "Vehicles" || frm.doc.cargo_type == "Split Ports") {
+            } else if (frm.doc.cargo_type == "Break Bulk" || frm.doc.cargo_type == "Heavy Vehicles" || frm.doc.cargo_type == "Loose Cargo") {
                 frappe.call({
                     "method": "frappe.client.get",
                     args: {

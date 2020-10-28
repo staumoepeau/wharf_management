@@ -15,7 +15,7 @@ class ExportBooking(Document):
 
     def create_export_cargo(self):
 
-        export_list = frappe.db.sql("""SELECT `tabExport Booking`.name, `tabExport Booking`.agents, `tabExport Booking`.booking_date, `tabExport Booking`.booking_time, 
+        export_list = frappe.db.sql("""SELECT `tabExport Booking`.name, `tabExport Booking`.agents, `tabExport Booking`.consignee,`tabExport Booking`.booking_date, `tabExport Booking`.booking_time, 
                         `tabExport Cargo Table`.cargo_type, `tabExport Cargo Table`.container_no, `tabExport Cargo Table`.container_size,`tabExport Cargo Table`.iso, 
                         `tabExport Cargo Table`.container_content, `tabExport Cargo Table`.weight, `tabExport Cargo Table`.volume, `tabExport Cargo Table`.seal_1, 
                         `tabExport Cargo Table`.seal_2, `tabExport Cargo Table`.cargo_description, `tabExport Cargo Table`.chasis_no, `tabExport Cargo Table`.mark
@@ -30,6 +30,7 @@ class ExportBooking(Document):
                 "posting_date" : d.booking_date,
                 "posting_time" : d.booking_time,
                 "cargo_type" : d.cargo_type,
+                "customer" : d.consignee,
                 "container_size" : d.container_size,
                 "container_no" : d.container_no,
                 "container_content" : d.container_content,

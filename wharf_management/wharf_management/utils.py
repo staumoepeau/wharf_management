@@ -18,7 +18,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no",
         "bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature", "container_type","mark","final_dest_port","volume",
         "container_size","consignee","container_content","stowage","hazardous","hazardous_code", "status","seal_1","seal_2","eta_date","cargo_description","etd_date",
-        "chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+        "chasis_no","yard_slot","inspection_status","yard_status","final_status", "third_work_type"], as_dict=True)
 
     if doctype == "Cargo":
         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no","custom_code",
@@ -26,14 +26,14 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         "container_size","consignee","container_content","stowage","hazardous","hazardous_code", "status","seal_1","seal_2","eta_date","cargo_description","etd_date","delivery_code",
         "chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
 
-#    if not val.consignee:
-#        val.consignee = val.agents
-
     if final_work_type == "Discharged" and not secondary_work_type:
         inspection_status = "Closed"
         movement = "Inspection"
         yard_status = "Open"
         yard_date = None
+        final_status = final_work_type
+        third_work_type =None
+        container_content = val.container_content
        
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
@@ -44,6 +44,9 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         inspection_status = "Closed"
         yard_status = "Open"
         yard_date = None
+        final_status = final_work_type
+        third_work_type =None
+        container_content = val.container_content
         
 
 #            elif self.secondary_work_type == "Transhipment":
@@ -60,6 +63,9 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         inspection_status = "Closed"
         yard_status = "Closed"
         yard_date = now()
+        final_status = final_work_type
+        third_work_type =None
+        container_content = val.container_content
         
 
     if cargo_type == "Split Ports" and final_work_type == "Loading" :
@@ -70,7 +76,58 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         inspection_status = "Open"
         yard_status = "Closed"
         yard_date = now()
-  
+        final_status = final_work_type
+        third_work_type =None
+        container_content = val.container_content
+
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
+        worktype = "Devanning"
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Open"
+        final_status = "Discharged"
+        payment = "Closed"
+        gate = "Closed"
+        yard_date = None
+        third_work_type =None
+        container_content = val.container_content
+
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
+        worktype = None
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Open"
+        final_status = "Devanning"
+        payment = "Open"
+        gate = "Open"
+        yard_date = None
+        final_work_type = "Devanning"
+        third_work_type =None
+        container_content = None
+
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and (val.third_work_type == "Stock" or not val.third_work_type):
+        worktype = "Devanning"
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Open"
+        final_status = "Stock"
+        payment = "Closed"
+        gate = "Closed"
+        yard_date = None
+        third_work_type = val.third_work_type
+        container_content = "EMPTY"
+
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type != "Container" and (val.third_work_type == "Stock" or not val.third_work_type):
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Open"
+        final_status = "Devanning"
+        payment = "Open"
+        gate = "Open"
+        yard_date = None
+        final_work_type = "Devanning"
+        third_work_type = val.third_work_type
+        container_content = None
 
     doc = frappe.new_doc("Cargo")
     doc.update({
@@ -79,8 +136,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "cargo_ref": cargo_ref,
                 "booking_ref" : val.booking_ref,
                 "pat_code" : val.pat_code,
-                "net_weight" : val.net_weight,
-                "cargo_type" : val.cargo_type,
+                "net_weight" : val.net_weight,                                         
+                "cargo_type" : cargo_type,
                 "qty" : val.qty,
                 "container_no" : val.container_no,
                 "voyage_no" : val.voyage_no,
@@ -88,6 +145,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "work_type" : final_work_type,
                 "work_type_date": now(),
                 "secondary_work_type" : worktype,
+                "third_work_type": third_work_type,
                 "pol" : val.pol,
                 "agents" : val.agents,
                 "commodity_code" : val.commodity_code,
@@ -100,7 +158,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "volume" : val.volume,
                 "container_size" : val.container_size,
                 "consignee" : val.consignee,
-                "container_content" : val.container_content,
+                "container_content" : container_content,
                 "stowage" : val.stowage,
                 "hazardous" : val.hazardous,
                 "hazardous_code" : val.hazardous_code,
@@ -114,7 +172,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "inspection_status" : inspection_status,
                 "yard_status" : yard_status,
                 "yard_date" : yard_date,
-                "final_status" : final_work_type,
+                "final_status" : final_status,
                 "payment_status" : payment,
                 "gate1_status" : gate,
                 "gate2_status" : gate,

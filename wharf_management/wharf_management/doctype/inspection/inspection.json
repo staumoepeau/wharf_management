@@ -29,6 +29,9 @@
   "column_break_14",
   "secondary_work_type",
   "third_work_type",
+  "section_break_23",
+  "devanning",
+  "column_break_25",
   "cargo_condition_info",
   "inspection_images",
   "col_01",
@@ -270,13 +273,29 @@
   {
    "fieldname": "column_break_39",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_23",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.work_type == \"Discharged\" &&  doc.secondary_work_type == \"Devanning\"",
+   "fieldname": "devanning",
+   "fieldtype": "Select",
+   "label": "Devanning",
+   "mandatory_depends_on": "eval: doc.work_type == \"Discharged\" &&  doc.secondary_work_type == \"Devanning\"",
+   "options": "\nVehicles\nHeavy Vehicles\nBreak Bulk"
+  },
+  {
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-07 09:46:11.552595",
+ "modified": "2020-10-23 06:14:28.654674",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Inspection",

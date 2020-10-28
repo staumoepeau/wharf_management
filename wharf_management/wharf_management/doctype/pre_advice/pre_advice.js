@@ -73,38 +73,37 @@ frappe.ui.form.on('Pre Advice', {
         }
 
 
-        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-            frm.doc.work_type == "Discharged" &&
-            frm.doc.secondary_work_type == "Devanning" &&
-            frm.doc.docstatus == 1
-        ) {
+        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+        //            frm.doc.work_type == "Discharged" &&
+        //            frm.doc.secondary_work_type == "Devanning" &&
+        //            frm.doc.docstatus == 1
+        //        ) {
 
-            frm.add_custom_button(__('Vehicles'), function() {
-                frappe.call({
-                    method: "devanning_create_vehicles",
-                    doc: frm.doc,
-                    callback: function(d) {
-                        console.log(d)
-                        cur_frm.refresh();
-                    }
-                })
+        //            frm.add_custom_button(__('Vehicles'), function() {
+        //                frappe.call({
+        //                    method: "devanning_create_vehicles",
+        //                    doc: frm.doc,
+        //                    callback: function(d) {
+        //                        console.log(d)
+        //                        cur_frm.refresh();
+        //                    }
+        //                })
 
-            }, __("Devanning"));
-            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
+        //            }, __("Devanning"));
+        //            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
 
-            frm.add_custom_button(__('Break Bulk'), function() {
-                frappe.call({
-                    method: "devanning_create_bbulk",
-                    doc: frm.doc,
-                    callback: function(d) {
-                        console.log(d)
-                        cur_frm.refresh();
-                    }
-                })
-            }, __("Devanning"));
-            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
-
-        }
+        //            frm.add_custom_button(__('Break Bulk'), function() {
+        //                frappe.call({
+        //                    method: "devanning_create_bbulk",
+        //                    doc: frm.doc,
+        //                    callback: function(d) {
+        //                        console.log(d)
+        //                        cur_frm.refresh();
+        //                    }
+        //                })
+        //            }, __("Devanning"));
+        //            cur_frm.page.set_inner_btn_group_as_primary(__("Devanning"));
+        //        }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
             frm.doc.gate2_status != "Closed" &&
@@ -211,46 +210,29 @@ frappe.ui.form.on('Pre Advice', {
             }).addClass("btn-primary");
         }
 
-        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
-                frm.doc.yard_status != "Closed" &&
-                frm.doc.inspection_status == "Closed" &&
-                frm.doc.qty == frm.doc.break_bulk_item_count
-            )) {
-            frm.add_custom_button(__('Yard'), function() {
-                //                frappe.route_options = {
-                //                    "cargo_ref": frm.doc.name,
-                //                    "container_no": frm.doc.container_no,
-                //                    "voyage_no": frm.doc.voyage_no,
-                //                    "vessel": frm.doc.vessel,
-                //                    "eta_date": frm.doc.eta_date,
-                //                    "bol": frm.doc.bol,
-                //                    "consignee": frm.doc.consignee,
-                //                    "chasis_no": frm.doc.chasis_no,
-                //                    "cargo_type": frm.doc.cargo_type,
-                //                    "work_type": frm.doc.work_type,
-                //                }
-                //                frappe.set_route("Form", "Yard", "New Yard 1");
-                frm.events.get_yard_slot(frm)
+        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
+        //                frm.doc.yard_status != "Closed" &&
+        //                frm.doc.inspection_status == "Closed" &&
+        //                frm.doc.qty == frm.doc.break_bulk_item_count
+        //            )) {
+        //            frm.add_custom_button(__('Yard'), function() {
 
-            }).addClass("btn-primary");
-        }
+        //                frm.events.get_yard_slot(frm)
 
-        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
-            frm.doc.inspection_status == "Closed" &&
-            frm.doc.qty > 1 &&
-            frm.doc.break_bulk_item_count != frm.doc.qty
-        ) {
-            frm.add_custom_button(__('Bulk Item Count'), function() {
-                //                frappe.route_options = {
-                //                    "cargo_ref": frm.doc.name,
-                //                    "mydoctype": "Pre Advice"
-                //                }
-                //                frappe.new_doc("Bulk Item Count");
-                //                frappe.set_route("Form", "Bulk Item Count", doc.name);
-                frm.events.get_breakbulk_count(frm)
+        //            }).addClass("btn-primary");
+        //        }
 
-            }).addClass("btn-warning");
-        }
+        //        if ((frappe.user.has_role("Administrator") || frappe.user.has_role("Yard Inspection User") || frappe.user.has_role("Yard Inspection Supervisor")) &&
+        //            frm.doc.inspection_status == "Closed" &&
+        //            frm.doc.qty > 1 &&
+        //            frm.doc.break_bulk_item_count != frm.doc.qty
+        //        ) {
+        //            frm.add_custom_button(__('Bulk Item Count'), function() {
+
+        //                frm.events.get_breakbulk_count(frm)
+
+        //            }).addClass("btn-warning");
+        //        }
     },
 
     get_breakbulk_count: function(frm) {

@@ -3,11 +3,34 @@
 
 frappe.ui.form.on('Export', {
 
-    setup: function(frm) {
+    onload: function(frm) {
+
+        let is_allowed = (frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager") ||
+            frappe.user_roles.includes("Cargo Operation Cashier") || frappe.user_roles.includes("Operation Manifest User"));
+
+        frm.toggle_display(['net_weight', 'volume', 'status', 'export_gate1_status', 'export_gate1_date'], is_allowed);
+
+        frm.toggle_enable(['cargo_type', 'customer', 'container_size', 'container_content'], is_allowed);
 
     },
 
     refresh: function(frm) {
+
+        //        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
+        //            frm.page.sidebar.hide(); // this removes the sidebar
+        //            $(".timeline").hide()
+        //            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        //        }
+        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Manager")) {
+            frm.page.sidebar.show(); // this removes the sidebar
+            $(".timeline").show()
+            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+        }
+        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
+            frm.page.sidebar.hide(); // this removes the sidebar
+            $(".timeline").hide()
+            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        }
 
 
         if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Manager")) || (frappe.user.has_role("Wharf Operation Cashier"))) {
@@ -15,7 +38,7 @@ frappe.ui.form.on('Export', {
             frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
                 frappe.route_options = {
                     "payment_type": "Receive",
-                    "customer": frm.doc.consignee,
+                    "customer": frm.doc.customer,
                     "reference_doctype": "Export"
                 }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
@@ -47,31 +70,25 @@ frappe.ui.form.on('Export', {
         }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer Main Gate") &&
-                !frm.doc.main_gate_start && frm.doc.docstatus == 1
+                frm.doc.main_gate_status != "Closed" &&
+                frm.doc.docstatus == 1
             )) {
 
             frm.add_custom_button(__('Main Gate'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name,
-                    "container_no": frm.doc.container_no
-                }
-                frappe.new_doc("Main Gate Export");
-                frappe.set_route("Form", "Maint Gate Export", doc.name);
+
+                frm.events.export_main_gate(frm)
             }).addClass("btn-warning");
 
         }
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
-                frm.doc.status == "Main Gate" &&
+                frm.doc.main_gate_status == "Closed" &&
+                frm.doc.export_gate1_status != "Closed" &&
                 frm.doc.docstatus == 1
             )) {
 
             frm.add_custom_button(__('Gate1'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name,
-                    "container_no": frm.doc.container_no
-                }
-                frappe.new_doc("Gate1 Export");
-                frappe.set_route("Form", "Gate1 Export", doc.name);
+
+                frm.events.export_gate1(frm)
             }).addClass("btn-warning");
 
         }
@@ -181,6 +198,79 @@ frappe.ui.form.on('Export', {
     //        cur_frm.set_value("apply_wharfage_fee", 0)
     //        cur_frm.set_value("apply_vgm_fee", 0)        
     //    },
+
+    export_gate1: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Security Gate 1',
+            fields: [{
+                label: 'Confirm',
+                fieldname: 'confirm',
+                fieldtype: 'Select',
+                options: ['NO',
+                    'YES'
+                ],
+                reqd: 1
+            }, ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                console.log(values);
+                if (values.confirm == "YES") {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.export.export.update_gate1_status",
+                        args: {
+                            "name_ref": frm.doc.name,
+                        },
+                        callback: function(r) {
+                            d.hide();
+                            //                            refresh_field("item_count");
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
+    },
+
+    export_main_gate: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Security Main Gate',
+            fields: [{
+                    label: 'Truck Licenses Plate',
+                    fieldname: 'truck_licenses_plate',
+                    fieldtype: 'Link',
+                    options: 'Container Truck',
+                    reqd: 1,
+                },
+                {
+                    label: 'Driver Information',
+                    fieldname: 'drivers_information',
+                    fieldtype: 'Link',
+                    options: 'Truck Drivers',
+                    reqd: 1
+                }
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                frappe.call({
+                    method: "wharf_management.wharf_management.doctype.export.export.update_main_gate_status",
+                    args: {
+                        "name_ref": frm.doc.name,
+                        "truck_licenses_plate": values.truck_licenses_plate,
+                        "drivers_information": values.drivers_information
+                    },
+                    callback: function(r) {
+                        d.hide();
+                        //                        refresh_field("item_count");
+                        location.reload(true);
+                    }
+                })
+            }
+        });
+
+        d.show();
+    },
 
 });
 

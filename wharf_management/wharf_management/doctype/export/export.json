@@ -20,36 +20,54 @@
   "posting_time",
   "cargo_details",
   "cargo_type",
-  "container_no",
-  "container_type",
-  "weight",
-  "seal_1",
-  "chasis_no",
-  "column_break_20",
   "container_size",
+  "container_type",
+  "net_weight",
+  "litre",
+  "seal_1",
+  "column_break_20",
+  "container_no",
   "pat_code",
   "container_content",
   "volume",
-  "seal_2",
   "mark",
+  "chasis_no",
+  "seal_2",
   "column_break_22",
   "cargo_description",
   "section_break_15",
-  "column_break_17",
   "status",
-  "column_break_29",
+  "payment_status",
+  "column_break_32",
+  "payment_date",
+  "payment_by",
+  "section_break_35",
+  "work_type",
+  "column_break_17",
+  "bol",
   "yard_slot",
   "export_movement",
-  "main_gate_start",
-  "main_gate_ends",
+  "main_gate_status",
+  "main_gate_created_by",
   "column_break_maingate",
-  "gate1_start",
-  "gate1_ends",
+  "main_gate_date",
+  "main_gate_user_name",
   "column_break_gate",
-  "driver_start",
-  "driver_ends",
-  "export_payment",
+  "export_gate1_status",
+  "gate1_created_by",
+  "column_gate1",
+  "export_gate1_date",
+  "gate1_user_name",
   "section_break_40",
+  "truck_licenses_plate",
+  "column_break_44",
+  "drivers_information",
+  "yard_status_section",
+  "yard_status",
+  "yard_created_by",
+  "column_break_55",
+  "yard_date",
+  "yard_created_name",
   "amended_from"
  ],
  "fields": [
@@ -160,12 +178,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "weight",
-   "fieldtype": "Float",
-   "label": "Weight"
-  },
-  {
    "fieldname": "seal_1",
    "fieldtype": "Data",
    "label": "Seal 1"
@@ -190,65 +202,39 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "Export",
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Status",
-   "options": "\nPaid\nMain Gate\nGate1\nYard\nOutward\nExport"
+   "options": "\nPaid\nMain Gate IN\nGate1 IN\nYard\nOutward\nExport\nLoading\nStock"
   },
   {
    "fieldname": "export_movement",
    "fieldtype": "Section Break",
-   "label": "Export Movement"
-  },
-  {
-   "fieldname": "main_gate_start",
-   "fieldtype": "Datetime",
-   "label": "Main Gate Start"
-  },
-  {
-   "fieldname": "main_gate_ends",
-   "fieldtype": "Datetime",
-   "label": "Main Gate Ends"
+   "label": "Main Gate Status"
   },
   {
    "fieldname": "column_break_maingate",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "gate1_start",
-   "fieldtype": "Datetime",
-   "label": "Gate 1 Start"
-  },
-  {
-   "fieldname": "gate1_ends",
-   "fieldtype": "Datetime",
-   "label": "Gate 1 Ends"
-  },
-  {
+   "collapsible": 1,
    "fieldname": "column_break_gate",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "driver_start",
-   "fieldtype": "Datetime",
-   "label": "Driver Start"
-  },
-  {
-   "fieldname": "driver_ends",
-   "fieldtype": "Datetime",
-   "label": "Driver Ends"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "export_payment",
    "fieldtype": "Section Break",
-   "label": "Payment"
+   "label": "Gate  1 Status"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -295,14 +281,152 @@
    "label": "Seal 2"
   },
   {
-   "fieldname": "column_break_29",
+   "fieldname": "work_type",
+   "fieldtype": "Select",
+   "label": "Work Type",
+   "options": "\nLoading\nStock"
+  },
+  {
+   "fieldname": "bol",
+   "fieldtype": "Data",
+   "label": "BOL"
+  },
+  {
+   "fieldname": "litre",
+   "fieldtype": "Data",
+   "label": "Litre"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "net_weight",
+   "fieldtype": "Float",
+   "label": "Weight"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "main_gate_status",
+   "fieldtype": "Select",
+   "label": "Main Gate Status",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "main_gate_date",
+   "fieldtype": "Datetime",
+   "label": "Main Gate Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "export_gate1_status",
+   "fieldtype": "Select",
+   "label": "Gate 1 Status",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "export_gate1_date",
+   "fieldtype": "Datetime",
+   "label": "Gate 1 Date"
+  },
+  {
+   "fieldname": "truck_licenses_plate",
+   "fieldtype": "Link",
+   "label": "Truck Licenses Plate",
+   "options": "Container Truck"
+  },
+  {
+   "fieldname": "column_break_44",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "drivers_information",
+   "fieldtype": "Link",
+   "label": "Drive's Information",
+   "options": "Truck Drivers"
+  },
+  {
+   "fieldname": "main_gate_created_by",
+   "fieldtype": "Data",
+   "label": "Created By"
+  },
+  {
+   "fieldname": "main_gate_user_name",
+   "fieldtype": "Data",
+   "label": "User Name"
+  },
+  {
+   "fieldname": "gate1_created_by",
+   "fieldtype": "Data",
+   "label": "Created By"
+  },
+  {
+   "fieldname": "gate1_user_name",
+   "fieldtype": "Data",
+   "label": "User Name"
+  },
+  {
+   "fieldname": "column_gate1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "yard_status_section",
+   "fieldtype": "Section Break",
+   "label": "Yard Status"
+  },
+  {
+   "fieldname": "yard_status",
+   "fieldtype": "Select",
+   "label": "Yard Status",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "fieldname": "yard_created_by",
+   "fieldtype": "Data",
+   "label": "Created By"
+  },
+  {
+   "fieldname": "column_break_55",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "yard_date",
+   "fieldtype": "Datetime",
+   "label": "Yard Date"
+  },
+  {
+   "fieldname": "yard_created_name",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Datetime",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_by",
+   "fieldtype": "Data",
+   "label": "Payment By"
+  },
+  {
+   "fieldname": "section_break_35",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-19 23:43:22.501315",
+ "modified": "2020-10-22 10:00:20.898233",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export",
@@ -367,13 +491,15 @@
    "share": 1
   },
   {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "All",
-   "share": 1
+   "role": "Wharf Security Officer",
+   "share": 1,
+   "write": 1
   },
   {
    "amend": 1,

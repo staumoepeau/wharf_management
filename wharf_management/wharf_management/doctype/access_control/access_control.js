@@ -7,6 +7,9 @@ frappe.ui.form.on('Access Control', {
             frm.set_value("check_in_out_time", frappe.datetime.now_datetime());
         }
     },
+    onload: function(frm) {
+
+    },
     refresh: function(frm) {
 
         if (frm.doc.docstatus == 0) {
@@ -15,6 +18,12 @@ frappe.ui.form.on('Access Control', {
             }
             //            set_posting_date_time(frm)
         }
+
+    },
+    customer_id: function(frm) {
+        frm.save();
+        frm.refresh();
+
 
     }
 });

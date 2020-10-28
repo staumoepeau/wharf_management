@@ -1,13 +1,13 @@
 {
  "actions": [],
- "creation": "2020-10-19 18:35:50.792403",
+ "creation": "2020-10-27 13:45:08.494797",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "cargo_ref",
   "cargo_type",
   "container_no",
-  "iso",
   "container_size",
   "container_content",
   "column_break_6",
@@ -26,17 +26,19 @@
  "fields": [
   {
    "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.cargo_type",
    "fieldname": "cargo_type",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Cargo Type",
-   "options": "Cargo Type"
+   "search_index": 1
   },
   {
    "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
    "in_global_search": 1,
@@ -46,20 +48,36 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "fieldname": "iso",
-   "fieldtype": "Link",
+   "fetch_from": "cargo_ref.container_size",
+   "fieldname": "container_size",
+   "fieldtype": "Select",
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "ISO",
-   "options": "Container Type",
-   "search_index": 1
+   "label": "Container Size",
+   "options": "\n20\n40"
   },
   {
-   "fieldname": "cargo_description",
-   "fieldtype": "Small Text",
-   "label": "Cargo Description"
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.container_content",
+   "fieldname": "container_content",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Content",
+   "options": "\nFULL\nEMPTY"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bol",
+   "fieldtype": "Data",
+   "label": "BOL"
   },
   {
    "allow_in_quick_entry": 1,
@@ -90,9 +108,17 @@
    "label": "Seal 2"
   },
   {
-   "fieldname": "chasis_no",
-   "fieldtype": "Data",
-   "label": "Chasis No"
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo Description"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "mark",
@@ -100,15 +126,9 @@
    "label": "Mark"
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "container_content",
-   "fieldtype": "Select",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Container Content",
-   "options": "\nFULL\nEMPTY"
+   "fieldname": "chasis_no",
+   "fieldtype": "Data",
+   "label": "Chasis No"
   },
   {
    "fieldname": "work_type",
@@ -118,40 +138,23 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "fieldname": "container_size",
-   "fieldtype": "Select",
+   "fieldname": "cargo_ref",
+   "fieldtype": "Link",
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Container Size",
-   "options": "\n20\n40"
-  },
-  {
-   "fieldname": "bol",
-   "fieldtype": "Data",
-   "label": "BOL"
-  },
-  {
-   "fieldname": "column_break_6",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_11",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_15",
-   "fieldtype": "Column Break"
+   "label": "Cargo Ref",
+   "options": "Export"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-10-21 14:06:40.426673",
+ "modified": "2020-10-28 05:52:57.498792",
  "modified_by": "Administrator",
  "module": "Wharf Management",
- "name": "Export Cargo Table",
+ "name": "Export Cargo Table Drop",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,

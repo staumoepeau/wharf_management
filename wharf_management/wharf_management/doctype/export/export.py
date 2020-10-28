@@ -7,6 +7,8 @@ import frappe, os, json
 from frappe import throw, _
 from frappe.model.document import Document
 import datetime
+from frappe.utils.user import get_user_fullname
+from frappe.utils import cstr, formatdate, cint, getdate, date_diff, add_days, now
 
 class Export(Document):
     pass
@@ -116,3 +118,48 @@ class Export(Document):
 #			})
 
 #		self.total_fee = ((qty * val.standard_rate) + (1 * vgm_fee))
+
+@frappe.whitelist()
+def update_main_gate_status(name_ref, truck_licenses_plate, drivers_information):
+    full_name = get_user_fullname(frappe.session['user'])
+    frappe.db.sql("""UPDATE `tabExport` SET truck_licenses_plate=%s, drivers_information=%s, main_gate_status="Closed", 
+                    main_gate_date =%s, status="Main Gate IN", main_gate_created_by=%s, main_gate_user_name=%s
+                    WHERE name=%s""", (truck_licenses_plate, drivers_information, now(), frappe.session.user, full_name, name_ref))
+    
+    val = frappe.db.get_value("Export", {"name": name_ref}, ["name","cargo_type","container_no","agents","container_type","container_size","container_content","cargo_description"], as_dict=True)
+	
+    if not val.cargo_type:
+        if val.container_content == "EMPTY" or val.container_content == "FULL":
+            val.cargo_type == "Container"
+
+    doc = frappe.new_doc("Cargo Movement")
+    doc.update({
+			"docstatus" : 1,
+			"cargo_type" : val.cargo_type,
+			"container_no" : val.container_no,
+			"agents" : val.agents,
+			"container_type" : val.container_type,
+			"container_size" : val.container_size,
+			"consignee" : val.consignee,
+			"main_gate_content" : val.container_content,
+			"cargo_description" : val.cargo_description,
+			"main_gate_status" : "IN",
+			"main_gate_date" : now(),
+			"main_gate_time" : now(),
+			"truck" : truck_licenses_plate,
+			"truck_driver" : drivers_information,
+			"refrence": val.name
+			})
+    doc.insert()
+    doc.submit()
+
+@frappe.whitelist()
+def update_gate1_status(name_ref):
+    full_name = get_user_fullname(frappe.session['user'])
+    frappe.db.sql("""UPDATE `tabExport` SET export_gate1_status="Closed", export_gate1_date =%s, status="Gate1 IN",
+                    gate1_created_by=%s, gate1_user_name=%s
+                    WHERE name=%s""", (now(), frappe.session.user, full_name, name_ref))
+
+    val = frappe.db.get_value("Export", {"name": name_ref}, ["name","container_content"], as_dict=True)
+    frappe.db.sql("""Update `tabCargo Movement` set gate_status='IN', container_content=%s, movement_date=%s, gate1_time=%s where refrence=%s""", 
+    (val.container_content, now(), now(), name_ref))

@@ -72,11 +72,8 @@
    "read_only": 1
   },
   {
-   "fetch_from": "user_id.user_image",
-   "fetch_if_empty": 1,
    "fieldname": "image",
    "fieldtype": "Attach Image",
-   "hidden": 1,
    "label": "Image",
    "no_copy": 1
   },
@@ -219,7 +216,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-10-12 15:26:17.845287",
+ "modified": "2020-10-27 11:54:08.527709",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Access Control User",

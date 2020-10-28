@@ -85,3 +85,18 @@ class Cargo(Document):
         self.free_days = free_days
         self.storage_days = working_days
         self.storage_rate = fees.fee_amount
+
+@frappe.whitelist()
+def update_breakbulk_inspection(name_ref, counter, qty):
+    frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s  WHERE name=%s""", (counter, name_ref))
+
+
+@frappe.whitelist()
+def update_security_breakbulk(name_ref, counter, qty):
+    frappe.db.sql("""UPDATE `tabCargo` SET security_item_count=%s  WHERE name=%s""", (counter, name_ref))
+
+	
+#    if counter == qty:
+#        frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s  WHERE name=%s""", (counter, name_ref))
+#        create_preadvise_history(name_ref)
+#        frappe.db.delete('Pre Advice', {'name': name_ref })

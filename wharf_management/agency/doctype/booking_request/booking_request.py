@@ -45,7 +45,7 @@ def get_permission_query_conditions(user):
     if not user: user = frappe.session.user
 #    user_role = frappe.get_roles(frappe.session.user)
 #    user_roles = frappe.get_roles()
-    if "System Manager" in frappe.get_roles():
+    if "System Manager" in frappe.get_roles() or "Wharf Operation Cashier" in frappe.get_roles() or "Wharf Security Manager" in frappe.get_roles() or "Pilot Operation Manager" in frappe.get_roles() :
         return None
     else:
         return """(`tabBooking Request`.agents = '{user_data}')""" .format(user_data=frappe.db.get_value('Agent User', {'user': user}, 'agent'))

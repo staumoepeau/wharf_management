@@ -63,5 +63,47 @@
 </div>
 {% endif %}
 
+{% if yard.cargo_type == "Heavy Vehicles" %}
+<div id="{{ yard.name }}" ondrop="DnD.onDrop(event)" draggable="true" ondragover="DnD.onallowDrop(event)" ondragstart="DnD.onDragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_hvehicle.svg"  height="45" width="115" id="Inspection"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Cargo/{{ yard.name }}">
+        {{ yard.chasis_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Tank Tainers" %}
+<div id="{{ yard.name }}" ondrop="DnD.onDrop(event)" draggable="true" ondragover="DnD.onallowDrop(event)" ondragstart="DnD.onDragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_tank_tainer.svg"  height="45" width="115" id="Inspection"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Cargo/{{ yard.name }}">
+        {{ yard.container_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Flatrack" %}
+<div id="{{ yard.name }}" ondrop="DnD.onDrop(event)" draggable="true" ondragover="DnD.onallowDrop(event)" ondragstart="DnD.onDragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_flatrack.svg"  height="45" width="120" id="Inspection"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Cargo/{{ yard.name }}">
+        {{ yard.container_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
 {% endfor %}
 </div>

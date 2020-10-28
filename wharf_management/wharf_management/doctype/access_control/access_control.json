@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "CUS-CKIN-.MM.-.YYYY.-.######",
+ "allow_rename": 1,
+ "autoname": "AC-.MM.-.YYYY.-.######",
  "creation": "2020-10-09 10:11:14.242898",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -11,14 +12,24 @@
   "log_type",
   "check_in_out_time",
   "column_break_4",
-  "id_image",
-  "device_id"
+  "image",
+  "userid_preview",
+  "reason",
+  "device_id",
+  "vehicle_detail_section",
+  "license_plate",
+  "column_break_10",
+  "drop_or_pickup",
+  "exportimport_section",
+  "export_cargo_table",
+  "section_break_15",
+  "amended_from"
  ],
  "fields": [
   {
    "fieldname": "customer_id",
    "fieldtype": "Link",
-   "label": "ID",
+   "label": "User ID",
    "options": "Access Control User",
    "reqd": 1
   },
@@ -35,7 +46,8 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Log Type",
-   "options": "\nIN\nOUT"
+   "options": "\nIN\nOUT",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_4",
@@ -48,11 +60,6 @@
    "label": "Location / Device ID"
   },
   {
-   "fieldname": "id_image",
-   "fieldtype": "Image",
-   "label": "ID"
-  },
-  {
    "default": "Now",
    "fieldname": "check_in_out_time",
    "fieldtype": "Datetime",
@@ -61,17 +68,85 @@
    "in_standard_filter": 1,
    "label": "Check IN/OUT Time",
    "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_detail_section",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Detail"
+  },
+  {
+   "fieldname": "license_plate",
+   "fieldtype": "Link",
+   "label": "License Plate",
+   "options": "Container Truck"
+  },
+  {
+   "depends_on": "eval:doc.drop_or_pickup == \"Drop\"",
+   "fieldname": "exportimport_section",
+   "fieldtype": "Section Break",
+   "label": "Export/Import"
+  },
+  {
+   "default": "N/A",
+   "fieldname": "drop_or_pickup",
+   "fieldtype": "Select",
+   "label": "Drop/PickUP",
+   "options": "\nN/A\nDrop\nPickup"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason"
+  },
+  {
+   "fieldname": "export_cargo_table",
+   "fieldtype": "Table",
+   "label": "Export Cargo",
+   "options": "Export Cargo Table Drop"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "userid_preview",
+   "fieldtype": "HTML",
+   "label": "User ID"
+  },
+  {
+   "fetch_from": "customer_id.image",
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "User Image"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Access Control",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "image_field": "image",
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2020-10-12 15:39:37.706679",
+ "modified": "2020-10-29 11:15:03.976570",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Access Control",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -82,6 +157,19 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Security Officer",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

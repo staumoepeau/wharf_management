@@ -40,13 +40,13 @@ frappe.ui.form.on('Inspection', {
 
         frm.toggle_display(['booking_ref', 'cargo_ref', 'final_work_type', 'bol'], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User'));
 
-        frm.toggle_display(['count_item'], frm.doc.cargo_type == "Break Bulk")
+        //    frm.toggle_display(['count_item'], frm.doc.cargo_type == "Break Bulk")
 
-        if (frm.doc.cargo_type == "Break Bulk") {
-            frm.set_df_property("count_item", "reqd", 1);
-        } else if (frm.doc.cargo_type == "Break Bulk") {
-            frm.set_df_property("count_item", "reqd", 0);
-        }
+        //    if (frm.doc.cargo_type == "Break Bulk") {
+        //        frm.set_df_property("count_item", "reqd", 1);
+        //    } else if (frm.doc.cargo_type == "Break Bulk") {
+        //        frm.set_df_property("count_item", "reqd", 0);
+        //    }
 
         //        frappe.call({
         //            "method": "frappe.client.get",

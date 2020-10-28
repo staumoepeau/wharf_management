@@ -48,7 +48,7 @@
   {
    "hidden": 0,
    "label": "Security",
-   "links": "[\n    {\n        \"description\": \"GATE 1\",\n        \"label\": \"GATE 1\",\n        \"name\": \"Gate1\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 2\",\n        \"label\": \"GATE 2\",\n        \"name\": \"Gate2\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n     {\n        \"description\": \"Access Control\",\n        \"label\": \"Access Control\",\n        \"name\": \"Access Control\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Access Control User\",\n        \"label\": \"Access Control User\",\n        \"name\": \"Access Control User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 1\",\n        \"label\": \"GATE 1\",\n        \"name\": \"Gate1\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 2\",\n        \"label\": \"GATE 2\",\n        \"name\": \"Gate2\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   }
  ],
  "category": "Modules",
@@ -63,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-10-20 09:04:12.859601",
+ "modified": "2020-10-27 14:29:38.475263",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -141,7 +141,7 @@
    "icon": "fa fa-cube",
    "label": " 20\" FULL Yard",
    "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": \"Container\",\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
    "type": "DocType"
   },
   {
@@ -150,30 +150,66 @@
    "icon": "octicon octicon-package",
    "label": "40\" FULL Yard",
    "link_to": "Cargo",
-   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Yard\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Yard\"}",
    "type": "DocType"
   },
   {
-   "color": "#fff168",
+   "color": "#4d4da8",
    "icon": "fa fa-car",
    "label": "Vehilces Yard",
    "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\":\"Vehicles\", \"status\": \"Yard\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Vehicles\", \"Heavy Vehicles\"]], \"status\": \"Yard\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4d4da8",
+   "icon": "fa fa-cube",
+   "label": "Break Bulk at the Yard",
+   "link_to": "Cargo",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Break Bulk\", \"Loose Cargo\"]], \"status\": \"Yard\"}",
    "type": "DocType"
   },
   {
    "color": "#ffb868",
-   "format": "{} To Deliver",
+   "format": "{} ",
    "icon": "fa  fa-check-circle",
-   "label": "Custom Inspection",
+   "label": "Cargo to Inspection",
    "link_to": "Custom Inspection",
    "stats_filter": "{\"status\":\"Inspection\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4f8ea8",
+   "format": "{} FULL",
+   "icon": "fa  fa-cubes",
+   "label": "Export FULL",
+   "link_to": "Export",
+   "stats_filter": "{\"container_content\":\"FULL\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4f8ea8",
+   "format": "{} FULL",
+   "icon": "fa  fa-cubes",
+   "label": "Export EMPTY",
+   "link_to": "Export",
+   "stats_filter": "{\"container_content\":\"EMPTY\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4f8ea8",
+   "format": "{}",
+   "icon": "fa  fa-check-circle",
+   "label": "Cargo Current Inspection",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\":\"Inspection Delivered\"}",
    "type": "DocType"
   },
   {
    "icon": "fa fa-check-square-o",
    "label": "Check Cargo Fees",
    "link_to": "Check Cargo Fees",
+   "stats_filter": "",
    "type": "DocType"
   },
   {
@@ -182,7 +218,7 @@
    "icon": "fa fa-cube",
    "label": "20\" FULL Paid",
    "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\":\"Container\",\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
    "type": "DocType"
   },
   {
@@ -191,7 +227,15 @@
    "icon": "octicon octicon-package",
    "label": "40\" FULL Paid",
    "link_to": "Cargo",
-   "stats_filter": "{\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Paid\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Paid\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#428b46",
+   "icon": "fa fa-cube",
+   "label": "Break Bulk  Paid",
+   "link_to": "Cargo",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Break Bulk\", \"Loose Cargo\"]], \"status\": \"Paid\"}",
    "type": "DocType"
   },
   {
@@ -199,7 +243,7 @@
    "icon": "fa fa-car",
    "label": "Vehicles Paid",
    "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\":\"Vehicles\", \"status\": \"Paid\"}",
+   "stats_filter": "{\"cargo_type\": [\"in\", [\"Vehicles\", \"Heavy Vehicles\"]], \"status\": \"Paid\"}",
    "type": "DocType"
   },
   {
@@ -224,7 +268,7 @@
    "icon": "fa fa-sign-in",
    "label": "Main Gate IN",
    "link_to": "Cargo",
-   "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
+   "stats_filter": "{\"status\": \"Gate IN\", \"docstatus\": 1}",
    "type": "DocType"
   },
   {
