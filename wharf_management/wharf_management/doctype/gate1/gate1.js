@@ -18,8 +18,29 @@ frappe.ui.form.on('Gate1', {
             frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
         }
     },
-
+    //    validate: function(frm) {
+    //        frappe.db.get_value('Cargo', { 'name': frm.doc.cargo_ref }, 'payment_date', function(r) {
+    //            console.log(r.payment_date, frappe.datetime.now_datetime())
+    //            frappe.call({
+    //                method: "wharf_management.wharf_management.doctype.gate1.gate1.get_storage_days",
+    //                args: {
+    //                    "eta_date": r.payment_date,
+    //                    "posting_date": frappe.datetime.now_datetime()
+    //                },
+    //                callback: function(d) {
+    //                    d.message
+    //                    alert(d.message)
+    //                    if (d.message > 0) {
+    //                        frappe.throw(__('This Cargo have a Storage Days Fee - UNPAID'))
+    //                    }
+    //                }
+    //            });
+    //            validated = false;
+    //        });
+    //    },
     on_submit: function(frm) {
+
+
         if (frm.doc.mydoctype == "CARGO") {
             frappe.set_route("List", "Cargo")
             location.reload(true);
@@ -38,8 +59,9 @@ frappe.ui.form.on('Gate1', {
             'cargo_type', 'cargo_description', 'chasis_no', 'container_content', 'status', 'work_type',
         ], is_allowed);
 
-
         frm.toggle_display(['cargo_ref', 'in_reference', 'work_type', 'mydoctype'], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User'));
+
+        frm.toggle_display(['cargo_description_section'], (frm.doc.qty === ' ' || frm.doc.chasis_no === ''));
 
         if (frm.doc.docstatus != 1) {
 

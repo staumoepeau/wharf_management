@@ -19,7 +19,7 @@ frappe.listview_settings['Booking Request'] = {
         }
     },
     refresh: function(frm) {
-        if (frappe.user.has_role("System Manager")) {
+        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Yard Operation User")) {
             frm.page.sidebar.show(); // this removes the sidebar
             $(".timeline").show()
             frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");

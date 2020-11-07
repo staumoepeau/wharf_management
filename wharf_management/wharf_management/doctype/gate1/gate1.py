@@ -7,6 +7,7 @@ import frappe, json
 from frappe.model.document import Document
 from frappe.utils import cstr, flt, fmt_money, formatdate
 from frappe import msgprint, _, scrub
+from frappe.utils import add_days, cint, cstr, flt, getdate, rounded, date_diff, money_in_words
 from wharf_management.wharf_management.utils import get_create_cargo, create_cargo_movement
 
 class Gate1(Document):
@@ -121,3 +122,24 @@ class Gate1(Document):
         doc.submit()
 
         frappe.db.sql("""Update `tabEmpty Containers` set gate1_date=%s, status='Gate 1' where name=%s""", (self.modified, self.cargo_ref))
+
+@frappe.whitelist()
+def get_storage_days(eta_date, posting_date):
+    working_days = get_holidays(eta_date, posting_date)
+    storage_days = date_diff(posting_date, eta_date)
+    storage_days -= len(working_days)
+    return storage_days
+
+
+def get_holidays(start_date, end_date):
+    holiday_list = frappe.db.get_value("Company", "Ports Authority Tonga", "default_holiday_list")
+    holidays = frappe.db.sql_list('''select holiday_date  from `tabHoliday` where
+		    parent=%(holiday_list)s
+		    and holiday_date >= %(start_date)s
+		    and holiday_date <= %(end_date)s''', {
+		    "holiday_list": holiday_list,
+		    "start_date": start_date,
+		    "end_date": end_date
+		    })
+    holidays = [cstr(i) for i in holidays]
+    return holidays

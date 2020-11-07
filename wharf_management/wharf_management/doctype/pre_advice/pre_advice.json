@@ -182,7 +182,7 @@
    "allow_on_submit": 1,
    "fieldname": "agents",
    "fieldtype": "Link",
-   "label": "Shipping Line Angency",
+   "label": "Shipping Line Agency",
    "options": "Shipping Agency"
   },
   {
@@ -730,7 +730,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-06 19:25:07.634437",
+ "modified": "2020-10-30 09:29:32.011037",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Pre Advice",

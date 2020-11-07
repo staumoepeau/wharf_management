@@ -18,7 +18,7 @@ def get_items():
     items = []
 
     items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
-        `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no
+        `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
         FROM `tabYard Settings` 
         LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot
         ORDER BY `tabYard Settings`.yard_slot""" , as_dict=True)
@@ -29,7 +29,7 @@ def get_items():
 @frappe.whitelist()
 def get_inspection_items():
 
-    inspection_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content
+    inspection_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content, cargo_condition
         FROM `tabCargo` WHERE status = 'Inspection' """ , as_dict=True)
     return inspection_items
 
@@ -38,8 +38,11 @@ def get_inspection_items():
 @frappe.whitelist()
 def get_express_items():
 
-    express_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content
-        FROM `tabExport` WHERE status in ('Paid','Gate1 IN')""" , as_dict=True)
+    express_items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
+        `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
+        FROM `tabYard Settings` 
+        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot
+        ORDER BY `tabYard Settings`.yard_slot""" , as_dict=True)
     return express_items
 
 

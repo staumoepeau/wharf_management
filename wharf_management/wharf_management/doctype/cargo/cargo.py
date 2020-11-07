@@ -53,34 +53,36 @@ class Cargo(Document):
         return holidays
 
     def get_storage_fee(self):
-        wfee = 0
+        working_days, fees, charge_days, free_days = 0.0, 0.0, 0.0, 0.0
         holidays = self.get_holidays(self.gate1_in, self.etd_date)
-        working_days = date_diff(self.etd_date, self.gate1_in)
-        working_days -= len(holidays)
+        working_days = flt(date_diff(self.etd_date, self.gate1_in))
+        working_days -= flt(len(holidays))
 
         if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
-            free_days = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type, "container_size" : self.container_size, "container_content" : self.container_content }, "grace_days")
+            free_days = flt(frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type, "container_size" : self.container_size, "container_content" : self.container_content }, "grace_days"))
 
         if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
-            free_days = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type}, "grace_days")
+            free_days = flt(frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type}, "grace_days"))
 
         if self.secondary_work_type == "Transhipment":
             working_days, free_days = 0.0, 0.0
-            if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
-                wfee = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Wharfage Fee", "cargo_type" : self.cargo_type, "container_size" : self.container_size}, "fee_amount")
+        if self.cargo_type in ["Tank Tainers", "Container", "Flatrack"]:
+              wfee = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Wharfage Fee", "cargo_type" : self.cargo_type, "container_size" : self.container_size}, "fee_amount")
 
-            if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
+        if self.cargo_type not in ["Tank Tainers", "Container", "Flatrack"]:
                 wfee = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Wharfage Fee", "cargo_type" : self.cargo_type}, "fee_amount")
 
-            fees = frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type, 
-            "container_size" : self.container_size, "container_content" : self.container_content}, "fee_amount")
-            
-            self.wharfage_fee = wfee
+        fees = flt(frappe.db.get_value("Wharf Fees", {"wharf_fee_category":"Storage Fee", "cargo_type" : self.cargo_type, 
+        "container_size" : self.container_size, "container_content" : self.container_content}, "fee_amount"))
         
-        if flt(free_days) < flt(working_days):
-                charge_days = flt(working_days) - flt(free_days)
+        if free_days < working_days:
+                charge_days = working_days - free_days
 
-        self.storage_fee = flt(charge_days) * flt(fees.fee_amount)
+        if free_days > working_days:
+            charge_days = 0
+
+        self.wharfage_fee = wfee
+        self.storage_fee = charge_days * fees.fee_amount
         self.charge_days = charge_days
         self.free_days = free_days
         self.storage_days = working_days
@@ -95,6 +97,9 @@ def update_breakbulk_inspection(name_ref, counter, qty):
 def update_security_breakbulk(name_ref, counter, qty):
     frappe.db.sql("""UPDATE `tabCargo` SET security_item_count=%s  WHERE name=%s""", (counter, name_ref))
 
+@frappe.whitelist()
+def set_overdue_storage(name_ref):
+    frappe.db.sql("""UPDATE `tabCargo` SET storage_overdue=1 WHERE name=%s""", (name_ref))
 	
 #    if counter == qty:
 #        frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s  WHERE name=%s""", (counter, name_ref))

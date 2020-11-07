@@ -1,15 +1,16 @@
 
 
 <section class="cargo section-bg">
+  <div class="container-fluid">
 
     <header class="section-header">
-        <h3>Vessel Schedule</h3>
-        <p>Welcome to Ports Authority - Ports Management System Schedule.</p>
+        <h3 class="text-center">Vessel Schedule</h3>
+        <p class="text-center">Welcome to Ports Authority - Ports Management System Schedule.</p>
     </header>
 
 
 
-        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <table id="example" class="table table-dark table-striped">
             <thead>
               <tr>
                 <th>Vessel Name</th>
@@ -22,6 +23,7 @@
             </thead>
             <tbody>
             {% for item in schedule %}
+            {% if item.status == "Approved" %}
               <tr>
                 <td>{{ item.vessel }}</td>
                 <td>{{ item.voyage_no }}</td>
@@ -30,6 +32,7 @@
                 <td>{{ item.eta_date }}</td>
                 <td>{{ item.etd_date }}</td>
               </tr>
+              {% endif %}
               {% endfor %}
             </tbody>
           </table>
@@ -52,5 +55,5 @@
 //} );
 
 </script>
-
+</div>
 </section>

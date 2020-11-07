@@ -5,8 +5,8 @@ frappe.listview_settings['Export'] = {
     hide_name_column: true,
     add_fields: ["status"],
     get_indicator: function(doc) {
-        if (doc.status === "Export") {
-            return [__("Export"), "purple", "status,=,'Export'"];
+        if (doc.status === "Booked") {
+            return [__("Booked"), "purple", "status,=,'Booked'"];
 
         } else if (doc.status === "Main Gate IN") {
             return [__("Main Gate In"), "orange", "status,=,'Main Gate In'"];

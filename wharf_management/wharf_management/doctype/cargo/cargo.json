@@ -103,13 +103,15 @@
   "column_break_56",
   "delivery_code",
   "section_break_60",
+  "cargo_condition",
+  "column_break_103",
+  "inspection_comment",
+  "section_break_81",
   "file_attach",
   "column_break_63",
   "file_attach_02",
   "column_break_80",
   "file_attach_03",
-  "section_break_81",
-  "inspection_comment",
   "stowage_section",
   "stowage",
   "cargo_status",
@@ -149,6 +151,8 @@
   "stock_take_by",
   "column_break_127",
   "stock_date",
+  "data_145",
+  "storage_overdue",
   "amended_from"
  ],
  "fields": [
@@ -227,18 +231,18 @@
    "collapsible": 1,
    "fieldname": "empty_details",
    "fieldtype": "Section Break",
-   "label": "EMPTY'S DETAILS"
+   "label": "EXPORT CARGO DETAILS"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "storage_days",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Storage Days"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "charge_days",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Charge Days"
   },
   {
@@ -248,7 +252,7 @@
   {
    "allow_on_submit": 1,
    "fieldname": "free_days",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Free Days"
   },
   {
@@ -311,7 +315,7 @@
    "allow_on_submit": 1,
    "fieldname": "agents",
    "fieldtype": "Link",
-   "label": "Shipping Line Angency",
+   "label": "Shipping Line Angeny",
    "options": "Shipping Agency"
   },
   {
@@ -513,7 +517,6 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Yard Slot",
-   "length": 5,
    "options": "Yard Settings"
   },
   {
@@ -670,11 +673,13 @@
    "label": "Delivery Information"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_60",
    "fieldtype": "Section Break",
-   "label": "IMAGES"
+   "label": "CARGO CONDITION"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "file_attach",
    "fieldtype": "Attach Image",
    "label": "Image 01"
@@ -684,6 +689,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "file_attach_02",
    "fieldtype": "Attach Image",
    "label": "Image 02"
@@ -693,26 +699,31 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "file_attach_03",
    "fieldtype": "Attach Image",
    "label": "Image 03"
   },
   {
+   "depends_on": "eval:doc.cargo_condition == \"DAMAGE\"",
    "fieldname": "section_break_81",
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "inspection_comment",
    "fieldtype": "Small Text",
    "label": "Inspection Comment"
   },
   {
+   "collapsible": 1,
    "fieldname": "stowage_section",
    "fieldtype": "Section Break",
    "hidden": 1,
    "label": "STOWAGE"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "stowage",
    "fieldtype": "Data",
    "label": "Stowage"
@@ -794,7 +805,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nGate IN\nINWARD\nRe-stowing\nSplit Ports\nTransshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection\nInspection Delivered",
+   "options": "\nUploaded\nOutbound\nInspection\nYard\nPaid\nGate1\nGate Out\nGate IN\nINWARD\nRe-stowing\nSplit Ports\nTransshipment\nCCV\nDevanning\nNeed Attention\nCustom Inspection\nInspection Delivered\nExpress",
    "print_hide": 1
   },
   {
@@ -971,6 +982,7 @@
    "label": "Hazardous Code"
   },
   {
+   "collapsible": 1,
    "fieldname": "cargo_header",
    "fieldtype": "Section Break",
    "label": "Cargo Information"
@@ -1009,13 +1021,35 @@
    "fieldname": "final_status_date",
    "fieldtype": "Datetime",
    "label": "Final Status Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cargo_condition",
+   "fieldtype": "Data",
+   "label": "Cargo Condition"
+  },
+  {
+   "fieldname": "column_break_103",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data_145",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "storage_overdue",
+   "fieldtype": "Check",
+   "label": "Storage Overdue",
+   "read_only": 1
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-16 04:59:23.845110",
+ "modified": "2020-11-06 19:01:12.116278",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

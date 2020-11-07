@@ -20,7 +20,8 @@ class ExportBooking(Document):
                         `tabExport Cargo Table`.container_content, `tabExport Cargo Table`.weight, `tabExport Cargo Table`.volume, `tabExport Cargo Table`.seal_1, 
                         `tabExport Cargo Table`.seal_2, `tabExport Cargo Table`.cargo_description, `tabExport Cargo Table`.chasis_no, `tabExport Cargo Table`.mark
                         FROM `tabExport Booking`, `tabExport Cargo Table`
-                        WHERE `tabExport Booking`.name = `tabExport Cargo Table`.parent """, as_dict=1)
+                        WHERE `tabExport Booking`.name = `tabExport Cargo Table`.parent
+                        AND `tabExport Booking`.name = %s""",(self.name), as_dict=1)
 
         for d in export_list:
             doc = frappe.new_doc("Export")

@@ -172,7 +172,7 @@
    "options": "Work Type"
   },
   {
-   "depends_on": "eval:doc.cargo_condition_info == \"Damage\"",
+   "depends_on": "eval:doc.cargo_condition_info == \"DAMAGE\"",
    "fieldname": "inspection_images",
    "fieldtype": "Section Break",
    "label": "IMAGES"
@@ -205,15 +205,16 @@
    "label": "Image 03"
   },
   {
-   "depends_on": "eval:doc.cargo_condition_info == \"Damage\"",
+   "depends_on": "eval:doc.cargo_condition_info == \"DAMAGE\"",
    "fieldname": "data_16",
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:doc.cargo_condition_info == \"DAMAGE\"",
    "fieldname": "cargo_condition",
    "fieldtype": "Small Text",
    "label": "Cargo Condition",
-   "mandatory_depends_on": "eval:doc.cargo_condition_info == \"Damage\""
+   "mandatory_depends_on": "eval:doc.cargo_condition_info == \"DAMAGE\""
   },
   {
    "fieldname": "qty",
@@ -252,7 +253,7 @@
    "fieldname": "cargo_condition_info",
    "fieldtype": "Select",
    "label": "Cargo Condition",
-   "options": "\nOK\nDamage",
+   "options": "\nGOOD CONDITIONS\nDAMAGE",
    "reqd": 1
   },
   {
@@ -263,7 +264,7 @@
    "fieldname": "user_responsible",
    "fieldtype": "Data",
    "label": "Responsible",
-   "mandatory_depends_on": "eval:doc.cargo_condition_info == \"Damage\""
+   "mandatory_depends_on": "eval:doc.cargo_condition_info == \"DAMAGE\""
   },
   {
    "fieldname": "count_item",
@@ -295,7 +296,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-23 06:14:28.654674",
+ "modified": "2020-11-04 11:14:55.806501",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Inspection",

@@ -5,20 +5,20 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
         single_column: true
     });
 
+    var field = page.add_field({
+        label: 'Cargo',
+        fieldtype: 'Link',
+        fieldname: 'cargo',
+        options: 'Cargo',
+        change() {
+            console.log(field.get_value());
+        }
+    });
+
     var state = "Close";
 
 
-    //    page.set_secondary_action(__("Inspection"), function() {
-    //        if (state == "Close") {
-    //            state = "Open"
-    //        } else if (state == "Open") {
-    //            state = "Close"
-    //        }
-    //    alert(state)
-    //        toggleMenu(state);
-    //    }, "icon-toggle")
-
-    page.add_action_icon(__("fa fa-bars fa-2x text-warning"), function() {
+    page.set_secondary_action(__("Express"), function() {
         if (state == "Close") {
             state = "Open"
         } else if (state == "Open") {
@@ -26,9 +26,11 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
         }
         //    alert(state)
         toggle_leftMenu(state);
-    });
+    }).addClass("btn-success");
 
-    page.add_action_icon(__("fa fa-pencil-square-o fa-2x text-success"), function() {
+
+    //page.add_action_icon(__("fa fa-pencil-square-o fa-2x text-success"), function() {
+    page.set_primary_action(__("Inspection"), function() {
         if (state == "Close") {
             state = "Open"
         } else if (state == "Open") {
@@ -38,17 +40,36 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
         toggle_rightMenu(state);
     });
 
-    page.add_action_icon(__("fa fa-refresh fa-2x text-primary"), function() {
-        return frappe.ui.toolbar.clear_cache();
-    });
+    //    page.add_action_icon(__("fa fa-refresh fa-2x text-primary"), function() {
+    //    page.set_primary_action(__("Refresh"), function() {
+    //        return frappe.ui.toolbar.clear_cache();
+    //    });
 
     //    page.set_primary_action(__("Refresh"), function() {
     //        return frappe.ui.toolbar.clear_cache();
     //    }, "icon-refresh")
 
-    //    load_template(page);
+
+    //  this.wrapper = wrapper;
+    //  this.page = wrapper.page;
+    //  var me = this;
+
+
+    //        this.role_select = this.wrapper.page.add_select(__("Roles"), [__("Select Role") + "..."].concat(this.options.roles))
+    //            .change(function() {
+    //                me.refresh();
+    //            });
+
+    //        this.page.add_inner_button(__('Set User Permissions'), () => {
+    //            return frappe.set_route('List', 'User Permission');
+    //        });
+    //        this.set_from_route();
+
+
     show_yard_details(page);
-    //    get_side_bar(page);
+
+
+    // get_side_bar(page);
 };
 
 var show_yard_details = function(page) {
@@ -60,6 +81,7 @@ var show_yard_details = function(page) {
                 items: r.message || []
             })).appendTo(page.main);
             //            page.content = $(page.body).find('.page-content-wrapper')
+            //           console.log(r.message)
         }
     });
 
@@ -68,9 +90,10 @@ var show_yard_details = function(page) {
         method: "wharf_management.wharf_management.page.yard_operations.yard_operations.get_inspection_items",
         callback: function(y) {
 
-            page.main.find('#sidebar-wrapper').html(frappe.render_template('yard_operations_rightbar', {
-                inspection_items: y.message || []
-            }))
+            page.main.find('#right-sidebar-wrapper').html(frappe.render_template('yard_operations_rightbar', {
+                    inspection_items: y.message || []
+                }))
+                //            console.log(y.message)
         }
     });
 
@@ -79,13 +102,15 @@ var show_yard_details = function(page) {
         callback: function(express) {
 
             page.main.find('#left-sidebar-wrapper').html(frappe.render_template('yard_operations_leftbar', {
-                    express_items: express.message || []
-                }))
-                //            console.log(express.message)
+                express_items: express.message || []
+            }))
+            console.log(express.message)
         }
     });
 
 };
+
+
 
 
 //function allowDrop(ev) {
@@ -145,14 +170,14 @@ function toggle_rightMenu(state) {
 }
 
 function closeNav() {
-    document.getElementById("sidebar-wrapper").style.width = "0px";
+    document.getElementById("right-sidebar-wrapper").style.width = "0px";
     document.getElementById("wrapper").style.paddingRight = "0px";
     document.getElementById("wrapper").style.marginRight = "0px";
 }
 
 function openNav() {
-    document.getElementById("sidebar-wrapper").style.width = "180px";
-    document.getElementById("wrapper").style.marginRight = "180px";
+    document.getElementById("right-sidebar-wrapper").style.width = "120px";
+    document.getElementById("wrapper").style.marginRight = "120px";
 }
 
 function leftcloseNav() {
@@ -162,18 +187,34 @@ function leftcloseNav() {
 }
 
 function leftopenNav() {
-    document.getElementById("left-sidebar-wrapper").style.width = "180px";
-    document.getElementById("wrapper").style.marginLeft = "180px";
+    document.getElementById("left-sidebar-wrapper").style.width = "120px";
+    document.getElementById("wrapper").style.marginLeft = "120px";
 }
 
+
+var cargo_ref, yard_id, status;
+
+function update_onDragStart(cargo_ref) {
+
+    frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'status', function(r) {
+        status = r.status
+        if (status != 'Inspection' || status != 'Express') {
+            frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'yard_slot', function(r) {
+                yard_id = r.yard_slot,
+                    frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
+            });
+        }
+
+    });
+
+}
 
 
 function DragStart(e, ref) {
 
     e.dataTransfer.setData('text/html', this.innerHTML);
-
     e.dataTransfer.setData('Text/html', e.target.id);
-    yard_id = e.target.id
+    //    yard_id = e.target.id
     cargo_ref = ref.id
 
     frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'status', function(r) {
@@ -184,9 +225,9 @@ function DragStart(e, ref) {
                     frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
             });
         }
-        //            console.log(cargo_ref, yard_id, status);
+        //        alert(status, ref.id, yard_id);
+        //        console.log(status, ref.id, yard_id);
     });
-
 
 }
 
@@ -199,11 +240,15 @@ function DragOver(e) {
 }
 
 function DragEnter(e) {
-    //        this.classList.add('drag--hover');
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
 }
 
 function DragLeave(e) {
-    //        this.classList.remove('drag--hover');
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
 }
 
 function allowDrop(e) {
@@ -213,9 +258,9 @@ function allowDrop(e) {
 }
 
 function Drop(e, ref) {
-    if (e.preventDefault) {
-        e.preventDefault();
-    }
+    //    if (e.preventDefault) {
+    //        e.preventDefault();
+    //    }
     /*  Gettting IDs 
      *  dragstart, drag, dragenter, dragleave, dragover, drop, dragend
      */
@@ -223,8 +268,9 @@ function Drop(e, ref) {
     var drop_cargo_ref = e.dataTransfer.getData("Text/html");
     new_yard = ref.id;
 
-    Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
+    //    console.log(new_yard, drop_cargo_ref, drop_cargo_ref.id)
 
+    Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
 
     //return false;
 }
@@ -235,10 +281,17 @@ function DragEnd(e) {
 
 function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 
+    console.log(status, cargo_ref, new_yard, drop_cargo_ref)
     if (status == "Inspection") {
         frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
         frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
-    } else if (yard_id != "Inspection") {
+    }
+    //    if (status == "Express") {
+    //        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
+    //        frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+
+    //} 
+    else if (yard_id != "Inspection") {
         frappe.db.set_value('Cargo', drop_cargo_ref, 'yard_slot', new_yard);
     }
     //    console.log(yard_id, new_yard, status, cargo_ref, drop_cargo_ref)
@@ -293,289 +346,3 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 //};
 
 //--------------------------------------------------------------------------------------------------------------------------
-
-var isMultiTouch = false;
-var multiTouchStartPos;
-var eventTarget;
-var touchElements = {};
-
-function preventMouseEvents(event) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-};
-
-function onMouse(touchType) {
-    console.log(touchType)
-    return function(event) {
-        // prevent mouse events
-        preventMouseEvents(event);
-
-        if (event.which !== 1) {
-            return;
-        }
-
-        // The EventTarget on which the touch point started when it was first placed on the surface,
-        // even if the touch point has since moved outside the interactive area of that element.
-        // also, when the target doesnt exist anymore, we update it
-        if (event.type == 'mousedown' || !eventTarget || (eventTarget && !eventTarget.dispatchEvent)) {
-            eventTarget = event.target;
-        }
-
-        // shiftKey has been lost, so trigger a touchend
-        if (isMultiTouch && !event.shiftKey) {
-            triggerTouch('touchend', event);
-            isMultiTouch = false;
-        }
-
-        triggerTouch(touchType, event);
-
-        // we're entering the multi-touch mode!
-        if (!isMultiTouch && event.shiftKey) {
-            isMultiTouch = true;
-            multiTouchStartPos = {
-                pageX: event.pageX,
-                pageY: event.pageY,
-                clientX: event.clientX,
-                clientY: event.clientY,
-                screenX: event.screenX,
-                screenY: event.screenY
-            };
-            triggerTouch('touchstart', event);
-        }
-
-        // reset
-        if (event.type == 'mouseup') {
-            multiTouchStartPos = null;
-            isMultiTouch = false;
-            eventTarget = null;
-        }
-    }
-};
-
-function triggerTouch(eventName, mouseEv) {
-    var touchEvent = document.createEvent('Event');
-    touchEvent.initEvent(eventName, true, true);
-
-    touchEvent.altKey = mouseEv.altKey;
-    touchEvent.ctrlKey = mouseEv.ctrlKey;
-    touchEvent.metaKey = mouseEv.metaKey;
-    touchEvent.shiftKey = mouseEv.shiftKey;
-
-    touchEvent.touches = getActiveTouches(mouseEv, eventName);
-    touchEvent.targetTouches = getActiveTouches(mouseEv, eventName);
-    touchEvent.changedTouches = getChangedTouches(mouseEv, eventName);
-
-    eventTarget.dispatchEvent(touchEvent);
-}
-
-function getActiveTouches(mouseEv, eventName) {
-    // empty list
-    if (mouseEv.type == 'mouseup') {
-        return new TouchList();
-    }
-
-    var touchList = createTouchList(mouseEv);
-    if (isMultiTouch && mouseEv.type != 'mouseup' && eventName == 'touchend') {
-        touchList.splice(1, 1);
-    }
-    return touchList;
-}
-
-/**
- * receive a filtered set of touches with only the changed pointers
- * @param mouseEv
- * @param eventName
- * @returns {TouchList}
- */
-function getChangedTouches(mouseEv, eventName) {
-    var touchList = createTouchList(mouseEv);
-
-    // we only want to return the added/removed item on multitouch
-    // which is the second pointer, so remove the first pointer from the touchList
-    //
-    // but when the mouseEv.type is mouseup, we want to send all touches because then
-    // no new input will be possible
-    if (isMultiTouch && mouseEv.type != 'mouseup' &&
-        (eventName == 'touchstart' || eventName == 'touchend')) {
-        touchList.splice(0, 1);
-    }
-
-    return touchList;
-}
-
-function TouchList() {
-    var touchList = [];
-
-    touchList.item = function(index) {
-        return this[index] || null;
-    };
-
-    // specified by Mozilla
-    touchList.identifiedTouch = function(id) {
-        return this[id + 1] || null;
-    };
-
-    return touchList;
-}
-
-function Touch(target, identifier, pos, deltaX, deltaY) {
-    deltaX = deltaX || 0;
-    deltaY = deltaY || 0;
-
-    this.identifier = identifier;
-    this.target = target;
-    this.clientX = pos.clientX + deltaX;
-    this.clientY = pos.clientY + deltaY;
-    this.screenX = pos.screenX + deltaX;
-    this.screenY = pos.screenY + deltaY;
-    this.pageX = pos.pageX + deltaX;
-    this.pageY = pos.pageY + deltaY;
-}
-
-function createTouchList(mouseEv) {
-    var touchList = new TouchList();
-
-    if (isMultiTouch) {
-        var f = TouchEmulator.multiTouchOffset;
-        var deltaX = multiTouchStartPos.pageX - mouseEv.pageX;
-        var deltaY = multiTouchStartPos.pageY - mouseEv.pageY;
-
-        touchList.push(new Touch(eventTarget, 1, multiTouchStartPos, (deltaX * -1) - f, (deltaY * -1) + f));
-        touchList.push(new Touch(eventTarget, 2, multiTouchStartPos, deltaX + f, deltaY - f));
-    } else {
-        touchList.push(new Touch(eventTarget, 1, mouseEv, 0, 0));
-    }
-
-    return touchList;
-}
-
-function showTouches(ev) {
-    var touch, i, el, styles;
-    console.log(ev.target)
-        // first all visible touches
-    for (i = 0; i < ev.touches.length; i++) {
-        touch = ev.touches[i];
-        el = touchElements[touch.identifier];
-        //        console.log(touch)
-        if (!el) {
-            el = touchElements[touch.identifier] = document.createElement("div");
-            document.body.appendChild(el);
-            //            console.log(el)
-        }
-
-        styles = TouchEmulator.template(touch);
-        for (var prop in styles) {
-            el.style[prop] = styles[prop];
-        }
-        //        console.log(styles)
-    }
-
-    // remove all ended touches
-    if (ev.type == 'touchend' || ev.type == 'touchcancel') {
-        for (i = 0; i < ev.changedTouches.length; i++) {
-            touch = ev.changedTouches[i];
-            el = touchElements[touch.identifier];
-            if (el) {
-                el.parentNode.removeChild(el);
-                delete touchElements[touch.identifier];
-            }
-        }
-    }
-}
-
-function touch_start(ev) {
-
-    // var id1 = document.getElementById('id'),
-    //    boxleft, // left position of moving box
-    //    startx, // starting x coordinate of touch point
-    //    dist = 0, // distance traveled by touch point
-    var touchobj = null
-
-    touchobj = ev.changedTouches[0]
-    ev.preventDefault();
-    ev.stopPropagation();
-    alert(touchogj)
-}
-
-
-
-
-function TouchEmulator() {
-    if (hasTouchSupport()) {
-        return;
-    }
-    fakeTouchSupport();
-
-}
-
-function fakeTouchSupport() {
-    var objs = [window, document.documentElement];
-    var props = ['ontouchstart', 'ontouchmove', 'ontouchcancel', 'ontouchend'];
-
-    for (var o = 0; o < objs.length; o++) {
-        for (var p = 0; p < props.length; p++) {
-            if (objs[o] && objs[o][props[p]] == undefined) {
-                objs[o][props[p]] = null;
-            }
-        }
-    }
-}
-
-/**
- * we don't have to emulate on a touch device
- * @returns {boolean}
- */
-function hasTouchSupport() {
-    return ("ontouchstart" in window) || // touch events
-        (window.Modernizr && window.Modernizr.touch) || // modernizr
-        (navigator.msMaxTouchPoints || navigator.maxTouchPoints) > 2; // pointer events
-}
-// start distance when entering the multitouch mode
-TouchEmulator.multiTouchOffset = 75;
-/**
- * css template for the touch rendering
- * @param touch
- * @returns object
- */
-TouchEmulator.template = function(touch) {
-    var size = 30;
-    var transform = 'translate(' + (touch.clientX - (size / 2)) + 'px, ' + (touch.clientY - (size / 2)) + 'px)';
-    return {
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        background: '#fff',
-        border: 'solid 1px #999',
-        opacity: .6,
-        borderRadius: '100%',
-        height: size + 'px',
-        width: size + 'px',
-        padding: 0,
-        margin: 0,
-        display: 'block',
-        overflow: 'hidden',
-        pointerEvents: 'none',
-        webkitUserSelect: 'none',
-        mozUserSelect: 'none',
-        userSelect: 'none',
-        webkitTransform: transform,
-        mozTransform: transform,
-        transform: transform
-    }
-};
-
-document.addEventListener("mousedown", onMouse('touchstart'), true);
-document.addEventListener("mousemove", onMouse('touchmove'), true);
-document.addEventListener("mouseup", onMouse('touchend'), true);
-
-document.addEventListener("mouseenter", preventMouseEvents, true);
-document.addEventListener("mouseleave", preventMouseEvents, true);
-document.addEventListener("mouseout", preventMouseEvents, true);
-document.addEventListener("mouseover", preventMouseEvents, true);
-
-document.addEventListener("touchstart", touch_start, false);
-document.addEventListener("touchmove", showTouches, false);
-document.addEventListener("touchend", showTouches, false);
-document.addEventListener("touchcancel", showTouches, false);
-
-//-------------------------------------------------------------------------------------------------------------------

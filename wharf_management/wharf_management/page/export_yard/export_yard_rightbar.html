@@ -1,0 +1,109 @@
+
+
+
+<div class="row">
+        <svg viewBox="0 0 210 40">
+
+          <text x="30%" y="70%" font-size="14" dominant-baseline="middle" text-anchor="middle">
+            Express
+          </text>
+      </svg>
+{% for yard in export_items %}
+
+    {% if yard.cargo_type == "Container" %}
+  <div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+    <svg viewBox="0 0 210 40">
+      <image href="/files/yellow_contanier.svg"  height="45" width="115" id="Express"/>
+      <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+        <a href="desk#Form/Export/{{ yard.name }}">
+          {{ yard.container_no }}
+          <tspan x="60" y="30">{{ yard.container_size }}"FT</tspan><br>
+      </a>
+    </text>
+  </svg>
+  </div>
+  {% endif %}
+
+  {% if yard.cargo_type == "Container" && yard.container_content == "EMPTY"%}
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/pink_contanier.svg"  height="45" width="115" id="Express"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Export/{{ yard.name }}">
+        {{ yard.container_no }}
+        <tspan x="60" y="30">{{ yard.container_size }}"FT</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Break Bulk" %}
+
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+      <img src="/files/yellow_break_bulk.svg"  height="40" width="120" id="{{ yard.yard_slot }}"/>
+      <div class="card-img-overlay">
+        <p class="container_no">{{ yard.mark}}</p>
+      </div>
+</div>
+
+{% endif %}
+
+{% if yard.cargo_type == "Vehicles" %}
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_vehicle.svg"  height="45" width="115" id="Express"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Export/{{ yard.name }}">
+        {{ yard.chasis_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Heavy Vehicles" %}
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_hvehicle.svg"  height="45" width="115" id="Express"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Export/{{ yard.name }}">
+        {{ yard.chasis_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Tank Tainers" %}
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_tank_tainer.svg"  height="45" width="115" id="Express"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Export/{{ yard.name }}">
+        {{ yard.container_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% if yard.cargo_type == "Flatrack" %}
+<div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
+  <svg viewBox="0 0 210 40">
+    <image href="/files/yellow_flatrack.svg"  height="45" width="120" id="Express"/>
+    <text x="30%" y="28%" font-size="10" dominant-baseline="middle" text-anchor="middle">
+      <a href="desk#Form/Export/{{ yard.name }}">
+        {{ yard.container_no }}
+        <tspan x="60" y="30">{{ yard.mark }}</tspan><br>
+    </a>
+  </text>
+</svg>
+</div>
+{% endif %}
+
+{% endfor %}
+</div>

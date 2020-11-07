@@ -123,7 +123,7 @@
    "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Shipping Line Agency",
-   "options": "Agent User"
+   "options": "Shipping Agency"
   },
   {
    "fieldname": "etd_date",
@@ -225,9 +225,10 @@
    "read_only": 1
   }
  ],
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-10 06:15:20.218813",
+ "modified": "2020-11-05 06:06:10.907343",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Manifest",

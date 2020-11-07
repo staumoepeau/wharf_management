@@ -166,8 +166,9 @@
    "read_only": 1
   }
  ],
+ "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-09-13 03:16:19.711378",
+ "modified": "2020-11-07 13:18:02.682891",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Vessels",
@@ -196,15 +197,6 @@
    "role": "Wharf Operation User",
    "share": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1
   },
   {
    "create": 1,

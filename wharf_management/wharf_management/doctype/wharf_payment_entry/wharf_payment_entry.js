@@ -340,7 +340,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Export', 'docstatus', '=', 1],
-                    ['Export', 'status', 'in', ['Export']],
+                    ['Export', 'status', 'in', ['Yard']],
                     ['Export', 'customer', '=', frm.doc.customer],
                 ]
             }
@@ -409,18 +409,26 @@ frappe.ui.form.on("Wharf Fee Item", {
 
 });
 
+//frm.fields_dict.child_table_name.grid.toggle_reqd("child_table_fieldname", condition)
+
 
 frappe.ui.form.on("Payment Method", {
     mode_of_payment: function(frm, cdt, cdn) {
         var d = frappe.get_doc(cdt, cdn);
-
         const row = locals[cdt][cdn];
-        var current_row = frm.fields_dict["payment_method"].grid.grid_rows_by_docname[row.name];
-        current_row.toggle_reqd("name_on_the_cheque", (row.mode_of_payment == "Cheque"));
-        current_row.toggle_reqd("cheque_no", (row.mode_of_payment == "Cheque"));
-        current_row.toggle_reqd("account_no", (row.mode_of_payment == "Cheque"));
-        current_row.toggle_reqd("cheque_date", (row.mode_of_payment == "Cheque"));
-        current_row.toggle_reqd("bank", (row.mode_of_payment == "Cheque"));
+
+        frm.fields_dict["payment_method"].grid.toggle_reqd("name_on_the_cheque", row.mode_of_payment == "Cheque")
+        frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_no", row.mode_of_payment == "Cheque")
+        frm.fields_dict["payment_method"].grid.toggle_reqd("account_no", row.mode_of_payment == "Cheque")
+        frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_date", row.mode_of_payment == "Cheque")
+        frm.fields_dict["payment_method"].grid.toggle_reqd("bank", row.mode_of_payment == "Cheque")
+
+        //var current_row = frm.fields_dict["payment_method"].grid.grid_rows_by_docname[row.name]; 
+        //current_row.toggle_reqd("name_on_the_cheque", (row.mode_of_payment == "Cheque"));
+        //current_row.toggle_reqd("cheque_no", (row.mode_of_payment == "Cheque"));
+        //current_row.toggle_reqd("account_no", (row.mode_of_payment == "Cheque"));
+        //current_row.toggle_reqd("cheque_date", (row.mode_of_payment == "Cheque"));
+        //current_row.toggle_reqd("bank", (row.mode_of_payment == "Cheque"));
         //        if (d.mode_of_payment = "Cheque") {
         //            frappe.meta.get_docfield(this.doctype, "name_on_the_cheque", this.frm.doc.name).reqd
         //            frappe.model.set_df_property(d.doctype, d.name, 'name_on_the_cheque', 'reqd', 1);
@@ -523,29 +531,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                     }
                 })
             }
-            //            if (d.cargo_type == "Flatrack") {
-            //                frappe.call({
-            //                    "method": "frappe.client.get",
-            //                    args: {
-            //                        doctype: "Wharf Fees",
-            //                        filters: {
-            //                            wharf_fee_category: "Wharfage Fee",
-            //                            cargo_type: d.cargo_type,
-            //                            container_size: d.container_size,
-            //                        }
-            //                    },
-            //                    callback: function(data) {
-            //                        frappe.model.set_value(d.doctype, d.name, "wharfage_item_code", data.message["item_name"]);
-            //                        frappe.model.set_value(d.doctype, d.name, "wharfage_fee_price", data.message["fee_amount"]);
-            //                        if (d.net_weight > d.volume) {
-            //                        frappe.model.set_value(d.doctype, d.name, "wharfage_fee", (data.message["fee_amount"] * d.net_weight));
-            //                        }
-            //                        if (d.net_weight < d.volume) {
-            //                            frappe.model.set_value(d.doctype, d.name, "wharfage_fee", (data.message["fee_amount"] * d.volume));
-            //                        }
-            //                    }
-            //                })
-            //            }
+
             if (d.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
@@ -654,69 +640,37 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 "posting_date": frm.doc.posting_date
             },
             callback: function(r) {
-                    frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
-                    let sdays = flt(d.storage_days - d.free_storage_days);
+                frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
+                let sdays = flt(d.storage_days - d.free_storage_days);
+                //                alert(sdays)
+                if (sdays > 0) {
 
+                    //                if (d.free_storage_days < d.storage_days) {
+                    //                    var sdays = flt(d.storage_days - d.free_storage_days);
+                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
 
-                    //                alert(sdays)
-                    if (sdays > 0) {
-
-                        //                if (d.free_storage_days < d.storage_days) {
-                        //                    var sdays = flt(d.storage_days - d.free_storage_days);
-                        frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
-
-                        if (cargo_a.includes(d.cargo_type)) {
-                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-                        }
-                        if (cargo_b.includes(d.cargo_type)) {
-                            if (d.net_weight > d.volume) {
-                                frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
-                            }
-                            if (d.net_weight < d.volume) {
-                                frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
-                            }
-
-                        }
-                        if (d.cargo_type == "Vehicles") {
-                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-                        }
-
-                        //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                    if (cargo_a.includes(d.cargo_type)) {
+                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                     }
-                    if (sdays <= 0) {
-                        console.log(sdays)
-                        frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
-                        frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
+                    if (cargo_b.includes(d.cargo_type)) {
+                        if (d.net_weight > d.volume) {
+                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
+                        }
+                        if (d.net_weight < d.volume) {
+                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
+                        }
                     }
-
-
+                    if (d.cargo_type == "Vehicles") {
+                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                    }
+                    //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                 }
-                //            callback: function(r) {
-                //                frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
-                //                if (d.free_storage_days < d.storage_days) {
-                //                    var sdays = flt(d.storage_days - d.free_storage_days);
-                //                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
-                //                    console.log(sdays)
-
-            //                    if (cargo_a.includes(d.cargo_type)) {
-            //                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-            //                    } else if (cargo_b.includes(d.cargo_type)) {
-            //                        if (d.net_weight > d.volume) {
-            //                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
-            //                        }
-            //                        if (d.net_weight < d.volume) {
-            //                            frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
-            //                        }
-
-            //                  } else if (d.cargo_type == "Vehicles") {
-            //                       frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-            //                   }
-            //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-            //                } else if (d.free_storage_days >= d.storage_days) {
-            //                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
-            //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-            //                }
-            //            }
+                if (sdays <= 0) {
+                    console.log(sdays)
+                    frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
+                }
+            }
         })
 
     } else if (!d.reference_doctype) {

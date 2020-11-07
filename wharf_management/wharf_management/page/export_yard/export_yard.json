@@ -1,0 +1,36 @@
+{
+ "content": null,
+ "creation": "2020-11-02 17:30:22.396248",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa-fa-cube",
+ "idx": 0,
+ "modified": "2020-11-02 17:30:22.396248",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "export-yard",
+ "owner": "Administrator",
+ "page_name": "Export Yard",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Cargo Operation Manager"
+  },
+  {
+   "role": "Yard Inspection User"
+  },
+  {
+   "role": "Yard Operation User"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Export Yard"
+}

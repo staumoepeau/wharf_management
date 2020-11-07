@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "Ex-Cargo.YY.MM.#####",
+ "autoname": "naming_series:",
  "creation": "2020-10-19 18:45:12.026975",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "shipping_details",
+  "naming_series",
   "booking_by",
   "username",
   "agents",
@@ -100,12 +101,18 @@
    "fieldtype": "Link",
    "label": "Consignee",
    "options": "Customer"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "EXP.-.YY.MM.#####"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-21 14:09:40.881136",
+ "modified": "2020-11-02 09:05:00.341162",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export Booking",
