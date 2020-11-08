@@ -18,6 +18,7 @@ frappe.ui.form.on('Wharf Access', {
         let is_allowed = frappe.user_roles.includes('System Manager', 'Cargo Operation Manager');
         frm.toggle_enable(['check_in_out_time'], is_allowed);
 
+        wharf_management.wharf_access.setup_cargo_queries(frm);
         wharf_management.wharf_access.setup_export_queries(frm);
 
     },
@@ -41,6 +42,16 @@ frappe.ui.form.on('Wharf Access', {
 
 $.extend(wharf_management.wharf_access, {
 
+    setup_cargo_queries: function(frm) {
+        frm.fields_dict['cargo_inspection_table'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['Cargo', 'docstatus', '=', 1],
+                    ['Cargo', 'status', 'in', ['Custom Inspection']],
+                ]
+            }
+        }
+    },
     setup_export_queries: function(frm) {
         frm.fields_dict['export_cargo_table'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
             return {

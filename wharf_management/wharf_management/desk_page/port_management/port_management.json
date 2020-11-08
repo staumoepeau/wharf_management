@@ -48,7 +48,7 @@
   {
    "hidden": 0,
    "label": "Security",
-   "links": "[\n     {\n        \"description\": \"Wharf Access\",\n        \"label\": \"Wharf Access\",\n        \"name\": \"Wharf Access\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Access Control User\",\n        \"label\": \"Access Control User\",\n        \"name\": \"Access Control User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 1\",\n        \"label\": \"GATE 1\",\n        \"name\": \"Gate1\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"GATE 2\",\n        \"label\": \"GATE 2\",\n        \"name\": \"Gate2\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n     {\n        \"description\": \"Wharf Access\",\n        \"label\": \"Wharf Access\",\n        \"name\": \"Wharf Access\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Access Control User\",\n        \"label\": \"Access Control User\",\n        \"name\": \"Access Control User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   }
  ],
  "category": "Modules",
@@ -63,7 +63,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-08 18:24:37.916532",
+ "modified": "2020-11-09 08:09:54.524678",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -176,15 +176,6 @@
    "type": "DocType"
   },
   {
-   "color": "#ffb868",
-   "format": "{} ",
-   "icon": "fa  fa-check-circle",
-   "label": "Cargo to Inspection",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Custom Inspection\"}",
-   "type": "DocType"
-  },
-  {
    "color": "#4f8ea8",
    "format": "{} FULL",
    "icon": "fa  fa-cubes",
@@ -200,6 +191,15 @@
    "label": "Export EMPTY",
    "link_to": "Export",
    "stats_filter": "{\"container_content\":\"EMPTY\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#ffb868",
+   "format": "{} ",
+   "icon": "fa  fa-check-circle",
+   "label": "Cargo to Inspection",
+   "link_to": "Cargo",
+   "stats_filter": "{\"status\":\"Custom Inspection\"}",
    "type": "DocType"
   },
   {
