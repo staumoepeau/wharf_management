@@ -125,6 +125,24 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-success");
         }
 
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+                frm.doc.storage_overdue == 1
+            )) {
+            frm.page.set_primary_action(__('Payment'), function() {
+                //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
+
+                frappe.route_options = {
+                    "payment_type": "Receive",
+                    "customer": frm.doc.consignee,
+                    "reference_doctype": "Cargo",
+                    "storage_overdue": frm.doc.storage_overdue
+                }
+                alert(frm.doc.storage_overdue)
+                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
+                //            }).addClass("btn-success");
+            }).addClass("btn-primary");
+        }
+
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.gate1_status != "Closed" &&
@@ -230,15 +248,33 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed" &&
-                frm.doc.status != "Inspection Delivered"
+                frm.doc.custom_inspection == "Open"
 
             )) {
-            frm.add_custom_button(__('Custom Inspection'), function() {
-                frappe.route_options = {
-                    "cargo_ref": frm.doc.name
-                }
-                frappe.new_doc("Custom Inspection");
-                frappe.set_route("Form", "Custom Inspection", doc.name);
+            frm.add_custom_button(__('Custom Request'), function() {
+                //                frappe.route_options = {
+                //                    "cargo_ref": frm.doc.name
+                //                }
+                frm.events.custom_requirement(frm)
+                    //                frappe.new_doc("Custom Inspection");
+                    //                frappe.set_route("Form", "Custom Inspection", doc.name);
+            }).addClass("btn-danger");
+        }
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
+                frm.doc.payment_status != "Closed" &&
+                frm.doc.yard_status == "Closed" &&
+                frm.doc.inspection_status == "Closed" &&
+                frm.doc.custom_inspection == "Closed" &&
+                frm.doc.custom_inspection_deliver != "Closed"
+
+            )) {
+            frm.add_custom_button(__('Deliver Custom'), function() {
+                //                frappe.route_options = {
+                //                    "cargo_ref": frm.doc.name
+                //                }
+                frm.events.deliver_to_custom(frm)
+                    //                frappe.new_doc("Custom Inspection");
+                    //                frappe.set_route("Form", "Custom Inspection", doc.name);
             }).addClass("btn-danger");
         }
 
@@ -281,7 +317,7 @@ frappe.ui.form.on('Cargo', {
                 d.message
                     //                    alert(d.message)
                 if (d.message > 0) {
-                    frappe.throw(__('This Cargo have a UNPAID Storage Days Fee. Please refer to the Cashier for more Details. Ref # : {0}'.format(frm.doc.name)))
+                    frappe.throw(__('This Cargo have a UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
                 } else {
 
                     frappe.route_options = {
@@ -303,6 +339,89 @@ frappe.ui.form.on('Cargo', {
                 }
             }
         });
+    },
+    custom_requirement: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Custom Require Inspection',
+            fields: [{
+                    label: 'This Cargo Requested by Custom for Inspection',
+                    fieldname: 'custom_inspection_request',
+                    fieldtype: 'Select',
+                    default: 'YES',
+                    options: ['YES',
+                        'NO'
+                    ],
+                    reqd: 1
+                },
+
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.custom_inspection_request) {
+                    frappe.throw(__("Please confirm by choose YES or NO"));
+                }
+
+                if (values.custom_inspection_request == "YES") {
+
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.cargo.cargo.update_custom_inspection",
+                        args: {
+                            "name_ref": frm.doc.name,
+
+                        },
+                        callback: function(r) {
+                            //                            alert(counter)
+                            d.hide();
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
+    },
+
+    deliver_to_custom: function(frm) {
+        let d = new frappe.ui.Dialog({
+            title: 'Deliver for Custom Inspection',
+            fields: [{
+                    label: 'Deliver to Custom for Inspection',
+                    fieldname: 'deliver_custom_inspection',
+                    fieldtype: 'Select',
+                    default: 'YES',
+                    options: ['YES',
+                        'NO'
+                    ],
+                    reqd: 1
+                },
+
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.deliver_custom_inspection) {
+                    frappe.throw(__("Please confirm by choosing YES or NO"));
+                }
+
+                if (values.deliver_custom_inspection == "YES") {
+
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.cargo.cargo.update_deliver_custom_inspection",
+                        args: {
+                            "name_ref": frm.doc.name,
+
+                        },
+                        callback: function(r) {
+                            //                            alert(counter)
+                            d.hide();
+                            location.reload(true);
+                        }
+                    })
+                }
+            }
+        });
+
+        d.show();
     },
 
     get_breakbulk_count: function(frm) {
@@ -445,7 +564,7 @@ frappe.ui.form.on('Cargo', {
                 },
                 callback: function(data) {
                     var discount_rate = (data.message["fee_amount"] - (data.message["fee_amount"] * 20 / 100))
-                    cur_frm.set_value("handling_fee", discount_rate);
+                    frm.set_value("handling_fee", discount_rate);
                 }
             })
         }
@@ -464,7 +583,7 @@ frappe.ui.form.on('Cargo', {
                     } else if (frm.doc.volume < frm.doc.net_weight) {
                         var handling_fee = frm.doc.net_weight * data.message["fee_amount"]
                     }
-                    cur_frm.set_value("handling_fee", handling_fee);
+                    frm.set_value("handling_fee", handling_fee);
                 }
             })
         }
@@ -483,7 +602,7 @@ frappe.ui.form.on('Cargo', {
                 },
                 callback: function(data) {
                     console.log(data.message["fee_amount"])
-                    cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    frm.set_value("handling_fee", data.message["fee_amount"]);
                 }
             })
         }
@@ -497,7 +616,7 @@ frappe.ui.form.on('Cargo', {
                     }
                 },
                 callback: function(data) {
-                    cur_frm.set_value("handling_fee", data.message["fee_amount"]);
+                    frm.set_value("handling_fee", data.message["fee_amount"]);
                 }
             })
         }
@@ -519,7 +638,7 @@ frappe.ui.form.on('Cargo', {
                     if (frm.doc.volume < frm.doc.net_weight) {
                         var handling_fee = frm.doc.net_weight * data.message["fee_amount"]
                     }
-                    cur_frm.set_value("handling_fee", handling_fee);
+                    frm.set_value("handling_fee", handling_fee);
                 }
             })
         }

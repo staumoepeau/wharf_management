@@ -318,7 +318,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports']],
+                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports', 'Paid']],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
                 ]
             }

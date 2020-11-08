@@ -5,15 +5,15 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
         single_column: true
     });
 
-    var field = page.add_field({
-        label: 'Cargo',
-        fieldtype: 'Link',
-        fieldname: 'cargo',
-        options: 'Cargo',
-        change() {
-            console.log(field.get_value());
-        }
-    });
+    //    var field = page.add_field({
+    //        label: 'Cargo',
+    //        fieldtype: 'Link',
+    //        fieldname: 'cargo',
+    //        options: 'Cargo',
+    //        change() {
+    //            console.log(field.get_value());
+    //        }
+    //    });
 
     var state = "Close";
 

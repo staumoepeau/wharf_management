@@ -34,6 +34,10 @@
   "storage_fee_price",
   "column_break_22",
   "storage_fee",
+  "section_break_36",
+  "previous_payment_date",
+  "column_break_32",
+  "storage_overdue",
   "wharfage_fee_section",
   "wharfage_item_code",
   "column_break_26",
@@ -254,12 +258,33 @@
    "label": "Litre",
    "mandatory_depends_on": "eval:doc.cargo_type == \"Tank Tainers\"",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_36",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fetch_from": "reference_doctype.storage_overdue",
+   "fieldname": "storage_overdue",
+   "fieldtype": "Check",
+   "label": "Storage Overdue"
+  },
+  {
+   "fetch_from": "reference_doctype.payment_date",
+   "fieldname": "previous_payment_date",
+   "fieldtype": "Datetime",
+   "label": "Previous Payment Date"
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-10-22 12:17:42.566677",
+ "modified": "2020-11-08 19:43:00.937249",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo References",

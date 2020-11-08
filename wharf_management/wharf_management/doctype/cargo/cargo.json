@@ -119,14 +119,17 @@
   "inspection_date",
   "yard_status",
   "yard_date",
-  "column_break_67",
-  "payment_status",
-  "payment_date",
   "gate1_status",
   "gate1_date",
-  "column_break_70",
   "gate2_status",
   "gate2_date",
+  "column_break_67",
+  "custom_inspection",
+  "custom_inspection_date",
+  "custom_inspection_deliver",
+  "custom_inspection_deliver_date",
+  "payment_status",
+  "payment_date",
   "final_status",
   "final_status_date",
   "status_section",
@@ -771,10 +774,6 @@
    "options": "\nOpen\nClosed"
   },
   {
-   "fieldname": "column_break_70",
-   "fieldtype": "Column Break"
-  },
-  {
    "allow_on_submit": 1,
    "default": "Open",
    "fieldname": "gate2_status",
@@ -1043,13 +1042,39 @@
    "fieldtype": "Check",
    "label": "Storage Overdue",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "custom_inspection",
+   "fieldtype": "Select",
+   "label": "Custom Inspection",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "custom_inspection_date",
+   "fieldtype": "Datetime",
+   "label": "Custom Inspection Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "custom_inspection_deliver",
+   "fieldtype": "Select",
+   "label": "Custom Inspection Deliver",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "custom_inspection_deliver_date",
+   "fieldtype": "Datetime",
+   "label": "Custom Inspection Deliver Date"
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-06 19:01:12.116278",
+ "modified": "2020-11-08 11:54:35.652344",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

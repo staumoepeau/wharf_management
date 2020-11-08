@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe, json
 from frappe.model.document import Document
 from frappe import msgprint, _, scrub
-from frappe.utils import cstr, flt, fmt_money, formatdate, cint, getdate, rounded, date_diff, money_in_words, add_days
+from frappe.utils import cstr, flt, fmt_money, formatdate, cint, getdate, rounded, date_diff, money_in_words, add_days, now
 
 
 class Cargo(Document):
@@ -100,6 +100,14 @@ def update_security_breakbulk(name_ref, counter, qty):
 @frappe.whitelist()
 def set_overdue_storage(name_ref):
     frappe.db.sql("""UPDATE `tabCargo` SET storage_overdue=1 WHERE name=%s""", (name_ref))
+
+@frappe.whitelist()
+def update_custom_inspection(name_ref):
+    frappe.db.sql("""UPDATE `tabCargo` SET status='Custom Inspection', custom_inspection='Closed', custom_inspection_date=%s WHERE name=%s""", (now(), name_ref))
+
+@frappe.whitelist()
+def update_deliver_custom_inspection(name_ref):
+    frappe.db.sql("""UPDATE `tabCargo` SET status='Inspection Delivered', custom_inspection_deliver='Closed', custom_inspection_deliver_date=%s WHERE name=%s""", (now(), name_ref))
 	
 #    if counter == qty:
 #        frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s  WHERE name=%s""", (counter, name_ref))
