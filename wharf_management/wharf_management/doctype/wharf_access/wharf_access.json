@@ -23,8 +23,8 @@
   "drop_or_pickup",
   "exportimport_section",
   "export_cargo_table",
-  "cargo_inspection_table",
   "section_break_15",
+  "cargo_inspection_table",
   "amended_from"
  ],
  "fields": [
@@ -112,20 +112,22 @@
    "options": "\nN/A\nDrop\nPickup"
   },
   {
+   "depends_on": "eval:doc.drop_or_pickup == \"Drop\"",
    "fieldname": "exportimport_section",
    "fieldtype": "Section Break",
-   "label": "Export/Import"
+   "label": "Export"
   },
   {
-   "depends_on": "eval:doc.drop_or_pickup == \"Drop\"",
    "fieldname": "export_cargo_table",
    "fieldtype": "Table",
    "label": "Export Cargo",
    "options": "Export Cargo Table Drop"
   },
   {
+   "depends_on": "eval:doc.drop_or_pickup == \"Pickup\"",
    "fieldname": "section_break_15",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Import"
   },
   {
    "fieldname": "amended_from",
@@ -152,18 +154,17 @@
    "options": "\nOn Foot\nVehicle\nContainer Truck\nForklift"
   },
   {
-   "depends_on": "eval:doc.drop_or_pickup == \"Pickup\"",
    "fieldname": "cargo_inspection_table",
    "fieldtype": "Table",
    "label": "Cargo",
-   "options": "Cargo Inspection Table"
+   "options": "Cargo Inspection Pickup"
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-09 11:54:36.014904",
+ "modified": "2020-11-09 14:04:12.192673",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Access",

@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "creation": "2020-11-09 14:03:53.717605",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cargo_ref",
+  "cargo_type",
+  "container_no",
+  "container_size",
+  "container_content",
+  "column_break_6",
+  "bol",
+  "weight",
+  "volume",
+  "seal_1",
+  "seal_2",
+  "section_break_11",
+  "cargo_description",
+  "column_break_15",
+  "mark",
+  "chasis_no",
+  "work_type"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "cargo_ref",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Ref",
+   "options": "Cargo"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Type",
+   "search_index": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Container No"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.container_size",
+   "fieldname": "container_size",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Size",
+   "options": "\n20\n40"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_ref.container_content",
+   "fieldname": "container_content",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container Content",
+   "options": "\nFULL\nEMPTY"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bol",
+   "fieldtype": "Data",
+   "label": "BOL"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Weight"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Volume"
+  },
+  {
+   "fieldname": "seal_1",
+   "fieldtype": "Data",
+   "label": "Seal 1"
+  },
+  {
+   "fieldname": "seal_2",
+   "fieldtype": "Data",
+   "label": "Seal 2"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo Description"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mark",
+   "fieldtype": "Data",
+   "label": "Mark"
+  },
+  {
+   "fieldname": "chasis_no",
+   "fieldtype": "Data",
+   "label": "Chasis No"
+  },
+  {
+   "fieldname": "work_type",
+   "fieldtype": "Link",
+   "label": "Work Type",
+   "options": "Work Type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2020-11-09 14:03:53.717605",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo Inspection Pickup",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
