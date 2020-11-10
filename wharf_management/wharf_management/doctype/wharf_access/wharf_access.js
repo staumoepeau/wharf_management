@@ -19,6 +19,7 @@ frappe.ui.form.on('Wharf Access', {
         frm.toggle_enable(['check_in_out_time'], is_allowed);
 
         wharf_management.wharf_access.setup_cargo_queries(frm);
+        wharf_management.wharf_access.setup_cargo_pickup(frm);
         wharf_management.wharf_access.setup_export_queries(frm);
 
     },
@@ -35,13 +36,30 @@ frappe.ui.form.on('Wharf Access', {
     customer_id: function(frm) {
         frm.save();
         frm.refresh();
-
-
     }
+});
+
+frappe.ui.form.on("Cargo Pickup", "cargo_ref", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    if (d.overdue_storage == 1) {
+        frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
+    }
+    frm.refresh();
+
 });
 
 $.extend(wharf_management.wharf_access, {
 
+    setup_cargo_pickup: function(frm) {
+        frm.fields_dict['cargo_pickup'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['Cargo', 'docstatus', '=', 1],
+                    ['Cargo', 'status', 'in', ['Paid']],
+                ]
+            }
+        }
+    },
     setup_cargo_queries: function(frm) {
         frm.fields_dict['cargo_inspection_table'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
             return {

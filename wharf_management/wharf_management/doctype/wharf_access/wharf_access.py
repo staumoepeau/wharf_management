@@ -15,8 +15,13 @@ class WharfAccess(Document):
         self.validate_log_type()
         self.validate_access_type()
         self.validate_reason()
-        self.validate_drop()
-        self.validate_pickup()
+
+        if self.drop_or_pickup == "Drop":
+            self.validate_drop()
+        if self.drop_or_pickup == "Custom Inspection":
+            self.validate_custom_inspection_pickup()
+        if self.drop_or_pickup == "Pickup":
+            self.validate_cargo_pickup()
 
     def validate(self):
         self.validate_duplicate_log()
@@ -58,14 +63,23 @@ class WharfAccess(Document):
 
                 update_gate1_status(val.name)
     
-    def validate_pickup(self):
-        if self.drop_or_pickup == "Pickup":
-            export_table = frappe.db.sql("""SELECT cargo_ref
+    def validate_custom_inspection_pickup(self):
+        if self.drop_or_pickup == "Custom Inspection":
+            custom_inspection_table = frappe.db.sql("""SELECT cargo_ref
 			FROM `tabCargo Inspection Pickup`
 			WHERE parent = %s """,(self.name), as_dict=1)
 
-            for e in export_table:
-                 frappe.db.sql("""UPDATE `tabCargo` SET status='Inspection Delivered', custom_inspection_deliver='Closed', custom_inspection_deliver_date=%s WHERE name=%s""", (now(), e.cargo_ref))
+            for c in custom_inspection_table:
+                 frappe.db.sql("""UPDATE `tabCargo` SET status='Inspection Delivered', yard_slot='', custom_inspection_deliver='Closed', custom_inspection_deliver_date=%s WHERE name=%s""", (now(), c.cargo_ref))
+    
+    def validate_cargo_pickup(self):
+        if self.drop_or_pickup == "Pickup":
+            cargo_table = frappe.db.sql("""SELECT cargo_ref
+			FROM `tabCargo Pickup`
+			WHERE parent = %s """,(self.name), as_dict=1)
+
+            for c in cargo_table:
+                 frappe.db.sql("""UPDATE `tabCargo` SET status='Inspection Delivered', yard_slot='', custom_inspection_deliver='Closed', custom_inspection_deliver_date=%s WHERE name=%s""", (now(), c.cargo_ref))
 
 #                val = frappe.db.get_value("Cargo", {"name": e.cargo_ref}, ["name","status","cargo_type","container_no","agents","container_type","container_size","container_content","cargo_description"], as_dict=True)
 #                update_main_gate_status(val.name, self.license_plate, self.customer_full_name)

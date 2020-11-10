@@ -156,6 +156,8 @@
   "stock_date",
   "data_145",
   "storage_overdue",
+  "column_break_149",
+  "overdue_storage_status",
   "amended_from"
  ],
  "fields": [
@@ -1068,13 +1070,23 @@
    "fieldname": "custom_inspection_deliver_date",
    "fieldtype": "Datetime",
    "label": "Custom Inspection Deliver Date"
+  },
+  {
+   "fieldname": "column_break_149",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overdue_storage_status",
+   "fieldtype": "Select",
+   "label": "Overdue Storage Status",
+   "options": "\nPaid\nUnpaid"
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-08 11:54:35.652344",
+ "modified": "2020-11-11 04:30:52.776065",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

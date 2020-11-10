@@ -125,6 +125,14 @@ frappe.ui.form.on('Cargo', {
             }).addClass("btn-success");
         }
 
+        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+        //                frm.doc.storage_overdue == 1
+        //            )) {
+        //            frm.add_custom_button(__('Waive Storage'), function() {
+        //                frm.events.overdue_storage_waive(frm);
+        //            }).addClass("btn-primary");
+        //        }
+
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.storage_overdue == 1
             )) {
@@ -132,12 +140,13 @@ frappe.ui.form.on('Cargo', {
                 //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
                 frappe.route_options = {
-                    "payment_type": "Receive",
-                    "customer": frm.doc.consignee,
-                    "reference_doctype": "Cargo",
-                    "storage_overdue": frm.doc.storage_overdue
-                }
-                alert(frm.doc.storage_overdue)
+                        "payment_type": "Receive",
+                        "customer": frm.doc.consignee,
+                        "overdue_storage": "Yes",
+                        "reference_doctype": "Cargo",
+
+                    }
+                    //                alert(frm.doc.storage_overdue)
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
                 //            }).addClass("btn-success");
             }).addClass("btn-primary");
@@ -260,23 +269,22 @@ frappe.ui.form.on('Cargo', {
                     //                frappe.set_route("Form", "Custom Inspection", doc.name);
             }).addClass("btn-danger");
         }
-        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
-                frm.doc.payment_status != "Closed" &&
-                frm.doc.yard_status == "Closed" &&
-                frm.doc.inspection_status == "Closed" &&
-                frm.doc.custom_inspection == "Closed" &&
-                frm.doc.custom_inspection_deliver != "Closed"
-
-            )) {
-            frm.add_custom_button(__('Deliver Custom'), function() {
-                //                frappe.route_options = {
-                //                    "cargo_ref": frm.doc.name
-                //                }
-                frm.events.deliver_to_custom(frm)
-                    //                frappe.new_doc("Custom Inspection");
-                    //                frappe.set_route("Form", "Custom Inspection", doc.name);
-            }).addClass("btn-danger");
-        }
+        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
+        //                frm.doc.payment_status != "Closed" &&
+        //                frm.doc.yard_status == "Closed" &&
+        //                frm.doc.inspection_status == "Closed" &&
+        //                frm.doc.custom_inspection == "Closed" &&
+        //                frm.doc.custom_inspection_deliver != "Closed"
+        //            )) {
+        //            frm.add_custom_button(__('Deliver Custom'), function() {
+        //                frappe.route_options = {
+        //                    "cargo_ref": frm.doc.name
+        //                }
+        //                frm.events.deliver_to_custom(frm)
+        //                frappe.new_doc("Custom Inspection");
+        //                frappe.set_route("Form", "Custom Inspection", doc.name);
+        //            }).addClass("btn-danger");
+        //        }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.inspection_status == "Closed" &&
@@ -305,6 +313,38 @@ frappe.ui.form.on('Cargo', {
         }
     },
 
+    overdue_storage_waive: function(frm) {
+
+        let d = new frappe.ui.Dialog({
+            title: 'Waive Overdue Storage',
+            fields: [{
+                    label: 'Waive Overdue Storage',
+                    fieldname: 'waive_overdue_storage',
+                    fieldtype: 'Select',
+                    default: 'YES',
+                    options: ['YES',
+                        'NO'
+                    ],
+                    reqd: 1
+                },
+
+            ],
+            primary_action_label: 'Submit',
+            primary_action(values) {
+                if (!values.waive_overdue_storage) {
+                    frappe.throw(__("Please confirm by choose YES or NO"));
+                }
+
+                if (values.waive_overdue_storage == "YES") {
+
+                    frm.set_value("storage_overdue_waive", 1);
+                }
+            }
+        });
+
+        d.show();
+    },
+
     check_overdue_storage: function(frm) {
 
         frappe.call({
@@ -316,9 +356,10 @@ frappe.ui.form.on('Cargo', {
             callback: function(d) {
                 d.message
                     //                    alert(d.message)
-                if (d.message > 0) {
-                    frappe.throw(__('This Cargo have a UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
-                } else {
+                if (d.message > 0 && frm.doc.storage_overdue_waive == 0) {
+                    frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
+                }
+                if (d.message > 0 && frm.doc.storage_overdue_waive == 1) {
 
                     frappe.route_options = {
                         "cargo_ref": frm.doc.name,

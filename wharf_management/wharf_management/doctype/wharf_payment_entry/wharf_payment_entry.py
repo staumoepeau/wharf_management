@@ -12,10 +12,15 @@ from frappe.model.document import Document
 class WharfPaymentEntry(Document):
 
     def on_submit(self):  
-        if self.reference_doctype == "Cargo":
+        if self.reference_doctype == "Cargo" and not self.storage_overdue:
             self.check_warrant_number()
             self.check_duplicate_warrant_number()
             self.update_cargo_table()
+
+        if self.reference_doctype == "Cargo" and self.storage_overdue == "Yes":
+#            self.check_warrant_number()
+#            self.check_duplicate_warrant_number()
+            self.update_cargo_overdue_table()
         
         if self.reference_doctype == "Booking Request":
             self.update_booking_request()
@@ -47,6 +52,13 @@ class WharfPaymentEntry(Document):
 		delivery_code=%s, status='Paid'
 		where `tabCargo References`.parent=%s""",
 		(self.modified, self.custom_warrant, self.delivery_code, self.delivery_information, self.name))
+    
+    def update_cargo_overdue_table(self):
+        frappe.db.sql("""Update `tabCargo` INNER JOIN `tabCargo References` ON
+		`tabCargo`.name = `tabCargo References`.reference_doctype
+		set overdue_storage_status = "Paid"
+		where `tabCargo References`.parent=%s""",
+		(self.name))
 
     def check_warrant_number(self):
         if not self.custom_warrant:
