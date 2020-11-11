@@ -13,6 +13,8 @@ class Cargo(Document):
 
     def on_submit(self):
         self.validate_booking_ref()
+        if not self.hazardous:
+            self.hazardous = self.get_hazardous()
 
     def validate(self):
 #        self.check_bulk_cargo()
@@ -23,6 +25,13 @@ class Cargo(Document):
 #    def check_bulk_cargo(self):
 #        if self.cargo_type == "Break Bulk":
 #            self.name = self.name +"-"+ self.break_bulk_items
+
+    def get_hazardous(self):
+        if not self.hazardous_code:
+            hazardous_ans = "No"
+        if self.hazardous_code:
+            hazardous_ans = "Yes"
+        return hazardous_ans
 
     def clear_new_cargo(self):
         self.inspection_status == ""

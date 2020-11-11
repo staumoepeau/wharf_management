@@ -11,9 +11,24 @@ frappe.ui.form.on('Pre Advice', {
         });
         frappe.set_route("List", "Pre Advice");
         location.reload(true);
+
+
     },
 
     onload: function(frm) {
+
+        cur_frm.add_fetch('container_type', 'size', 'container_size');
+        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
+        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
+        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
+        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
+        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
+        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
+        cur_frm.add_fetch('booking_ref', 'pol', 'pol');
+        cur_frm.add_fetch('booking_ref', 'pod', 'pod');
+        cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
+
+
         if (frm.doc.cargo_type == "Split Ports") {
             cur_frm.set_df_property("last_port", "hidden", 0);
 
@@ -48,16 +63,7 @@ frappe.ui.form.on('Pre Advice', {
     },
 
     refresh: function(frm) {
-        cur_frm.add_fetch('container_type', 'size', 'container_size');
-        cur_frm.add_fetch('container_type', 'pat_code', 'pat_code');
-        cur_frm.add_fetch('booking_ref', 'voyage_no', 'voyage_no');
-        cur_frm.add_fetch('booking_ref', 'agents', 'agents');
-        cur_frm.add_fetch('booking_ref', 'vessel', 'vessel');
-        cur_frm.add_fetch('booking_ref', 'eta_date', 'eta_date');
-        cur_frm.add_fetch('booking_ref', 'etd_date', 'etd_date');
-        cur_frm.add_fetch('booking_ref', 'pol', 'pol');
-        cur_frm.add_fetch('booking_ref', 'pod', 'pod');
-        cur_frm.add_fetch('booking_ref', 'final_dest_port', 'final_dest_port');
+
 
 
         if (frappe.user_roles.includes('Yard Inspection User', 'Yard Operation User')) {

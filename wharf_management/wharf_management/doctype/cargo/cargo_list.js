@@ -16,7 +16,7 @@ frappe.listview_settings['Cargo'] = {
                 "Export": "red",
                 "Uploaded": "purple",
                 "Re-stowing": "yellow",
-                "Transhipment": "purple",
+                "Transshipment": "purple",
                 "Outbound": "lightblue",
                 "Inspection": "green",
                 "Yard": "purple",

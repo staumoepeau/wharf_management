@@ -16,12 +16,13 @@
   "title",
   "barcode_code",
   "manifest_section",
-  "storage_fee",
   "handling_fee",
-  "column_break_7",
+  "storage_fee",
   "wharfage_fee",
+  "column_break_7",
   "handling_fee_discount",
   "manifest_check",
+  "manifest_status",
   "empty_details",
   "storage_days",
   "charge_days",
@@ -433,6 +434,7 @@
   {
    "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
+   "fetch_from": "container_type.size",
    "fieldname": "container_size",
    "fieldtype": "Select",
    "in_global_search": 1,
@@ -440,7 +442,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container Size",
-   "options": "\n10\n20\n40"
+   "options": "\n10\n20\n40",
+   "read_only": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -633,8 +636,10 @@
    "options": "Work Type"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_44",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "CARGO DETAILS"
   },
   {
    "allow_on_submit": 1,
@@ -1080,13 +1085,22 @@
    "fieldtype": "Select",
    "label": "Overdue Storage Status",
    "options": "\nPaid\nUnpaid"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Open",
+   "fieldname": "manifest_status",
+   "fieldtype": "Select",
+   "label": "Manifest Status",
+   "options": "Open\nClosed",
+   "read_only": 1
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-11 04:30:52.776065",
+ "modified": "2020-11-12 06:45:21.539145",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

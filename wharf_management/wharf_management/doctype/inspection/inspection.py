@@ -145,7 +145,7 @@ class Inspection(Document):
 
         if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
             frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s, inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, file_attach_02=%s, inspection_comment=%s 
-            WHERE cargo_ref=%s""", (self.count_item, self.file_attach, self.file_attach_02, self.cargo_condition, self.cargo_ref))
+            WHERE 3cargo_ref=%s""", (self.count_item, self.file_attach, self.file_attach_02, self.cargo_condition, self.cargo_ref))
 
 #            if self.qty == 1:
 #                frappe.db.sql("""UPDATE `tabPre Advice` SET break_bulk_item_count=%s, inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.count_item, self.file_attach, self.cargo_condition, self.cargo_ref))
@@ -218,7 +218,7 @@ class Inspection(Document):
                     "stowage" : val.stowage,
                     "hazardous" : val.hazardous,
                     "hazardous_code" : val.hazardous_code,
-                    "status" : "Transhipment",
+                    "status" : "Transshipment",
                     "seal_1" : val.seal_1,
                     "seal_2" : val.seal_2,
                     "eta_date" : val.eta_date,
@@ -234,7 +234,7 @@ class Inspection(Document):
                 })
         doc.insert()
         doc.submit()
-        frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Transhipment", status="Transfer" where name=%s""", (self.cargo_ref))
+#        frappe.db.sql("""Update `tabPre Advice` set inspection_status="Closed", yard_status="Closed", payment_status="Closed", gate1_status="Closed", gate2_status="Closed", final_status="Transhipment", status="Transfer" where name=%s""", (self.cargo_ref))
 
 #    Create EMPTY Container in Cargo for Handling Fee
     def create_cargo_item(self):

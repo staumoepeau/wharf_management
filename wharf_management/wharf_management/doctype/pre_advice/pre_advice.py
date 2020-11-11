@@ -33,7 +33,10 @@ class PreAdvice(Document):
         return inspection_status
 
     def get_hazardous(self):
-        hazardous_ans = "No"
+        if not self.hazardous_code:
+            hazardous_ans = "No"
+        if self.hazardous_code:
+            hazardous_ans = "Yes"
         return hazardous_ans
 
 

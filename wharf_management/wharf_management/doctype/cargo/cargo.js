@@ -112,7 +112,8 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
             )) {
-            frm.page.set_primary_action(__('Payment'), function() {
+            //frm.page.set_primary_action(__('Payment'), function() {
+            frm.add_custom_button(__('Payment'), function() {
                 //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
                 frappe.route_options = {
@@ -136,7 +137,8 @@ frappe.ui.form.on('Cargo', {
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.storage_overdue == 1
             )) {
-            frm.page.set_primary_action(__('Payment'), function() {
+            //frm.page.set_primary_action(__('Payment'), function() {
+            frm.add_custom_button(__('Payment'), function() {
                 //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
                 frappe.route_options = {

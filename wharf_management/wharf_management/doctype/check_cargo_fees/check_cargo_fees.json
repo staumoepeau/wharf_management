@@ -12,10 +12,10 @@
   "column_break_2",
   "today_date",
   "section_break_4",
-  "cargo_references_table",
+  "cargo_references_table_check",
   "fees_details_section",
   "update_fees",
-  "wharf_fee_item",
+  "wharf_fee_item_check",
   "section_break_24",
   "column_break_25",
   "column_break_26",
@@ -53,12 +53,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "wharf_fee_item",
-   "fieldtype": "Table",
-   "label": "Fees",
-   "options": "Wharf Fee Item"
-  },
-  {
    "fieldname": "section_break_24",
    "fieldtype": "Section Break"
   },
@@ -70,12 +64,6 @@
    "fieldname": "fees_details_section",
    "fieldtype": "Section Break",
    "label": "Fees Details"
-  },
-  {
-   "fieldname": "cargo_references_table",
-   "fieldtype": "Table",
-   "label": "Cargo References",
-   "options": "Cargo References"
   },
   {
    "fieldname": "section_break_4",
@@ -108,12 +96,23 @@
    "fieldname": "update_fees",
    "fieldtype": "Button",
    "label": "Update Fees"
+  },
+  {
+   "fieldname": "cargo_references_table_check",
+   "fieldtype": "Table",
+   "label": "Cargo References",
+   "options": "Cargo References Check"
+  },
+  {
+   "fieldname": "wharf_fee_item_check",
+   "fieldtype": "Table",
+   "label": "Fees",
+   "options": "Wharf Fee Item Check"
   }
  ],
- "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2020-09-29 09:48:15.542352",
+ "modified": "2020-11-11 11:11:06.726316",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Check Cargo Fees",
@@ -135,6 +134,16 @@
    "print": 1,
    "read": 1,
    "role": "Agent User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Wharf Operation Cashier",
    "share": 1,
    "write": 1
   }

@@ -81,7 +81,7 @@ class CheckCargoFees(Document):
             storage_fee = 0.0
             charged_days = 0.0
         
-        self.append("wharf_fee_item", { 
+        self.append("wharf_fee_item_check", { 
     				"item": storage_item_code,
     				"description": storage_description,
     				"price": fee_amount,
@@ -89,7 +89,7 @@ class CheckCargoFees(Document):
     				"total": float(storage_fee)
     			})
         
-        self.append("wharf_fee_item", { 
+        self.append("wharf_fee_item_check", { 
     				"item": wharf_item_code,
     				"description": wharfage_description,
     				"price": wharfage_fee,
@@ -100,3 +100,28 @@ class CheckCargoFees(Document):
         self.total_fee_to_paid = float(storage_fee + (wharfage_fee * qty))
     #    return storage_days, grace_days, charged_days, fee_amount, storage_fee, wharfage, flt(storage_fee + wharfage)
 
+
+@frappe.whitelist()
+def get_storage_fees(docname):
+    return frappe.db.sql("""select docB.item_code, docA.description,
+		Sum(docB.charged_storage_days) as qty,
+		Sum(docB.storage_fee_price) as price,
+		Sum(docB.storage_fee) as total
+		from `tabCargo References Check` as docB, `tabWharf Fees` as docA
+		WHERE docB.wharfage_item_code = docA.item_name AND docB.parent = %s group by docB.item_code""", (docname), as_dict=1)
+
+@frappe.whitelist()
+def get_wharfage_fees(docname):
+    return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
+        CASE 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles", "Split Ports") 
+            THEN 
+                CASE 
+                WHEN Sum(docB.volume) < Sum(docB.net_weight)
+                    THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
+        WHEN docB.cargo_type IN ("Container", "Flatrack") THEN Count(docA.item_name)
+        WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
+        END AS qty,
+        Sum(docB.wharfage_fee) as total
+        from `tabCargo References Check` as docB, `tabWharf Fees` as docA
+		where docB.wharfage_item_code = docA.item_name and docB.parent = %s group by docB.wharfage_item_code""", (docname), as_dict=1)

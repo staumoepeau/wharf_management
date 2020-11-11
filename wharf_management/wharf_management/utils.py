@@ -60,14 +60,19 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type =None
         container_content = val.container_content
+    
+    if final_work_type == "Discharged" and secondary_work_type == "Transhipment":
+        worktype = "Transhipment"
+        movement = "Transshipment"
+        payment = "Closed"
+        gate = "Closed"
+        inspection_status = "Closed"
+        yard_status = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        third_work_type =None
+        container_content = val.container_content
         
-
-#            elif self.secondary_work_type == "Transhipment":
-#                worktype = "Transhipment"
-#                movement = "Transhipment"
-#                payment = "Closed"
-#                gate = "Closed"
-
     if cargo_type == "Split Ports" and final_work_type == "Discharged" :
         worktype = secondary_work_type
         movement = "Split Ports"

@@ -34,8 +34,8 @@ frappe.ui.form.on('Check Cargo Fees', {
     today_date: function(frm) {
 
         frm.refresh();
-        frappe.model.clear_table(frm.doc, "wharf_fee_item");
-        frappe.model.clear_table(frm.doc, "cargo_references_table");
+        frappe.model.clear_table(frm.doc, "wharf_fee_item_check");
+        frappe.model.clear_table(frm.doc, "cargo_references_table_check");
         frm.set_value("total_fee_to_paid", " ");
     },
 
@@ -54,7 +54,7 @@ frappe.ui.form.on('Check Cargo Fees', {
                     }
                 }
             })
-        } else if (frappe.user.has_role("System Manager")) {
+        } else if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier")) {
             cur_frm.set_value("agents", " ")
         }
     },
@@ -74,8 +74,8 @@ frappe.ui.form.on('Check Cargo Fees', {
 
         //        frm.set_value('today_date', frappe.datetime.nowdate());
         frm.set_value("user", frappe.session.user);
-        frappe.model.clear_table(frm.doc, "wharf_fee_item");
-        frappe.model.clear_table(frm.doc, "cargo_references_table");
+        frappe.model.clear_table(frm.doc, "wharf_fee_item_check");
+        frappe.model.clear_table(frm.doc, "cargo_references_table_check");
         frm.set_value("total_fee_to_paid", " ");
     },
 
@@ -87,17 +87,18 @@ frappe.ui.form.on('Check Cargo Fees', {
 
 var get_storage_fee = function(frm) {
     frappe.call({
-        method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_fees",
+        method: "wharf_management.wharf_management.doctype.check_cargo_fees.check_cargo_fees.get_storage_fees",
         args: {
             "docname": frm.doc.name,
         },
         callback: function(r) {
+            console.log(frm.doc.name)
             if (r.message) {
                 if (frm.doc.wharf_fee_item) {
-                    frm.set_value("wharf_fee_item", [])
+                    frm.set_value("wharf_fee_item_check", [])
                 }
                 $.each(r.message, function(i, item) {
-                    var item_row = frm.add_child("wharf_fee_item")
+                    var item_row = frm.add_child("wharf_fee_item_check")
                     console.log(item)
                     item_row.item = item.item_code,
                         item_row.description = item.description,
@@ -113,14 +114,14 @@ var get_storage_fee = function(frm) {
 }
 var get_wharfage_fee = function(frm) {
     frappe.call({
-        method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_wharfage_fees",
+        method: "wharf_management.wharf_management.doctype.check_cargo_fees.check_cargo_fees.get_wharfage_fees",
         args: {
             "docname": frm.doc.name,
         },
         callback: function(r) {
             if (r.message) {
                 $.each(r.message, function(i, item) {
-                    var item_row = frm.add_child("wharf_fee_item")
+                    var item_row = frm.add_child("wharf_fee_item_check")
                     console.log(item)
                     item_row.item = item.wharfage_item_code,
                         item_row.description = item.description,
@@ -151,7 +152,7 @@ var get_net_total_fee = function(frm) {
 $.extend(wharf_management.check_cargo_fees, {
 
     setup_cargo_queries: function(frm) {
-        if (!frappe.user.has_role("System Manager")) {
+        if (!frappe.user.has_role("System Manager") & !frappe.user.has_role("Wharf Operation Cashier")) {
             frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
                 return {
                     filters: [
@@ -175,7 +176,7 @@ $.extend(wharf_management.check_cargo_fees, {
     }
 });
 
-frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cdn) {
+frappe.ui.form.on("Cargo References Check", "reference_doctype", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
     var cargo_a = ["Container", "Tank Tainers", "Flatrack", "Split Ports"];
 
@@ -358,7 +359,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
     }
 });
 
-frappe.ui.form.on("Wharf Fee Item", {
+frappe.ui.form.on("Wharf Fee Item Check", {
     qty: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
 
