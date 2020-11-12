@@ -9,28 +9,29 @@ let cargo_type_b = ["Break Bulk", "Heavy Vehicles", "Loose Cargo"];
 frappe.ui.form.on('Cargo', {
 
     before_load: function(frm) {
-        if (frm.doc.payment_status == "Closed" && frm.doc.gate1_status == "Open") {
-            frappe.call({
-                method: "wharf_management.wharf_management.doctype.gate1.gate1.get_storage_days",
-                args: {
-                    "eta_date": frm.doc.payment_date,
-                    "posting_date": frappe.datetime.now_datetime()
-                },
-                callback: function(d) {
-                    d.message
-                        //                    alert(d.message)
-                    if (d.message > 0) {
-                        frappe.call({
-                            method: 'wharf_management.wharf_management.doctype.cargo.cargo.set_overdue_storage',
-                            args: {
-                                "name_ref": frm.doc.name
-                            }
-                        })
-                        frm.save()
-                    }
-                }
-            });
-        }
+
+        //        if (frm.doc.payment_status == "Closed" && frm.doc.gate1_status == "Open") {
+        //            frappe.call({
+        //                method: "wharf_management.wharf_management.doctype.gate1.gate1.get_storage_days",
+        //                args: {
+        //                    "eta_date": frm.doc.payment_date,
+        //                    "posting_date": frappe.datetime.now_datetime()
+        //                },
+        //                callback: function(d) {
+        //                    d.message
+        //                    alert(d.message)
+        //                    if (d.message > 0) {
+        //                        frappe.call({
+        //                            method: 'wharf_management.wharf_management.doctype.cargo.cargo.set_overdue_storage',
+        //                            args: {
+        //                                "name_ref": frm.doc.name
+        //                            }
+        //                        })
+        //                        frm.save()
+        //                    }
+        //                }
+        //            });
+        //        }
 
     },
 
@@ -165,7 +166,24 @@ frappe.ui.form.on('Cargo', {
 
             frm.add_custom_button(__('Gate 1'), function() {
 
-                frm.events.check_overdue_storage(frm);
+                frappe.route_options = {
+                    "cargo_ref": frm.doc.name,
+                    "customer": frm.doc.consignee,
+                    "container_no": frm.doc.container_no,
+                    "custom_warrant": frm.doc.custom_warrant,
+                    "custom_code": frm.doc.custom_code,
+                    "delivery_code": frm.doc.delivery_code,
+                    "cargo_type": frm.doc.cargo_type,
+                    "cargo_description": frm.doc.cargo_description,
+                    "chasis_no": frm.doc.chasis_no,
+                    "qty": frm.doc.qty,
+                    "container_content": frm.doc.container_content,
+                    "work_type": frm.doc.work_type,
+                    "mydoctype": "CARGO"
+                }
+                frappe.set_route("Form", "Gate1", "New Gate1 1");
+
+                //                frm.events.check_overdue_storage(frm);
 
             }).addClass("btn-primary");
 
@@ -259,7 +277,7 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed" &&
-                frm.doc.custom_inspection == "Open"
+                frm.doc.custom_inspection != "Closed"
 
             )) {
             frm.add_custom_button(__('Custom Request'), function() {

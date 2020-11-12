@@ -106,6 +106,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = "Discharged"
         payment = "Closed"
         gate = "Closed"
+        final_work_type == "Discharged"
         yard_date = None
         third_work_type =None
         container_content = val.container_content
@@ -119,7 +120,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Open"
         gate = "Open"
         yard_date = None
-        final_work_type = "Devanning"
+        final_work_type = "Discharged"
         third_work_type =None
         container_content = None
 
@@ -132,6 +133,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Closed"
         gate = "Closed"
         yard_date = None
+        final_work_type == "Discharged"
         third_work_type = val.third_work_type
         container_content = "EMPTY"
 

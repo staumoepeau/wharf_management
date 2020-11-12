@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-12 07:04:59.713317",
+ "modified": "2020-11-12 09:27:04.241176",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -312,7 +312,7 @@
    "color": "#428b46",
    "doc_view": "List",
    "format": "{}",
-   "label": "Manifest Not Confirm",
+   "label": "Cargo Not Confirm",
    "link_to": "Cargo",
    "stats_filter": "{\"manifest_check\": [\"in\", [\" \", \"Pending\"]], \"manifest_status\": [\"in\", [\" \", \"Open\"]]}",
    "type": "DocType"
@@ -321,7 +321,7 @@
    "color": "#7b933d",
    "doc_view": "List",
    "format": "{}",
-   "label": "Manifest Confirm",
+   "label": "Cargo Confirm",
    "link_to": "Cargo",
    "stats_filter": "{\"manifest_check\": \"Confirm\", \"manifest_status\": [\"in\", [\" \",\"Open\"]]}",
    "type": "DocType"
@@ -330,7 +330,7 @@
    "color": "#49937e",
    "doc_view": "List",
    "format": "{}",
-   "label": "Manifest Confirm & Completed",
+   "label": "Cargo Confirm & Completed",
    "link_to": "Cargo",
    "stats_filter": "{\"manifest_check\": \"Confirm\", \"manifest_status\": \"Closed\"}",
    "type": "DocType"

@@ -5,7 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "cargo_ref",
+  "pickup_cargo_ref",
   "cargo_type",
   "container_no",
   "container_size",
@@ -29,17 +29,6 @@
   "overdue_storage_status"
  ],
  "fields": [
-  {
-   "allow_in_quick_entry": 1,
-   "fieldname": "cargo_ref",
-   "fieldtype": "Link",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Cargo Ref",
-   "options": "Cargo"
-  },
   {
    "allow_in_quick_entry": 1,
    "fetch_from": "cargo_ref.cargo_type",
@@ -153,7 +142,7 @@
    "options": "Work Type"
   },
   {
-   "fetch_from": "cargo_ref.custom_warrant",
+   "fetch_from": "pickup_cargo_ref.custom_warrant",
    "fieldname": "warrant_number",
    "fieldtype": "Data",
    "label": "Warrant Number",
@@ -161,38 +150,49 @@
   },
   {
    "default": "0",
-   "fetch_from": "cargo_ref.storage_overdue",
+   "fetch_from": "pickup_cargo_ref.storage_overdue",
    "fieldname": "overdue_storage",
    "fieldtype": "Check",
    "label": "Overdue Storage",
    "read_only": 1
   },
   {
-   "fetch_from": "cargo_ref.eta_date",
+   "fetch_from": "pickup_cargo_ref.eta_date",
    "fieldname": "eta",
    "fieldtype": "Datetime",
    "label": "ETA",
    "read_only": 1
   },
   {
-   "fetch_from": "cargo_ref.payment_date",
+   "fetch_from": "pickup_cargo_ref.payment_date",
    "fieldname": "previous_payment_date",
    "fieldtype": "Datetime",
    "label": "Previous Payment Date",
    "read_only": 1
   },
   {
-   "fetch_from": "cargo_ref.overdue_storage_status",
+   "fetch_from": "pickup_cargo_ref.overdue_storage_status",
    "fieldname": "overdue_storage_status",
    "fieldtype": "Select",
    "label": "Overdue Storage Status",
    "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "pickup_cargo_ref",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Ref",
+   "options": "Cargo"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-11-11 04:31:48.614544",
+ "modified": "2020-11-12 14:10:53.807554",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Pickup",

@@ -14,7 +14,6 @@ frappe.ui.form.on('Wharf Cashier Closing', {
     },
 
     get_transactions: function(frm) {
-
         frappe.call({
             method: "wharf_management.wharf_management.doctype.wharf_cashier_closing.wharf_cashier_closing.get_transactions_list",
             args: {

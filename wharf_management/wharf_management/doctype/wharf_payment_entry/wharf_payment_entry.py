@@ -12,15 +12,16 @@ from frappe.model.document import Document
 class WharfPaymentEntry(Document):
 
     def on_submit(self):  
-        if self.reference_doctype == "Cargo" and not self.storage_overdue:
+#        if self.reference_doctype == "Cargo" and not self.storage_overdue:
+        if self.reference_doctype == "Cargo":
             self.check_warrant_number()
             self.check_duplicate_warrant_number()
             self.update_cargo_table()
 
-        if self.reference_doctype == "Cargo" and self.storage_overdue == "Yes":
+#        if self.reference_doctype == "Cargo" and self.storage_overdue == "Yes":
 #            self.check_warrant_number()
 #            self.check_duplicate_warrant_number()
-            self.update_cargo_overdue_table()
+#            self.update_cargo_overdue_table()
         
         if self.reference_doctype == "Booking Request":
             self.update_booking_request()

@@ -231,9 +231,10 @@
    "label": "Update"
   }
  ],
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-04 06:09:32.127542",
+ "modified": "2020-11-12 10:54:22.070512",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Cashier Closing",

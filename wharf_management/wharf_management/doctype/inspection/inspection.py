@@ -145,7 +145,7 @@ class Inspection(Document):
 
         if self.cargo_type in ["Loose Cargo", "Break Bulk"]:
             frappe.db.sql("""UPDATE `tabCargo` SET break_bulk_item_count=%s, inspection_status="Closed", final_status="Discharged", status="Inspection", file_attach=%s, file_attach_02=%s, inspection_comment=%s 
-            WHERE 3cargo_ref=%s""", (self.count_item, self.file_attach, self.file_attach_02, self.cargo_condition, self.cargo_ref))
+            WHERE cargo_ref=%s""", (self.count_item, self.file_attach, self.file_attach_02, self.cargo_condition, self.cargo_ref))
 
 #            if self.qty == 1:
 #                frappe.db.sql("""UPDATE `tabPre Advice` SET break_bulk_item_count=%s, inspection_status="Closed", final_status="Discharged", status="Inspection", image_01=%s, inspection_comment=%s WHERE name=%s""", (self.count_item, self.file_attach, self.cargo_condition, self.cargo_ref))

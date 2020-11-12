@@ -21,7 +21,8 @@
   "column_break_15",
   "mark",
   "chasis_no",
-  "work_type"
+  "work_type",
+  "warrant_number"
  ],
  "fields": [
   {
@@ -146,12 +147,17 @@
    "in_standard_filter": 1,
    "label": "Cargo Ref",
    "options": "Export"
+  },
+  {
+   "fieldname": "warrant_number",
+   "fieldtype": "Data",
+   "label": "Warrant Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-10-28 05:52:57.498792",
+ "modified": "2020-11-12 15:11:27.136858",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export Cargo Table Drop",
