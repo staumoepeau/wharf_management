@@ -48,10 +48,22 @@ frappe.ui.form.on("Cargo Pickup", "cargo_ref", function(frm, cdt, cdn) {
 
 });
 
+
+frappe.ui.form.on("Cargo Pickup", {
+    security_check_warrant_number: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn];
+        if (d.warranr_number != d.security_check_warrant_number) {
+            //frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
+            frappe.msgprint('Please Make sure that is the correct WARRANT NUMBER', raise_exception = false)
+        }
+        frm.refresh();
+    }
+});
+
 $.extend(wharf_management.wharf_access, {
 
     setup_cargo_pickup: function(frm) {
-        frm.fields_dict['cargo_pickup'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
+        frm.fields_dict['cargo_pickup'].grid.get_field("pickup_cargo_ref").get_query = function(doc, cdt, cdn) {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],

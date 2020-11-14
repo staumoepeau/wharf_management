@@ -10,10 +10,8 @@ from frappe.model.document import Document
 from frappe.utils import cstr, today, flt
 from wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry import get_storage_days
 
-class CheckCargoFees(Document):
-#    pass
+class EnquireCargoFees(Document):
 
-#@frappe.whitelist()
     def get_storage(self):
         charged_days, storage_fee, wharfage, wharfage_fee, storage_days, grace_days, qty = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
         #    currency = frappe.get_value('Company',  "Ports Authority Tonga",  "default_currency")
@@ -125,3 +123,8 @@ def get_wharfage_fees(docname):
         Sum(docB.wharfage_fee) as total
         from `tabCargo References Check` as docB, `tabWharf Fees` as docA
 		where docB.wharfage_item_code = docA.item_name and docB.parent = %s group by docB.wharfage_item_code""", (docname), as_dict=1)
+
+@frappe.whitelist()
+def clear_table():
+    frappe.db.sql(""" DELETE from `tabCargo References Check`""", as_dict=1)
+    frappe.db.sql(""" DELETE from `tabWharf Fee Item Check`""", as_dict=1)

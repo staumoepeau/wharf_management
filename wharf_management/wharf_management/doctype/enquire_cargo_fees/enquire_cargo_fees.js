@@ -1,14 +1,12 @@
 // Copyright (c) 2020, Sione Taumoepeau and contributors
 // For license information, please see license.txt
-
-frappe.provide("wharf_management.check_cargo_fees");
-
-frappe.ui.form.on('Check Cargo Fees', {
+frappe.provide("wharf_management.enquire_cargo_fees");
+frappe.ui.form.on('Enquire Cargo Fees', {
 
     refresh: function(frm) {
 
         frm.add_custom_button(__("Print"), function() {
-            var w = window.open("/printview?doctype=Check%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Check%20Cargo%20Fees&no_letterhead=0&_lang=es");
+            var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Enquire%20Cargo%20Fees&no_letterhead=0&_lang=es");
 
             if (!w) {
                 frappe.msgprint(__("Please enable pop-ups"));
@@ -16,7 +14,21 @@ frappe.ui.form.on('Check Cargo Fees', {
             }
         });
         frm.add_custom_button(__("Refresh"), function() {
-            frm.reload_doc();
+            //            alert("Hello")
+            location.reload(true);
+            frappe.model.clear_table(frm.doc, "wharf_fee_item_check");
+            frappe.model.clear_table(frm.doc, "cargo_references_table_check");
+            frappe.call({
+                method: "wharf_management.wharf_management.doctype.enquire_cargo_fees.enquire_cargo_fees.clear_table",
+
+                callback: function(r) {
+                    //                    alert(r.message);
+                },
+
+            });
+            frm.reload_doc()
+            frm.update()
+                //            frm.refresh();
         });
 
 
@@ -61,9 +73,8 @@ frappe.ui.form.on('Check Cargo Fees', {
 
     onload: function(frm) {
 
+        wharf_management.enquire_cargo_fees.setup_cargo_queries(frm);
 
-
-        wharf_management.check_cargo_fees.setup_cargo_queries(frm);
         frm.set_query("user", function(doc) {
             return {
                 filters: {
@@ -87,14 +98,15 @@ frappe.ui.form.on('Check Cargo Fees', {
 
 var get_storage_fee = function(frm) {
     frappe.call({
-        method: "wharf_management.wharf_management.doctype.check_cargo_fees.check_cargo_fees.get_storage_fees",
+        method: "wharf_management.wharf_management.doctype.enquire_cargo_fees.enquire_cargo_fees.get_storage_fees",
         args: {
             "docname": frm.doc.name,
         },
         callback: function(r) {
-            console.log(frm.doc.name)
+            //            alert(frm.doc.name)
+            console.log(r.message)
             if (r.message) {
-                if (frm.doc.wharf_fee_item) {
+                if (frm.doc.wharf_fee_item_check) {
                     frm.set_value("wharf_fee_item_check", [])
                 }
                 $.each(r.message, function(i, item) {
@@ -114,7 +126,7 @@ var get_storage_fee = function(frm) {
 }
 var get_wharfage_fee = function(frm) {
     frappe.call({
-        method: "wharf_management.wharf_management.doctype.check_cargo_fees.check_cargo_fees.get_wharfage_fees",
+        method: "wharf_management.wharf_management.doctype.enquire_cargo_fees.enquire_cargo_fees.get_wharfage_fees",
         args: {
             "docname": frm.doc.name,
         },
@@ -140,8 +152,8 @@ var get_net_total_fee = function(frm) {
     var doc = frm.doc;
 
     doc.net_total = 0.0
-    if (doc.wharf_fee_item) {
-        $.each(doc.wharf_fee_item, function(index, data) {
+    if (doc.wharf_fee_item_check) {
+        $.each(doc.wharf_fee_item_check, function(index, data) {
             doc.net_total += data.total
         })
     }
@@ -149,11 +161,11 @@ var get_net_total_fee = function(frm) {
     refresh_field('total_fee_to_paid')
 }
 
-$.extend(wharf_management.check_cargo_fees, {
+$.extend(wharf_management.enquire_cargo_fees, {
 
     setup_cargo_queries: function(frm) {
         if (!frappe.user.has_role("System Manager") & !frappe.user.has_role("Wharf Operation Cashier")) {
-            frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
+            frm.fields_dict['cargo_references_table_check'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
                 return {
                     filters: [
                         ['Cargo', 'docstatus', '=', 1],
@@ -163,7 +175,7 @@ $.extend(wharf_management.check_cargo_fees, {
                 }
             }
         } else {
-            frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
+            frm.fields_dict['cargo_references_table_check'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
                 return {
                     filters: [
                         ['Cargo', 'docstatus', '=', 1],
@@ -342,13 +354,17 @@ frappe.ui.form.on("Cargo References Check", "reference_doctype", function(frm, c
             },
             callback: function(r) {
                 frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
-                if (d.free_storage_days < d.storage_days) {
-                    var sdays = flt(d.storage_days - d.free_storage_days);
+
+                var sdays = flt(d.storage_days - d.free_storage_days);
+
+                if (sdays > 0) {
+
                     frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
                     frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-                } else if (d.free_storage_days >= d.storage_days) {
+
+                } else if (sdays <= 0) {
                     frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
-                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                    frappe.model.set_value(d.doctype, d.name, "storage_fee", (0 * d.storage_fee_price));
 
                 }
 
@@ -366,7 +382,7 @@ frappe.ui.form.on("Wharf Fee Item Check", {
         frappe.model.set_value(d.doctype, d.name, "total", d.price * d.qty);
 
         var total = 0;
-        frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
+        frm.doc.wharf_fee_item_check.forEach(function(d) { total += d.total; });
 
         //        frm.set_value("net_total", total);
         frm.set_value("total_fee_to_paid", total);
@@ -376,15 +392,15 @@ frappe.ui.form.on("Wharf Fee Item Check", {
         var d = locals[cdt][cdn];
         frappe.model.set_value(d.doctype, d.name, "net_total", d.total);
         var total_fees = 0;
-        frm.doc.wharf_fee_item.forEach(function(i) { total_fees += i.total; });
+        frm.doc.wharf_fee_item_check.forEach(function(i) { total_fees += i.total; });
 
         //        frm.set_value("net_total", total_fees);
         frm.set_value("total_fee_to_paid", total);
 
     },
-    wharf_fee_item_remove: function(frm, cdt, cdn) {
+    wharf_fee_item_check_remove: function(frm, cdt, cdn) {
         var total = 0;
-        frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
+        frm.doc.wharf_fee_item_check.forEach(function(d) { total += d.total; });
 
         //        frm.set_value("net_total", total);
         frm.set_value("total_fee_to_paid", total);

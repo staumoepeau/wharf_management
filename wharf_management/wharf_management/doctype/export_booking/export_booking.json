@@ -57,12 +57,14 @@
   {
    "fieldname": "booking_by",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_global_search": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Booking By",
+   "label": "User Name",
    "options": "User",
-   "reqd": 1
+   "print_hide": 1,
+   "read_only": 1
   },
   {
    "fieldname": "column_break_4",
@@ -88,31 +90,33 @@
    "fetch_from": "booking_by.full_name",
    "fieldname": "username",
    "fieldtype": "Data",
-   "hidden": 1,
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "User Name",
+   "label": "Booking By",
    "read_only": 1
   },
   {
    "fieldname": "consignee",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Consignee",
    "options": "Customer"
   },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
-   "options": "EXP.-.YY.MM.#####"
+   "options": "EXP.-.YY.MM.#####",
+   "print_hide": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-02 09:05:00.341162",
+ "modified": "2020-11-14 17:17:59.872261",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export Booking",
@@ -177,17 +181,27 @@
    "share": 1
   },
   {
-   "amend": 1,
    "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
-   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Administrator",
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent User",
    "share": 1,
    "submit": 1,
    "write": 1

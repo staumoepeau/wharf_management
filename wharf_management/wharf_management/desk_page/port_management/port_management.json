@@ -38,7 +38,7 @@
   {
    "hidden": 0,
    "label": "Setup",
-   "links": "[\n    \n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n     {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Booking Request Status\",\n        \"label\": \"Booking Request Status\",\n        \"name\": \"Booking Request Status\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Self Analytics\",\n        \"label\": \"Self Analytics\",\n        \"name\": \"Self Analytics\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Container Type\",\n        \"label\": \"Container Type\",\n        \"name\": \"Container Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Booking Request Status\",\n        \"label\": \"Booking Request Status\",\n        \"name\": \"Booking Request Status\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-12 09:27:04.241176",
+ "modified": "2020-11-14 17:59:22.741802",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -217,9 +217,10 @@
    "type": "DocType"
   },
   {
+   "doc_view": "New",
    "icon": "fa fa-check-square-o",
    "label": "Check Cargo Fees",
-   "link_to": "Check Cargo Fees",
+   "link_to": "Enquire Cargo Fees",
    "stats_filter": "",
    "type": "DocType"
   },

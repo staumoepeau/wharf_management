@@ -7,12 +7,13 @@
  "disable_user_customization": 1,
  "docstatus": 0,
  "doctype": "Desk Page",
+ "extends": "Port Management",
  "extends_another_page": 0,
  "hide_custom": 1,
  "idx": 0,
  "is_standard": 1,
  "label": "Shipping Agency",
- "modified": "2020-09-28 11:13:19.609826",
+ "modified": "2020-11-14 17:27:22.771029",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Shipping Agency",
@@ -30,9 +31,17 @@
    "type": "DocType"
   },
   {
+   "doc_view": "New",
    "icon": "fa fa-check-square-o",
    "label": "Check Cargo Fees",
-   "link_to": "Check Cargo Fees",
+   "link_to": "Enquire Cargo Fees",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "icon": "fa fa-cubes",
+   "label": "Booking Export",
+   "link_to": "Export Booking",
    "type": "DocType"
   }
  ]

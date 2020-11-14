@@ -1,6 +1,6 @@
 {
  "actions": [],
- "creation": "2020-09-18 06:11:33.676060",
+ "creation": "2020-11-14 13:00:32.052514",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -30,53 +30,11 @@
    "options": "Cargo"
   },
   {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_fee_to_paid",
-   "fieldtype": "Currency",
-   "label": "Total Fees",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_26",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Today",
-   "fieldname": "today_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Date",
-   "no_copy": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_24",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_25",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "fees_details_section",
-   "fieldtype": "Section Break",
-   "label": "Fees Details"
-  },
-  {
-   "fieldname": "section_break_4",
-   "fieldtype": "Section Break"
-  },
-  {
-   "default": "User",
    "fieldname": "user",
    "fieldtype": "Link",
    "hidden": 1,
    "label": "User",
-   "options": "User",
-   "reqd": 1
+   "options": "User"
   },
   {
    "fetch_from": "user.full_name",
@@ -92,10 +50,21 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:!(doc.__islocal)",
-   "fieldname": "update_fees",
-   "fieldtype": "Button",
-   "label": "Update Fees"
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "today_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "no_copy": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "cargo_references_table_check",
@@ -104,18 +73,47 @@
    "options": "Cargo References Check"
   },
   {
+   "fieldname": "fees_details_section",
+   "fieldtype": "Section Break",
+   "label": "Fees Details"
+  },
+  {
+   "depends_on": "eval:!(doc.__islocal)",
+   "fieldname": "update_fees",
+   "fieldtype": "Button",
+   "label": "Update Fees"
+  },
+  {
    "fieldname": "wharf_fee_item_check",
    "fieldtype": "Table",
    "label": "Fees",
    "options": "Wharf Fee Item Check"
+  },
+  {
+   "fieldname": "section_break_24",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_fee_to_paid",
+   "fieldtype": "Currency",
+   "label": "Total Fees",
+   "read_only": 1
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-11-11 11:11:06.726316",
+ "modified": "2020-11-14 15:21:09.982129",
  "modified_by": "Administrator",
  "module": "Wharf Management",
- "name": "Check Cargo Fees",
+ "name": "Enquire Cargo Fees",
  "owner": "Administrator",
  "permissions": [
   {
@@ -130,20 +128,20 @@
   },
   {
    "create": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "role": "Agent User",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
    "delete": 1,
    "email": 1,
    "print": 1,
    "read": 1,
    "role": "Wharf Operation Cashier",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Agent User",
    "share": 1,
    "write": 1
   }

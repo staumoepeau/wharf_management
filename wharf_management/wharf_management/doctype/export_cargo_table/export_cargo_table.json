@@ -8,8 +8,8 @@
   "cargo_type",
   "container_no",
   "iso",
-  "container_size",
   "container_content",
+  "container_size",
   "column_break_6",
   "bol",
   "weight",
@@ -21,6 +21,7 @@
   "column_break_15",
   "mark",
   "chasis_no",
+  "warrant_no",
   "work_type"
  ],
  "fields": [
@@ -41,6 +42,7 @@
    "fieldtype": "Data",
    "in_global_search": 1,
    "in_list_view": 1,
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container No"
   },
@@ -117,15 +119,14 @@
    "options": "Work Type"
   },
   {
-   "allow_in_quick_entry": 1,
+   "fetch_from": "iso.size",
    "fieldname": "container_size",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_global_search": 1,
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container Size",
-   "options": "\n20\n40"
+   "read_only": 1
   },
   {
    "fieldname": "bol",
@@ -143,12 +144,17 @@
   {
    "fieldname": "column_break_15",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "warrant_no",
+   "fieldtype": "Data",
+   "label": "Warrant No"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-10-21 14:06:40.426673",
+ "modified": "2020-11-14 17:20:44.088917",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export Cargo Table",

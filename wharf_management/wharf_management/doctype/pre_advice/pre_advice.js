@@ -38,12 +38,12 @@ frappe.ui.form.on('Pre Advice', {
         // Toggle Fields to Read-Only
         let is_allowed = (frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager"));
 
-        frm.toggle_enable(['container_content', 'secondary_work_type', 'mark', 'cargo_type', 'final_work_type', 'cargo_ref',
-            'vessel', 'vessel_arrival_date', 'bol', 'container_no', 'chasis_no', 'third_work_type', 'last_port', 'voyage_no', 'work_type'
+        frm.toggle_enable(['container_content', 'secondary_work_type', 'mark', 'cargo_type', 'final_work_type', 'cargo_ref', 'container_size', 'container_type', 'pat_code',
+            'vessel', 'vessel_arrival_date', 'bol', 'container_no', 'chasis_no', 'third_work_type', 'last_port', 'voyage_no', 'work_type', 'seal1', 'work_information'
         ], is_allowed);
         // Hide Fields
-        frm.toggle_display(['consignee_details', 'hazardous_goods', 'import_status', 'break_bulk_items', 'net_weight', 'volume',
-            'booking_ref', 'eta_date', 'etd_date', 'status_section', 'ports_details'
+        frm.toggle_display(['consignee_details', 'hazardous_goods', 'import_status', 'break_bulk_items', 'net_weight', 'volume', 'seal_2', 'commodity_code', 'yard_slot',
+            'booking_ref', 'eta_date', 'etd_date', 'status_section', 'ports_details', 'temperature'
         ], is_allowed)
 
         frm.toggle_display(['qty', 'break_bulk_items'], frm.doc.cargo_type == "Break Bulk" || is_allowed)

@@ -43,5 +43,5 @@ class ExportBooking(Document):
                 "chasis_no" : d.chasis_no,
                 "mark" : d.mark,
             })
-            doc.insert()
+            doc.insert(ignore_permissions=True)
 #            doc.submit()

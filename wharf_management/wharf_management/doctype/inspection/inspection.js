@@ -40,6 +40,8 @@ frappe.ui.form.on('Inspection', {
 
         frm.toggle_display(['booking_ref', 'cargo_ref', 'final_work_type', 'bol'], frappe.user_roles.includes('System Manager', 'Cargo Operation Manager', 'Operation Manifest User'));
 
+        frm.toggle_display(['qty', 'break_bulk_items', 'count_item'], frm.doc.cargo_type == "Break Bulk" || is_allowed)
+
         //    frm.toggle_display(['count_item'], frm.doc.cargo_type == "Break Bulk")
 
         //    if (frm.doc.cargo_type == "Break Bulk") {

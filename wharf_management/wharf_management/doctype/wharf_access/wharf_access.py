@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe import _
+from frappe import msgprint, _, scrub
 from frappe.utils import cstr, flt, fmt_money, formatdate, now
 from wharf_management.wharf_management.utils import update_main_gate_status, update_gate1_status
 
@@ -33,7 +33,7 @@ class WharfAccess(Document):
     
     def validate_reason(self):
         if self.log_type == "IN":
-            if not self.log_type:
+            if not self.reason:
                 frappe.throw(_('Require a Reason for Entering the Restricted Area'))
 
     def validate_access_type(self):
@@ -74,6 +74,7 @@ class WharfAccess(Document):
     
     def validate_cargo_pickup(self):
         if self.drop_or_pickup == "Pickup":
+
             cargo_table = frappe.db.sql("""SELECT cargo_ref
 			FROM `tabCargo Pickup`
 			WHERE parent = %s """,(self.name), as_dict=1)
