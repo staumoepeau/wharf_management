@@ -3,9 +3,22 @@
 frappe.provide("wharf_management.enquire_cargo_fees");
 frappe.ui.form.on('Enquire Cargo Fees', {
 
-    refresh: function(frm) {
 
-        frm.add_custom_button(__("Print"), function() {
+
+    refresh: function(frm) {
+        frm.disable_save();
+        frm.page.hide_actions_menu();
+
+        frm.page.set_primary_action(__("Save"), function() {
+            //frm.add_custom_button(__("Save"), function() {
+
+            frm.save()
+            frm.set_value("check", 1)
+        });
+
+        frm.page.add_action_icon(__("fa fa-print text-success"), function() {
+
+            //        frm.add_custom_button(__("Print"), function() {
             var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Enquire%20Cargo%20Fees&no_letterhead=0&_lang=es");
 
             if (!w) {
@@ -13,7 +26,9 @@ frappe.ui.form.on('Enquire Cargo Fees', {
                 return;
             }
         });
-        frm.add_custom_button(__("Refresh"), function() {
+
+        frm.page.set_secondary_action(__("Refresh"), function() {
+            //        frm.add_custom_button(__("Refresh"), function() {
             //            alert("Hello")
             location.reload(true);
             frappe.model.clear_table(frm.doc, "wharf_fee_item_check");
@@ -72,6 +87,7 @@ frappe.ui.form.on('Enquire Cargo Fees', {
     },
 
     onload: function(frm) {
+        frm.set_value("check", 0)
 
         wharf_management.enquire_cargo_fees.setup_cargo_queries(frm);
 

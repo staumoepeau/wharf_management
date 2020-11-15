@@ -12,9 +12,11 @@ frappe.ui.form.on('Export Booking', {
             };
         });
 
-        frm.set_value("booking_by", frappe.session.user);
+
 
         if (frm.doc.docstatus == 0) {
+            frm.set_value("booking_by", frappe.session.user);
+
             if (!frm.doc.posting_date) {
                 frm.set_value('booking_date', frappe.datetime.nowdate());
             }

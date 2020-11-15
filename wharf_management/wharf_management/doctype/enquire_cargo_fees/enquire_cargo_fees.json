@@ -19,7 +19,8 @@
   "section_break_24",
   "column_break_25",
   "column_break_26",
-  "total_fee_to_paid"
+  "total_fee_to_paid",
+  "check"
  ],
  "fields": [
   {
@@ -78,7 +79,7 @@
    "label": "Fees Details"
   },
   {
-   "depends_on": "eval:!(doc.__islocal)",
+   "depends_on": "eval:doc.check == 1",
    "fieldname": "update_fees",
    "fieldtype": "Button",
    "label": "Update Fees"
@@ -106,11 +107,18 @@
    "fieldtype": "Currency",
    "label": "Total Fees",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "check",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Check"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-11-14 15:21:09.982129",
+ "modified": "2020-11-15 12:34:13.177844",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Enquire Cargo Fees",

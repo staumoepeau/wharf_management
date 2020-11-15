@@ -277,20 +277,3 @@ frappe.ui.form.on('Export', {
     },
 
 });
-
-//var calculate_total_fee = function(frm){
-//    total_fee = 0;
-//    if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 1){
-//        total_fee = frm.doc.vgm_fee + frm.doc.wharfage_fee
-//    
-//    }else if (frm.doc.apply_wharfage_fee == 1 && frm.doc.apply_vgm_fee == 0){
-//        total_fee = frm.doc.wharfage_fee
-//    
-//    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 1){
-//        total_fee = frm.doc.vgm_fee
-//   
-//    }else if (frm.doc.apply_wharfage_fee == 0 && frm.doc.apply_vgm_fee == 0){
-//        total_fee = 0
-//    }
-//    cur_frm.set_value("total_fee", total_fee);
-//}
