@@ -1,13 +1,10 @@
 {
  "cards": [
   {
-   "card": "Container 20 Discharged"
-  },
-  {
-   "card": "Container 40FT FULL Discharged"
-  },
-  {
    "card": "Cargo Booked"
+  },
+  {
+   "card": "Cargo Discharged"
   }
  ],
  "charts": [
@@ -15,16 +12,16 @@
    "width": "Half"
   }
  ],
- "creation": "2020-10-02 14:51:04.143474",
- "dashboard_name": "Cargo",
+ "creation": "2020-11-17 14:38:18.432926",
+ "dashboard_name": "Cargo Operation",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2020-11-17 14:38:08.970400",
+ "modified": "2020-11-17 14:48:01.725739",
  "modified_by": "Administrator",
  "module": "Wharf Management",
- "name": "Cargo",
+ "name": "Cargo Operation",
  "owner": "Administrator"
 }
