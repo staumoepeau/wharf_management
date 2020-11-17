@@ -186,7 +186,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-09-26 22:26:11.670796",
+ "modified": "2020-11-17 20:45:57.642413",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fees",
@@ -222,6 +222,18 @@
    "report": 1,
    "role": "Agent User",
    "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
   }
  ],
  "search_fields": "item_code, item_name",

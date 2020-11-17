@@ -27,13 +27,8 @@
   },
   {
    "hidden": 0,
-   "label": "Shipping Agency",
-   "links": "[\n    {\n        \"description\": \"Booking Request\",\n        \"label\": \"Shipping Booking Request\",\n        \"name\": \"Booking Request\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
-  },
-  {
-   "hidden": 0,
    "label": "Settings",
-   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Settings Setup\",\n        \"label\": \"Yard Settings Setup\",\n        \"name\": \"Yard Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Wharf Fee Category\",\n        \"label\": \"Wharf Fee Category\",\n        \"name\": \"Wharf Fee Category\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Settings Setup\",\n        \"label\": \"Yard Settings Setup\",\n        \"name\": \"Yard Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -54,6 +49,11 @@
    "hidden": 0,
    "label": "Transhipment",
    "links": "[\n     {\n        \"description\": \"Transhipment Cargo\",\n        \"label\": \"Transhipment Cargo\",\n        \"name\": \"Transhipment Cargo\",\n        \"onboard\": 1,\n        \"type\": \"Transhipment Cargo\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Yard",
+   "links": "[\n    {\n        \"description\": \"Yard Operation\",\n        \"label\": \"Yard Operation\",\n        \"name\": \"Yard Operation\",\n        \"onboard\": 1,\n        \"type\":\"page\"\n    },\n    {\n        \"description\": \"Yard Export\",\n        \"label\": \"Yard Export\",\n        \"name\": \"Yard Export\",\n        \"onboard\": 1,\n        \"type\": \"age\"\n    }\n]"
   }
  ],
  "category": "Modules",
@@ -64,11 +64,11 @@
  "docstatus": 0,
  "doctype": "Desk Page",
  "extends_another_page": 0,
- "hide_custom": 1,
+ "hide_custom": 0,
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-14 17:59:22.741802",
+ "modified": "2020-11-17 20:34:49.991722",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -76,15 +76,6 @@
  "pin_to_bottom": 0,
  "pin_to_top": 1,
  "shortcuts": [
-  {
-   "color": "#ff4d4d",
-   "format": "{}",
-   "icon": "fa fa-calendar",
-   "label": "Shipping Agency Booking",
-   "link_to": "Booking Request",
-   "stats_filter": "{\"status\":\"Pending\"}",
-   "type": "DocType"
-  },
   {
    "color": "#ff7846",
    "format": "{} Booked",
@@ -139,37 +130,11 @@
   },
   {
    "color": "#4d4da8",
-   "format": "{}",
+   "format": "",
    "icon": "",
-   "label": "Cargo at the Yard",
+   "label": "Cargo",
    "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Yard\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#7575ff",
-   "format": "{}",
-   "icon": "fa fa-cube",
-   "label": " 20\" FULL Yard",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Yard\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#5e3aa8",
-   "format": "{}",
-   "icon": "octicon octicon-package",
-   "label": "40\" FULL Yard",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Yard\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#4d4da8",
-   "icon": "fa fa-car",
-   "label": "Vehilces Yard",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Vehicles\", \"Heavy Vehicles\"]], \"status\": \"Yard\"}",
+   "stats_filter": "",
    "type": "DocType"
   },
   {
@@ -222,74 +187,6 @@
    "label": "Check Cargo Fees",
    "link_to": "Enquire Cargo Fees",
    "stats_filter": "",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "format": "{}",
-   "icon": "fa fa-cube",
-   "label": "20\" FULL Paid",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"20\", \"status\": \"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "format": "{}",
-   "icon": "octicon octicon-package",
-   "label": "40\" FULL Paid",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Container\", \"Tank Tainers\",\"Flatrack\"]],\"container_content\":\"FULL\",\"container_size\":\"40\", \"status\": \"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "icon": "fa fa-cube",
-   "label": "Break Bulk  Paid",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Break Bulk\", \"Loose Cargo\"]], \"status\": \"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "icon": "fa fa-car",
-   "label": "Vehicles Paid",
-   "link_to": "Cargo",
-   "stats_filter": "{\"cargo_type\": [\"in\", [\"Vehicles\", \"Heavy Vehicles\"]], \"status\": \"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#ff8989",
-   "icon": "fa fa-sign-in",
-   "label": "Gate IN",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Gate IN\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "icon": "fa fa-sign-out",
-   "label": "Gate OUT",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Paid\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#ff8989",
-   "format": "",
-   "icon": "fa fa-sign-in",
-   "label": "Main Gate IN",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\": \"Gate IN\", \"docstatus\": 1}",
-   "type": "DocType"
-  },
-  {
-   "color": "#428b46",
-   "format": "",
-   "icon": "fa fa-sign-out",
-   "label": "Main Gate OUT",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\": \"Gate1\", \"docstatus\": 1}",
    "type": "DocType"
   },
   {

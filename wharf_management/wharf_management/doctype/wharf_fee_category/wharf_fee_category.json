@@ -34,7 +34,7 @@
  ],
  "icon": "fa fa-flag",
  "links": [],
- "modified": "2020-08-26 06:19:19.633692",
+ "modified": "2020-11-17 20:44:59.602018",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fee Category",
@@ -76,6 +76,18 @@
    "read": 1,
    "report": 1,
    "role": "Wharf Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
    "share": 1,
    "write": 1
   }

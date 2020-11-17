@@ -13,7 +13,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Shipping Agency",
- "modified": "2020-11-14 17:27:22.771029",
+ "modified": "2020-11-17 17:41:28.904107",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Shipping Agency",
@@ -23,6 +23,7 @@
  "shortcuts": [
   {
    "color": "#ff4d4d",
+   "doc_view": "List",
    "format": "{}",
    "icon": "fa fa-calendar",
    "label": "Booking Request",

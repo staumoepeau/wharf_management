@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Operation",
- "modified": "2020-11-15 13:24:21.921709",
+ "modified": "2020-11-17 16:52:48.701959",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Operation",
@@ -76,53 +76,6 @@
  "pin_to_bottom": 0,
  "pin_to_top": 1,
  "shortcuts": [
-  {
-   "color": "#ff4d4d",
-   "doc_view": "",
-   "format": "{}",
-   "icon": "fa fa-calendar",
-   "label": "Shipping Agency Booking",
-   "link_to": "Booking Request",
-   "stats_filter": "{\"status\":\"Pending\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#ff7846",
-   "doc_view": "",
-   "format": "{} Booked",
-   "icon": "fa fa-cube",
-   "label": "Booked",
-   "link_to": "Pre Advice",
-   "stats_filter": "{ \"status\":\"Booked\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "#4f8ea8",
-   "doc_view": "",
-   "format": "{} Inspection",
-   "icon": "fa fa-codepen",
-   "label": "Inspection",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\": \"Inspection\"}",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "",
-   "icon": "fa fa-caret-square-o-down",
-   "label": "Discharged",
-   "link_to": "Pre Advice",
-   "stats_filter": "{\"status\": \"Booked\", \"work_type\":\"Discharged\"}",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "",
-   "format": "{}",
-   "icon": "fa fa-caret-square-o-up",
-   "label": "Loading",
-   "link_to": "Pre Advice",
-   "stats_filter": "{\"status\": \"Booked\", \"work_type\": \"Loading\"}",
-   "type": "DocType"
-  },
   {
    "color": "#4d4da8",
    "doc_view": "",
@@ -146,16 +99,6 @@
    "type": "Page"
   },
   {
-   "color": "#4d4da8",
-   "doc_view": "",
-   "format": "{}",
-   "icon": "",
-   "label": "Cargo at the Yard",
-   "link_to": "Cargo",
-   "stats_filter": "{\"status\":\"Yard\"}",
-   "type": "DocType"
-  },
-  {
    "doc_view": "New",
    "icon": "fa fa-check-square-o",
    "label": "Check Cargo Fees",
@@ -172,6 +115,12 @@
    "link_to": "Transhipment Cargo",
    "stats_filter": "{\"status\":\"Transshipment\"}",
    "type": "DocType"
+  },
+  {
+   "doc_view": "Dashboard",
+   "label": "Dashboard",
+   "link_to": "Cargo Operation",
+   "type": "Dashboard"
   }
  ],
  "shortcuts_label": "Port Management"

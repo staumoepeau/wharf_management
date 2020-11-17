@@ -5,6 +5,12 @@
   },
   {
    "card": "Cargo Discharged"
+  },
+  {
+   "card": "Cargo Loading"
+  },
+  {
+   "card": "Cargo Inspection"
   }
  ],
  "charts": [
@@ -19,7 +25,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2020-11-17 14:48:01.725739",
+ "modified": "2020-11-17 16:45:01.177114",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Operation",

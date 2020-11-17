@@ -16,15 +16,9 @@ import numpy as np
 def execute(filters=None):
     columns, data = [], []
     vessels = get_vessels_info(filters)
-    colnames = [key for key in vessels[0].keys()]
+    colnames = [key for key in vessels[2].keys()]
     df = pd.DataFrame.from_records(vessels, columns=colnames)
-    pvt = pd.pivot_table(
-            df,
-            index=['YEAR','vessel_type'],
-            columns='MONTH',
-            values='TOTAL',
-            fill_value=0
-        )
+    pvt = pd.pivot_table(df, index=['YEAR','vessel_type'], columns=['MONTH'], values=['TOTAL'], fill_value=0)
     data = pvt.reset_index().values.tolist() # reset the index and create a list for use in report.
     columns += pvt.columns.values.tolist()
 
