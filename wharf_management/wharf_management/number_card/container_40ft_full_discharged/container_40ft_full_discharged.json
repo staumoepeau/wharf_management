@@ -1,6 +1,6 @@
 {
  "aggregate_function_based_on": "",
- "color": "#6be273",
+ "color": "#428b46",
  "creation": "2020-10-02 14:54:31.265521",
  "docstatus": 0,
  "doctype": "Number Card",
@@ -12,7 +12,7 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Container 40FT FULL Discharged",
- "modified": "2020-10-02 14:58:40.123255",
+ "modified": "2020-11-17 23:54:31.953185",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Container 40FT FULL Discharged",

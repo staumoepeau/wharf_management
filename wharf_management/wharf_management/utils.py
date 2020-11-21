@@ -10,6 +10,107 @@ from frappe.utils import cstr, formatdate, cint, getdate, date_diff, add_days, t
 from frappe.utils.user import get_user_fullname
 
 
+
+def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type, devan):
+    
+    worktype, movement, payment,gate = "", "", "", ""
+
+    if doctype == "Pre Advice":
+        val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no",
+        "bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature", "container_type","mark","final_dest_port","volume",
+        "container_size","consignee","container_content","stowage","hazardous","hazardous_code", "status","seal_1","seal_2","eta_date","cargo_description","etd_date",
+        "chasis_no","yard_slot","inspection_status","yard_status","final_status", "third_work_type"], as_dict=True)
+
+    if doctype == "Cargo":
+        val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no","custom_code",
+        "bol","work_type","secondary_work_type","pol","agents","commodity_code","vessel","pod","temperature", "container_type","mark","final_dest_port","volume","custom_warrant",
+        "container_size","consignee","container_content","stowage","hazardous","hazardous_code", "status","seal_1","seal_2","eta_date","cargo_description","etd_date","delivery_code",
+        "chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
+
+    if final_work_type == "Discharged" and devan == "EMPTY" and val.third_work_type == "Loading" and cargo_type == "Container":
+        worktype = "Devanning"
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Closed"
+        final_status = "Discharged"
+        payment = "Closed"
+        gate = "Closed"
+        final_work_type == "Discharged"
+        yard_date = None
+        third_work_type =None
+        container_content = "EMPTY"
+        secondary_work_type = val.secondary_work_type
+    
+    if final_work_type == "Discharged" and devan == "EMPTY" and val.third_work_type == "Stock" and cargo_type == "Container":
+        worktype = "Devanning"
+        movement = "Inspection"
+        inspection_status = "Closed"
+        yard_status = "Closed"
+        final_status = "Discharged"
+        payment = "Closed"
+        gate = "Closed"
+        final_work_type == "Discharged"
+        yard_date = None
+        third_work_type =None
+        container_content = "EMPTY"
+        secondary_work_type = val.secondary_work_type
+
+    doc = frappe.new_doc("Cargo")
+    doc.update({
+
+                "docstatus" : 1,
+                "cargo_ref": cargo_ref,
+                "booking_ref" : val.booking_ref,
+                "pat_code" : val.pat_code,
+                "net_weight" : val.net_weight,                                         
+                "cargo_type" : cargo_type,
+                "qty" : val.qty,
+                "container_no" : val.container_no,
+                "voyage_no" : val.voyage_no,
+                "bol" : val.bol,
+                "work_type" : final_work_type,
+                "work_type_date": now(),
+                "secondary_work_type" : worktype,
+                "third_work_type": third_work_type,
+                "pol" : val.pol,
+                "agents" : val.agents,
+                "commodity_code" : val.commodity_code,
+                "vessel" : val.vessel,
+                "pod" : val.pod,
+                "temperature" : val.temperature,
+                "container_type" : val.container_type,
+                "mark" : val.mark,
+                "final_dest_port" : val.final_dest_port,
+                "volume" : val.volume,
+                "container_size" : val.container_size,
+                "consignee" : val.consignee,
+                "container_content" : container_content,
+                "stowage" : val.stowage,
+                "hazardous" : val.hazardous,
+                "hazardous_code" : val.hazardous_code,
+                "status" : movement,
+                "seal_1" : val.seal_1,
+                "seal_2" : val.seal_2,
+                "eta_date" : val.eta_date,
+                "cargo_description" : val.cargo_description,
+                "etd_date" : val.etd_date,
+                "chasis_no" : val.chasis_no,
+                "inspection_status" : inspection_status,
+                "yard_status" : yard_status,
+                "yard_date" : yard_date,
+                "final_status" : final_status,
+                "payment_status" : payment,
+                "gate1_status" : gate,
+                "gate2_status" : gate,
+                "custom_warrant" : val.custom_warrant,
+                "custom_code" : val.custom_code,
+                "delivery_code" : val.delivery_code,
+                "inspection_date": now()
+            })
+    doc.insert(ignore_permissions=True)
+    doc.submit()
+
+
 @frappe.whitelist()
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
@@ -100,9 +201,9 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
         worktype = "Devanning"
-        movement = "Inspection"
+        movement = "Devanning"
         inspection_status = "Closed"
-        yard_status = "Open"
+        yard_status = "Closed"
         final_status = "Discharged"
         payment = "Closed"
         gate = "Closed"
@@ -110,6 +211,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_date = None
         third_work_type =None
         container_content = val.container_content
+    
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
         worktype = None
@@ -126,16 +228,16 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and (val.third_work_type == "Stock" or not val.third_work_type):
         worktype = "Devanning"
-        movement = "Inspection"
+        movement = "Devanning"
         inspection_status = "Closed"
-        yard_status = "Open"
-        final_status = "Stock"
+        yard_status = "Closed"
+        final_status = "Discharged"
         payment = "Closed"
         gate = "Closed"
         yard_date = None
         final_work_type == "Discharged"
         third_work_type = val.third_work_type
-        container_content = "EMPTY"
+        container_content = "FULL"
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type != "Container" and (val.third_work_type == "Stock" or not val.third_work_type):
         movement = "Inspection"

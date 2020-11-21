@@ -3,7 +3,7 @@
  "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:category_name",
- "creation": "2020-08-26 06:18:44.060735",
+ "creation": "2020-11-17 21:06:25.735907",
  "doctype": "DocType",
  "document_type": "Setup",
  "engine": "InnoDB",
@@ -34,7 +34,7 @@
  ],
  "icon": "fa fa-flag",
  "links": [],
- "modified": "2020-11-17 20:44:59.602018",
+ "modified": "2020-11-17 21:06:25.735907",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fee Category",
@@ -92,7 +92,6 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Education",
  "search_fields": "description",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

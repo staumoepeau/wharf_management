@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 import frappe, erpnext, json
 from frappe import msgprint, _, scrub
 from frappe.model.document import Document
-from frappe.utils import cstr, formatdate, cint, getdate, date_diff, add_days, now
-from wharf_management.wharf_management.utils import get_create_cargo
+from frappe.utils import cstr, formatdate, cint, getdate, date_diff, add_days, now, flt
+from wharf_management.wharf_management.utils import get_create_cargo, get_create_cargo_devan
 
 
 class Inspection(Document):
@@ -29,25 +29,34 @@ class Inspection(Document):
         if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and (self.third_work_type == "Stock" or not self.third_work_type) :
 
             self.create_cargo()
-            if self.devanning == "Vehicles":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Vehicles")
-            if self.devanning == "Break Bulk":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Break Bulk")
-            if self.devanning == "Heavy Vehicles":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Heavy Vehicles")
-            
+            get_create_cargo_devan("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type, "EMPTY")
+
+            if flt(self.devan_qty) > 0 :
+                for v in range(1, self.devan_qty+1):
+                    if self.devanning == "Vehicles":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Vehicles")
+                    if self.devanning == "Break Bulk":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Break Bulk")
+                    if self.devanning == "Heavy Vehicles":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Heavy Vehicles")
+                    
             self.moveto_preadvise_history()
             frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
 
+
         elif self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Loading":
 
-            self.create_cargo()            
-            if self.devanning == "Vehicles":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Vehicles")
-            if self.devanning == "Break Bulk":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Break Bulk")
-            if self.devanning == "Heavy Vehicles":
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Heavy Vehicles")
+            self.create_cargo()
+            get_create_cargo_devan("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type, "EMPTY")           
+            
+            if flt(self.devan_qty) > 0 :
+                for v in range(1, self.devan_qty+1):
+                    if self.devanning == "Vehicles":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Vehicles")
+                    if self.devanning == "Break Bulk":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Break Bulk")
+                    if self.devanning == "Heavy Vehicles":
+                        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Heavy Vehicles")
 
             self.update_pre_advice_loading("Devanning/Loading")
 
@@ -92,7 +101,9 @@ class Inspection(Document):
 
 
     def devanning_loading_update(self):
-        frappe.db.sql("""UPDATE `tabCargo` SET last_work="Loading", status="Outbound", last_work_date=%s WHERE cargo_ref=%s and cargo_type in ("Container", "Flatrack")""", (now(), self.cargo_ref))
+#         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["status"
+
+        frappe.db.sql("""UPDATE `tabCargo` SET last_work="Loading", status="Outbound", last_work_date=%s WHERE cargo_ref=%s and container_content = "EMPTY" and cargo_type in ("Container", "Flatrack")""", (now(), self.cargo_ref))
         self.moveto_preadvise_history()
         frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
 

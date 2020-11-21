@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "field:vehicle_yard_slot",
+ "creation": "2020-11-21 09:41:44.658304",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "vehicle_yard_section",
+  "vehicle_yard_row",
+  "vehicle_yard_slot_number",
+  "vehicle_yard_slot",
+  "column_break_4",
+  "vehicle_yard_sub_section",
+  "occupy",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "vehicle_yard_section",
+   "fieldtype": "Select",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Vehicle Yard Bay",
+   "options": "\nV",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_yard_row",
+   "fieldtype": "Select",
+   "label": "Vehicle Yard Row",
+   "options": "\n1\n2\n3\n4",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "vehicle_yard_slot_number",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Vehicle Yard Slot Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_yard_slot",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Vehicle Yard Slot",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle_yard_sub_section",
+   "fieldtype": "Read Only",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Vehicle Yard Sub Section"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "0",
+   "fieldname": "occupy",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Occupy"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Yard Settings",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2020-11-21 09:42:22.248080",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Vehicle Yard Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Wharf Operation User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Yard Inspection User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,36 @@
+{
+ "content": null,
+ "creation": "2020-10-10 05:55:10.485967",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa-fa-cube",
+ "idx": 0,
+ "modified": "2020-11-19 21:19:41.135806",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "container_yard",
+ "owner": "Administrator",
+ "page_name": "container_yard",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Cargo Operation Manager"
+  },
+  {
+   "role": "Yard Inspection User"
+  },
+  {
+   "role": "Yard Operation User"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Container Yard"
+}

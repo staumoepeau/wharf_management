@@ -8,6 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "yard_section",
+  "yard_row",
+  "yard_height",
   "yard_slot_number",
   "yard_slot",
   "column_break_4",
@@ -22,7 +24,6 @@
    "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Yard Slot",
-   "read_only": 1,
    "unique": 1
   },
   {
@@ -42,8 +43,8 @@
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Yard Section",
-   "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL\nEXP",
+   "label": "Yard Bay",
+   "options": "\nA\nB\nC\nD\nE\nF\nG\nH\nI\nJ\nK\nL\nM\nN\nO\nP\nQ\nR\nS\nT\nDG\nDTL\nMAT\nPOL\nEXP\nINS",
    "reqd": 1
   },
   {
@@ -79,11 +80,25 @@
    "in_standard_filter": 1,
    "label": "Yard Slot Number",
    "reqd": 1
+  },
+  {
+   "fieldname": "yard_row",
+   "fieldtype": "Select",
+   "label": "Yard Row",
+   "options": "\n1\n2\n3\n4",
+   "reqd": 1
+  },
+  {
+   "fieldname": "yard_height",
+   "fieldtype": "Select",
+   "label": "Yard Height",
+   "options": "\n1\n2\n3\n4\n5",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-05 13:56:30.902420",
+ "modified": "2020-11-19 00:57:19.111720",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard Settings",

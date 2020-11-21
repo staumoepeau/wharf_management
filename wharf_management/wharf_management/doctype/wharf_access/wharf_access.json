@@ -153,7 +153,7 @@
    "fieldname": "access_type",
    "fieldtype": "Select",
    "label": "Access Type",
-   "options": "\nOn Foot\nVehicle\nContainer Truck\nForklift"
+   "options": "\nOn Foot\nVehicle\nForklift"
   },
   {
    "fieldname": "cargo_inspection_table",
@@ -178,7 +178,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-10 15:15:24.405143",
+ "modified": "2020-11-19 01:26:04.680172",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Access",

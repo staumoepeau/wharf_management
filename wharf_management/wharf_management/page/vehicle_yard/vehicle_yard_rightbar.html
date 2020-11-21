@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="container">
+
+      {% for yard in inspection_items %}
+      <div class="col-sm-12">
+
+          {% if yard.cargo_type == "Vehicles" %}
+          <div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)" draggable="true">
+
+              <img class="card-img-top" src="/files/yellow_vehicle.svg"  height="50" width="115" id="Inspection"/>
+              <div class="card-img-overlay">
+                <p>{{ yard.chasis_no }}</p>
+              </div>
+          </div>
+          {% endif %}
+
+          {% if yard.cargo_type == "Heavy Vehicles" %}
+          <div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)" draggable="true">
+              <img class="card-img-top" src="/files/yellow_hvehicle.svg" height="50" width="115" id="Inspection"/>
+              <div class="card-img-overlay">
+                <p class="container_no">{{ yard.chasis_no }}</p>
+              </div>
+
+          </div>
+          {% endif %}
+</div>
+      {% endfor %}
+
+</div>
+</div>

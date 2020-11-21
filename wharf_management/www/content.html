@@ -10,7 +10,7 @@
 
 
 
-        <table id="example" class="table table-dark table-striped">
+        <table class="table responsive" id="sort">
             <thead>
               <tr>
                 <th>Vessel Name</th>
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             {% for item in schedule %}
-            {% if item.status == "Approved" %}
+            {% if item.docstatus == 1 %}
               <tr>
                 <td>{{ item.vessel }}</td>
                 <td>{{ item.voyage_no }}</td>
@@ -36,24 +36,6 @@
               {% endfor %}
             </tbody>
           </table>
-<script>
 
-  $(document).ready(function() {
-
-  $('#example').dataTable({
-      "dom":' <"search"f><"left"l>rt<"bottom"ip><"clear">'
-          language: { search: "" },
-  });
-} );
-
-//$(document).ready(function() {
-//    $('.example').dataTable({
-//       "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-//        "sPaginationType": "bootstrap",
-//        "oLanguage": { "sSearch": '<i class="icon-search"></i>' }
-//    });
-//} );
-
-</script>
 </div>
 </section>

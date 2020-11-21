@@ -19,8 +19,8 @@
   "column_break_7",
   "tarrif_end_date",
   "section_break_9",
-  "wharf_fee_category",
   "vessel_type",
+  "wharf_fee_category",
   "cargo_type",
   "grace_days",
   "data_2",
@@ -41,18 +41,6 @@
    "hidden": 1,
    "label": "Series",
    "options": "Wharf-Fee.-.##"
-  },
-  {
-   "fieldname": "wharf_fee_category",
-   "fieldtype": "Link",
-   "in_filter": 1,
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Fee Category",
-   "options": "Wharf Fee Category",
-   "search_index": 1
   },
   {
    "fieldname": "section_break_3",
@@ -182,11 +170,17 @@
    "fieldname": "tarrif_description_section",
    "fieldtype": "Section Break",
    "label": "Tarrif Description"
+  },
+  {
+   "fieldname": "wharf_fee_category",
+   "fieldtype": "Link",
+   "label": "Wharf Fee Category",
+   "options": "Wharf Fee Category"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-17 20:45:57.642413",
+ "modified": "2020-11-17 21:09:55.580757",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Fees",

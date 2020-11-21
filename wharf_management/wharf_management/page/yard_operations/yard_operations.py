@@ -53,8 +53,8 @@ def update_yard(ref):
     
     frappe.db.sql("""UPDATE `tabYard Settings` SET occupy=0 WHERE yard_slot=%s""", (ref))
 
-    msgprint(_("Old Yard Slot").format(ref),
-                    raise_exception=1)
+#    msgprint(_("Old Yard Slot").format(ref),
+#                    raise_exception=1)
 
 @frappe.whitelist()
 def update_cargo(status, cargo_ref, new_yard, drop_cargo_ref, yard_id):

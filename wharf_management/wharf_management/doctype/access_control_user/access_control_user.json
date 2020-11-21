@@ -103,7 +103,7 @@
    "label": "Status",
    "oldfieldname": "status",
    "oldfieldtype": "Select",
-   "options": "Active\nExpired\nHold",
+   "options": "Active\nExpired\nHold\nRed Flag",
    "reqd": 1,
    "search_index": 1
   },
@@ -216,7 +216,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-02 06:35:05.959590",
+ "modified": "2020-11-18 22:10:34.479051",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Access Control User",

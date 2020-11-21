@@ -41,8 +41,14 @@
                               <img class="card-img-top" src="/files/green_contanier.svg" height="50" width="115" id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
 
+                               <a href="#"  data-toggle="tooltip" data-html="true" title="{{ item.container_no}} &#013;&#010;
+                                                                                          {{ item.yard_slot }} &#013;&#010;
+                                                                                          {{ item.container_size }} ` FULL ">
+
                                 <p class="container_no"  style="color:white;">{{ item.container_no}}</p>
                                 <p class="yard_slot"  style="color:white;" >{{ item.yard_slot }}</p>
+
+                              </a>
 
 
                               </div>
@@ -77,6 +83,21 @@
                           </div>
 
                           {% endif %}
+
+                          {% if (item.status == "Yard" || item.status == "Stock") && item.hazardous != "Yes" && item.cargo_type == "Container" && item.container_content == "EMPTY" %}
+
+                            <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/pink_contanier.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                              <div class="card-img-overlay">
+
+                                <p class="container_no">{{ item.container_no}}</p>
+                                <p class="yard_slot" >{{ item.yard_slot }}</p>
+
+
+                              </div>
+                            </div>
+
+                            {% endif %}
 
                         {% if item.status == "Yard" && item.hazardous == "Yes" && item.cargo_type == "Container" && item.container_content == "FULL" %}
                         <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">

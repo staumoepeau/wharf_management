@@ -1,0 +1,35 @@
+{
+ "content": null,
+ "creation": "2020-11-19 21:21:08.630336",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa-fa-vehicle",
+ "idx": 0,
+ "modified": "2020-11-19 21:21:08.630336",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "vehicle_yard",
+ "owner": "Administrator",
+ "page_name": "vehicle_yard",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Wharf Operation Manager"
+  },
+  {
+   "role": "Cargo Operation Manager"
+  },
+  {
+   "role": "Yard Inspection User"
+  },
+  {
+   "role": "Yard Operation User"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}

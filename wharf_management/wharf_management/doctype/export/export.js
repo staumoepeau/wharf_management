@@ -37,7 +37,7 @@ frappe.ui.form.on('Export', {
 
         if (frappe.user.has_role("System Manager") || (frappe.user.has_role("Wharf Operation Manager")) || (frappe.user.has_role("Wharf Operation Cashier"))) {
 
-            frm.page.set_primary_action(__("Payment"), function() {
+            frm.add_custom_button(__("Payment"), function() {
 
                 //            frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
                 frappe.route_options = {

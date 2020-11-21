@@ -1,13 +1,14 @@
 <div class="row">
   <div class="container">
-      <div class="col-sm-12">
+
       {% for yard in inspection_items %}
+      <div class="col-sm-12">
               {% if yard.cargo_type == "Container" %}
               <div id="{{ yard.name }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
               <img class="card-img-top" src="/files/yellow_contanier.svg" height="50" width="115" id="Inspection"/>
               <div class="card-img-overlay">
 
-                <p class="container_no">{{ yard.container_no}}</p>
+                <p class="container_no"  style="color:red;">{{ yard.container_no}}</p>
 
               </div>
 
@@ -48,9 +49,8 @@
 
               <img class="card-img-top" src="/files/yellow_vehicle.svg"  height="50" width="115" id="Inspection"/>
               <div class="card-img-overlay">
-                <p class="container_no">{{ yard.chasis_no }}</p>
+                <p>{{ yard.chasis_no }}</p>
               </div>
-
 
 
           </div>
@@ -88,8 +88,8 @@
 
           </div>
           {% endif %}
-
-      {% endfor %}
 </div>
+      {% endfor %}
+
 </div>
 </div>

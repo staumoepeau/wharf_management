@@ -1,22 +1,14 @@
-frappe.pages['yard-operations'].on_page_load = function(wrapper) {
+frappe.provide("wharf_management.yard_operations");
+frappe.pages['yard_operations'].on_page_load = function(wrapper) {
     var page = frappe.ui.make_app_page({
         parent: wrapper,
         title: 'Yard Operations',
         single_column: true
     });
 
-    //    var field = page.add_field({
-    //        label: 'Cargo',
-    //        fieldtype: 'Link',
-    //        fieldname: 'cargo',
-    //        options: 'Cargo',
-    //        change() {
-    //            console.log(field.get_value());
-    //        }
-    //    });
+
 
     var state = "Close";
-
 
     page.set_secondary_action(__("Express"), function() {
         if (state == "Close") {
@@ -29,7 +21,6 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
     }).addClass("btn-success");
 
 
-    //page.add_action_icon(__("fa fa-pencil-square-o fa-2x text-success"), function() {
     page.set_primary_action(__("Inspection"), function() {
         if (state == "Close") {
             state = "Open"
@@ -40,51 +31,44 @@ frappe.pages['yard-operations'].on_page_load = function(wrapper) {
         toggle_rightMenu(state);
     });
 
-    //    page.add_action_icon(__("fa fa-refresh fa-2x text-primary"), function() {
-    //    page.set_primary_action(__("Refresh"), function() {
-    //        return frappe.ui.toolbar.clear_cache();
-    //    });
+    let container_no_field = page.add_field({
+        label: 'Container No',
+        fieldtype: 'Data',
+        fieldname: 'contanier_no',
+        options: '',
+        change() {
+            console.log(container_no_field.get_value());
+        }
+    });
+    let bay_field = page.add_field({
+        label: 'Bay',
+        fieldtype: 'Data',
+        fieldname: 'bay',
+        options: '',
+        change() {
+            console.log(bay_field.get_value());
+        }
+    });
 
-    //    page.set_primary_action(__("Refresh"), function() {
-    //        return frappe.ui.toolbar.clear_cache();
-    //    }, "icon-refresh")
+    //    page.main.html(frappe.render_template('yard_operations', {}));
 
+    show_yard_details(page, container_no_field.get_value());
 
-    //  this.wrapper = wrapper;
-    //  this.page = wrapper.page;
-    //  var me = this;
-
-
-    //        this.role_select = this.wrapper.page.add_select(__("Roles"), [__("Select Role") + "..."].concat(this.options.roles))
-    //            .change(function() {
-    //                me.refresh();
-    //            });
-
-    //        this.page.add_inner_button(__('Set User Permissions'), () => {
-    //            return frappe.set_route('List', 'User Permission');
-    //        });
-    //        this.set_from_route();
-
-
-    show_yard_details(page);
-
-
-    // get_side_bar(page);
 };
 
 var show_yard_details = function(page) {
     frappe.call({
         method: "wharf_management.wharf_management.page.yard_operations.yard_operations.get_items",
+        //        args: {
+        //            "container_no": container_no
+        //        },
         callback: function(r) {
-
+            //page.main.html(frappe.render_template('yard_operations', {}));
             page.main.html(frappe.render_template('yard_operations', {
                 items: r.message || []
-            })).appendTo(page.main);
-            //            page.content = $(page.body).find('.page-content-wrapper')
-            //           console.log(r.message)
+            }))
         }
     });
-
 
     frappe.call({
         method: "wharf_management.wharf_management.page.yard_operations.yard_operations.get_inspection_items",
@@ -346,3 +330,7 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 //};
 
 //--------------------------------------------------------------------------------------------------------------------------
+
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});

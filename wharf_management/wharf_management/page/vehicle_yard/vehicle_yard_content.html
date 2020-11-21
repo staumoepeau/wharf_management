@@ -1,0 +1,88 @@
+                <div class="container-fluid">
+
+                    <div class="row">
+
+                      {% var yardData = ["A","B","C","D","E","F","G"]; %}
+
+                      {% for item in items %}
+
+                      {% for (y = 0; y < yardData.length; y++) { %}
+
+                          {% if item.yard_section == yardData[y] %}
+
+                            {% for (var i=3; i>= 0; i--){ %}
+
+                              {% if item.yard_sub_section == yardData[y]+[i] %}
+
+
+                            <div class="col-sm-1">
+                               {% if item.status == "Yard" && item.cargo_type == "Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/blue_vehicle.svg" height="55" width="115" id="{{ item.yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+
+                                    </div>
+                                </div>
+                                {% endif %} {% if item.status == "Paid" && item.cargo_type == "Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/green_vehicle.svg" height="55" width="115" id="{{ item.yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+
+                                    </div>
+                                </div>
+                                {% endif %} {% if item.status == "Yard" && item.cargo_type == "Heavy Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/blue_hvehicle.svg" height="55" width="115" id="{{ item.yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if item.status == "Paid" && item.cargo_type == "Heavy Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/green_hvehicle.svg" height="55" width="115" id="{{ item.yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% else %}
+                                <div id="{{ item.yard_slot }}" class="empty" ondrop="Drop(event, this)" ondragenter="DragEnter(event)" ondragover="allowDrop(event)">
+                                    <img class="card-img-top" src="/files/empty_contanier.svg" height="55" width="115" id="{{ item.yard_slot }}" />
+                                    <div class="card-img-overlay">
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+                                    </div>
+                                </div>
+
+                                {% endif %}
+                                  </div>
+                            {% endif %}
+                        {% } %}
+
+                    {% endif %}
+
+                  {% } %}
+              {% endfor %}
+                    </div>
+                </div>
