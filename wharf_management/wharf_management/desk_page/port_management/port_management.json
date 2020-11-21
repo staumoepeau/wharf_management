@@ -27,11 +27,6 @@
   },
   {
    "hidden": 0,
-   "label": "Settings",
-   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Wharf Fee Category\",\n        \"label\": \"Wharf Fee Category\",\n        \"name\": \"Wharf Fee Category\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Settings Setup\",\n        \"label\": \"Yard Settings Setup\",\n        \"name\": \"Yard Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Section\",\n        \"label\": \"Yard Section\",\n        \"name\": \"Yard Section\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
-  },
-  {
-   "hidden": 0,
    "label": "Setup",
    "links": "[\n        {\n        \"description\": \"Cargo Type\",\n        \"label\": \"Cargo Type\",\n        \"name\": \"Cargo Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Container Type\",\n        \"label\": \"Container Type\",\n        \"name\": \"Container Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Work Type\",\n        \"label\": \"Work Type\",\n        \"name\": \"Work Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Type\",\n        \"label\": \"Vessel Type\",\n        \"name\": \"Vessel Type\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Booking Request Status\",\n        \"label\": \"Booking Request Status\",\n        \"name\": \"Booking Request Status\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
@@ -54,6 +49,11 @@
    "hidden": 0,
    "label": "Yard",
    "links": "[\n    {\n        \"description\": \"Yard Operation\",\n        \"label\": \"Yard Operation\",\n        \"name\": \"Yard Operation\",\n        \"onboard\": 1,\n        \"type\":\"page\"\n    },\n    {\n        \"description\": \"Yard Export\",\n        \"label\": \"Yard Export\",\n        \"name\": \"Yard Export\",\n        \"onboard\": 1,\n        \"type\": \"age\"\n    }\n]"
+  },
+  {
+   "hidden": 0,
+   "label": "Settings",
+   "links": "[\n    {\n        \"description\": \"Wharf Fees Setup\",\n        \"label\": \"Wharf Fees\",\n        \"name\": \"Wharf Fees\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Wharf Fee Category\",\n        \"label\": \"Wharf Fee Category\",\n        \"name\": \"Wharf Fee Category\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Settings Setup\",\n        \"label\": \"Yard Settings Setup\",\n        \"name\": \"Yard Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Agency User Setup\",\n        \"label\": \"Agency User Setup\",\n        \"name\": \"Agent User\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Shipping Agency Setup\",\n        \"label\": \"Shipping Agency Setup\",\n        \"name\": \"Shipping Agency\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Vessel Setup\",\n        \"label\": \"Vessel Setup\",\n        \"name\": \"Vessels\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Yard Section\",\n        \"label\": \"Yard Section\",\n        \"name\": \"Yard Section\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Company\",\n        \"label\": \"Company\",\n        \"name\": \"Company\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"System Settings\",\n        \"label\": \"System Settings\",\n        \"name\": \"System Settings\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Holiday List\",\n        \"label\": \"Holiday List\",\n        \"name\": \"Holiday List\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   }
  ],
  "category": "Modules",
@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-19 21:51:10.789644",
+ "modified": "2020-11-22 09:11:01.066446",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",

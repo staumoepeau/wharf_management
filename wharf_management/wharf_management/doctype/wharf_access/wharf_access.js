@@ -34,8 +34,19 @@ frappe.ui.form.on('Wharf Access', {
 
     },
     customer_id: function(frm) {
-        frm.save();
-        frm.refresh();
+        if (frm.user_status == "Red Flag") {
+            frappe.throw(__('This User is RED FLAG'))
+            frm.refresh();
+        } else if (frm.user_status == "Expired") {
+            frappe.throw(__('This User ID is EXPIRED'))
+            frm.refresh();
+        } else if (frm.user_status == "Hold") {
+            frappe.throw(__('Please Contact Security Supervisor for this User ID'))
+            frm.refresh();
+        } else if (frm.user_status == "Active") {
+            frm.save();
+            frm.refresh();
+        }
     }
 });
 

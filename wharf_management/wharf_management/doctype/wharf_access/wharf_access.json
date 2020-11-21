@@ -14,6 +14,7 @@
   "device_id",
   "column_break_4",
   "image",
+  "user_status",
   "userid_preview",
   "reason",
   "access_type",
@@ -172,13 +173,19 @@
    "fieldtype": "Table",
    "label": "Cargo Pickup",
    "options": "Cargo Pickup"
+  },
+  {
+   "fetch_from": "customer_id.status",
+   "fieldname": "user_status",
+   "fieldtype": "Data",
+   "label": "User Status"
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-19 01:26:04.680172",
+ "modified": "2020-11-21 19:41:27.101326",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Access",

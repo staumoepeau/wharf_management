@@ -241,12 +241,14 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
    "fieldname": "storage_days",
    "fieldtype": "Int",
    "label": "Storage Days"
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
    "fieldname": "charge_days",
    "fieldtype": "Int",
    "label": "Charge Days"
@@ -257,6 +259,7 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
    "fieldname": "free_days",
    "fieldtype": "Int",
    "label": "Free Days"
@@ -1100,7 +1103,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-12 06:45:21.539145",
+ "modified": "2020-11-21 19:48:00.341953",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
