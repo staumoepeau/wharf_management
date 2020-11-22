@@ -3,10 +3,10 @@
 
 frappe.listview_settings['Cargo'] = {
     hide_name_column: true,
-    add_fields: ["status", "container_content"],
-    filters: [
-        ["status", "=", "Yard"]
-    ],
+    add_fields: ["status", "container_content", "manifest_check"],
+    //    filters: [
+    //        ["status", "=", "Yard"]
+    //    ],
     has_indicator_for_draft: 1,
     get_indicator: function(doc) {
         if (doc.status) {
@@ -30,7 +30,8 @@ frappe.listview_settings['Cargo'] = {
                 "Inspection Delivered": "lightblue",
                 "Gate IN": "blue",
                 "INWARD": "green",
-                "FULL": "green"
+                "FULL": "green",
+                "Confirm": "green",
 
             }[doc.status];
             return indicator;
@@ -38,7 +39,7 @@ frappe.listview_settings['Cargo'] = {
         }
         if (doc.container_content) {
             var indicator = [__(doc.container_content), frappe.utils.guess_colour(doc.container_content), "container_content,=," + doc.container_content];
-            indicator[1] = {
+            indicator[2] = {
                 "FULL": "green",
                 "EMPTY": "red",
             }[doc.container_content];

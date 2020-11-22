@@ -117,9 +117,8 @@ var show_yard_details = function(page, container_no, bay) {
         callback: function(y) {
 
             page.main.find('#right-sidebar-wrapper').html(frappe.render_template('container_yard_rightbar', {
-                    inspection_items: y.message || []
-                }))
-                //            console.log(y.message)
+                inspection_items: y.message || []
+            }))
         }
     });
 
@@ -230,9 +229,7 @@ function update_onDragStart(cargo_ref) {
                     frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
             });
         }
-
     });
-
 }
 
 
@@ -251,8 +248,6 @@ function DragStart(e, ref) {
                     frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
             });
         }
-        //        alert(status, ref.id, yard_id);
-        //        console.log(status, ref.id, yard_id);
     });
 
 }
@@ -294,7 +289,7 @@ function Drop(e, ref) {
     var drop_cargo_ref = e.dataTransfer.getData("Text/html");
     new_yard = ref.id;
 
-    //    console.log(new_yard, drop_cargo_ref, drop_cargo_ref.id)
+    console.log(new_yard)
 
     Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
 
@@ -307,7 +302,7 @@ function DragEnd(e) {
 
 function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 
-    console.log(status, cargo_ref, new_yard, drop_cargo_ref)
+    //   console.log(status, cargo_ref, new_yard, drop_cargo_ref)
     if (status == "Inspection") {
         frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
         frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
@@ -324,7 +319,6 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
     frappe.db.set_value('Yard Settings', new_yard, 'occupy', 1);
 
     frappe.ui.toolbar.clear_cache();
-
 }
 
 
