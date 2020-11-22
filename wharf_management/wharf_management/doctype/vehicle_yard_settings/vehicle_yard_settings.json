@@ -33,7 +33,7 @@
    "fieldname": "vehicle_yard_row",
    "fieldtype": "Select",
    "label": "Vehicle Yard Row",
-   "options": "\n1\n2\n3\n4",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8",
    "reqd": 1
   },
   {
@@ -90,7 +90,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-21 09:42:22.248080",
+ "modified": "2020-11-22 18:03:13.633019",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Vehicle Yard Settings",

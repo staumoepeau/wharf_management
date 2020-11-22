@@ -63,31 +63,62 @@ frappe.pages['vehicle_yard'].on_page_load = function(wrapper) {
         }
     });
 
-    page.main.append(frappe.render_template('vehicle_yard_main', {}));
+    page.main.append(frappe.render_template('vehicle_yard', {}));
 
-    show_yard_details(page, container_no_field.get_value(), bay_field.get_value());
+    show_yard_details(page, chasis_no_field.get_value(), bay_field.get_value());
 
 };
 
-var show_yard_details = function(page) {
-    frappe.call({
-        method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_items",
-        //        args: {
-        //            "container_no": container_no
-        //        },
-        callback: function(r) {
-            //page.main.html(frappe.render_template('yard_operations', {}));
-            page.main.html(frappe.render_template('vehicle_yard', {
-                items: r.message || []
-            }))
-        }
-    });
+var show_yard_details = function(page, chasis_no, bay) {
+    if (chasis_no && !bay) {
+        frappe.call({
+            method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_chasis",
+            args: {
+                "chasis_no": chasis_no
+            },
+            callback: function(r) {
+                //page.main.html(frappe.render_template('yard_operations', {}));
+                page.main.append(frappe.render_template('vehicle_yard_content', {
+                    items: r.message || []
+                }))
+            }
+        });
+    }
+    if (!chasis_no && bay) {
+        frappe.call({
+            method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_bay",
+            args: {
+                "bay": bay
+            },
+            callback: function(r) {
+                //page.main.html(frappe.render_template('yard_operations', {}));
+                page.main.append(frappe.render_template('vehicle_yard_content', {
+                    items: r.message || []
+                }))
+            }
+        });
+    }
+    if (!chasis_no && !bay) {
+        frappe.call({
+            method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_all_items",
+            //            args: {
+            //                "bay": bay
+            //            },
+            callback: function(r) {
+                //page.main.html(frappe.render_template('yard_operations', {}));
+                page.main.append(frappe.render_template('vehicle_yard_content', {
+                    items: r.message || []
+                }))
+            }
+        });
+    }
+
 
     frappe.call({
         method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_inspection_items",
         callback: function(y) {
 
-            page.main.find('#right-sidebar-wrapper').html(frappe.render_template('vehicle_yard_rightbar', {
+            page.main.find('#right-sidebar-wrapper').append(frappe.render_template('vehicle_yard_rightbar', {
                     inspection_items: y.message || []
                 }))
                 //            console.log(y.message)
@@ -98,7 +129,7 @@ var show_yard_details = function(page) {
         method: "wharf_management.wharf_management.page.vehicle_yard.vehicle_yard.get_express_items",
         callback: function(express) {
 
-            page.main.find('#left-sidebar-wrapper').html(frappe.render_template('vehicle_yard_leftbar', {
+            page.main.find('#left-sidebar-wrapper').append(frappe.render_template('vehicle_yard_leftbar', {
                 express_items: express.message || []
             }))
             console.log(express.message)
@@ -106,49 +137,6 @@ var show_yard_details = function(page) {
     });
 
 };
-
-
-
-
-//function allowDrop(ev) {
-//    ev.preventDefault();
-//}
-
-//function drag(ev, ref) {
-//    ev.dataTransfer.setData('Text/html', ev.target.id);
-//    objeto = ref.id;
-
-//    yard_id = ev.target.id;
-//    alert(yard_id)
-//    if (!yard_id == 'Inspection') {
-//        frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
-//    }
-//}
-
-
-//function drop(ev, target) {
-//    ev.preventDefault();
-
-//    console.log(objeto, ev.target.id)
-
-//    var data = ev.dataTransfer.getData('Text/html');
-//    destino = ev.target.id;
-
-//    frappe.db.set_value('Cargo', objeto, 'yard_slot', destino);
-
-//    if (yard_id == "Inspection") {
-//        frappe.db.set_value('Cargo', objeto, { 'status': 'Yard', 'yard_status': 'Closed' });
-//    }
-
-//    update_yard_slot();
-//}
-
-//function update_yard_slot() {
-
-//    frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
-//    frappe.ui.toolbar.clear_cache();
-//}
-
 
 function toggle_leftMenu(state) {
     if (state == "Close") {
@@ -272,9 +260,6 @@ function Drop(e, ref) {
     //return false;
 }
 
-function DragEnd(e) {
-
-}
 
 function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 

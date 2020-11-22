@@ -296,9 +296,9 @@ function Drop(e, ref) {
     //return false;
 }
 
-function DragEnd(e) {
+//function DragEnd(e) {
 
-}
+//}
 
 function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 

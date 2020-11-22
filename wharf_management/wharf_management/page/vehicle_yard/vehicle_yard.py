@@ -14,7 +14,7 @@ from jinja2 import Environment, FunctionLoader
 #    context.show_search = True
 
 @frappe.whitelist()
-def get_items():
+def get_all_items():
     items = []
 
     items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
@@ -23,6 +23,30 @@ def get_items():
         LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type in ("Vehicles","Heavy Vehicles")
         ORDER BY `tabYard Settings`.yard_slot DESC""", as_dict=True)
     return items
+
+@frappe.whitelist()
+def get_chasis(chasis_no):
+    items = []
+
+    items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabVehicle Yard Settings`.yard_slot, `tabVehicle Yard Settings`.yard_section, `tabCargo`.cargo_type,
+        `tabVehicle Yard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
+        FROM `tabVehicle Yard Settings` 
+        LEFT JOIN `tabCargo` ON `tabVehicle Yard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type in ("Vehicles","Heavy Vehicles") AND `tabCargo`.chasis_no=%s 
+        ORDER BY `tabVehicle Yard Settings`.yard_slot DESC""",(chasis_no), as_dict=True)
+    return items
+
+
+@frappe.whitelist()
+def get_bay(bay):
+    items = []
+
+    items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabVehicle Yard Settings`.yard_slot, `tabVehicle Yard Settings`.yard_section, `tabCargo`.cargo_type,
+        `tabVehicle Yard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
+        FROM `tabVehicle Yard Settings` 
+        LEFT JOIN `tabCargo` ON `tabVehicle Yard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type in ("Vehicles","Heavy Vehicles") WHERE `tabVehicle Yard Settings`.yard_section=%s 
+        ORDER BY `tabVehicle Yard Settings`.yard_slot DESC""",(bay), as_dict=True)
+    return items
+
 
 #    yardlist = frappe.db.sql("""SELECT `tabYard Settings`.yard_section FROM `tabYard Settings` """, as_dict=True)
 
