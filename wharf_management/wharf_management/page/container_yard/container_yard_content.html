@@ -7,9 +7,15 @@
 
               {% if item.yard_section == yardData[y] %}
 
-                {% for (var i=3; i>= 0; i--){ %}
+                {% for (var i=11; i>= 0; i--){ %}
 
-                  {% if item.yard_sub_section == yardData[y]+[i] %}
+                {% if [i] == 10 || [i] == 11 %}
+                  {% var a = ""  %}
+                {% else %}
+                  {% var a = 0  %}
+                {% endif %}
+
+                  {% if item.yard_sub_section == yardData[y]+a+[i] %}
 
                       <div class="col-sm-1">
                         {% if item.cargo_ref %}
