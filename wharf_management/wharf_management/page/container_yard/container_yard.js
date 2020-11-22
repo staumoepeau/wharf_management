@@ -35,16 +35,15 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         fieldtype: 'Data',
         fieldname: 'contanier_no',
         options: '',
-        change() {
-            console.log(container_no_field.get_value());
+        //        change() {
+        //            console.log(container_no_field.get_value());
 
-            if (container_no_field.get_value()) {
-                show_yard_details(page, container_no_field.get_value(), null);
-            } else {
-                frappe.ui.toolbar.clear_cache();
-            }
-
-        }
+        //            if (container_no_field.get_value()) {
+        //                show_yard_details(page, container_no_field.get_value(), null);
+        //            } else {
+        //                frappe.ui.toolbar.clear_cache();
+        //            }
+        //        }
     });
 
     let bay_field = page.add_field({
@@ -52,21 +51,20 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         fieldtype: 'Data',
         fieldname: 'bay',
         options: '',
-        change() {
-            console.log(bay_field.get_value());
-
-            if (page, bay_field.get_value()) {
-                show_yard_details(page, null, bay_field.get_value());
-            } else {
-                frappe.ui.toolbar.clear_cache();
-            }
-        }
+        //        change() {
+        //            console.log(bay_field.get_value());
+        //            if (page, bay_field.get_value()) {
+        //                show_yard_details(page, null, bay_field.get_value());
+        //            } else {
+        //                frappe.ui.toolbar.clear_cache();
+        //            }
+        //        }
     });
 
-    page.main.append(frappe.render_template('container_yard_main', {}));
+    //    page.main.append(frappe.render_template('container_yard_main', {}));
 
 
-    show_yard_details(page, container_no_field.get_value(), bay_field.get_value());
+    //    show_yard_details(page, container_no_field.get_value(), bay_field.get_value());
 
 };
 

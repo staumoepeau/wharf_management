@@ -35,37 +35,34 @@ frappe.pages['vehicle_yard'].on_page_load = function(wrapper) {
         label: 'Chasis No',
         fieldtype: 'Data',
         fieldname: 'chasis_no',
-        change() {
-            console.log(chasis_no_field.get_value());
-
-            if (chasis_no_field.get_value()) {
-                show_yard_details(page, chasis_no_field.get_value(), null);
-            } else {
-                frappe.ui.toolbar.clear_cache();
-            }
-        }
+        //        change() {
+        //          console.log(chasis_no_field.get_value());
+        //
+        //            if (chasis_no_field.get_value()) {
+        //                show_yard_details(page, chasis_no_field.get_value(), null);
+        //            } else {
+        //                frappe.ui.toolbar.clear_cache();
+        //            }
+        //        }
     });
     let bay_field = page.add_field({
         label: 'Bay',
         fieldtype: 'Data',
         fieldname: 'bay',
         options: '',
-        change() {
-            console.log(bay_field.get_value());
-
-            if (page, bay_field.get_value()) {
-                show_yard_details(page, null, bay_field.get_value());
-            } else {
-                frappe.ui.toolbar.clear_cache();
-            }
-
-
-        }
+        //        change() {
+        //            console.log(bay_field.get_value());
+        //            if (page, bay_field.get_value()) {
+        //                show_yard_details(page, null, bay_field.get_value());
+        //            } else {
+        //                frappe.ui.toolbar.clear_cache();
+        //            }
+        //        }
     });
 
-    page.main.append(frappe.render_template('vehicle_yard', {}));
+    //    page.main.append(frappe.render_template('vehicle_yard', {}));
 
-    show_yard_details(page, chasis_no_field.get_value(), bay_field.get_value());
+    //    show_yard_details(page, chasis_no_field.get_value(), bay_field.get_value());
 
 };
 
