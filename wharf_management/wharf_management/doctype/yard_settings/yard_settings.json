@@ -89,7 +89,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Yard Row",
-   "options": "\n1\n2\n3\n4",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13",
    "reqd": 1
   },
   {
@@ -100,13 +100,13 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Yard Height",
-   "options": "\n1\n2\n3\n4\n5",
+   "options": "\n1\n2\n3\n4\n5\n6",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-21 18:26:17.890353",
+ "modified": "2020-11-22 19:33:14.846956",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard Settings",
