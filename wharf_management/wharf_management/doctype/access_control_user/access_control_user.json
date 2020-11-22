@@ -3,7 +3,7 @@
  "allow_events_in_timeline": 1,
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:user_id",
+ "autoname": "YY.####",
  "creation": "2020-10-09 14:26:26.911495",
  "doctype": "DocType",
  "document_type": "Setup",
@@ -86,12 +86,11 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Company",
    "options": "Company",
    "print_hide": 1,
-   "read_only": 1,
-   "remember_last_selected_value": 1,
-   "reqd": 1
+   "remember_last_selected_value": 1
   },
   {
    "default": "Active",
@@ -166,15 +165,10 @@
    "options": "User"
   },
   {
-   "allow_in_quick_entry": 1,
    "fieldname": "user_id",
    "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
+   "hidden": 1,
    "label": "User ID",
-   "reqd": 1,
    "unique": 1
   },
   {
@@ -192,8 +186,12 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "expiry_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Expiry Date"
   },
   {
@@ -208,6 +206,10 @@
   {
    "fieldname": "employer",
    "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Employer",
    "options": "Customer"
   }
@@ -216,7 +218,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-18 22:10:34.479051",
+ "modified": "2020-11-23 06:47:38.404015",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Access Control User",
