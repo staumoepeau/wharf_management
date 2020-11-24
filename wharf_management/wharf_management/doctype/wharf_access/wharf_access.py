@@ -3,7 +3,7 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-import frappe
+import frappe, json
 from frappe.model.document import Document
 from frappe import msgprint, _, scrub
 from frappe.utils import cstr, flt, fmt_money, formatdate, now
@@ -11,6 +11,7 @@ from wharf_management.wharf_management.utils import update_main_gate_status, upd
 
 
 class WharfAccess(Document):
+
     def on_submit(self):
         self.validate_log_type()
         self.validate_access_type()
@@ -22,6 +23,7 @@ class WharfAccess(Document):
             self.validate_custom_inspection_pickup()
         if self.drop_or_pickup == "Pickup":
             self.validate_cargo_pickup()
+            self.update_movement_status()
 
     def validate(self):
         self.validate_duplicate_log()
@@ -46,10 +48,10 @@ class WharfAccess(Document):
 			'customer_id': self.customer_id,
 			'check_in_out_time': self.check_in_out_time,
 			'name': ['!=', self.name]})
-        if doc:
-            doc_link = frappe.get_desk_link('Wharf Access', doc)
-            frappe.throw(_('This person already has a log with the same timestamp.{0}')
-				.format("<Br>" + doc_link))
+#        if doc:
+#            doc_link = frappe.get_desk_link('Wharf Access', doc)
+#            frappe.throw(_('This person already has a log with the same timestamp.{0}')
+#				.format("<Br>" + doc_link))
 
     def validate_drop(self):
         if self.drop_or_pickup == "Drop":
@@ -75,14 +77,68 @@ class WharfAccess(Document):
     def validate_cargo_pickup(self):
         if self.drop_or_pickup == "Pickup":
 
-            cargo_table = frappe.db.sql("""SELECT cargo_ref
+            cargo_table = frappe.db.sql("""SELECT pickup_cargo_ref
 			FROM `tabCargo Pickup`
 			WHERE parent = %s """,(self.name), as_dict=1)
-
+            
             for c in cargo_table:
-                 frappe.db.sql("""UPDATE `tabCargo` SET status='Inspection Delivered', yard_slot='', custom_inspection_deliver='Closed', custom_inspection_deliver_date=%s WHERE name=%s""", (now(), c.cargo_ref))
+                val = frappe.db.get_value("Cargo", {"name": c.pickup_cargo_ref}, ["name","status","cargo_type","container_no","agents","consignee",
+                "container_type","container_size","container_content","cargo_description", "pat_code","work_type","custom_warrant"], as_dict=1)
+           
+                doc = frappe.new_doc("Cargo Movement")
+                doc.update({
+                    "docstatus" : 1,
+                    "pat_code" : val.pat_code,
+                    "cargo_type" : val.cargo_type,
+                    "container_no" : val.container_no,
+                    "work_type" : val.work_type,
+                    "agents" : val.agents,
+                    "container_type" : val.container_type,
+                    "container_size" : val.container_size,
+                    "consignee" : val.consignee,
+                    "container_content" : val.container_content,
+                    "cargo_description" : val.cargo_description,
+                    "gate_status" : "OUT",
+                    "movement_date" : now(),
+                    "gate1_time" : now(),
+                    "truck" : self.license_plate,
+                    "truck_driver" : self.customer_full_name,
+                    "refrence": c.pickup_cargo_ref,
+                    "warrant_number" : val.custom_warrant
+                    })
+                doc.insert(ignore_permissions=True)
+                doc.submit()
+    
+    def update_movement_status(self):
 
-#                val = frappe.db.get_value("Cargo", {"name": e.cargo_ref}, ["name","status","cargo_type","container_no","agents","container_type","container_size","container_content","cargo_description"], as_dict=True)
-#                update_main_gate_status(val.name, self.license_plate, self.customer_full_name)
+        cargo_table = frappe.db.sql("""SELECT pickup_cargo_ref, item_counter, qty, item_counter, security_item_count
+			FROM `tabCargo Pickup`
+			WHERE parent = %s """,(self.name), as_dict=1)
+            
+        for c in cargo_table:
+            val = frappe.db.get_value("Cargo", {"name": c.pickup_cargo_ref}, ["name","status","cargo_type","container_no","agents","consignee", "yard_slot","security_item_count",
+            "container_type","container_size","container_content","cargo_description", "pat_code","work_type","custom_warrant",'qty'], as_dict=1)
+           
+            yardslot = None
 
-#                update_gate1_status(val.name)
+            if val.cargo_type in ["Tank Tainers", "Container", "Flatrack", "Split Ports", "Vehicles", "Heavy Vehicles", "Petrolium"]:
+                if val.yard_slot:
+                    frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
+                frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", (now(), yardslot, c.pickup_cargo_ref))
+
+            if val.cargo_type in ["Loose Cargo", "Break Bulk"]:
+                if c.qty > c.item_counter:
+                    if val.yard_slot:
+                        frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
+                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_date=%s, where name=%s""", ((val.security_item_count + c.security_item_count), now(), c.pickup_cargo_ref))
+                
+                if c.qty == c.item_counter:
+                    if val.yard_slot:
+                        frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
+                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", ((val.security_item_count + c.security_item_count), now(), yardslot, c.pickup_cargo_ref))
+
+                if c.qty == 1:
+                    if val.yard_slot:
+                        frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
+                    frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", (now(), yardslot, c.pickup_cargo_ref))
+

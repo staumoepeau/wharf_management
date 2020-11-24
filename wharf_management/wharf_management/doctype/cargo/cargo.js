@@ -289,22 +289,7 @@ frappe.ui.form.on('Cargo', {
                     //                frappe.set_route("Form", "Custom Inspection", doc.name);
             }).addClass("btn-danger");
         }
-        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
-        //                frm.doc.payment_status != "Closed" &&
-        //                frm.doc.yard_status == "Closed" &&
-        //                frm.doc.inspection_status == "Closed" &&
-        //                frm.doc.custom_inspection == "Closed" &&
-        //                frm.doc.custom_inspection_deliver != "Closed"
-        //            )) {
-        //            frm.add_custom_button(__('Deliver Custom'), function() {
-        //                frappe.route_options = {
-        //                    "cargo_ref": frm.doc.name
-        //                }
-        //                frm.events.deliver_to_custom(frm)
-        //                frappe.new_doc("Custom Inspection");
-        //                frappe.set_route("Form", "Custom Inspection", doc.name);
-        //            }).addClass("btn-danger");
-        //        }
+
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Security Officer") &&
                 frm.doc.inspection_status == "Closed" &&

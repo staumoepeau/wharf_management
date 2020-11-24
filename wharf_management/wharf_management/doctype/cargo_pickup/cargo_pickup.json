@@ -9,11 +9,9 @@
   "cargo_type",
   "container_no",
   "container_size",
-  "container_content",
   "column_break_6",
+  "container_content",
   "bol",
-  "weight",
-  "volume",
   "seal_1",
   "seal_2",
   "section_break_11",
@@ -22,8 +20,13 @@
   "mark",
   "chasis_no",
   "work_type",
+  "qty",
+  "item_counter",
+  "security_item_count",
   "warrant_number",
-  "security_check_warrant_number",
+  "data_20",
+  "column_break_18",
+  "security_check",
   "eta",
   "previous_payment_date",
   "overdue_storage",
@@ -35,11 +38,11 @@
    "fetch_from": "pickup_cargo_ref.cargo_type",
    "fieldname": "cargo_type",
    "fieldtype": "Data",
-   "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Cargo Type",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -50,65 +53,52 @@
    "in_global_search": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Container No"
+   "label": "Container No",
+   "read_only": 1
   },
   {
    "allow_in_quick_entry": 1,
    "fetch_from": "pickup_cargo_ref.container_size",
    "fieldname": "container_size",
    "fieldtype": "Select",
-   "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container Size",
-   "options": "\n20\n40"
+   "options": "\n20\n40",
+   "read_only": 1
   },
   {
    "allow_in_quick_entry": 1,
+   "columns": 6,
    "fetch_from": "pickup_cargo_ref.container_content",
    "fieldname": "container_content",
    "fieldtype": "Select",
-   "in_global_search": 1,
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container Content",
-   "options": "\nFULL\nEMPTY"
+   "options": "\nFULL\nEMPTY",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_6",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "pickup_cargo_ref.bol",
    "fieldname": "bol",
    "fieldtype": "Data",
-   "label": "BOL"
+   "label": "BOL",
+   "read_only": 1
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "weight",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Weight"
-  },
-  {
-   "allow_in_quick_entry": 1,
-   "fieldname": "volume",
-   "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Volume"
-  },
-  {
+   "fetch_from": "pickup_cargo_ref.seal_1",
    "fieldname": "seal_1",
    "fieldtype": "Data",
    "label": "Seal 1"
   },
   {
+   "fetch_from": "pickup_cargo_ref.seal_2",
    "fieldname": "seal_2",
    "fieldtype": "Data",
    "label": "Seal 2"
@@ -118,6 +108,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "fetch_from": "pickup_cargo_ref.cargo_description",
    "fieldname": "cargo_description",
    "fieldtype": "Small Text",
    "label": "Cargo Description"
@@ -125,23 +116,29 @@
   {
    "fetch_from": "pickup_cargo_ref.mark",
    "fieldname": "column_break_15",
-   "fieldtype": "Column Break"
+   "fieldtype": "Section Break"
   },
   {
+   "fetch_from": "pickup_cargo_ref.mark",
    "fieldname": "mark",
    "fieldtype": "Data",
-   "label": "Mark"
+   "label": "Mark",
+   "read_only": 1
   },
   {
+   "fetch_from": "pickup_cargo_ref.chasis_no",
    "fieldname": "chasis_no",
    "fieldtype": "Data",
-   "label": "Chasis No"
+   "label": "Chasis No",
+   "read_only": 1
   },
   {
+   "fetch_from": "pickup_cargo_ref.work_type",
    "fieldname": "work_type",
    "fieldtype": "Link",
    "label": "Work Type",
-   "options": "Work Type"
+   "options": "Work Type",
+   "read_only": 1
   },
   {
    "fetch_from": "pickup_cargo_ref.custom_warrant",
@@ -183,7 +180,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "pickup_cargo_ref",
    "fieldtype": "Link",
-   "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
@@ -191,15 +187,45 @@
    "options": "Cargo"
   },
   {
-   "fieldname": "security_check_warrant_number",
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "security_check",
    "fieldtype": "Data",
-   "label": "Warrant Number"
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Number"
+  },
+  {
+   "fetch_from": "pickup_cargo_ref.qty",
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "label": "Qty",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "pickup_cargo_ref.security_item_count",
+   "fieldname": "item_counter",
+   "fieldtype": "Int",
+   "label": "Item Count",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "security_item_count",
+   "fieldtype": "Int",
+   "label": "Item Counter"
+  },
+  {
+   "fieldname": "data_20",
+   "fieldtype": "Data"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-11-12 19:37:22.232034",
+ "modified": "2020-11-25 08:07:34.470925",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Pickup",

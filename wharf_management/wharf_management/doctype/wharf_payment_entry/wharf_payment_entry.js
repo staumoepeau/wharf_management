@@ -47,8 +47,6 @@ frappe.ui.form.on('Wharf Payment Entry', {
     },
     onload: function(frm) {
 
-
-
         if (frm.doc.reference_doctype == "Cargo") {
             wharf_management.wharf_payment_entry.setup_cargo_queries(frm);
             frm.set_df_property('delivery_code', 'hidden', 0);
@@ -65,7 +63,7 @@ frappe.ui.form.on('Wharf Payment Entry', {
             wharf_management.wharf_payment_entry.setup_export_booking_queries(frm);
             frm.set_df_property('delivery_code', 'hidden', 1);
             frm.set_df_property('delivery_information', 'hidden', 1);
-            frm.set_df_property('custom_warrant', 'hidden', 1);
+            frm.set_df_property('custom_warrant', 'hidden', 0);
         }
 
 
@@ -114,6 +112,19 @@ frappe.ui.form.on('Wharf Payment Entry', {
             cur_frm.set_df_property("outstanding_amount", "read_only", 1)
         }
     },
+    set_doctype_reference: function(frm) {
+
+        if (frm.doc.docstatus == 0) {
+            if (!frm.doc.reference_doctype) {
+                frm.set_df_property("reference_doctype", "read_only", 0);
+                frm.set_df_property("reference_doctype", "reqd", 1);
+                frm.set_df_property("customer", "reqd", 1);
+                frm.set_df_property("data_35", "hidden", 1);
+                frm.set_df_property("custom_warrant", "read_only", 1);
+            }
+        }
+
+    },
 
     set_posting_time: function(frm) {
         set_posting_date_time(frm)
@@ -130,6 +141,8 @@ var set_posting_date_time = function(frm) {
         frm.set_df_property('posting_time', 'read_only', 1);
     }
 }
+
+
 
 var get_net_total_fee = function(frm) {
     var doc = frm.doc;

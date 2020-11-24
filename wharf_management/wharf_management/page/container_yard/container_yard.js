@@ -35,38 +35,45 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         fieldtype: 'Data',
         fieldname: 'contanier_no',
         options: '',
-        //        change() {
-        //            console.log(container_no_field.get_value());
+        change() {
+            console.log(container_no_field.get_value());
 
-        //            if (container_no_field.get_value()) {
-        //                show_yard_details(page, container_no_field.get_value(), null);
-        //            } else {
-        //                frappe.ui.toolbar.clear_cache();
-        //            }
-        //        }
+            if (container_no_field.get_value()) {
+                show_yard_details(page, container_no_field.get_value(), null);
+            } else {
+                reload_page();
+                //show_yard_details(page, null, null);
+            }
+        }
     });
 
     let bay_field = page.add_field({
         label: 'Bay',
-        fieldtype: 'Data',
+        fieldtype: 'Select',
         fieldname: 'bay',
-        options: '',
-        //        change() {
-        //            console.log(bay_field.get_value());
-        //            if (page, bay_field.get_value()) {
-        //                show_yard_details(page, null, bay_field.get_value());
-        //            } else {
-        //                frappe.ui.toolbar.clear_cache();
-        //            }
-        //        }
+        options: ['All', 'A01', 'A02'],
+        change() {
+            //            console.log(bay_field.get_value());
+            if (page, bay_field.get_value()) {
+                show_yard_details(page, null, bay_field.get_value());
+            } else {
+                reload_page();
+            }
+        }
     });
 
-    //    page.main.append(frappe.render_template('container_yard_main', {}));
 
 
-    //    show_yard_details(page, container_no_field.get_value(), bay_field.get_value());
+    page.main.append(frappe.render_template('container_yard_main'));
+
+    //    console.log(container_no_field.get_value(), bay_field.get_value());
+
+
+
+    show_yard_details(page, container_no_field.get_value(), bay_field.get_value());
 
 };
+
 
 var show_yard_details = function(page, container_no, bay) {
     if (container_no && !bay) {
@@ -75,25 +82,34 @@ var show_yard_details = function(page, container_no, bay) {
             args: {
                 "container_no": container_no
             },
+
             callback: function(r) {
-                page.wrapper.find('#page-content-wrapper').html(frappe.render_template('container_yard_content', {
+                page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', {
+                    //page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', {
                     items: r.message || []
                 }))
             }
         });
     }
     if (!container_no && bay) {
+        if (bay == 'All') {
+            bay == null
+        } else {
+            bay == bay
+        }
+        console.log(bay)
         frappe.call({
             method: "wharf_management.wharf_management.page.container_yard.container_yard.get_items",
             args: {
                 "bay": bay
             },
             callback: function(r) {
-                page.wrapper.find('#page-content-wrapper').html(frappe.render_template('container_yard_content', {
+                page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', {
                     items: r.message || []
                 }))
             }
         });
+
     }
     if (!container_no && !bay) {
         frappe.call({
@@ -114,7 +130,7 @@ var show_yard_details = function(page, container_no, bay) {
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_inspection_items",
         callback: function(y) {
 
-            page.main.find('#right-sidebar-wrapper').html(frappe.render_template('container_yard_rightbar', {
+            page.main.find('#right-sidebar-wrapper').append(frappe.render_template('container_yard_rightbar', {
                 inspection_items: y.message || []
             }))
         }
@@ -124,7 +140,7 @@ var show_yard_details = function(page, container_no, bay) {
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_express_items",
         callback: function(express) {
 
-            page.main.find('#left-sidebar-wrapper').html(frappe.render_template('container_yard_leftbar', {
+            page.main.find('#left-sidebar-wrapper').append(frappe.render_template('container_yard_leftbar', {
                 express_items: express.message || []
             }))
             console.log(express.message)
@@ -316,7 +332,8 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
     //    console.log(yard_id, new_yard, status, cargo_ref, drop_cargo_ref)
     frappe.db.set_value('Yard Settings', new_yard, 'occupy', 1);
 
-    frappe.ui.toolbar.clear_cache();
+    show_yard_details(page, null, null);
+    //frappe.ui.toolbar.clear_cache();
 }
 
 

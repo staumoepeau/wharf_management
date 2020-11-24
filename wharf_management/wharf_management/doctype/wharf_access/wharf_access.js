@@ -50,27 +50,6 @@ frappe.ui.form.on('Wharf Access', {
     }
 });
 
-frappe.ui.form.on("Cargo Pickup", "cargo_ref", function(frm, cdt, cdn) {
-    var d = locals[cdt][cdn];
-    if (d.overdue_storage == 1) {
-        frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
-    }
-    frm.refresh();
-
-});
-
-
-frappe.ui.form.on("Cargo Pickup", {
-    security_check_warrant_number: function(frm, cdt, cdn) {
-        var d = locals[cdt][cdn];
-        if (d.warranr_number != d.security_check_warrant_number) {
-            //frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
-            frappe.msgprint('Please Make sure that is the correct WARRANT NUMBER', raise_exception = false)
-        }
-        frm.refresh();
-    }
-});
-
 $.extend(wharf_management.wharf_access, {
 
     setup_cargo_pickup: function(frm) {
@@ -78,7 +57,8 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Paid']],
+                    ['Cargo', 'status', 'in', ['Paid', 'Gate1']],
+                    ['Cargo', 'security_item_count_status', '=', ['Open']],
                 ]
             }
         }
@@ -98,9 +78,57 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Export', 'docstatus', '=', 1],
-                    ['Export', 'status', 'in', ['Booked']],
+                    ['Export', 'status', 'in', ['Booked', 'Paid']],
                 ]
             }
         }
     },
 });
+
+frappe.ui.form.on("Cargo Pickup", "pickup_cargo_ref", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    //    if (d.overdue_storage == 1) {
+    //    frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
+    //    }
+    //    frm.refresh();
+
+});
+
+
+frappe.ui.form.on("Cargo Pickup", {
+
+    //    security_item_count: function(frm, cdt, cdn) {
+    //        var d = locals[cdt][cdn];
+
+    //        d.item_counter = d.item_counter + d.security_item_count;
+
+    //    },
+
+    security_check: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn];
+
+        if (d.security_check === d.warrant_number) {
+
+            enable_button_state(frm)
+        }
+
+        if (d.security_check != d.warrant_number) {
+            disable_button_state(frm)
+        }
+
+    },
+});
+
+var enable_button_state = function(frm) {
+    frm.save_disabled = false;
+    frm.page.set_primary_action();
+    frm.refresh();
+
+}
+
+var disable_button_state = function(frm) {
+    frm.disable_save();
+    frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
+        //    frm.refresh();
+
+}

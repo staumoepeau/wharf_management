@@ -78,6 +78,8 @@
   "break_bulk_item_count",
   "column_break_51",
   "security_item_count",
+  "column_break_71",
+  "security_item_count_status",
   "hazardous_goods",
   "hazardous",
   "column_break_44",
@@ -314,6 +316,7 @@
    "allow_on_submit": 1,
    "fieldname": "final_eta",
    "fieldtype": "Datetime",
+   "hidden": 1,
    "label": "Final ETA"
   },
   {
@@ -339,6 +342,7 @@
    "allow_on_submit": 1,
    "fieldname": "final_etd",
    "fieldtype": "Datetime",
+   "hidden": 1,
    "label": "Final ETD"
   },
   {
@@ -553,6 +557,7 @@
    "label": "Chaisis No"
   },
   {
+   "allow_on_submit": 1,
    "collapsible": 1,
    "fieldname": "break_bulk_items",
    "fieldtype": "Section Break",
@@ -569,6 +574,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "break_bulk_item_count",
    "fieldtype": "Int",
    "label": "Break Bulk Count"
@@ -578,6 +584,8 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
+   "default": "0",
    "fieldname": "security_item_count",
    "fieldtype": "Int",
    "label": "Security Count Item"
@@ -1089,13 +1097,25 @@
    "label": "Manifest Status",
    "options": "Open\nClosed",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_71",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Open",
+   "fieldname": "security_item_count_status",
+   "fieldtype": "Select",
+   "label": "Item Count Status",
+   "options": "\nOpen\nClosed"
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-23 11:09:35.848829",
+ "modified": "2020-11-25 07:56:57.879056",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

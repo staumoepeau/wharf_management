@@ -16,6 +16,7 @@
   "chasis_no",
   "secondary_work_type",
   "bol",
+  "master_bol",
   "column_break_12",
   "eta_date",
   "voyage_no",
@@ -271,11 +272,17 @@
    "fieldtype": "Datetime",
    "label": "Previous Payment Date",
    "read_only": 1
+  },
+  {
+   "fetch_from": "reference_doctype.master_bol",
+   "fieldname": "master_bol",
+   "fieldtype": "Data",
+   "label": "Master BOL"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-11-10 11:39:05.166958",
+ "modified": "2020-11-24 07:12:35.775081",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo References",
