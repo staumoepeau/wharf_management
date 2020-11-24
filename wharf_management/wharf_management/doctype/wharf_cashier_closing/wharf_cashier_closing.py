@@ -77,6 +77,6 @@ class WharfCashierClosing(Document):
 def get_transactions_list(posting_date, cashier):
     return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
 		FROM `tabWharf Payment Entry`
-		WHERE status = "Paid"
+		WHERE status = "Paid", docstatus = 1
 		AND owner = %s 
 		AND posting_date = %s """, (cashier, posting_date), as_dict=1)

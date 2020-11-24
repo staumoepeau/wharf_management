@@ -121,21 +121,23 @@ class WharfAccess(Document):
            
             yardslot = None
 
+            counter = val.security_item_count + c.security_item_count
+
             if val.cargo_type in ["Tank Tainers", "Container", "Flatrack", "Split Ports", "Vehicles", "Heavy Vehicles", "Petrolium"]:
                 if val.yard_slot:
                     frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
                 frappe.db.sql("""Update `tabCargo` set gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", (now(), yardslot, c.pickup_cargo_ref))
 
             if val.cargo_type in ["Loose Cargo", "Break Bulk"]:
-                if c.qty > c.item_counter:
+                if c.qty > counter:
                     if val.yard_slot:
                         frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
-                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_date=%s, where name=%s""", ((val.security_item_count + c.security_item_count), now(), c.pickup_cargo_ref))
+                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_date=%s where name=%s""", (counter, now(), c.pickup_cargo_ref))
                 
-                if c.qty == c.item_counter:
+                if c.qty == counter:
                     if val.yard_slot:
                         frappe.db.set_value('Yard Settings', val.yard_slot, 'occupy', 0)
-                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", ((val.security_item_count + c.security_item_count), now(), yardslot, c.pickup_cargo_ref))
+                    frappe.db.sql("""Update `tabCargo` set security_item_count=%s, gate1_status="Closed", gate1_date=%s, status="Gate1", yard_slot=%s where name=%s""", (counter, now(), yardslot, c.pickup_cargo_ref))
 
                 if c.qty == 1:
                     if val.yard_slot:
