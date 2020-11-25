@@ -55,6 +55,7 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         change() {
             //            console.log(bay_field.get_value());
             if (page, bay_field.get_value()) {
+                $("#container_yard_content").load(window.location.href + " #container_yard_content");
                 show_yard_details(page, null, bay_field.get_value());
             } else {
                 reload_page();

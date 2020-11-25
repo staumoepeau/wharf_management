@@ -19,7 +19,8 @@ frappe.ui.form.on('Enquire Cargo Fees', {
         frm.page.add_action_icon(__("fa fa-print text-success"), function() {
 
             //        frm.add_custom_button(__("Print"), function() {
-            var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Enquire%20Cargo%20Fees&no_letterhead=0&_lang=es");
+            var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Enquire%20Cargo%20Fees&no_letterhead=0&_lang=en");
+            //var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Quote&no_letterhead=0&_lang=en");
 
             if (!w) {
                 frappe.msgprint(__("Please enable pop-ups"));

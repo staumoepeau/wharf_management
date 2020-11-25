@@ -14,7 +14,7 @@ class EnquireCargoFees(Document):
 
     def get_storage(self):
         charged_days, storage_fee, wharfage, wharfage_fee, storage_days, grace_days, qty = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        #    currency = frappe.get_value('Company',  "Ports Authority Tonga",  "default_currency")
+        currency = frappe.get_value('Company',  "Ports Authority Tonga",  "default_currency")
         cargo_ref = self.cargo_ref
         eta_date_cargo = frappe.db.get_value("Cargo", cargo_ref, "eta_date")
         storage_days = get_storage_days(eta_date_cargo, today())
