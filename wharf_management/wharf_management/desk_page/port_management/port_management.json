@@ -8,7 +8,7 @@
   {
    "hidden": 0,
    "label": "Cargo Payment",
-   "links": "[\n    {\n        \"description\": \"Cargo Payment\",\n        \"label\": \"Cargo Payment\",\n        \"name\": \"Wharf Payment Entry\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cashier Closing Voucher\",\n        \"label\": \"Cashier Closing Voucher\",\n        \"name\": \"Wharf Cashier Closing\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]\n\n"
+   "links": "[\n    {\n        \"description\": \"Cargo Payment\",\n        \"label\": \"Cargo Payment\",\n        \"name\": \"Wharf Payment Entry\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Cashier Closing Voucher\",\n        \"label\": \"Cashier Closing Voucher\",\n        \"name\": \"Wharf Cashier Closing\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"dependencies\": [\n            \"Wharf Fee Item\"\n        ],\n        \"doctype\": \"Wharf Fee Item\",\n        \"is_query_report\": true,\n        \"label\": \"Fees Summary Report\",\n        \"name\": \"Fees Summary\",\n        \"type\": \"report\"\n    }\n]\n\n"
   },
   {
    "hidden": 0,
@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-11-23 11:56:58.181031",
+ "modified": "2020-11-27 07:38:42.484218",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",

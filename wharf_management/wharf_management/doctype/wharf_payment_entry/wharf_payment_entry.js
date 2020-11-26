@@ -27,6 +27,10 @@ frappe.ui.form.on('Wharf Payment Entry', {
             frm.set_value("status", "Paid");
         }
         frm.save('Update');
+
+        if (frm.doc.total_amount != frm.doc.paid_amount) {
+            frappe.throw(__("Please make sure the Paid Amount is Correct "));
+        }
     },
 
     validate: function(frm) {
@@ -235,7 +239,7 @@ var get_storage_fee = function(frm) {
                 }
                 $.each(r.message, function(i, item) {
                     var item_row = frm.add_child("wharf_fee_item")
-                    console.log(item)
+                        //                    console.log(item)
                     item_row.item = item.item_code,
                         item_row.description = item.description,
                         item_row.price = item.price,
@@ -258,7 +262,7 @@ var get_wharfage_fee = function(frm) {
             if (r.message) {
                 $.each(r.message, function(i, item) {
                     var item_row = frm.add_child("wharf_fee_item")
-                    console.log(item)
+                        //                   console.log(item)
                     if (frm.doc.storage_overdue != "Yes") {
 
                         item_row.item = item.wharfage_item_code,
@@ -275,6 +279,7 @@ var get_wharfage_fee = function(frm) {
                             item_row.qty = 0,
                             item_row.total = 0
                     }
+                    frm.refresh()
                     get_net_total_fee(frm)
                     frm.save()
                 });
@@ -447,6 +452,7 @@ frappe.ui.form.on("Payment Method", {
         frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_date", row.mode_of_payment == "Cheque")
         frm.fields_dict["payment_method"].grid.toggle_reqd("bank", row.mode_of_payment == "Cheque")
 
+
         //var current_row = frm.fields_dict["payment_method"].grid.grid_rows_by_docname[row.name]; 
         //current_row.toggle_reqd("name_on_the_cheque", (row.mode_of_payment == "Cheque"));
         //current_row.toggle_reqd("cheque_no", (row.mode_of_payment == "Cheque"));
@@ -481,7 +487,7 @@ frappe.ui.form.on("Booking Request References", "booking_reference_doctype", fun
             }
         },
         callback: function(data) {
-            console.log(data)
+            //            console.log(data)
 
             frappe.model.set_value(d.doctype, d.name, "grt_fee", data.message["fee_amount"]);
             //            frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);

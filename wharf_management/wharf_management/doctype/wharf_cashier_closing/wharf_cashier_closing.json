@@ -9,6 +9,7 @@
   "company",
   "section_break_2",
   "user",
+  "all_cashier",
   "column_break_3",
   "posting_date",
   "pos_opening_entry",
@@ -71,12 +72,12 @@
   },
   {
    "default": "User",
+   "depends_on": "eval:doc.all_cashier == 0",
    "fetch_from": "pos_opening_entry.user",
    "fieldname": "user",
    "fieldtype": "Link",
    "label": "Cashier",
-   "options": "User",
-   "reqd": 1
+   "options": "User"
   },
   {
    "fieldname": "section_break_11",
@@ -191,6 +192,7 @@
    "label": "Gov Voucher"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "gov_voucher",
    "fieldtype": "Table",
    "label": "Gov Voucher",
@@ -205,6 +207,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "total_voucher",
    "fieldtype": "Currency",
    "label": "Total Voucher",
@@ -215,6 +218,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "wharf_payment_list",
    "fieldtype": "Table",
    "label": "Wharf Payment List",
@@ -229,12 +233,18 @@
    "fieldname": "updates",
    "fieldtype": "Button",
    "label": "Update"
+  },
+  {
+   "default": "0",
+   "fieldname": "all_cashier",
+   "fieldtype": "Check",
+   "label": "All Cashier"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-12 10:54:22.070512",
+ "modified": "2020-11-26 23:43:32.454695",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Cashier Closing",

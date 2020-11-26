@@ -464,22 +464,25 @@ class Inspection(Document):
 
     def check_export(self):
         container_number=None
-        vals = frappe.db.get_value("Pre Advice", {"container_no": self.container_no, "name" : self.cargo_ref}, ["booking_ref", "name"], as_dict=True)
+#        val = frappe.db.get_value("Pre Advice", {"container_no": self.container_no, "name" : self.cargo_ref}, ["booking_ref", "name"], as_dict=True)
         container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
 
         if container_number:
+#               msgprint(_("Check 1 {0}").format(container_number), raise_exception=1)
     #            container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
                 val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["name", "yard_slot",
                 "main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
                 "container_type","container_size","pat_code","container_content","driver_ends","seal_1", "status"], as_dict=True)
 
                 if val.container_content == "FULL" and val.status != "Paid":
+
                     msgprint(_("Please Check and Confirmed this container have been PAID"), raise_exception=1)
                 if val.container_content == "EMPTY" and val.status != "Yard":
                     msgprint(_("Please Check and Confirmed this container has arrived at the GATE"), raise_exception=1)
 #                if val.container_content == "FULL" and val.status == "Paid":
 #                    val.status = "Paid"
                 
+#                msgprint(_("Check 1"), raise_exception=1)
                 
                 doc = frappe.new_doc("Export History")
                 doc.update({
@@ -499,9 +502,11 @@ class Inspection(Document):
                         })
                 doc.insert(ignore_permissions=True)
                 doc.submit()
-
+                
+#                msgprint(_("Check 2"), raise_exception=1)
     #            frappe.throw(_("Gate 1 {0}").format(vals.gate1_start))
-                get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, "Export", self.cargo_type)
+                get_create_cargo("Pre Advice", self.cargo_ref, "Loading", "Export", self.cargo_type)
+#                msgprint(_("Check 3"), raise_exception=1)
 #                frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
                 frappe.db.sql("""Update `tabCargo` set gate1_in=%s, maingate_in=%s where container_no=%s and cargo_ref=%s """, (val.gate1_start, val.main_gate_start, self.container_no, self.cargo_ref ))
                 frappe.db.sql("""Delete from `tabExport` where container_no=%s""", self.container_no)
