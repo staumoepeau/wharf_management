@@ -31,6 +31,9 @@ frappe.ui.form.on('Wharf Payment Entry', {
         if (frm.doc.total_amount != frm.doc.paid_amount) {
             frappe.throw(__("Please make sure the Paid Amount is Correct "));
         }
+        if (frm.doc.outstanding_amount != 0) {
+            frappe.throw(__("Please make sure the Paid Amount is Correct "));
+        }
     },
 
     validate: function(frm) {

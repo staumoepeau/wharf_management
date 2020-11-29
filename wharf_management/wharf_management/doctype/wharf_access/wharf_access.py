@@ -18,7 +18,9 @@ class WharfAccess(Document):
         self.validate_reason()
 
         if self.drop_or_pickup == "Drop":
-            self.validate_drop()
+            self.validate_export_drop()
+        if self.drop_or_pickup == "Pickup MTY":
+            self.validate_export_pickup()
         if self.drop_or_pickup == "Custom Inspection":
             self.validate_custom_inspection_pickup()
         if self.drop_or_pickup == "Pickup":
@@ -53,7 +55,7 @@ class WharfAccess(Document):
 #            frappe.throw(_('This person already has a log with the same timestamp.{0}')
 #				.format("<Br>" + doc_link))
 
-    def validate_drop(self):
+    def validate_export_drop(self):
         if self.drop_or_pickup == "Drop":
             export_table = frappe.db.sql("""SELECT cargo_ref
 			FROM `tabExport Cargo Table Drop`
@@ -64,6 +66,42 @@ class WharfAccess(Document):
                 update_main_gate_status(val.name, self.license_plate, self.customer_full_name)
 
                 update_gate1_status(val.name)
+    
+def validate_export_pickup(self):
+        if self.drop_or_pickup == "Pickup MTY":
+            export_table = frappe.db.sql("""SELECT cargo_ref
+			FROM `tabExport Cargo Table Drop`
+			WHERE parent = %s """,(self.name), as_dict=1)
+
+            for e in export_table:
+                val = frappe.db.get_value("Export", {"name": e.cargo_ref}, ["name", "yard_slot","container_no",
+                "main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
+                "container_type","container_size","pat_code","container_content","driver_ends","seal_1", "status"], as_dict=True)
+
+                update_main_gate_status(val.name, self.license_plate, self.customer_full_name)
+
+                update_gate1_status(val.name)
+
+                doc = frappe.new_doc("Export History")
+                doc.update({
+                        "yard_slot" : val.yard_slot,
+                        "main_gate_start" : val.main_gate_start,
+                        "main_gate_ends" : val.main_gate_ends,
+                        "gate1_start": val.gate1_start,
+                        "gate1_ends" : val.gate1_ends,
+                        "driver_start" : val.driver_start,
+                        "driver_ends" : val.driver_ends,
+                        "container_type" : val.container_type,
+                        "container_size" : val.container_size,
+                        "pat_code" : val.pat_code,
+                        "container_content" : val.container_content,
+                        "seal_1" : val.seal_1,
+                        "container_no" : val.container_no
+                        })
+                doc.insert(ignore_permissions=True)
+                doc.submit()
+
+                frappe.db.delete('Export', {"container_no": val.container_no})
     
     def validate_custom_inspection_pickup(self):
         if self.drop_or_pickup == "Custom Inspection":

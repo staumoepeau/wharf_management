@@ -12,7 +12,9 @@ frappe.ui.form.on('Wharf Cashier Closing', {
             };
         });
     },
-
+    all_cashier: function(frm) {
+        frm.set_value("user", NULL);
+    },
     get_transactions: function(frm) {
         if (frm.doc.all_cashier == 1) {
             var cashier = ""

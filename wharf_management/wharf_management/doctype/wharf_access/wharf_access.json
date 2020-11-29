@@ -112,10 +112,10 @@
    "fieldname": "drop_or_pickup",
    "fieldtype": "Select",
    "label": "Drop/PickUP",
-   "options": "\nN/A\nDrop\nCustom Inspection\nPickup"
+   "options": "\nN/A\nDrop\nCustom Inspection\nPickup\nPickup MTY"
   },
   {
-   "depends_on": "eval:doc.drop_or_pickup == \"Drop\"",
+   "depends_on": "eval:doc.drop_or_pickup == \"Drop\" || doc.drop_or_pickup == \"Pickup MTY\"",
    "fieldname": "exportimport_section",
    "fieldtype": "Section Break",
    "label": "Export"
@@ -185,7 +185,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-21 19:41:27.101326",
+ "modified": "2020-11-28 07:24:11.514668",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Access",

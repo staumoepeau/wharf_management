@@ -139,7 +139,7 @@ def get_transactions_list(posting_date, cashier):
 			AND owner = %s 
 			AND posting_date = %s """, (cashier, posting_date), as_dict=1)
 	
-	if not cashier:
+	if not cashier or cashier == "":
     		return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
 			FROM `tabWharf Payment Entry`
 			WHERE status = "Paid" AND docstatus = 1

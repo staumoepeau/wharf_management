@@ -50,7 +50,7 @@ class Inspection(Document):
             get_create_cargo_devan("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type, "EMPTY")           
             
             if flt(self.devan_qty) > 0 :
-                for v in range(1, self.devan_qty+1):
+                for v in range(1, int(self.devan_qty)+1):
                     if self.devanning == "Vehicles":
                         get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, "Vehicles")
                     if self.devanning == "Break Bulk":
