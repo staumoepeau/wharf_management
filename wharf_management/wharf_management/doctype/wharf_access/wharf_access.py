@@ -67,7 +67,7 @@ class WharfAccess(Document):
 
                 update_gate1_status(val.name)
     
-def validate_export_pickup(self):
+    def validate_export_pickup(self):
         if self.drop_or_pickup == "Pickup MTY":
             export_table = frappe.db.sql("""SELECT cargo_ref
 			FROM `tabExport Cargo Table Drop`
