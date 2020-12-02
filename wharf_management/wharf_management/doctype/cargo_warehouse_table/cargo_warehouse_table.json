@@ -1,0 +1,210 @@
+{
+ "actions": [],
+ "creation": "2020-12-02 06:09:16.425373",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cargo_warehouse",
+  "container_no",
+  "column_break_41",
+  "voyage_no",
+  "cargo_type",
+  "section_break_23",
+  "devaning_date",
+  "bol",
+  "mark",
+  "chasis_no",
+  "net_weight",
+  "volume",
+  "status",
+  "column_break_59",
+  "item_code",
+  "storage_fee_price",
+  "storage_days",
+  "free_storage_days",
+  "charged_storage_days",
+  "storage_fee",
+  "section_break_61",
+  "cargo_description",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fetch_from": "cargo_warehouse.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Container No",
+   "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_warehouse.bol",
+   "fieldname": "bol",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Bill of Landing",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_warehouse.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "cargo_warehouse.mark",
+   "fieldname": "mark",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Mark",
+   "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "cargo_warehouse.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Type",
+   "options": "Cargo Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_warehouse.cargo_description",
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo Description"
+  },
+  {
+   "fetch_from": "cargo_warehouse.volume",
+   "fieldname": "volume",
+   "fieldtype": "Float",
+   "label": "Volume",
+   "read_only": 1
+  },
+  {
+   "fieldname": "storage_days",
+   "fieldtype": "Int",
+   "label": "Storage Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "free_storage_days",
+   "fieldtype": "Int",
+   "label": "Garce Days",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_warehouse.chasis_no",
+   "fieldname": "chasis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_23",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_61",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOpen\nClosed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_59",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Warehouse Fee Payment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "cargo_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Cargo Warehouse",
+   "options": "Cargo Warehouse"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "storage_fee_price",
+   "fieldtype": "Currency",
+   "label": "Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "charged_storage_days",
+   "fieldtype": "Int",
+   "label": "Charge Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "storage_fee",
+   "fieldtype": "Currency",
+   "label": "Storage Fee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_warehouse.request_date_devanning",
+   "fieldname": "devaning_date",
+   "fieldtype": "Datetime",
+   "label": "Devaning Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cargo_warehouse.net_weight",
+   "fieldname": "net_weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "read_only": 1
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2020-12-03 05:40:20.751206",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Cargo Warehouse Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1
+}

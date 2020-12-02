@@ -19,6 +19,7 @@ frappe.ui.form.on('Wharf Access', {
         frm.toggle_enable(['check_in_out_time'], is_allowed);
 
         wharf_management.wharf_access.setup_cargo_queries(frm);
+        wharf_management.wharf_access.setup_cargo_overdue_pickup(frm)
         wharf_management.wharf_access.setup_cargo_pickup(frm);
         wharf_management.wharf_access.setup_export_queries(frm);
 
@@ -63,6 +64,18 @@ $.extend(wharf_management.wharf_access, {
             }
         }
     },
+    setup_cargo_overdue_pickup: function(frm) {
+        frm.fields_dict['cargo_pickup'].grid.get_field("pickup_cargo_ref").get_query = function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    ['Cargo', 'docstatus', '=', 1],
+                    ['Cargo', 'status', 'in', ['Paid']],
+                    ['Cargo', 'security_item_count_status', '=', ['Open']],
+                    ['Cargo', 'overdue_storage_status', '=', ['Clear']],
+                ]
+            }
+        }
+    },
     setup_cargo_queries: function(frm) {
         frm.fields_dict['cargo_inspection_table'].grid.get_field("cargo_ref").get_query = function(doc, cdt, cdn) {
             return {
@@ -85,24 +98,22 @@ $.extend(wharf_management.wharf_access, {
     },
 });
 
-frappe.ui.form.on("Cargo Pickup", "pickup_cargo_ref", function(frm, cdt, cdn) {
-    var d = locals[cdt][cdn];
-    //    if (d.overdue_storage == 1) {
-    //    frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
-    //    }
-    //    frm.refresh();
-
-});
-
 
 frappe.ui.form.on("Cargo Pickup", {
 
-    //    security_item_count: function(frm, cdt, cdn) {
-    //        var d = locals[cdt][cdn];
+    pickup_cargo_ref: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn];
 
-    //        d.item_counter = d.item_counter + d.security_item_count;
+        if (d.overdue_storage == 1 && d.overdue_storage_status != "Clear") {
+            disable_button_state(frm)
+            frappe.throw(__('This Cargo have an UNPAID Storage Days Fee. Please refer to the Cashier for more Details'))
+        }
+        if (d.overdue_storage == 0) {
+            enable_button_state(frm)
+        }
 
-    //    },
+
+    },
 
     security_check: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
@@ -114,6 +125,7 @@ frappe.ui.form.on("Cargo Pickup", {
 
         if (d.security_check != d.warrant_number) {
             disable_button_state(frm)
+            frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
         }
 
     },
@@ -126,9 +138,6 @@ var enable_button_state = function(frm) {
 
 }
 
-var disable_button_state = function(frm) {
+var disable_button_state = function(frm, ref) {
     frm.disable_save();
-    frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
-        //    frm.refresh();
-
 }

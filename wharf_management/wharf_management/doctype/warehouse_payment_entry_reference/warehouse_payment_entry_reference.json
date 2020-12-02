@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "creation": "2020-12-03 06:40:57.302747",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "warehouse_payment",
+  "posting_date",
+  "column_break_3",
+  "customer",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "warehouse_payment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Warehouse Payment Reference",
+   "options": "Warehouse Fee Payment",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "warehouse_payment.posting_date",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "warehouse_payment.total_amount",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2020-12-03 07:25:30.561544",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Warehouse Payment Entry Reference",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

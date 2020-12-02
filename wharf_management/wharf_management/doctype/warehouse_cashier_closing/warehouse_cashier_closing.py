@@ -8,13 +8,9 @@ from frappe.model.document import Document
 from frappe.utils import cstr, flt, fmt_money, formatdate, now, date_diff
 from frappe import _
 
-class WharfCashierClosing(Document):
-
-    def on_submit(self):
-        self.update_cargo_for_overdue_storage()
+class WarehouseCashierClosing(Document):
 
     def updates_list(self):
-
         self.get_cheques()
         self.get_mode_of_payment()
         self.get_gov_voucher()
@@ -25,7 +21,7 @@ class WharfCashierClosing(Document):
             chequelist = frappe.db.sql("""SELECT name_on_the_cheque, bank, cheque_no, amount
             FROM `tabPayment Method`
             WHERE docstatus = 1
-            AND parenttype = "Wharf Payment Entry"
+            AND parenttype = "Warehouse Fee Payment"
             AND mode_of_payment = "Cheque"
             AND posting_date = %s """, (self.posting_date), as_dict=1)
             totalcheque = 0.0
@@ -43,7 +39,7 @@ class WharfCashierClosing(Document):
             chequelist = frappe.db.sql("""SELECT name_on_the_cheque, bank, cheque_no, amount
             FROM `tabPayment Method`
             WHERE docstatus = 1
-            AND parenttype = "Wharf Payment Entry"
+            AND parenttype = "Warehouse Fee Payment"
             AND mode_of_payment = "Cheque"
             AND owner = %s
             AND posting_date = %s """, (self.user, self.posting_date), as_dict=1)
@@ -64,7 +60,7 @@ class WharfCashierClosing(Document):
             paymentmode = frappe.db.sql("""SELECT mode_of_payment, SUM(amount) as total
                 FROM `tabPayment Method`
                 WHERE docstatus = 1
-                AND parenttype = "Wharf Payment Entry"
+                AND parenttype = "Warehouse Fee Payment"
                 AND posting_date = %s
                 GROUP BY mode_of_payment """, (self.posting_date), as_dict=1)
             grandtotal = 0.0
@@ -80,7 +76,7 @@ class WharfCashierClosing(Document):
             paymentmode = frappe.db.sql("""SELECT mode_of_payment, SUM(amount) as total
                 FROM `tabPayment Method`
                 WHERE docstatus = 1
-                AND parenttype = "Wharf Payment Entry"
+                AND parenttype = "Warehouse Fee Payment"
                 AND owner = %s
                 AND posting_date = %s
                 GROUP BY mode_of_payment """, (self.user, self.posting_date), as_dict=1)
@@ -99,7 +95,7 @@ class WharfCashierClosing(Document):
             gov_voucher = frappe.db.sql("""SELECT gov_ministry, po_number, receipt_no, amount
                 FROM `tabPayment Method`
                 WHERE docstatus = 1
-                AND parenttype = "Wharf Payment Entry"
+                AND parenttype = "Warehouse Fee Payment"
                 AND mode_of_payment = 'Gov Voucher'
                 AND posting_date = %s """, (self.posting_date), as_dict=1)
             totalvoucher = 0.0
@@ -118,7 +114,7 @@ class WharfCashierClosing(Document):
             gov_voucher = frappe.db.sql("""SELECT gov_ministry, po_number, receipt_no, amount
                 FROM `tabPayment Method`
                 WHERE docstatus = 1
-                AND parenttype = "Wharf Payment Entry"
+                AND parenttype = "Warehouse Fee Payment"
                 AND mode_of_payment = 'Gov Voucher'
                 AND owner = %s
                 AND posting_date = %s """, (self.user, self.posting_date), as_dict=1)
@@ -135,29 +131,18 @@ class WharfCashierClosing(Document):
             self.total_voucher = totalvoucher
 
 
-    def update_cargo_for_overdue_storage(self):
-        cargolist = frappe.db.sql("""SELECT name, payment_date FROM `tabCargo` WHERE status = 'Paid' and gate1_status != 'Closed' and storage_overdue = 0""", as_dict=1)
-
-        for odlist in cargolist:
-            oddays = date_diff(now(), odlist.payment_date)
-#            frappe.throw(_('Overdue Days.{0}').format(oddays))
-            if oddays > 2:        
-#                frappe.throw(_('Check 2'))
-                frappe.db.sql("""UPDATE `tabCargo` SET storage_overdue=1 WHERE name=%s""", odlist.name, as_dict=1)
-#                        frappe.throw(_('Check 3'))
-
 @frappe.whitelist()
-def get_transactions_list(posting_date, cashier):
+def get_transactions_list(posting_date):
 
-    if cashier:
-        return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
-            FROM `tabWharf Payment Entry`
-            WHERE status = "Paid" AND docstatus = 1
-            AND owner = %s
-            AND posting_date = %s """, (cashier, posting_date), as_dict=1)
+#    if cashier:
+#        return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
+#            FROM `tabWarehouse Fee Payment`
+#            WHERE status = "Paid" AND docstatus = 1
+#            AND owner = %s
+#            AND posting_date = %s """, (cashier, posting_date), as_dict=1)
 
-    if not cashier or cashier == "":
-            return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
-            FROM `tabWharf Payment Entry`
-            WHERE status = "Paid" AND docstatus = 1
-            AND posting_date = %s """, (posting_date), as_dict=1)
+#    if not cashier or cashier == "":
+        return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
+        FROM `tabWarehouse Fee Payment`
+        WHERE status = "Paid" AND docstatus = 1
+        AND posting_date = %s """, (posting_date), as_dict=1)

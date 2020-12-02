@@ -44,17 +44,16 @@
   "mark",
   "column_break_36",
   "cargo_type",
-  "qty",
-  "break_bulk_item_count",
   "volume",
   "chasis_no",
+  "qty",
+  "break_bulk_item_count",
   "section_break_40",
   "yard_slot",
   "column_break_43",
   "warrant_no",
   "section_break_45",
   "cargo_description",
-  "column_break_40",
   "cargo_movement_status",
   "inspection_status",
   "custom_check_status",
@@ -320,6 +319,7 @@
    "unique": 1
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_45",
    "fieldtype": "Section Break"
   },
@@ -327,10 +327,6 @@
    "fieldname": "cargo_description",
    "fieldtype": "Small Text",
    "label": "Cargo Description"
-  },
-  {
-   "fieldname": "column_break_40",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "cargo_movement_status",
@@ -346,6 +342,7 @@
    "options": "\nOpen\nClosed"
   },
   {
+   "allow_on_submit": 1,
    "default": "Open",
    "fieldname": "custom_check_status",
    "fieldtype": "Select",
@@ -386,6 +383,7 @@
    "label": "STATUS"
   },
   {
+   "allow_on_submit": 1,
    "default": "Booked",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -476,7 +474,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-10 06:15:16.351597",
+ "modified": "2020-12-03 04:06:32.738911",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Warehouse",

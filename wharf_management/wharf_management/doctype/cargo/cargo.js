@@ -65,6 +65,7 @@ frappe.ui.form.on('Cargo', {
 
         frm.toggle_display(['break_bulk_items'], frm.doc.qty > 1);
         frm.toggle_display(['last_port'], frm.doc.cargo_type === "Split Ports");
+
     },
 
     cargo_type: function(frm) {
@@ -109,6 +110,7 @@ frappe.ui.form.on('Cargo', {
         }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+                frm.doc.status != "Paid" &&
                 frm.doc.payment_status != "Closed" &&
                 frm.doc.yard_status == "Closed" &&
                 frm.doc.inspection_status == "Closed"
@@ -123,33 +125,26 @@ frappe.ui.form.on('Cargo', {
                     "reference_doctype": "Cargo"
                 }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
-                //            }).addClass("btn-success");
+
             }).addClass("btn-success");
         }
 
-        //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
-        //                frm.doc.storage_overdue == 1
-        //            )) {
-        //            frm.add_custom_button(__('Waive Storage'), function() {
-        //                frm.events.overdue_storage_waive(frm);
-        //            }).addClass("btn-primary");
-        //        }
-
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
-                frm.doc.storage_overdue == 1
+                frm.doc.status == "Paid" &&
+                frm.doc.payment_status == "Closed" &&
+                frm.doc.storage_overdue == 1 &&
+                frm.doc.gate1_status != "Closed" &&
+                frm.doc.overdue_storage_status != "Clear"
             )) {
-            //frm.page.set_primary_action(__('Payment'), function() {
             frm.add_custom_button(__('Payment'), function() {
-                //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
                 frappe.route_options = {
-                        "payment_type": "Receive",
-                        "customer": frm.doc.consignee,
-                        "overdue_storage": "Yes",
-                        "reference_doctype": "Cargo",
+                    "payment_type": "Receive",
+                    "customer": frm.doc.consignee,
+                    "overdue_storage": "Yes",
+                    "reference_doctype": "Overdue Storage",
 
-                    }
-                    //                alert(frm.doc.storage_overdue)
+                }
                 frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
                 //            }).addClass("btn-success");
             }).addClass("btn-primary");

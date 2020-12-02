@@ -1,7 +1,7 @@
 {
  "actions": [],
- "autoname": "CCV.YY.-.#####",
- "creation": "2020-08-27 19:43:44.133057",
+ "autoname": "WCC.YY.-.#####",
+ "creation": "2020-12-03 06:14:20.511405",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -40,10 +40,37 @@
   "grand_total",
   "section_break_13",
   "get_transactions",
-  "wharf_payment_list",
+  "warehouse_payment_list",
   "amended_from"
  ],
  "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "User",
+   "depends_on": "eval:doc.all_cashier == 0",
+   "fetch_from": "pos_opening_entry.user",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Cashier",
+   "options": "User"
+  },
+  {
+   "default": "0",
+   "fieldname": "all_cashier",
+   "fieldtype": "Check",
+   "label": "All Cashier"
+  },
   {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
@@ -63,68 +90,6 @@
    "label": "POS Opening Entry"
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "read_only": 1,
-   "reqd": 1
-  },
-  {
-   "default": "User",
-   "depends_on": "eval:doc.all_cashier == 0",
-   "fetch_from": "pos_opening_entry.user",
-   "fieldname": "user",
-   "fieldtype": "Link",
-   "label": "Cashier",
-   "options": "User"
-  },
-  {
-   "fieldname": "section_break_11",
-   "fieldtype": "Section Break",
-   "label": "Modes of Payment"
-  },
-  {
-   "fieldname": "payment_reconciliation",
-   "fieldtype": "Table",
-   "label": "Payment Reconciliation",
-   "options": "Wharf Payment Reconciliation"
-  },
-  {
-   "collapsible": 1,
-   "collapsible_depends_on": "eval:doc.docstatus==0",
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break",
-   "label": "Details"
-  },
-  {
-   "default": "0",
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Grand Total",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_16",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_14",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Wharf Cashier Closing",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "cash_reconciliation_section",
    "fieldtype": "Section Break",
    "label": "Cash Reconciliation"
@@ -136,16 +101,16 @@
    "options": "Cash Denomination Table"
   },
   {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
    "fieldname": "column_break_7",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_8",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "total_cash",
@@ -158,10 +123,23 @@
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "updates",
+   "fieldtype": "Button",
+   "label": "Update"
+  },
+  {
    "fieldname": "cheque_details",
    "fieldtype": "Table",
    "label": "Cheque Details",
    "options": "Cheque Details"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "data_1",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "data_15",
@@ -174,22 +152,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "data_1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_141",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_22",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_2",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "gov_voucher_section",
    "fieldtype": "Section Break",
    "label": "Gov Voucher"
@@ -200,6 +162,10 @@
    "fieldtype": "Table",
    "label": "Gov Voucher",
    "options": "Gov Voucher Table"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "data_22",
@@ -217,15 +183,44 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_22",
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break",
+   "label": "Modes of Payment"
+  },
+  {
+   "fieldname": "payment_reconciliation",
+   "fieldtype": "Table",
+   "label": "Payment Reconciliation",
+   "options": "Wharf Payment Reconciliation"
+  },
+  {
+   "fieldname": "section_break_141",
    "fieldtype": "Section Break"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "wharf_payment_list",
-   "fieldtype": "Table",
-   "label": "Wharf Payment List",
-   "options": "Wharf Payment Entry Reference"
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Grand Total",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.docstatus==0",
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break",
+   "label": "Details"
   },
   {
    "fieldname": "get_transactions",
@@ -233,24 +228,29 @@
    "label": "Get Transactions"
   },
   {
-   "fieldname": "updates",
-   "fieldtype": "Button",
-   "label": "Update"
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Warehouse Cashier Closing",
+   "print_hide": 1,
+   "read_only": 1
   },
   {
-   "default": "0",
-   "fieldname": "all_cashier",
-   "fieldtype": "Check",
-   "label": "All Cashier"
+   "allow_on_submit": 1,
+   "fieldname": "warehouse_payment_list",
+   "fieldtype": "Table",
+   "label": "Warehouse Payment List",
+   "options": "Warehouse Payment Entry Reference"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-30 15:49:48.039347",
+ "modified": "2020-12-03 06:54:40.359964",
  "modified_by": "Administrator",
  "module": "Wharf Management",
- "name": "Wharf Cashier Closing",
+ "name": "Warehouse Cashier Closing",
  "owner": "Administrator",
  "permissions": [
   {

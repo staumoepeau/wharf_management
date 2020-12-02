@@ -10,12 +10,11 @@
   "container_no",
   "container_size",
   "column_break_6",
+  "warrant_number",
   "container_content",
   "bol",
   "seal_1",
   "seal_2",
-  "section_break_11",
-  "cargo_description",
   "column_break_15",
   "mark",
   "chasis_no",
@@ -23,14 +22,14 @@
   "qty",
   "item_counter",
   "security_item_count",
-  "warrant_number",
-  "data_20",
   "column_break_18",
   "security_check",
   "eta",
   "previous_payment_date",
   "overdue_storage",
-  "overdue_storage_status"
+  "overdue_storage_status",
+  "section_break_11",
+  "cargo_description"
  ],
  "fields": [
   {
@@ -95,15 +94,18 @@
    "fetch_from": "pickup_cargo_ref.seal_1",
    "fieldname": "seal_1",
    "fieldtype": "Data",
-   "label": "Seal 1"
+   "label": "Seal 1",
+   "read_only": 1
   },
   {
    "fetch_from": "pickup_cargo_ref.seal_2",
    "fieldname": "seal_2",
    "fieldtype": "Data",
-   "label": "Seal 2"
+   "label": "Seal 2",
+   "read_only": 1
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_11",
    "fieldtype": "Section Break"
   },
@@ -144,6 +146,7 @@
    "fetch_from": "pickup_cargo_ref.custom_warrant",
    "fieldname": "warrant_number",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Warrant Number",
    "read_only": 1
   },
@@ -174,6 +177,7 @@
    "fieldname": "overdue_storage_status",
    "fieldtype": "Select",
    "label": "Overdue Storage Status",
+   "options": "\nClear\nUnpaid",
    "read_only": 1
   },
   {
@@ -195,7 +199,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Number"
+   "label": "Warrant Number"
   },
   {
    "fetch_from": "pickup_cargo_ref.qty",
@@ -216,16 +220,12 @@
    "fieldname": "security_item_count",
    "fieldtype": "Int",
    "label": "Item Counter"
-  },
-  {
-   "fieldname": "data_20",
-   "fieldtype": "Data"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-11-25 08:07:34.470925",
+ "modified": "2020-12-01 10:07:51.685821",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Pickup",
