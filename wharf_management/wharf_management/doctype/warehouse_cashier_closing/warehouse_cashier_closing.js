@@ -15,42 +15,15 @@ frappe.ui.form.on('Warehouse Cashier Closing', {
     all_cashier: function(frm) {
         frm.set_value("user", NULL);
     },
+
     get_transactions: function(frm) {
-        if (frm.doc.all_cashier == 1) {
-            var cashier = ""
-        } else {
-            frm.doc.all_cashier == 0
-            cashier = frm.doc.user
-        }
-        //        console.log(cashier)
-        frappe.call({
-            method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_transactions_list",
-            args: {
-                "posting_date": frm.doc.posting_date,
-                //                "cashier": cashier
-            },
-            callback: function(data) {
-                console.log(data.message)
-                if (data.message) {
-                    $.each(data.message, function(i, item) {
-                        var item_row = frm.add_child("warehouse_payment_list")
-                            //                        console.log(item)
-                        item_row.warehouse_payment = item.name,
-                            item_row.posting_date = item.posting_date,
-                            item_row.customer = item.consignee,
-                            item_row.amount = item.total_amount
-                    });
-                    frm.refresh()
-                }
 
-            }
-
-        });
-
-        //        frm.save()
-        //        frm.refresh()
+        get_fees_summary(frm);
+        get_transactions_list(frm);
 
     },
+
+
 
     updates: function(frm) {
         return frappe.call({
@@ -66,6 +39,70 @@ frappe.ui.form.on('Warehouse Cashier Closing', {
 
 });
 
+var get_fees_summary = function(frm) {
+
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.wharf_cashier_closing.wharf_cashier_closing.get_fees_summary",
+        args: {
+            "posting_date": frm.doc.posting_date,
+        },
+        callback: function(r) {
+            console.log(r.message)
+            if (r.message) {
+                $.each(r.message, function(i, item) {
+                    var item_row = frm.add_child("fees_summary")
+                    item_row.wharf_fees = item.category,
+                        item_row.total_discount = item.discount,
+                        item_row.total_amount = item.total
+                });
+                frm.refresh()
+            }
+
+        }
+
+    });
+
+    //        frm.save()
+    //        frm.refresh()
+
+}
+
+var get_transactions_list = function(frm) {
+    if (frm.doc.all_cashier == 1) {
+        var cashier = ""
+    } else {
+        frm.doc.all_cashier == 0
+        cashier = frm.doc.user
+    }
+    //        console.log(cashier)
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_transactions_list",
+        args: {
+            "posting_date": frm.doc.posting_date,
+            //                "cashier": cashier
+        },
+        callback: function(data) {
+            console.log(data.message)
+            if (data.message) {
+                $.each(data.message, function(i, item) {
+                    var item_row = frm.add_child("warehouse_payment_list")
+                        //                        console.log(item)
+                    item_row.warehouse_payment = item.name,
+                        item_row.posting_date = item.posting_date,
+                        item_row.customer = item.consignee,
+                        item_row.amount = item.total_amount
+                });
+                frm.refresh()
+            }
+
+        }
+
+    });
+
+    //        frm.save()
+    //        frm.refresh()
+
+}
 
 frappe.ui.form.on('Cash Denomination Table', {
     qty: function(frm, cdt, cdn) {

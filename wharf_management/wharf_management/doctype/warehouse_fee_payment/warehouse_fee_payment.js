@@ -131,7 +131,7 @@ $.extend(wharf_management.warehouse_fee_payment, {
             return {
                 filters: [
                     ['Cargo Warehouse', 'docstatus', '=', 1],
-                    ['Cargo Warehouse', 'status', 'in', ['Shelves']],
+                    ['Cargo Warehouse', 'status', 'in', ['Custom Check']],
                     ['Cargo Warehouse', 'consignee', '=', frm.doc.consignee],
                 ]
             }

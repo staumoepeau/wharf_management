@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "creation": "2020-12-03 18:41:54.348242",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "wharf_fees",
+  "total_discount",
+  "total_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "wharf_fees",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fees Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_discount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Discount",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2020-12-04 06:19:21.155000",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Fees Summary",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

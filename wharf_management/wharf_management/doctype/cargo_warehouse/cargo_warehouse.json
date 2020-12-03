@@ -132,7 +132,7 @@
    "fieldname": "agents",
    "fieldtype": "Link",
    "label": "Shipping Agent",
-   "options": "Agent User"
+   "options": "Shipping Agency"
   },
   {
    "fieldname": "etd_date",
@@ -189,13 +189,14 @@
    "fieldname": "freight_forwarder",
    "fieldtype": "Link",
    "label": "Freight Forwarder",
-   "options": "Agent User"
+   "options": "Customer"
   },
   {
    "fieldname": "data_20",
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "request_date_devanning",
    "fieldtype": "Datetime",
    "label": "Request Date for Devanning"
@@ -213,6 +214,7 @@
    "label": "Container No"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "devanning_date",
    "fieldtype": "Datetime",
    "label": "Devanning Date"
@@ -474,7 +476,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-03 04:06:32.738911",
+ "modified": "2020-12-03 14:24:56.948259",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Warehouse",
@@ -509,6 +511,7 @@
    "write": 1
   },
   {
+   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -516,6 +519,7 @@
    "report": 1,
    "role": "Wharf Operation Cashier",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {

@@ -32,7 +32,7 @@
   "section_break_23",
   "devanning",
   "column_break_25",
-  "devan_qty",
+  "devanqty",
   "column_break_27",
   "cargo_condition_info",
   "inspection_images",
@@ -294,21 +294,20 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval: doc.work_type == \"Discharged\" &&  doc.secondary_work_type == \"Devanning\"",
-   "fieldname": "devan_qty",
-   "fieldtype": "Data",
-   "label": "QTY"
-  },
-  {
    "fieldname": "column_break_27",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "devanqty",
+   "fieldtype": "Int",
+   "label": "Devanning QTY"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-19 03:21:16.180173",
+ "modified": "2020-12-04 06:53:31.227324",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Inspection",

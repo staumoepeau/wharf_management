@@ -136,12 +136,14 @@ class WharfCashierClosing(Document):
 
 
     def update_cargo_for_overdue_storage(self):
-        cargolist = frappe.db.sql("""SELECT name, payment_date FROM `tabCargo` WHERE status = 'Paid' and gate1_status != 'Closed' and storage_overdue = 0""", as_dict=1)
+        cargolist = frappe.db.sql("""SELECT name, eta_date, payment_date FROM `tabCargo` WHERE status = 'Paid' and gate1_status != 'Closed' and storage_overdue = 0""", as_dict=1)
 
         for odlist in cargolist:
             oddays = date_diff(now(), odlist.payment_date)
-#            frappe.throw(_('Overdue Days.{0}').format(oddays))
-            if oddays > 2:        
+
+            storage_days = date_diff(now(), odlist.eta_date)
+
+            if oddays > 2 and storage_days > 10:
 #                frappe.throw(_('Check 2'))
                 frappe.db.sql("""UPDATE `tabCargo` SET storage_overdue=1 WHERE name=%s""", odlist.name, as_dict=1)
 #                        frappe.throw(_('Check 3'))
@@ -161,3 +163,15 @@ def get_transactions_list(posting_date, cashier):
             FROM `tabWharf Payment Entry`
             WHERE status = "Paid" AND docstatus = 1
             AND posting_date = %s """, (posting_date), as_dict=1)
+
+
+@frappe.whitelist()
+def get_fees_summary(posting_date):
+    return frappe.db.sql("""SELECT SUM(`tabWharf Fee Item`.`total`) AS total,
+        SUM(`tabWharf Fee Item`.`discount`) AS discount,
+        `tabWharf Fees`.`wharf_fee_category` AS category
+        FROM `tabWharf Fee Item`, `tabWharf Fees`
+        WHERE `tabWharf Fee Item`.`item` = `tabWharf Fees`.`name`
+        AND DATE(`tabWharf Fee Item`.`creation`) = %s
+        AND `tabWharf Fee Item`.`parenttype` = "Wharf Payment Entry"
+        GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict=1)

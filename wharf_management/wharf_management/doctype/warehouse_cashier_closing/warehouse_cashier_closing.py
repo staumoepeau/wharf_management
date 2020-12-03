@@ -146,3 +146,14 @@ def get_transactions_list(posting_date):
         FROM `tabWarehouse Fee Payment`
         WHERE status = "Paid" AND docstatus = 1
         AND posting_date = %s """, (posting_date), as_dict=1)
+
+@frappe.whitelist()
+def get_fees_summary(posting_date):
+    return frappe.db.sql("""SELECT SUM(`tabWharf Fee Item`.`total`) AS total,
+        SUM(`tabWharf Fee Item`.`discount`) AS discount,
+        `tabWharf Fees`.`wharf_fee_category` AS category
+        FROM `tabWharf Fee Item`, `tabWharf Fees`
+        WHERE `tabWharf Fee Item`.`item` = `tabWharf Fees`.`name`
+        AND DATE(`tabWharf Fee Item`.`creation`) = %s
+        AND `tabWharf Fee Item`.`parenttype` = "Warehouse Fee Payment"
+        GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict=1)

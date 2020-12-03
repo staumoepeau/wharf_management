@@ -40,6 +40,7 @@
   "grand_total",
   "section_break_13",
   "get_transactions",
+  "fees_summary",
   "warehouse_payment_list",
   "amended_from"
  ],
@@ -242,12 +243,18 @@
    "fieldtype": "Table",
    "label": "Warehouse Payment List",
    "options": "Warehouse Payment Entry Reference"
+  },
+  {
+   "fieldname": "fees_summary",
+   "fieldtype": "Table",
+   "label": "Fees Summary",
+   "options": "Fees Summary"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-03 06:54:40.359964",
+ "modified": "2020-12-04 06:33:59.564695",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Warehouse Cashier Closing",
