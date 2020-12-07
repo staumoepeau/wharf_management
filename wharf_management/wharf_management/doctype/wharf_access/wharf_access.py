@@ -16,6 +16,7 @@ class WharfAccess(Document):
         self.validate_log_type()
         self.validate_access_type()
         self.validate_reason()
+        self.update_status()
 
         if self.drop_or_pickup == "Drop":
             self.validate_export_drop()
@@ -26,7 +27,7 @@ class WharfAccess(Document):
         if self.drop_or_pickup == "Pickup":
             self.validate_cargo_pickup()
             self.update_movement_status()
-        self.update_staus()
+        
 
     def validate(self):
         self.validate_duplicate_log()
@@ -45,7 +46,7 @@ class WharfAccess(Document):
         if not self.access_type:
             frappe.throw(_('Require Access Type'))
 
-    def update_staus(self):
+    def update_status(self):
         if self.log_type == "IN":
             frappe.db.sql("""UPDATE `tabWharf Access` SET access_status='IN' WHERE name=%s""", (self.name))
         
