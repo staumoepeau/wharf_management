@@ -9,8 +9,10 @@ frappe.ui.form.on('Wharf Access', {
     },
 
     setup: function(frm) {
-        if (!frm.doc.time) {
-            frm.set_value("check_in_out_time", frappe.datetime.now_datetime());
+        if (frm.doc.docstatus != 1){
+            if (!frm.doc.time) {
+                frm.set_value("check_in_out_time", frappe.datetime.now_datetime());
+            }
         }
     },
     onload: function(frm) {
@@ -26,12 +28,22 @@ frappe.ui.form.on('Wharf Access', {
     },
     refresh: function(frm) {
 
-        //    if (frm.doc.docstatus == 0) {
-        //        if (!frm.doc.time) {
-        //            frm.set_value('check_in_out_time', frappe.datetime.now_datetime());
-        //        }
-        //            set_posting_date_time(frm)
-        //    }
+        if (frm.doc.access_status == "IN") {
+            frm.add_custom_button(__('OUT'), function() {
+
+                frappe.route_options = {
+                    "customer_id": frm.doc.customer_id,
+                    "customer_full_name": frm.doc.customer_full_name,
+                    "log_type": "OUT",
+                    "user_status": frm.doc.user_status,
+                    "access_type": frm.doc.access_type,
+                    "license_plate": frm.doc.license_plate,
+                    "access_ref": frm.doc.name
+                }
+                frappe.set_route("Form", "Wharf Access", "New Wharf Access 1");
+                //            }).addClass("btn-success");
+            }).addClass("btn-primary");
+        }
 
     },
     customer_id: function(frm) {

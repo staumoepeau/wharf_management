@@ -28,7 +28,9 @@
   "cargo_inspection_table",
   "section_break_19",
   "cargo_pickup",
-  "amended_from"
+  "access_status",
+  "amended_from",
+  "access_ref"
  ],
  "fields": [
   {
@@ -47,11 +49,13 @@
    "read_only": 1
   },
   {
+   "default": "IN",
    "fieldname": "log_type",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Log Type",
-   "options": "\nIN\nOUT"
+   "options": "\nIN\nOUT",
+   "read_only": 1
   },
   {
    "default": "Now",
@@ -178,14 +182,26 @@
    "fetch_from": "customer_id.status",
    "fieldname": "user_status",
    "fieldtype": "Data",
-   "label": "User Status"
+   "label": "User Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "access_status",
+   "fieldtype": "Select",
+   "label": "Access Status",
+   "options": "\nIN\nOUT"
+  },
+  {
+   "fieldname": "access_ref",
+   "fieldtype": "Data",
+   "label": "Access References"
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-28 07:24:11.514668",
+ "modified": "2020-12-07 12:05:51.320114",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Access",

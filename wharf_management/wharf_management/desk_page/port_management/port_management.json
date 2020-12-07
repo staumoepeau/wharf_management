@@ -23,7 +23,7 @@
   {
    "hidden": 0,
    "label": "Warehouse",
-   "links": "[\n    {\n        \"description\": \"Cargo Warehouse\",\n        \"label\": \"Cargo Warehouse\",\n        \"name\": \"Cargo Warehouse\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Inspection\",\n        \"label\": \"Warehouse Inspection\",\n        \"name\": \"Warehouse Inspection\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Devan Request\",\n        \"label\": \"Devan Request\",\n        \"name\": \"Devan Request\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Fee Payment\",\n        \"label\": \"Warehouse Fee Payment\",\n        \"name\": \"Warehouse Fee Payment\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Cashier Closing\",\n        \"label\": \"Warehouse Cashier Closing\",\n        \"name\": \"Warehouse Cashier Closing\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
+   "links": "[\n    {\n        \"description\": \"Cargo Warehouse\",\n        \"label\": \"Cargo Warehouse\",\n        \"name\": \"Cargo Warehouse\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Inspection\",\n        \"label\": \"Warehouse Inspection\",\n        \"name\": \"Warehouse Inspection\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Devaning Request\",\n        \"label\": \"Devaning Request\",\n        \"name\": \"Devaning Request\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Fee Payment\",\n        \"label\": \"Warehouse Fee Payment\",\n        \"name\": \"Warehouse Fee Payment\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    },\n    {\n        \"description\": \"Warehouse Cashier Closing\",\n        \"label\": \"Warehouse Cashier Closing\",\n        \"name\": \"Warehouse Cashier Closing\",\n        \"onboard\": 1,\n        \"type\": \"doctype\"\n    }\n]"
   },
   {
    "hidden": 0,
@@ -68,13 +68,38 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-12-03 06:15:44.415421",
+ "modified": "2020-12-08 06:08:36.046142",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 1,
- "shortcuts": [],
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Cargo Dashboard",
+   "link_to": "Cargo",
+   "type": "Dashboard"
+  },
+  {
+   "doc_view": "",
+   "label": "Voyage Dashboard",
+   "link_to": "Voyage",
+   "type": "Dashboard"
+  },
+  {
+   "doc_view": "",
+   "label": "Security Dashboard",
+   "link_to": "Wharf Security",
+   "type": "Dashboard"
+  },
+  {
+   "doc_view": "",
+   "label": "Operation Dashboard",
+   "link_to": "Cargo Operation",
+   "type": "Dashboard"
+  }
+ ],
  "shortcuts_label": ""
 }

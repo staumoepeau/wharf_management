@@ -189,8 +189,9 @@
   {
    "fetch_from": "vessel.vessel_type",
    "fieldname": "vessel_type",
-   "fieldtype": "Read Only",
+   "fieldtype": "Link",
    "label": "Vessel Type",
+   "options": "Vessel Type",
    "read_only": 1
   },
   {
@@ -496,7 +497,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Security Status",
-   "options": "\nPending\nChecked\nReject",
+   "options": "\nPending\nCheck\nReject",
    "read_only": 1
   },
   {
@@ -621,7 +622,7 @@
  "hide_toolbar": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-11 14:42:21.532130",
+ "modified": "2020-12-08 01:44:08.451421",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Booking Request",

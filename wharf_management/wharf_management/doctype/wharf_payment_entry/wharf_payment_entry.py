@@ -16,7 +16,6 @@ class WharfPaymentEntry(Document):
 #        self.check_payment()
         self.check_status()
 
-#        if self.reference_doctype == "Cargo" and not self.storage_overdue:
         if self.reference_doctype == "Cargo":
             self.check_warrant_number()
             self.check_duplicate_warrant_number()
@@ -129,7 +128,7 @@ def get_storage_fees(docname):
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight * docB.charged_storage_days) ELSE Sum(docB.volume * docB.charged_storage_days) END
-        WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
+        WHEN docB.cargo_type IN ("Container","Flatrack") THEN (Count(docA.item_name) * docB.charged_storage_days)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS qty,
         CASE 
@@ -138,7 +137,7 @@ def get_storage_fees(docname):
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight * docB.charged_storage_days * docB.storage_fee_price) ELSE Sum(docB.volume * docB.charged_storage_days * docB.storage_fee_price) END
-        WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
+        WHEN docB.cargo_type IN ("Container","Flatrack") THEN (Count(docA.item_name) * docB.charged_storage_days)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS total
         from `tabCargo References` as docB, `tabWharf Fees` as docA

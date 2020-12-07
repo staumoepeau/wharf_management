@@ -264,7 +264,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-29 09:15:41.764672",
+ "modified": "2020-12-06 11:45:58.940128",
  "modified_by": "Administrator",
  "module": "Freight Forwarder",
  "name": "Devaning Request",
@@ -285,11 +285,13 @@
    "create": 1,
    "email": 1,
    "export": 1,
+   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Wharf Operation Cashier",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -316,7 +318,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Administrator",
+   "role": "System Manager",
    "share": 1,
    "submit": 1,
    "write": 1

@@ -154,6 +154,7 @@ def get_fees_summary(posting_date):
         `tabWharf Fees`.`wharf_fee_category` AS category
         FROM `tabWharf Fee Item`, `tabWharf Fees`
         WHERE `tabWharf Fee Item`.`item` = `tabWharf Fees`.`name`
+        AND `tabWharf Fee Item`.`docstatus` = 1
         AND DATE(`tabWharf Fee Item`.`creation`) = %s
         AND `tabWharf Fee Item`.`parenttype` = "Warehouse Fee Payment"
         GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict=1)

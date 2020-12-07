@@ -15,7 +15,7 @@ frappe.query_reports["Cargo Reconciliation Report"] = {
             "fieldname": "stock_count",
             "label": __("Stock Count"),
             "fieldtype": "Select",
-            "options": [" ", "Yes", "No"],
+            "options": ["Yes", "No"],
             "reqd": 1,
             "width": "40"
         },

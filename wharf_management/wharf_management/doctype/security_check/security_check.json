@@ -67,6 +67,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "booking_ref.vessel",
    "fieldname": "vessel",
    "fieldtype": "Link",
    "label": "Vessel",
@@ -74,6 +75,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "booking_ref.eta_date",
    "fieldname": "current_eta",
    "fieldtype": "Datetime",
    "label": "Current ETA",
@@ -84,6 +86,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "booking_ref.agents",
    "fieldname": "agent",
    "fieldtype": "Link",
    "label": "Shipping Agency",
@@ -91,15 +94,18 @@
    "read_only": 1
   },
   {
+   "fetch_from": "booking_ref.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
    "label": "Voyage No",
    "read_only": 1
   },
   {
+   "fetch_from": "booking_ref.etd_date",
    "fieldname": "current_etd",
    "fieldtype": "Datetime",
-   "label": "Current ETD"
+   "label": "Current ETD",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_3",
@@ -224,7 +230,7 @@
  "in_create": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-13 22:16:54.926233",
+ "modified": "2020-12-06 17:58:37.473618",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Security Check",

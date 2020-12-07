@@ -1,50 +1,44 @@
 {
- "cards": [
-  {
-   "card": "Container 20 Discharged"
-  },
-  {
-   "card": "Container 40FT FULL Discharged"
-  },
-  {
-   "card": "Container 40FT EMT Discharged"
-  },
-  {
-   "card": "Container 20FT EMT Discharged"
-  },
-  {
-   "card": "Container 20FT FULL Loading"
-  },
-  {
-   "card": "Container 40FT FULL Loading"
-  },
-  {
-   "card": "Container 20FT EMT Loading"
-  },
-  {
-   "card": "Container 40FT EMT Loading"
-  },
-  {
-   "card": "Container 40FT FULL Discharged-1"
-  },
-  {
-   "card": "Container 20FT FULL Discharged Monthly"
-  },
-  {
-   "card": "Container 20FT FULL Loading Monthly"
-  },
-  {
-   "card": "Container 40FT FULL Loading Monthly"
-  },
-  {
-   "card": "Container 40FT EMT Loading Monthly"
-  },
-  {
-   "card": "Container 20FT EMT Loading Monthly"
-  }
- ],
+ "cards": [],
  "charts": [
   {
+   "chart": "TEU",
+   "width": "Half"
+  },
+  {
+   "chart": "FEU",
+   "width": "Half"
+  },
+  {
+   "chart": "TEU Discharged",
+   "width": "Half"
+  },
+  {
+   "chart": "TEU Loading",
+   "width": "Half"
+  },
+  {
+   "chart": "FEU Discharged",
+   "width": "Half"
+  },
+  {
+   "chart": "FEU Loading",
+   "width": "Half"
+  },
+  {
+   "chart": "TEU FULL Discharged",
+   "width": "Half"
+  },
+  {
+   "chart": "FEU FULL Discharged",
+   "width": "Half"
+  },
+  {
+   "chart": "TEU MTY Discharged",
+   "width": "Half"
+  },
+  {
+   "chart": "FEU MTY Discharged",
    "width": "Half"
   }
  ],
@@ -53,9 +47,9 @@
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
- "is_default": 0,
+ "is_default": 1,
  "is_standard": 1,
- "modified": "2020-11-18 00:33:06.424809",
+ "modified": "2020-12-08 06:14:44.585956",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

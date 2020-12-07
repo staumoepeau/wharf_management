@@ -8,33 +8,6 @@ let cargo_type_b = ["Break Bulk", "Heavy Vehicles", "Loose Cargo"];
 
 frappe.ui.form.on('Cargo', {
 
-    before_load: function(frm) {
-
-        //        if (frm.doc.payment_status == "Closed" && frm.doc.gate1_status == "Open") {
-        //            frappe.call({
-        //                method: "wharf_management.wharf_management.doctype.gate1.gate1.get_storage_days",
-        //                args: {
-        //                    "eta_date": frm.doc.payment_date,
-        //                    "posting_date": frappe.datetime.now_datetime()
-        //                },
-        //                callback: function(d) {
-        //                    d.message
-        //                    alert(d.message)
-        //                    if (d.message > 0) {
-        //                        frappe.call({
-        //                            method: 'wharf_management.wharf_management.doctype.cargo.cargo.set_overdue_storage',
-        //                            args: {
-        //                                "name_ref": frm.doc.name
-        //                            }
-        //                        })
-        //                        frm.save()
-        //                    }
-        //                }
-        //            });
-        //        }
-
-    },
-
     onload: function(frm) {
 
         wharf_management.cargo.setup_yard_queries(frm);

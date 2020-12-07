@@ -23,7 +23,7 @@ def get_columns():
 		_("Status") + ":Data:60",
 		_("Stock Date") + ":Date:110",
 		_("Stock Count") + ":Check:90",
-		_("Stock Take By") + ":Data:140",		
+		_("Stock Take By") + ":Data:200",		
 	]
 
 def get_cargo_stock_data(filters, columns):
@@ -32,33 +32,26 @@ def get_cargo_stock_data(filters, columns):
 	cargo_stock_data = get_cargo_stoc_reconciliation(filters)
 
 	for cont in cargo_stock_data:
-		row = [cont.name, cont.cargo_type, cont.container_no, cont.yard_slot, 
-		cont.chasis_no, cont.mark, cont.status, cont.stock_date, cont.stock_count, cont.stock_take_by]
+		row = [cont.name, cont.cargo_type, cont.container_no, cont.yard_slot, cont.chasis_no, cont.mark, 
+				cont.status, cont.stock_date, cont.stock_count, cont.stock_take_by]
 		data.append(row)
 	return data
 
 def get_conditions(filters):
-	conditions = " "
-	if filters.get("stock_date"): conditions += " and stock_date >= %(stock_date)s"
-	if filters.get("stock_count"): conditions += " and stock_count = %(stock_count)s"
-#	if filters.get("owner"): conditions += " and a.owner = %(owner)s"
-#	if filters.get("pos_profile"): conditions += " and a.is_pos = %(pos_profile)s"
-#	if filters.get("status"): conditions += " and a.status = %(status)s"
+	conditions = "1=1"
+	if filters.get("stock_date"): conditions += " and stock_date = %(stock_date)s"
+	if filters.get("stock_count") == "Yes": conditions += " and stock_count = '1'"
+	if filters.get("stock_count") == "No": conditions += " and stock_count = '0'"
+	
 	return conditions
 
 
 def get_cargo_stoc_reconciliation(filters):
 	conditions = get_conditions(filters)
-	return frappe.db.sql("""
-		select
-		name, cargo_type, cargo_description, container_no, yard_slot, 
-		chasis_no, mark, status, stock_date, stock_take_by, stock_count,
-		CASE
-    		WHEN stock_count = 0 THEN "No"
-    		WHEN stock_count = 1 THEN "Yes"
-		END
-		from `tabCargo`
-		where docstatus < 2
-			and {conditions}			
-	""".format(conditions=conditions), filters, as_dict=1)
+	return frappe.db.sql("""SELECT name, cargo_type, cargo_description, container_no, yard_slot, 
+			chasis_no, mark, status, stock_date, stock_take_by, stock_count
+			FROM `tabCargo`
+			WHERE docstatus = 1
+			AND {conditions}			
+			""".format(conditions=conditions), filters, as_dict=1)
 

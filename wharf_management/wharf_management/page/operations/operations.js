@@ -6,18 +6,22 @@ frappe.pages['operations'].on_page_load = function(wrapper) {
         single_column: true
     });
 
-    page.add_action_icon(__("fa fa-refresh fa-2x text-primary"), function() {
+    page.set_primary_action(__("Refresh"), function() {
         return frappe.ui.toolbar.clear_cache();
     });
 
-    page.main.html(frappe.render_template("operations", {}));
+    
 
-    var cargo_operations = frappe.ui.form.make_control({
-        parent: page.main.find(".vessel"),
-        df: {
-            field: "Link",
-            options: "Booking Request",
-            fieldname: "name"
-        },
+    let container_no_field = page.add_field({
+        label: 'Voyage',
+        fieldtype: 'Link',
+        fieldname: 'voyage',
+        options: 'Booking Request',
+        change() {
+            console.log(container_no_field.get_value());
+        }
     });
+
+    page.main.append(frappe.render_template("operations"));
+
 }
