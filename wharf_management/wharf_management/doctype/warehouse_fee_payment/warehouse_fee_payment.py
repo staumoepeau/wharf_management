@@ -3,7 +3,7 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-from frappe.utils import add_days, cint, cstr, flt
+from frappe.utils import add_days, cint, cstr, flt, getdate, rounded, date_diff, money_in_words
 import frappe
 from frappe import _, msgprint, throw
 from frappe.model.document import Document
@@ -42,10 +42,44 @@ class WarehouseFeePayment(Document):
         where `tabCargo Warehouse Table`.parent=%s""", (self.custom_warrant, self.vehicle_licenses_plate, self.driver_information, self.name))
 
 @frappe.whitelist()
+def get_storage_days(eta_date, posting_date):
+    working_days = get_holidays(eta_date, posting_date)
+    storage_days = date_diff(posting_date, eta_date)
+    storage_days -= len(working_days)
+    return storage_days
+
+@frappe.whitelist()
+def get_holidays(start_date, end_date):
+    holiday_list = frappe.db.get_value("Company", "Ports Authority Tonga", "default_holiday_list")
+    holidays = frappe.db.sql_list('''select holiday_date  from `tabHoliday` where
+		    parent=%(holiday_list)s
+		    and holiday_date >= %(start_date)s
+		    and holiday_date <= %(end_date)s''', {
+		    "holiday_list": holiday_list,
+		    "start_date": start_date,
+		    "end_date": end_date
+		    })
+    holidays = [cstr(i) for i in holidays]
+    return holidays
+
+@frappe.whitelist()
 def get_storage_fees(docname):
-    return frappe.db.sql("""select docB.item_code, docA.description,
-        Sum(docB.charged_storage_days) as qty,
-        Sum(docB.storage_fee_price) as price,
-        Sum(docB.storage_fee) as total
+    return frappe.db.sql("""select docB.item_code, docA.description, docB.storage_fee_price as price,
+        CASE 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo") 
+            THEN 
+                CASE 
+                WHEN Sum(docB.volume) < Sum(docB.net_weight)
+                    THEN Sum(docB.net_weight * docB.charged_storage_days) ELSE Sum(docB.volume * docB.charged_storage_days) END
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN (Count(docA.item_name) * docB.charged_storage_days) 
+        END AS qty,
+        CASE 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Split Ports") 
+            THEN 
+                CASE 
+                WHEN Sum(docB.volume) < Sum(docB.net_weight)
+                    THEN Sum(docB.net_weight * docB.charged_storage_days * docB.storage_fee_price) ELSE Sum(docB.volume * docB.charged_storage_days * docB.storage_fee_price) END
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN (Count(docA.item_name) * docB.charged_storage_days)
+        END AS total
         from `tabCargo Warehouse Table` as docB, `tabWharf Fees` as docA
-        WHERE docB.item_code = docA.item_name AND docB.parent = %s group by docB.item_code""", (docname), as_dict=1)
+		where docB.item_code = docA.item_name and docB.parent = %s group by docB.item_code""", (docname), as_dict=1)

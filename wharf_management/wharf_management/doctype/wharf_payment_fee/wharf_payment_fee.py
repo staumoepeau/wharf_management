@@ -142,7 +142,7 @@ class WharfPaymentFee(Document):
 
 	def insert_fees(self):
 		fees=0
-		strqty=0
+		int(strqty)=0
 		cubic_value=0
 		qty=0
 

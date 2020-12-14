@@ -1,0 +1,1 @@
+UPDATE `tabCargo Movement` JOIN `tabCargo` ON `tabCargo Movement`.refrence = `tabCargo`.name SET `tabCargo Movement`.etd_date = `tabCargo`.etd_date;

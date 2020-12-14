@@ -110,11 +110,13 @@
   },
   {
    "bold": 1,
+   "fetch_from": "booking_ref.vessel",
    "fieldname": "vessel",
    "fieldtype": "Data",
    "label": "Vessel"
   },
   {
+   "fetch_from": "booking_ref.eta_date",
    "fieldname": "eta_date",
    "fieldtype": "Datetime",
    "label": "ETA"
@@ -476,7 +478,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-03 14:24:56.948259",
+ "modified": "2020-12-10 10:22:11.651359",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Warehouse",
@@ -514,6 +516,7 @@
    "create": 1,
    "email": 1,
    "export": 1,
+   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,

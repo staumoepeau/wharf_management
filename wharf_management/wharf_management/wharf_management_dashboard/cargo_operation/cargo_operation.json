@@ -13,7 +13,10 @@
    "card": "Cargo Inspection"
   },
   {
-   "card": "Split Port"
+   "card": "TEU Discharged"
+  },
+  {
+   "card": "FEU Discharged"
   }
  ],
  "charts": [
@@ -28,7 +31,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2020-12-08 06:17:33.386364",
+ "modified": "2020-12-08 18:32:26.151740",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Operation",

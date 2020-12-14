@@ -215,9 +215,8 @@
    "read_only": 1
   },
   {
-   "default": "0",
    "fieldname": "posting_time",
-   "fieldtype": "Time",
+   "fieldtype": "Data",
    "label": "Posting Time",
    "read_only": 1
   },
@@ -291,7 +290,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-03 05:54:17.747469",
+ "modified": "2020-12-14 07:38:57.483562",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Warehouse Fee Payment",

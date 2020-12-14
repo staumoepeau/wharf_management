@@ -7,7 +7,7 @@ frappe.ui.form.on('Warehouse Fee Payment', {
     on_submit: function(frm) {
 
         //        frappe.set_route("List", "Cargo Warehouse")
-        frm.reload_doc()
+ //       frm.reload_doc()
     },
 
     refresh: function(frm) {
@@ -18,15 +18,15 @@ frappe.ui.form.on('Warehouse Fee Payment', {
             frm.set_df_property("who_authorized_discount", "reqd", 0);
         }
 
-        //        if (frm.doc.docstatus == 0) {
-        //            if (!frm.doc.posting_date) {
-        //                frm.set_value('posting_date', frappe.datetime.nowdate());
-        //            }
-        //            if (!frm.doc.posting_time) {
-        //                frm.set_value('posting_time', frappe.datetime.now_time());
-        //            }
-        //            set_posting_date_time(frm)
-        //        }
+        if (frm.doc.docstatus == 0) {
+            if (!frm.doc.posting_date) {
+                frm.set_value('posting_date', frappe.datetime.nowdate());
+            }
+            if (!frm.doc.posting_time) {
+                frm.set_value('posting_time', frappe.datetime.now_time());
+            }
+            set_posting_date_time(frm)
+        }
 
     },
     onload: function(frm) {
@@ -80,6 +80,35 @@ var set_posting_date_time = function(frm) {
     }
 }
 
+var get_storage_fee = function(frm) {
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_fees",
+        args: {
+            "docname": frm.doc.name,
+        },
+        callback: function(r) {
+            if (r.message) {
+
+                $.each(r.message, function(i, item) {
+                    var item_row = frm.add_child("wharf_fee_item")
+                    console.log(item)
+                    item_row.item = item.item_code,
+                        item_row.description = item.description,
+                        item_row.price = item.price,
+                        item_row.qty = item.qty,
+                        item_row.total = item.total
+                    frm.refresh()
+//                    get_net_total_fee(frm)
+//                    frm.refresh()
+//                    frm.save()
+//                    frm.refresh()
+                });
+
+            }
+        }
+    });
+}
+
 var get_net_total_fee = function(frm) {
     var doc = frm.doc;
 
@@ -93,36 +122,6 @@ var get_net_total_fee = function(frm) {
     refresh_field('net_total')
     refresh_field('total_amount')
 }
-
-var get_storage_fee = function(frm) {
-    frappe.call({
-        method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_fees",
-        args: {
-            "docname": frm.doc.name,
-        },
-        callback: function(r) {
-            if (r.message) {
-                if (frm.doc.wharf_fee_item) {
-                    frm.set_value("wharf_fee_item", [])
-                }
-                $.each(r.message, function(i, item) {
-                    var item_row = frm.add_child("wharf_fee_item")
-                        //                    console.log(item)
-                    item_row.item = item.item_code,
-                        item_row.description = item.description,
-                        item_row.price = item.price,
-                        item_row.qty = item.qty,
-                        item_row.total = item.total
-                    frm.refresh()
-                    get_net_total_fee(frm)
-                    frm.save()
-                });
-
-            }
-        }
-    });
-}
-
 
 $.extend(wharf_management.warehouse_fee_payment, {
 
@@ -151,7 +150,7 @@ frappe.ui.form.on("Wharf Fee Item", {
 
         frm.set_value("net_total", total);
         frm.set_value("total_amount", total);
-        cur_frm.refresh();
+        frm.refresh();
     },
 
     discount: function(frm, cdt, cdn) {
@@ -165,7 +164,7 @@ frappe.ui.form.on("Wharf Fee Item", {
 
         frm.set_value("net_total", total);
         frm.set_value("total_amount", total);
-        cur_frm.refresh();
+        frm.refresh();
     },
     discount_percent: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
@@ -176,7 +175,7 @@ frappe.ui.form.on("Wharf Fee Item", {
         frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
         frm.set_value("net_total", total);
         frm.set_value("total_amount", total);
-        cur_frm.refresh();
+        frm.refresh();
     },
 
 
@@ -268,7 +267,7 @@ frappe.ui.form.on("Cargo Warehouse Table", "cargo_warehouse", function(frm, cdt,
         }
 
         frappe.call({
-                method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
+            method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_days",
                 args: {
                     "eta_date": d.devaning_date,
                     "posting_date": frm.doc.posting_date

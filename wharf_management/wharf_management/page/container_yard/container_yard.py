@@ -41,8 +41,19 @@ def get_items(bay):
     items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
         `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
         FROM `tabYard Settings` 
-        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles") WHERE `tabYard Settings`.yard_sub_section=%s 
+        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles") WHERE `tabYard Settings`.yard_section=%s 
         ORDER BY `tabYard Settings`.yard_slot""",(bay) , as_dict=True)
+    return items
+
+@frappe.whitelist()
+def get_bay_row_items(bay):
+    items = []
+
+    items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
+        `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
+        FROM `tabYard Settings` 
+        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles") WHERE `tabYard Settings`.yard_sub_section=%s 
+        ORDER BY `tabYard Settings`.yard_slot""",(bay_row) , as_dict=True)
     return items
 
 #    yardlist = frappe.db.sql("""SELECT `tabYard Settings`.yard_section FROM `tabYard Settings` """, as_dict=True)

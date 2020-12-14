@@ -167,12 +167,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "charged_storage_days",
-   "fieldtype": "Int",
-   "label": "Charge Days",
-   "read_only": 1
-  },
-  {
    "fieldname": "storage_fee",
    "fieldtype": "Currency",
    "label": "Storage Fee",
@@ -191,13 +185,19 @@
    "fieldtype": "Float",
    "label": "Weight",
    "read_only": 1
+  },
+  {
+   "fieldname": "charged_storage_days",
+   "fieldtype": "Int",
+   "label": "Charge Days",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-12-03 05:40:20.751206",
+ "modified": "2020-12-14 07:45:41.405310",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo Warehouse Table",

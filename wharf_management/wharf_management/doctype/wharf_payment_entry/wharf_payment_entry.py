@@ -123,21 +123,21 @@ def get_booking_berthed_fee(docname):
 def get_storage_fees(docname):
     return frappe.db.sql("""select docB.item_code, docA.description, docB.storage_fee_price as price,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles", "Split Ports") 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Split Ports") 
             THEN 
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight * docB.charged_storage_days) ELSE Sum(docB.volume * docB.charged_storage_days) END
-        WHEN docB.cargo_type IN ("Container","Flatrack") THEN (Count(docA.item_name) * docB.charged_storage_days)
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN (Count(docA.item_name) * docB.charged_storage_days)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS qty,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles", "Split Ports") 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Split Ports") 
             THEN 
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight * docB.charged_storage_days * docB.storage_fee_price) ELSE Sum(docB.volume * docB.charged_storage_days * docB.storage_fee_price) END
-        WHEN docB.cargo_type IN ("Container","Flatrack") THEN (Count(docA.item_name) * docB.charged_storage_days)
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN (docB.storage_fee_price * docB.charged_storage_days)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS total
         from `tabCargo References` as docB, `tabWharf Fees` as docA
@@ -154,12 +154,12 @@ def get_storage_fees(docname):
 def get_wharfage_fees(docname):
     return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles", "Split Ports") 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Split Ports") 
             THEN 
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
-        WHEN docB.cargo_type IN ("Container", "Flatrack") THEN Count(docA.item_name)
+        WHEN docB.cargo_type IN ("Container", "Flatrack", "Vehicles") THEN Count(docA.item_name)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS qty,
         Sum(docB.wharfage_fee) as total
@@ -179,12 +179,12 @@ def get_export_storage_fees(docname):
 def get_export_wharfage_fees(docname):
     return frappe.db.sql("""select docB.wharfage_item_code, docA.description, docB.wharfage_fee_price as price,
         CASE 
-            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Vehicles", "Split Ports") 
+            WHEN docB.cargo_type IN ("Heavy Vehicles", "Break Bulk", "Loose Cargo", "Split Ports") 
             THEN 
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight) ELSE Sum(docB.volume) END
-        WHEN docB.cargo_type IN ("Container","Flatrack") THEN Count(docA.item_name)
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN Count(docA.item_name)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS qty,
         Sum(docB.wharfage_fee) as total
