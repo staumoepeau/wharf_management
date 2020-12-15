@@ -42,7 +42,7 @@ frappe.ui.form.on('Warehouse Cashier Closing', {
 var get_fees_summary = function(frm) {
 
     frappe.call({
-        method: "wharf_management.wharf_management.doctype.wharf_cashier_closing.wharf_cashier_closing.get_fees_summary",
+        method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_fees_summary",
         args: {
             "posting_date": frm.doc.posting_date,
         },

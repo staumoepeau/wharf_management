@@ -161,6 +161,7 @@
   "storage_overdue",
   "column_break_149",
   "overdue_storage_status",
+  "empty_deliver",
   "amended_from"
  ],
  "fields": [
@@ -1110,13 +1111,19 @@
    "fieldtype": "Select",
    "label": "Item Count Status",
    "options": "\nOpen\nClosed"
+  },
+  {
+   "fieldname": "empty_deliver",
+   "fieldtype": "Select",
+   "label": "EMPTY Deliver",
+   "options": "\nEMPTY"
   }
  ],
  "image_field": "file_attach",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-30 20:59:07.117719",
+ "modified": "2020-12-15 09:42:35.680538",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",
