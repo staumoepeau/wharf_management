@@ -93,7 +93,7 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Custom Inspection']],
+                    ['Cargo', 'status', '=', ['Custom Inspection']],
                 ]
             }
         }
