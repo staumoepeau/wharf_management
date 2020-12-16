@@ -170,7 +170,7 @@ var get_net_total_fee = function(frm) {
         })
     }
 
-    if (frm.doc.reference_doctype == "Cargo") {
+    if (frm.doc.reference_doctype == "Cargo" || frm.doc.reference_doctype == "Export") {
         frm.set_value("total_amount", doc.net_total);
         frm.set_df_property('amount_to_paid', 'hidden', 1);
     }
@@ -359,6 +359,7 @@ var get_export_wharfage_fee = function(frm) {
 
                         item_row.qty = item.qty,
                         item_row.total = item.total
+                        frm.refresh()
                     get_net_total_fee(frm)
                     frm.save()
                 });
