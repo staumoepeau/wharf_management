@@ -68,7 +68,7 @@
  "idx": 0,
  "is_standard": 1,
  "label": "Port Management",
- "modified": "2020-12-08 06:08:36.046142",
+ "modified": "2020-12-19 12:22:53.329035",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -99,6 +99,12 @@
    "label": "Operation Dashboard",
    "link_to": "Cargo Operation",
    "type": "Dashboard"
+  },
+  {
+   "doc_view": "",
+   "label": "Container Yard",
+   "link_to": "container_yard",
+   "type": "Page"
   }
  ],
  "shortcuts_label": ""

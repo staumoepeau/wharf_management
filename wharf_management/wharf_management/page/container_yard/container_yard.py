@@ -46,7 +46,7 @@ def get_items(bay):
     return items
 
 @frappe.whitelist()
-def get_bay_row_items(bay):
+def get_bay_row_items(bay_row):
     items = []
 
     items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,

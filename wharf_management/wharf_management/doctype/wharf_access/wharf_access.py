@@ -129,7 +129,7 @@ class WharfAccess(Document):
 			WHERE parent = %s """,(self.name), as_dict=1)
             
             for c in cargo_table:
-                val = frappe.db.get_value("Cargo", {"name": c.pickup_cargo_ref}, ["name","status","cargo_type","container_no","agents","consignee",
+                val = frappe.db.get_value("Cargo", {"name": c.pickup_cargo_ref}, ["name","status","cargo_type","container_no","agents","consignee","eta_date", "etd_date",
                 "container_type","container_size","container_content","cargo_description", "pat_code","work_type","custom_warrant"], as_dict=1)
            
                 doc = frappe.new_doc("Cargo Movement")
@@ -152,6 +152,9 @@ class WharfAccess(Document):
                     "truck_driver" : self.customer_full_name,
                     "refrence": c.pickup_cargo_ref,
                     "warrant_number" : val.custom_warrant
+                    "eta_date" : val.eta_date,
+                    "etd_date" : val.etd_date,
+                    "refrence": val.name
                     })
                 doc.insert(ignore_permissions=True)
                 doc.submit()

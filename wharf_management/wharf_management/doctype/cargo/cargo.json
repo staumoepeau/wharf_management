@@ -288,6 +288,7 @@
   },
   {
    "bold": 1,
+   "fetch_from": "booking_ref.vessel",
    "fieldname": "vessel",
    "fieldtype": "Data",
    "in_preview": 1,
@@ -299,6 +300,7 @@
   },
   {
    "allow_in_quick_entry": 1,
+   "fetch_from": "booking_ref.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
    "in_preview": 1,
@@ -308,6 +310,7 @@
   {
    "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.eta_date",
    "fieldname": "eta_date",
    "fieldtype": "Datetime",
    "in_preview": 1,
@@ -315,6 +318,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.final_eta",
    "fieldname": "final_eta",
    "fieldtype": "Datetime",
    "hidden": 1,
@@ -326,6 +330,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.agents",
    "fieldname": "agents",
    "fieldtype": "Link",
    "label": "Shipping Line Angeny",
@@ -334,6 +339,7 @@
   {
    "allow_in_quick_entry": 1,
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.etd_date",
    "fieldname": "etd_date",
    "fieldtype": "Datetime",
    "in_preview": 1,
@@ -341,6 +347,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.final_etd",
    "fieldname": "final_etd",
    "fieldtype": "Datetime",
    "hidden": 1,
@@ -353,6 +360,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.pol",
    "fieldname": "pol",
    "fieldtype": "Link",
    "label": "Port of Loading",
@@ -364,6 +372,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.pod",
    "fieldname": "pod",
    "fieldtype": "Link",
    "label": "Port of Discharged",
@@ -375,6 +384,7 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "booking_ref.final_dest_port",
    "fieldname": "final_dest_port",
    "fieldtype": "Link",
    "label": "Final Destination Port",
@@ -1123,7 +1133,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-15 09:42:35.680538",
+ "modified": "2020-12-18 19:43:32.876967",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

@@ -21,6 +21,7 @@
   "total_cash",
   "section_break_12",
   "updates",
+  "cheque_section",
   "cheque_details",
   "section_break_14",
   "data_1",
@@ -153,6 +154,8 @@
    "read_only": 1
   },
   {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:!doc.gov_voucher",
    "fieldname": "gov_voucher_section",
    "fieldtype": "Section Break",
    "label": "Gov Voucher"
@@ -249,12 +252,19 @@
    "fieldtype": "Table",
    "label": "Fees Summary",
    "options": "Fees Summary"
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:!doc.cheque_details",
+   "fieldname": "cheque_section",
+   "fieldtype": "Section Break",
+   "label": "Cheque Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-04 06:33:59.564695",
+ "modified": "2020-12-19 09:57:04.534903",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Warehouse Cashier Closing",

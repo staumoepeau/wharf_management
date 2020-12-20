@@ -18,6 +18,10 @@
   "basic_information",
   "agents",
   "data_7",
+  "cargo_ref",
+  "data_12",
+  "devanning_date",
+  "section_break_13",
   "booking_ref",
   "column_break_9",
   "voyage_no",
@@ -30,15 +34,11 @@
   "data_16",
   "final_dest_port",
   "section_break_23",
-  "cargo_ref",
-  "column_break_25",
   "container_no",
   "column_break_26",
   "container_type",
   "column_break_27",
   "container_size",
-  "section_break_30",
-  "devanning_date",
   "section_break_29",
   "warehouse_manifest",
   "column_break_32",
@@ -97,7 +97,7 @@
    "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Freight Forwarder",
-   "options": "Shipping Agency",
+   "options": "Customer",
    "reqd": 1
   },
   {
@@ -105,6 +105,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "cargo_ref.booking_ref",
    "fieldname": "booking_ref",
    "fieldtype": "Link",
    "label": "Voyage Details",
@@ -115,20 +116,21 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "booking_ref.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
    "in_filter": 1,
    "in_global_search": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Voyage No",
-   "reqd": 1
+   "label": "Voyage No"
   },
   {
    "fieldname": "column_break_14",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "booking_ref.vessel",
    "fieldname": "vessel",
    "fieldtype": "Link",
    "in_filter": 1,
@@ -143,6 +145,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "fetch_from": "booking_ref.pol",
    "fieldname": "pol",
    "fieldtype": "Link",
    "label": "Port of Loading",
@@ -153,6 +156,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "booking_ref.pod",
    "fieldname": "pod",
    "fieldtype": "Link",
    "label": "Port of Discharge",
@@ -163,6 +167,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "booking_ref.final_dest_port",
    "fieldname": "final_dest_port",
    "fieldtype": "Link",
    "label": "Final Destination Port",
@@ -176,41 +181,35 @@
    "fieldname": "cargo_ref",
    "fieldtype": "Link",
    "label": "Cargo Ref",
-   "options": "Cargo"
+   "options": "Cargo",
+   "reqd": 1
   },
   {
-   "fieldname": "column_break_25",
-   "fieldtype": "Column Break"
-  },
-  {
+   "fetch_from": "cargo_ref.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
-   "label": "Container No",
-   "read_only": 1
+   "label": "Container No"
   },
   {
    "fieldname": "column_break_26",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "cargo_ref.container_type",
    "fieldname": "container_type",
    "fieldtype": "Data",
-   "label": "Container Type",
-   "read_only": 1
+   "label": "Container Type"
   },
   {
    "fieldname": "column_break_27",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "cargo_ref.container_size",
    "fieldname": "container_size",
    "fieldtype": "Data",
    "label": "Container Size",
    "read_only": 1
-  },
-  {
-   "fieldname": "section_break_30",
-   "fieldtype": "Section Break"
   },
   {
    "allow_on_submit": 1,
@@ -236,7 +235,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "\nPending\nApproved",
+   "options": "\nPending\nBooked\nApproved",
    "read_only": 1
   },
   {
@@ -257,6 +256,14 @@
    "options": "Devaning Request",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "data_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
   }
  ],
  "hide_toolbar": 1,
@@ -264,7 +271,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-06 11:45:58.940128",
+ "modified": "2020-12-18 21:00:20.013938",
  "modified_by": "Administrator",
  "module": "Freight Forwarder",
  "name": "Devaning Request",

@@ -133,28 +133,22 @@ class WarehouseCashierClosing(Document):
 
 @frappe.whitelist()
 def get_transactions_list(posting_date):
-
-#    if cashier:
-#        return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
-#            FROM `tabWarehouse Fee Payment`
-#            WHERE status = "Paid" AND docstatus = 1
-#            AND owner = %s
-#            AND posting_date = %s """, (cashier, posting_date), as_dict=1)
-
-#    if not cashier or cashier == "":
         return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
         FROM `tabWarehouse Fee Payment`
-        WHERE status = "Paid" AND docstatus = 1
+        WHERE status = "Paid" 
+        AND docstatus = 1
         AND posting_date = %s """, (posting_date), as_dict=1)
+
 
 @frappe.whitelist()
 def get_fees_summary(posting_date):
     return frappe.db.sql("""SELECT SUM(`tabWharf Fee Item`.`total`) AS total,
         SUM(`tabWharf Fee Item`.`discount`) AS discount,
         `tabWharf Fees`.`wharf_fee_category` AS category
-        FROM `tabWharf Fee Item`, `tabWharf Fees`
+        FROM `tabWharf Fee Item`, `tabWharf Fees`, `tabWarehouse Fee Payment`
         WHERE `tabWharf Fee Item`.`item` = `tabWharf Fees`.`name`
         AND `tabWharf Fee Item`.`docstatus` = 1
-        AND DATE(`tabWharf Fee Item`.`creation`) = %s
+        AND `tabWharf Fee Item`.`parent` = `tabWarehouse Fee Payment` .`name`
+        AND DATE(`tabWarehouse Fee Payment`.`posting_date`) = %s
         AND `tabWharf Fee Item`.`parenttype` = "Warehouse Fee Payment"
         GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict=1)

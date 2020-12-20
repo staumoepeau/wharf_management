@@ -27,8 +27,17 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         } else if (state == "Open") {
             state = "Close"
         }
-        //    alert(state)
         toggle_rightMenu(state);
+
+        frappe.call({
+            method: "wharf_management.wharf_management.page.container_yard.container_yard.get_inspection_items",
+            callback: function(y) {
+    
+                page.main.find('#right-sidebar-wrapper').append(frappe.render_template('container_yard_rightbar', {
+                    inspection_items: y.message || []
+                }))
+            }
+        });
     });
 
     let container_no_field = page.add_field({
@@ -57,35 +66,33 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
                 show_yard_details(page, null, null);
             } 
             if (page, bay_field.get_value() != "All") {
-                $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
-                show_yard_details(page, null, bay_field.get_value());        
+//                $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
+                show_yard_details(page, null, bay_field.get_value(), null);        
             }
             bayvalue = bay_field.get_value();
 
-//            alert(bayvalue)
+            
         }
         
     });
 
-   // var row_field = page.add_field({
-   //     label: 'Row',
-   //     fieldtype: 'Link',
-   //     fieldname: 'row',
-   //     options: "Yard Row",
-   //     change() {
-//            if (page, row_field.get_value() == "All") {
+    var row_field = page.add_field({
+        label: 'Row',
+        fieldtype: 'Link',
+        fieldname: 'row',
+        options: "Yard Row",
+        change() {
+            if (page, row_field.get_value() == "All") {
 //                $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
-//                show_yard_details(page, null, null);
-//            } 
- //           if (page, row_field.get_value()) {
- //              $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
- //               show_yard_details(page, null, bay, row);   
- //           }
- //           console.log(bay, row)
- //       }
-        
-        
- //   });
+                show_yard_details(page, null, null);
+            } 
+           if (page, row_field.get_value()) {
+//              $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
+               show_yard_details(page, null, null, row_field.get_value());   
+           }
+           console.log(bay, row)
+       }        
+   });
 
     
 
@@ -95,12 +102,12 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
 };
 
 
-var show_yard_details = function(page, container_no, bay) {
+var show_yard_details = function(page, container_no, bay, row) {
     
     page.main.append(frappe.render_template('container_yard_main'));
 
 
-    if (container_no && !bay) {
+    if (container_no && !bay && !row) {
         frappe.call({
             method: "wharf_management.wharf_management.page.container_yard.container_yard.get_container",
             args: {
@@ -115,7 +122,7 @@ var show_yard_details = function(page, container_no, bay) {
             }
         });
     }
-    if (!container_no && bay) {
+    if (!container_no && !row && bay) {
         if (bay == 'All') {
             bay == null
         } else {
@@ -136,7 +143,22 @@ var show_yard_details = function(page, container_no, bay) {
 
     }
 
-    if (!container_no && !bay) {
+    if (!container_no && bay && row) {
+        frappe.call({
+            method: "wharf_management.wharf_management.page.container_yard.container_yard.get_bay_row_items",
+                        args: {
+                            "bay": bay,
+                            "row": row
+                        },
+            callback: function(r) {
+                page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', {
+                    items: r.message || []
+                }))
+            }
+        });
+    }
+
+    if (!container_no && !bay && !row) {
         frappe.call({
             method: "wharf_management.wharf_management.page.container_yard.container_yard.get_all_items",
             //            args: {
@@ -149,22 +171,13 @@ var show_yard_details = function(page, container_no, bay) {
             }
         });
     }
+};
 
 
-//    frappe.call({
-//        method: "wharf_management.wharf_management.page.container_yard.container_yard.get_inspection_items",
-//        callback: function(y) {
-
-//            page.main.find('#right-sidebar-wrapper').append(frappe.render_template('container_yard_rightbar', {
-//                inspection_items: y.message || []
-//            }))
-//        }
-//    });
 
 //    frappe.call({
 //        method: "wharf_management.wharf_management.page.container_yard.container_yard.get_express_items",
 //        callback: function(express) {
-
 //            page.main.find('#left-sidebar-wrapper').append(frappe.render_template('container_yard_leftbar', {
 //                express_items: express.message || []
 //            }))
@@ -172,7 +185,6 @@ var show_yard_details = function(page, container_no, bay) {
 //        }
 //    });
 
-};
 
 
 
@@ -325,11 +337,13 @@ function Drop(e, ref) {
      *  dragstart, drag, dragenter, dragleave, dragover, drop, dragend
      */
 
+     console.log(bayvalue);
+     console.log(state);
+
     var drop_cargo_ref = e.dataTransfer.getData("Text/html");
     new_yard = ref.id;
 
 //    alert(new_yard)
-
 //    Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
 
     //return false;
@@ -352,21 +366,24 @@ function Drop(e, ref) {
 
     //} 
     else if (yard_id != "Inspection") {
+
+        
         frappe.db.set_value('Cargo', drop_cargo_ref, 'yard_slot', new_yard);
     }
     //    console.log(yard_id, new_yard, status, cargo_ref, drop_cargo_ref)
+//    alert(bayvalue)
+
     frappe.db.set_value('Yard Settings', new_yard, 'occupy', 1);
 
-
-//    var bay_value = document.getElementsByClassName('bay')[0].value
     
-    //var bay_value = document.getElementsByClassName('awesomplete').getAttribute('data-fieldname').value;
 
-    alert(bay_value);
+//    $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
 
-//    show_yard_details(page, null, bay_value);
-    $("#container-yard-main").load(location.href + " #container-yard-main");
-//    frappe.ui.toolbar.clear_cache();
+    //    document.getElementById("page-content-wrapper").innerHTML = document.getElementById("page-content-wrapper").innerHTML;
+
+//      $("#container-yard-main").load(location.href + " #container-yard-main");
+//      $( "#container-yard-main" ).load(window.location.href + " #container-yard-main" );
+ //     frappe.ui.toolbar.clear_cache();
 }
 
 
@@ -414,4 +431,4 @@ function Drop(e, ref) {
 //};
 
 //--------------------------------------------------------------------------------------------------------------------------
-$('[data-toggle="tooltip"]').tooltip({ html: true });
+//$('[data-toggle="tooltip"]').tooltip({ html: true });
