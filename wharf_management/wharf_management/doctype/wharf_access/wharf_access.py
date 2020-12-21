@@ -151,7 +151,7 @@ class WharfAccess(Document):
                     "truck" : self.license_plate,
                     "truck_driver" : self.customer_full_name,
                     "refrence": c.pickup_cargo_ref,
-                    "warrant_number" : val.custom_warrant
+                    "warrant_number" : val.custom_warrant,
                     "eta_date" : val.eta_date,
                     "etd_date" : val.etd_date,
                     "refrence": val.name
