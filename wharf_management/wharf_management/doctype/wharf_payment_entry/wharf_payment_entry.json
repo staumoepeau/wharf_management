@@ -124,6 +124,7 @@
    "label": "PAYMENT DETAILS"
   },
   {
+   "allow_on_submit": 1,
    "bold": 1,
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
@@ -173,6 +174,7 @@
    "options": "Wharf Fee Item"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "payment_method",
    "fieldtype": "Table",
    "label": "Payment Method",
@@ -394,7 +396,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-02 07:15:34.621838",
+ "modified": "2021-01-04 19:06:31.532150",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",

@@ -146,7 +146,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_status = "Open"
         yard_date = None
         final_status = final_work_type
-        third_work_type =None
+        third_work_type = None
         container_content = val.container_content
        
 
@@ -159,7 +159,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_status = "Open"
         yard_date = None
         final_status = final_work_type
-        third_work_type =None
+        third_work_type = None
         container_content = val.container_content
     
     if final_work_type == "Discharged" and secondary_work_type == "Transhipment":
@@ -171,7 +171,19 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_status = "Closed"
         yard_date = now()
         final_status = final_work_type
-        third_work_type =None
+        third_work_type = None
+        container_content = val.container_content
+    
+    if final_work_type == "Loading" and secondary_work_type == "Transhipment":
+        worktype = "Transhipment"
+        movement = "Transshipment"
+        payment = "Closed"
+        gate = "Closed"
+        inspection_status = "Closed"
+        yard_status = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        third_work_type = None
         container_content = val.container_content
         
     if cargo_type == "Split Ports" and final_work_type == "Discharged" :
@@ -196,7 +208,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_status = "Closed"
         yard_date = now()
         final_status = final_work_type
-        third_work_type =None
+        third_work_type = None
         container_content = val.container_content
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
@@ -209,7 +221,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         gate = "Closed"
         final_work_type == "Discharged"
         yard_date = None
-        third_work_type =None
+        third_work_type = None
         container_content = val.container_content
     
 
@@ -223,7 +235,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         gate = "Open"
         yard_date = None
         final_work_type = "Discharged"
-        third_work_type =None
+        third_work_type = None
         container_content = None
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and (val.third_work_type == "Stock" or not val.third_work_type):

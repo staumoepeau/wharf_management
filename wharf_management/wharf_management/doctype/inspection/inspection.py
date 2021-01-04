@@ -64,6 +64,11 @@ class Inspection(Document):
         elif self.final_work_type == "Discharged" and self.secondary_work_type == "Transhipment" and not self.third_work_type:
             self.create_cargo()
             self.create_transhipment_cargo()
+        
+        elif self.final_work_type == "Loading" and self.secondary_work_type == "Transhipment" and not self.third_work_type:
+            self.create_cargo()
+            self.load_transhipment_cargo()
+
 
         elif self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing" and not self.third_work_type:
             self.create_cargo()
