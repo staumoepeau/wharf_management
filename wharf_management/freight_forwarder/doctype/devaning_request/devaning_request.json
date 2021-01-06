@@ -231,7 +231,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "Pending",
+   "default": "Booked",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -271,7 +271,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-18 21:00:20.013938",
+ "modified": "2021-01-04 23:38:53.306160",
  "modified_by": "Administrator",
  "module": "Freight Forwarder",
  "name": "Devaning Request",

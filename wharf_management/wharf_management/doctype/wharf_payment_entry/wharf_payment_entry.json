@@ -168,6 +168,7 @@
    "label": "FEES"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "wharf_fee_item",
    "fieldtype": "Table",
    "label": "Fees",
@@ -198,6 +199,7 @@
    "mandatory_depends_on": "eval:doc.discount==\"YES\""
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -396,7 +398,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-04 19:06:31.532150",
+ "modified": "2021-01-05 11:28:26.690113",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",
