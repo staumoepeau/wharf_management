@@ -28,7 +28,7 @@ class WharfCashierClosing(Document):
             AND docA.parent = docB.name
             AND docA.parenttype = "Wharf Payment Entry"
             AND docA.mode_of_payment = "Cheque"
-            AND docB.reference_doctype IN ("Cargo", "Export")
+            AND docB.reference_doctype IN ("Cargo", "Export", "Fees")
             AND docA.posting_date = %s """, (self.posting_date), as_dict=1)
             totalcheque = 0.0
             for d in chequelist:
@@ -48,7 +48,7 @@ class WharfCashierClosing(Document):
             AND docA.parent = docB.name
             AND docA.parenttype = "Wharf Payment Entry"
             AND docA.mode_of_payment = "Cheque"
-            AND docB.reference_doctype IN ("Cargo", "Export")
+            AND docB.reference_doctype IN ("Cargo", "Export", "Fees")
             AND docA.owner = %s
             AND docA.posting_date = %s """, (self.user, self.posting_date), as_dict=1)
             totalcheque = 0.0
@@ -71,7 +71,7 @@ class WharfCashierClosing(Document):
                 AND docA.parent = docB.name
                 AND docA.parenttype = "Wharf Payment Entry"
                 AND docA.posting_date = %s
-                AND docB.reference_doctype IN ("Cargo", "Export")
+                AND docB.reference_doctype IN ("Cargo", "Export", "Fees")
                 GROUP BY docA.mode_of_payment """, (self.posting_date), as_dict=1)
             grandtotal = 0.0
             for d in paymentmode:
@@ -89,7 +89,7 @@ class WharfCashierClosing(Document):
                 AND docA.parent = docB.name
                 AND docA.parenttype = "Wharf Payment Entry"
                 AND docA.owner = %s
-                AND docB.reference_doctype IN ("Cargo", "Export")
+                AND docB.reference_doctype IN ("Cargo", "Export", "Fees")
                 AND docA.posting_date = %s
                 GROUP BY docA.mode_of_payment """, (self.user, self.posting_date), as_dict=1)
             grandtotal = 0.0
@@ -164,14 +164,14 @@ def get_transactions_list(posting_date, cashier):
             FROM `tabWharf Payment Entry`
             WHERE status = "Paid" AND docstatus = 1
             AND owner = %s
-            AND reference_doctype IN ("Cargo", "Export")
+            AND reference_doctype IN ("Cargo", "Export", "Fees")
             AND posting_date = %s """, (cashier, posting_date), as_dict=1)
 
     if not cashier or cashier == "":
             return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
             FROM `tabWharf Payment Entry`
             WHERE status = "Paid" AND docstatus = 1
-            AND reference_doctype IN ("Cargo", "Export")
+            AND reference_doctype IN ("Cargo", "Export", "Fees")
             AND posting_date = %s """, (posting_date), as_dict=1)
 
 
@@ -181,7 +181,7 @@ def get_transactions(posting_date):
     FROM `tabWharf Payment Entry` 
     WHERE status = 'Paid' 
     AND docstatus = 1
-    AND reference_doctype IN ("Cargo", "Export")
+    AND reference_doctype IN ("Cargo", "Export", "Fees")
     AND posting_date = %s""", (posting_date), as_list=True)
  
 
@@ -197,5 +197,5 @@ def get_fees_summary(posting_date):
         AND `tabWharf Fee Item`.`parent` = `tabWharf Payment Entry` .`name`
         AND `tabWharf Payment Entry`.`posting_date` = %s
         AND `tabWharf Fee Item`.`parenttype` = "Wharf Payment Entry"
-        AND `tabWharf Payment Entry`.reference_doctype IN ("Cargo", "Export")
+        AND `tabWharf Payment Entry`.reference_doctype IN ("Cargo", "Export", "Fees")
         GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict = 1)

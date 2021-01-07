@@ -13,7 +13,7 @@ from frappe.utils.user import get_user_fullname
 
 def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type, devan):
     
-    worktype, movement, payment,gate = "", "", "", ""
+    secondary_work_type, movement, payment,gate = "", "", "", ""
 
     if doctype == "Pre Advice":
         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no",
@@ -28,7 +28,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
         "chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
 
     if final_work_type == "Discharged" and devan == "EMPTY" and val.third_work_type == "Loading" and cargo_type == "Container":
-        worktype = "Devanning"
+        secondary_work_type = "Devanning"
         movement = "Inspection"
         inspection_status = "Closed"
         yard_status = "Closed"
@@ -42,7 +42,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
         secondary_work_type = val.secondary_work_type
     
     if final_work_type == "Discharged" and devan == "EMPTY" and val.third_work_type == "Stock" and cargo_type == "Container":
-        worktype = "Devanning"
+        secondary_work_type = "Devanning"
         movement = "Inspection"
         inspection_status = "Closed"
         yard_status = "Closed"
@@ -51,7 +51,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
         gate = "Closed"
         final_work_type == "Discharged"
         yard_date = None
-        third_work_type =None
+        third_work_type ="Stock"
         container_content = "EMPTY"
         secondary_work_type = val.secondary_work_type
 
@@ -70,8 +70,8 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
                 "bol" : val.bol,
                 "work_type" : final_work_type,
                 "work_type_date": now(),
-                "secondary_work_type" : worktype,
-                "third_work_type": third_work_type,
+                "secondary_work_type" : secondary_work_type,
+                "additional_work": third_work_type,
                 "pol" : val.pol,
                 "agents" : val.agents,
                 "commodity_code" : val.commodity_code,
@@ -114,7 +114,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
 @frappe.whitelist()
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
-    worktype, movement, payment,gate = "", "", "", ""
+    secondary_work_type, movement, payment,gate = "", "", "", ""
 
     if doctype == "Pre Advice":
         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no",
@@ -151,7 +151,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
-        worktype = "Re-stowing"
+        secondary_work_type = "Re-stowing"
         movement = "Re-stowing"
         payment = "Closed"
         gate = "Closed"
@@ -163,7 +163,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         container_content = val.container_content
     
     if final_work_type == "Discharged" and secondary_work_type == "Transhipment":
-        worktype = "Transhipment"
+        secondary_work_type = "Transhipment"
         movement = "Transshipment"
         payment = "Closed"
         gate = "Closed"
@@ -175,7 +175,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         container_content = val.container_content
     
     if final_work_type == "Loading" and secondary_work_type == "Transhipment":
-        worktype = "Transhipment"
+        secondary_work_type = "Transhipment"
         movement = "Transshipment"
         payment = "Closed"
         gate = "Closed"
@@ -186,8 +186,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         third_work_type = None
         container_content = val.container_content
         
-    if cargo_type == "Split Ports" and final_work_type == "Discharged" :
-        worktype = secondary_work_type
+    if cargo_type == "Split Ports" and final_work_type == "Discharged":
+        secondary_work_type = secondary_work_type
         movement = "Split Ports"
         payment = "Open"
         gate = "Open"
@@ -199,8 +199,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         container_content = val.container_content
         
 
-    if cargo_type == "Split Ports" and final_work_type == "Loading" :
-        worktype = secondary_work_type
+    if cargo_type == "Split Ports" and final_work_type == "Loading":
+        secondary_work_type = secondary_work_type
         movement = "Split Ports"
         payment = "Closed"
         gate = "Open"
@@ -212,7 +212,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         container_content = val.container_content
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
-        worktype = "Devanning"
+        secondary_work_type = "Devanning"
         movement = "Devanning"
         inspection_status = "Closed"
         yard_status = "Closed"
@@ -226,7 +226,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
     
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
-        worktype = None
+        secondary_work_type = None
         movement = "Inspection"
         inspection_status = "Closed"
         yard_status = "Open"
@@ -238,20 +238,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         third_work_type = None
         container_content = None
 
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and (val.third_work_type == "Stock" or not val.third_work_type):
-        worktype = "Devanning"
-        movement = "Devanning"
-        inspection_status = "Closed"
-        yard_status = "Closed"
-        final_status = "Discharged"
-        payment = "Closed"
-        gate = "Closed"
-        yard_date = None
-        final_work_type == "Discharged"
-        third_work_type = val.third_work_type
-        container_content = "FULL"
-
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type != "Container" and (val.third_work_type == "Stock" or not val.third_work_type):
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type != "Container" and val.third_work_type == "Stock":
         movement = "Inspection"
         inspection_status = "Closed"
         yard_status = "Open"
@@ -262,6 +249,18 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_work_type = "Devanning"
         third_work_type = val.third_work_type
         container_content = None
+    
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type == "Container" and val.third_work_type == "Stock":
+        inspection_status = "Closed"
+        yard_status = "Open"
+        final_status = "Discharged"
+        payment = "Open"
+        gate = "Open"
+        yard_date = None
+        final_work_type = "Devanning"
+        third_work_type = val.third_work_type
+        container_content = "EMPTY"
+
 
     doc = frappe.new_doc("Cargo")
     doc.update({
@@ -278,8 +277,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "bol" : val.bol,
                 "work_type" : final_work_type,
                 "work_type_date": now(),
-                "secondary_work_type" : worktype,
-                "third_work_type": third_work_type,
+                "secondary_work_type" : secondary_work_type,
+                "additional_work": third_work_type,
                 "pol" : val.pol,
                 "agents" : val.agents,
                 "commodity_code" : val.commodity_code,
