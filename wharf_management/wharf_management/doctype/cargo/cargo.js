@@ -55,8 +55,6 @@ frappe.ui.form.on('Cargo', {
 
     refresh: function(frm) {
 
-
-
         if (frm.doc.docstatus == 1) {
             if (frm.doc.cargo_type == "Vehicles") {
                 frm.set_df_property("chasis_no", "reqd", 1);
@@ -662,11 +660,13 @@ frappe.ui.form.on('Cargo', {
         }
 
     },
+    
+
     manifest_check: function(frm) {
 
         if (frm.doc.manifest_check == "Confirm") {
             if (frm.doc.work_type == "Loading") {
-                //               alert("Hello")
+
                 if (cargo_type_a.includes(frm.doc.cargo_type)) {
                     frappe.call({
                         "method": "frappe.client.get",
@@ -719,19 +719,25 @@ frappe.ui.form.on('Cargo', {
                         }
                     });
                 }
-
+                if (frm.doc.last_work == "Stock"){
+                    let etadate = frm.doc.final_eta
+                    let postingdate = frm.doc.final_etd
+                } else {
+                    let etadate = frm.doc.gate1_date
+                    let postingdate = frm.doc.etd_date
+                }
+                console.log(etadate, postingdate)
                 frappe.call({
                     method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
                     args: {
-                        "eta_date": frm.doc.gate1_date,
-                        "posting_date": frm.doc.etd_date,
+                        "eta_date": etadate,
+                        "posting_date": postingdate,
                     },
                     callback: function(r) {
+                        console.log(etadate, postingdate)
                         frm.set_value("storage_days", r.message);
 
                         let sdays = flt(frm.doc.storage_days - frm.doc.free_days);
-
-                        //                        alert(sdays)
                         if (sdays > 0) {
 
                             frm.set_value("charge_days", sdays);

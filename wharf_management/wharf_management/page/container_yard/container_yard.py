@@ -59,10 +59,10 @@ def get_bay_row_items(bay_row):
 #    yardlist = frappe.db.sql("""SELECT `tabYard Settings`.yard_section FROM `tabYard Settings` """, as_dict=True)
 
 @frappe.whitelist()
-def get_inspection_items():
+def get_inspection_items(booking_ref):
 
     inspection_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content, cargo_condition
-        FROM `tabCargo` WHERE status = 'Inspection' AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles")""" , as_dict=True)
+        FROM `tabCargo` WHERE booking_ref=%s AND status = 'Inspection' AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles")""",(booking_ref) , as_dict=True)
     return inspection_items
 
 

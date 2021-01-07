@@ -114,7 +114,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
 @frappe.whitelist()
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
-    secondary_work_type, movement, payment,gate = "", "", "", ""
+    last_work_type, secondary_work_type, third_work_type, movement, payment, gate = "", "", "", "", "", ""
 
     if doctype == "Pre Advice":
         val = frappe.db.get_value(doctype, {"name": cargo_ref}, ["booking_ref","pat_code","net_weight","cargo_type","last_port","qty","container_no","voyage_no",
@@ -135,9 +135,24 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         payment = "Closed"
         gate = "Closed"
         yard_date = now()
+
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+
+    
+    if final_work_type == "Loading" and not secondary_work_type:
+        inspection_status = "Closed"
+        movement = "Outbound"
+        yard_status = "Closed"
+        payment = "Closed"
+        gate = "Closed"
+        yard_date = now()
+  
+        final_status = final_work_type
+        last_work_type = "Stock"
+        container_content = val.container_content 
 
 
     if final_work_type == "Discharged" and not secondary_work_type:
@@ -148,6 +163,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+   
        
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
@@ -161,6 +178,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+
     
     if final_work_type == "Discharged" and secondary_work_type == "Transhipment":
         secondary_work_type = "Transhipment"
@@ -173,6 +192,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+
     
     if final_work_type == "Loading" and secondary_work_type == "Transhipment":
         secondary_work_type = "Transhipment"
@@ -185,6 +206,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+
         
     if cargo_type == "Split Ports" and final_work_type == "Discharged":
         secondary_work_type = secondary_work_type
@@ -197,7 +220,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type =None
         container_content = val.container_content
-        
+        last_work_type : None
+
 
     if cargo_type == "Split Ports" and final_work_type == "Loading":
         secondary_work_type = secondary_work_type
@@ -210,6 +234,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_status = final_work_type
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
+
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
         secondary_work_type = "Devanning"
@@ -223,6 +249,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_date = None
         third_work_type = None
         container_content = val.container_content
+        last_work_type : None
     
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
@@ -237,6 +264,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_work_type = "Discharged"
         third_work_type = None
         container_content = None
+        last_work_type : None
+
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type != "Container" and val.third_work_type == "Stock":
         movement = "Inspection"
@@ -249,6 +278,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_work_type = "Devanning"
         third_work_type = val.third_work_type
         container_content = None
+        last_work_type : None
+ 
     
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and cargo_type == "Container" and val.third_work_type == "Stock":
         inspection_status = "Closed"
@@ -260,6 +291,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         final_work_type = "Devanning"
         third_work_type = val.third_work_type
         container_content = "EMPTY"
+        last_work_type : None
+
 
 
     doc = frappe.new_doc("Cargo")
@@ -279,6 +312,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "work_type_date": now(),
                 "secondary_work_type" : secondary_work_type,
                 "additional_work": third_work_type,
+                "last_work" : last_work_type,
                 "pol" : val.pol,
                 "agents" : val.agents,
                 "commodity_code" : val.commodity_code,
@@ -298,8 +332,8 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
                 "status" : movement,
                 "seal_1" : val.seal_1,
                 "seal_2" : val.seal_2,
-                "eta_date" : val.eta_date,
                 "cargo_description" : val.cargo_description,
+                "eta_date" : val.eta_date,
                 "etd_date" : val.etd_date,
                 "chasis_no" : val.chasis_no,
                 "inspection_status" : inspection_status,

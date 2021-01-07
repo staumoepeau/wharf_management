@@ -1,7 +1,7 @@
 frappe.provide("wharf_management.container_yard");
 var bayvalue = "";
 var state = "Close";
-var page;
+var booking_ref = "";
 
 frappe.pages['container_yard'].on_page_load = function(wrapper) {
         page = frappe.ui.make_app_page({
@@ -51,38 +51,28 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         fieldtype: 'Link',
         fieldname: 'bay',
         options: "Yard Bay",
-        change() {
-
-            
-
+        change() {          
 //            if (page, bay_field.get_value() == "All") {
 //                show_yard_details(page, null, null);
 //            } 
-            if (page, bay_field.get_value() != "All") {
-                show_yard_details(page, null, bay_field.get_value());
-                bayvalue = bay_field.get_value();        
-            }           
-        }
-        
+//            if (page, bay_field.get_value() != "All") {
+            $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
+            show_yard_details(page, null, bay_field.get_value());
+            bayvalue = bay_field.get_value();        
+//            }           
+        }       
     });
 
-//    var row_field = page.add_field({
-//        label: 'Row',
-//        fieldtype: 'Link',
-//        fieldname: 'row',
-//        options: "Yard Row",
-//        change() {
-//            if (page, row_field.get_value() == "All") {
-//                $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
-//                show_yard_details(page, null, null);
-//            } 
-//           if (page, row_field.get_value()) {
-//              $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
-//               show_yard_details(page, null, null, row_field.get_value());   
-//           }
-//           console.log(bay, row)
-//       }        
-//   });
+    let booking_ref_field = page.add_field({
+        label: 'Booking Ref',
+        fieldtype: 'Link',
+        fieldname: 'row',
+        options: "Booking Request",
+        change() {
+            booking_ref = booking_ref_field.get_value()
+            console.log(booking_ref)
+       }        
+   });
 
 // page.main.append(frappe.render_template('container_yard_main'));
 
@@ -91,7 +81,7 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
 
 var show_yard_details = function(page,container_no, bay) {
     
-//    page.main.append(frappe.render_template('container_yard_main'));
+    page.main.append(frappe.render_template('container_yard_main'));
 
 
     if (container_no && !bay) {
@@ -102,7 +92,7 @@ var show_yard_details = function(page,container_no, bay) {
             },
 
             callback: function(r) {
-                page.main.append(frappe.render_template('container_yard_main'));
+//                page.main.append(frappe.render_template('container_yard_main'));
                 $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
                 
                 page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', {
@@ -126,7 +116,7 @@ var show_yard_details = function(page,container_no, bay) {
                 "bay": bay
             },
             callback: function(r) {
-                page.main.append(frappe.render_template('container_yard_main'));
+ //               page.main.append(frappe.render_template('container_yard_main'));
 //                $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
                 
                 page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', { items: r.message || [] }))
@@ -221,6 +211,9 @@ var toggle_rightMenu = function(state) {
 
     frappe.call({
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_inspection_items",
+        args: {
+            "booking_ref": booking_ref
+            },
         callback: function(y) {
             
             page.main.find('#right-sidebar-wrapper').append(frappe.render_template('container_yard_rightbar', {

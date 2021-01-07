@@ -2,7 +2,7 @@
     <div class="container">
         {% for yard in inspection_items %}
         <div class="col-sm-12">
-            {% if yard.cargo_type == "Container" %}
+            {% if yard.cargo_type == "Container" && yard.container_content == "FULL" %}
             <div id="{{ yard.name }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                 <img id="Inspection" class="card-img-top" src="/files/yellow_contanier.svg" height="55" width="115" />
                 <div class="card-img-overlay inspection">
@@ -12,7 +12,7 @@
                 </div>
 
             </div>
-            {% endif %} {% if yard.cargo_type == "Container" && yard.cargo_condition == "DAMAGE" %}
+            {% endif %} {% if yard.cargo_type == "Container" && yard.container_content == "FULL" && yard.cargo_condition == "DAMAGE" %}
             <div id="{{ yard.name }}" ondrop="Drop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="DragStart(event, this)">
                 <img id="Inspection" class="card-img-top" src="/files/damage_contanier.svg" height="50" width="115" />
                 <div class="card-img-overlay inspection">
