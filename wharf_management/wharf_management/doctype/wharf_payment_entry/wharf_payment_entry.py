@@ -12,8 +12,6 @@ from frappe.model.document import Document
 class WharfPaymentEntry(Document):
 
     def on_submit(self):
-
-#        self.check_payment()
         self.check_status()
 
         if self.reference_doctype == "Cargo":

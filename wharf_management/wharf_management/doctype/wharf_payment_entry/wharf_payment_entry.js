@@ -5,6 +5,14 @@ frappe.provide("wharf_management.wharf_payment_entry");
 
 frappe.ui.form.on('Wharf Payment Entry', {
 
+    on_submit: function(frm) {
+        if(frm.doc.docstatus ==1){
+            if (frm.doc.status != "Paid"){
+                frm.set_value('status', "Paid");
+                }
+            }
+    },
+
     refresh: function(frm) {
         if (frm.doc.discount == "YES") {
             frm.set_df_property("who_authorized_discount", "reqd", 1);

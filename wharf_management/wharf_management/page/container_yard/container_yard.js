@@ -335,8 +335,8 @@ var Drop = function(e, ref) {
 
     //   console.log(status, cargo_ref, new_yard, drop_cargo_ref)
     if (status == "Inspection") {
-        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
-        frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+//        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
+        frappe.db.set_value('Cargo', cargo_ref, {'yard_slot': new_yard, 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
     }
     //    if (status == "Express") {
     //        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
