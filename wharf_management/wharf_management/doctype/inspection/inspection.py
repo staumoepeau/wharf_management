@@ -95,6 +95,14 @@ class Inspection(Document):
         elif self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and self.work_information == "Devanning/Loading":
             self.devanning_loading_update()
         
+        elif self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and not self.work_information and self.container_content == "FULL":
+            export_container_number = None
+
+            export_container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
+            
+            if export_container_number:
+                self.check_export()
+
         elif self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and not self.work_information and self.container_content == "EMPTY":
             export_container_number = None
             stock_container_number=None
@@ -471,55 +479,82 @@ class Inspection(Document):
         doc.submit()
 
     def check_export(self):
-        container_number=None
+#        container_number=None
 #        val = frappe.db.get_value("Pre Advice", {"container_no": self.container_no, "name" : self.cargo_ref}, ["booking_ref", "name"], as_dict=True)
-        container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
+#        container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
 
-        if container_number:
+#        if container_number:
 #               msgprint(_("Check 1 {0}").format(container_number), raise_exception=1)
     #            container_ref = frappe.db.get_value("Export", {"container_no": self.container_no}, "name")
-                val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["name", "yard_slot",
-                "main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
-                "container_type","container_size","pat_code","container_content","driver_ends","seal_1", "status"], as_dict=True)
+        val = frappe.db.get_value("Export", {"container_no": self.container_no}, ["name", "title", "agents", "customer", "posting_date", "posting_time", "cargo_type", 
+        "container_size", "container_type", "net_weight", "litre", "seal_1", "container_no", "pat_code", "container_content", "volume", "mark", "chasis_no", "seal_2", 
+        "cargo_description", "status", "payment_status", "payment_date", "payment_by", "work_type", "bol", "main_gate_status", "main_gate_created_by", "main_gate_date",
+        "main_gate_user_name", "export_gate1_status", "gate1_created_by", "export_gate1_date", "yard_status", "yard_created_by", "yard_slot", "yard_date",
+        "yard_created_name", "gate1_user_name", "truck_licenses_plate", "drivers_information", "hazardous",], as_dict=True)
 
-                if val.container_content == "FULL" and val.status != "Paid":
-                    msgprint(_("Please Check and Confirmed this container have been PAID"), raise_exception=1)
+        if val.container_content == "FULL" and val.status != "Paid":
+            msgprint(_("Please Check and Confirmed this container have been PAID"), raise_exception=1)
 
-                if val.container_content == "EMPTY" and val.status != "Yard":
-                    msgprint(_("Please Check and Confirmed this container has arrived at the GATE"), raise_exception=1)
+        if val.container_content == "EMPTY" and val.status != "Yard":
+            msgprint(_("Please Check and Confirmed this container has arrived at the GATE"), raise_exception=1)
 #                if val.container_content == "FULL" and val.status == "Paid":
 #                    val.status = "Paid"
                 
 #                msgprint(_("Check 1"), raise_exception=1)
                 
-                doc = frappe.new_doc("Export History")
-                doc.update({
-                        "yard_slot" : val.yard_slot,
-                        "main_gate_start" : val.main_gate_start,
-                        "main_gate_ends" : val.main_gate_ends,
-                        "gate1_start": val.gate1_start,
-                        "gate1_ends" : val.gate1_ends,
-                        "driver_start" : val.driver_start,
-                        "driver_ends" : val.driver_ends,
-                        "container_type" : val.container_type,
-                        "container_size" : val.container_size,
-                        "pat_code" : val.pat_code,
-                        "container_content" : val.container_content,
-                        "seal_1" : val.seal_1,
-                        "container_no" : self.container_no
-                        })
-                doc.insert(ignore_permissions=True)
-                doc.submit()
+        doc = frappe.new_doc("Export History")
+        doc.update({
+            "export_ref" : val.name,
+            "title" : val.title,
+            "agents" : val.agents,
+            "customer" : val.customer,
+            "posting_date" : val.posting_date,
+            "posting_time" : val.posting_time,
+            "cargo_type" : val.cargo_type,
+            "container_size" : val.container_size,
+            "container_type" : val.container_type,
+            "net_weight" : val.net_weight,
+            "litre" : val.litre,
+            "seal_1" : val.seal_1,
+            "container_no" : val.container_no,
+            "pat_code" : val.pat_code,
+            "container_content" : val.container_content,
+            "volume" : val.volume,
+            "mark" : val.mark,
+            "chasis_no" : val.chasis_no,
+            "seal_2" : val.seal_2,
+            "cargo_description" : val.cargo_description,
+            "status" : val.status,
+            "payment_status" : val.payment_status,
+            "payment_date" : val.payment_date,
+            "payment_by" : val.payment_by,
+            "work_type" : val.work_type,
+            "bol" : val.bol,
+            "main_gate_status" : val.main_gate_status,
+            "main_gate_created_by" : val.main_gate_created_by,
+            "main_gate_date" : val.main_gate_date,
+            "export_gate1_status" : val.export_gate1_status,
+            "export_gate1_date" : val.export_gate1_date,
+            "yard_status" : val.yard_status,
+            "yard_created_by" : val.yard_created_by,
+            "yard_slot" : val.yard_slot,
+            "yard_date" : val.yard_date,
+            "truck_licenses_plate" : val.truck_licenses_plate,
+            "drivers_information" : val.drivers_information,
+            "hazardous" : val.hazardous
+            })
+        doc.insert(ignore_permissions=True)
+        doc.submit()
                 
 #                msgprint(_("Check 2"), raise_exception=1)
     #            frappe.throw(_("Gate 1 {0}").format(vals.gate1_start))
-                get_create_cargo("Pre Advice", self.cargo_ref, "Loading", "Export", self.cargo_type)
+        get_create_cargo("Pre Advice", self.cargo_ref, "Loading", "Export", self.cargo_type)
 #                msgprint(_("Check 3"), raise_exception=1)
 #                frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
-                frappe.db.sql("""Update `tabCargo` set gate1_in=%s, maingate_in=%s where container_no=%s and cargo_ref=%s """, (val.gate1_start, val.main_gate_start, self.container_no, self.cargo_ref ))
-                frappe.db.sql("""Delete from `tabExport` where container_no=%s""", self.container_no)
-                self.moveto_preadvise_history()
-                frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
+        frappe.db.sql("""Update `tabCargo` set gate1_status=%s, gate1_date=%s, gate2_status=%s, gate2_date=%s where container_no=%s and cargo_ref=%s """, (val.export_gate1_status, val.export_gate1_date, val.main_gate_status, val.main_gate_date, self.container_no, self.cargo_ref ))
+        frappe.db.sql("""Delete from `tabExport` where container_no=%s""", self.container_no)
+        self.moveto_preadvise_history()
+        frappe.db.delete('Pre Advice', {'name': self.cargo_ref })
 
 
     def load_transhipment_cargo(self):
@@ -536,7 +571,7 @@ class Inspection(Document):
 #        val = frappe.db.get_value("Cargo", {"container_no":self.container_no, "additional_work": "Stock", "work_type": "Discharged"}, ["name", "eta_date", "etd_date"], as_dict=True)
         
 #        if container_number:
-        get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type)
+        get_create_cargo("Pre Advice", self.cargo_ref, "Loading", "Stock", self.cargo_type)
         frappe.db.sql("""UPDATE `tabCargo` SET status = 'Outbound' where work_type = 'Discharged' and additional_work = 'Stock' and container_no=%s""", self.container_no)
         frappe.db.sql("""UPDATE `tabCargo` SET booking_ref=%s , final_eta=%s, final_etd=%s where work_type = "Loading" and last_work = "Stock" and container_no=%s""", (self.booking_ref, eta, etd, self.container_no))
 
