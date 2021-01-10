@@ -29,7 +29,7 @@ class WharfCashierClosing(Document):
             AND docA.parenttype = "Wharf Payment Entry"
             AND docA.mode_of_payment = "Cheque"
             AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
-            AND docA.posting_date = %s """, (self.posting_date), as_dict=1)
+            AND docB.posting_date = %s """, (self.posting_date), as_dict=1)
             totalcheque = 0.0
             for d in chequelist:
                 self.append("cheque_details", {
@@ -50,7 +50,7 @@ class WharfCashierClosing(Document):
             AND docA.mode_of_payment = "Cheque"
             AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
             AND docA.owner = %s
-            AND docA.posting_date = %s """, (self.user, self.posting_date), as_dict=1)
+            AND docB.posting_date = %s """, (self.user, self.posting_date), as_dict=1)
             totalcheque = 0.0
             for d in chequelist:
                 self.append("cheque_details", {
@@ -70,7 +70,7 @@ class WharfCashierClosing(Document):
                 WHERE docA.docstatus = 1
                 AND docA.parent = docB.name
                 AND docA.parenttype = "Wharf Payment Entry"
-                AND docA.posting_date = %s
+                AND docB.posting_date = %s
                 AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
                 GROUP BY docA.mode_of_payment """, (self.posting_date), as_dict=1)
             grandtotal = 0.0
@@ -90,7 +90,7 @@ class WharfCashierClosing(Document):
                 AND docA.parenttype = "Wharf Payment Entry"
                 AND docA.owner = %s
                 AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
-                AND docA.posting_date = %s
+                AND docB.posting_date = %s
                 GROUP BY docA.mode_of_payment """, (self.user, self.posting_date), as_dict=1)
             grandtotal = 0.0
             for d in paymentmode:
