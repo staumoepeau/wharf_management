@@ -162,7 +162,7 @@ def get_transactions_list(posting_date, cashier):
     if cashier:
         return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
             FROM `tabWharf Payment Entry`
-            WHERE status = "Paid" AND docstatus = 1
+            WHERE docstatus = 1
             AND owner = %s
             AND reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
             AND posting_date = %s """, (cashier, posting_date), as_dict=1)
@@ -170,7 +170,7 @@ def get_transactions_list(posting_date, cashier):
     if not cashier or cashier == "":
             return frappe.db.sql("""SELECT name, posting_date, customer, total_amount, reference_doctype
             FROM `tabWharf Payment Entry`
-            WHERE status = "Paid" AND docstatus = 1
+            WHERE docstatus = 1
             AND reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
             AND posting_date = %s """, (posting_date), as_dict=1)
 
@@ -179,7 +179,6 @@ def get_transactions_list(posting_date, cashier):
 def get_transactions(posting_date):
     return frappe.db.sql("""SELECT name 
     FROM `tabWharf Payment Entry` 
-    WHERE status = 'Paid' 
     AND docstatus = 1
     AND reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
     AND posting_date = %s""", (posting_date), as_list=True)
