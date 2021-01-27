@@ -115,7 +115,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
     last_work_type, third_work_type, movement, payment, gate, yard_status = "", "", "", "", "", ""
-    container_content, inspection_status, yard_date, final_status, secondary_work_type = "", "", "", "", ""
+    container_content, inspection_status, yard_date, final_status = "", "", "", ""
 
     
     if doctype == "Pre Advice":
@@ -130,55 +130,54 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         "container_size","consignee","container_content","stowage","hazardous","hazardous_code", "status","seal_1","seal_2","eta_date","cargo_description","etd_date","delivery_code",
         "chasis_no","yard_slot","inspection_status","yard_status","final_status"], as_dict=True)
 
-    if final_work_type == "Loading":
-        if secondary_work_type == "Export":
-            inspection_status = "Closed"
-            movement = "Outbound"
-            yard_status = "Closed"
-            payment = "Closed"
-            gate = "Closed"
-            yard_date = now()
-            final_status = final_work_type
-            third_work_type = None
-            container_content = val.container_content
-            last_work_type : None
+    if final_work_type == "Loading" and secondary_work_type == "Export":
+        inspection_status = "Closed"
+        movement = "Outbound"
+        yard_status = "Closed"
+        payment = "Closed"
+        gate = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        third_work_type = None
+        container_content = val.container_content
+        last_work_type : None
 
-        if secondary_work_type == "Stock":
-            inspection_status = "Closed"
-            movement = "Outbound"
-            yard_status = "Closed"
-            payment = "Closed"
-            gate = "Closed"
-            yard_date = now()
-            final_status = final_work_type
-            last_work_type = None
-            container_content = val.container_content 
+    if final_work_type == "Loading" and secondary_work_type == "Stock":
+        inspection_status = "Closed"
+        movement = "Outbound"
+        yard_status = "Closed"
+        payment = "Closed"
+        gate = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        last_work_type = None
+        container_content = val.container_content 
 
-        if secondary_work_type == "Transhipment":
-            secondary_work_type = "Transhipment"
-            movement = "Transshipment"
-            payment = "Closed"
-            gate = "Closed"
-            inspection_status = "Closed"
-            yard_status = "Closed"
-            yard_date = now()
-            final_status = final_work_type
-            third_work_type = None
-            container_content = val.container_content
-            last_work_type : None
+    if final_work_type == "Loading" and secondary_work_type == "Transhipment":
+        secondary_work_type = "Transhipment"
+        movement = "Transshipment"
+        payment = "Closed"
+        gate = "Closed"
+        inspection_status = "Closed"
+        yard_status = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        third_work_type = None
+        container_content = val.container_content
+        last_work_type : None
         
-        if cargo_type == "Split Ports":
-            secondary_work_type = secondary_work_type
-            movement = "Split Ports"
-            payment = "Closed"
-            gate = "Open"
-            inspection_status = "Open"
-            yard_status = "Closed"
-            yard_date = now()
-            final_status = final_work_type
-            third_work_type = None
-            container_content = val.container_content
-            last_work_type : None
+    if final_work_type == "Loading" and cargo_type == "Split Ports":
+        secondary_work_type = secondary_work_type
+        movement = "Split Ports"
+        payment = "Closed"
+        gate = "Open"
+        inspection_status = "Open"
+        yard_status = "Closed"
+        yard_date = now()
+        final_status = final_work_type
+        third_work_type = None
+        container_content = val.container_content
+        last_work_type : None
 
     if final_work_type == "Discharged":    
         if not secondary_work_type:

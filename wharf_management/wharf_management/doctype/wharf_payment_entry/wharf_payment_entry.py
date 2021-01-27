@@ -12,7 +12,9 @@ from frappe.model.document import Document
 class WharfPaymentEntry(Document):
 
     def on_submit(self):
-        self.check_status()
+        if self.status != "Paid":
+            self.status = "Paid"
+
 
         if self.reference_doctype == "Cargo":
             self.check_warrant_number()
@@ -29,18 +31,6 @@ class WharfPaymentEntry(Document):
             self.check_warrant_number()
             self.check_duplicate_warrant_number()
             self.update_export()
-
-    def check_status(self):
-        if self.status != "Paid":
-            self.status = "Paid"
-
-#    def check_payment(self):
-#        if self.total_amount != self.paid_amount:
-#            frappe.throw(_("Please Check Your Paid Amount"))
-        
-#        if self.outstanding_amount > 0:
-#            frappe.throw(_("Please Check double check your Payment Amount"))
-
 
     def update_export(self):
         frappe.db.sql("""Update `tabExport` INNER JOIN `tabExport Cargo Reference` ON
