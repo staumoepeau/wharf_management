@@ -27,6 +27,7 @@ class Inspection(Document):
     def check_work_type(self):
 
         if self.final_work_type == "Discharged" and self.secondary_work_type == "Devanning" and self.third_work_type == "Stock":
+            self.create_cargo()
             get_create_cargo_devan("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type, "EMPTY")
 
             if (self.devanqty) > 0 :

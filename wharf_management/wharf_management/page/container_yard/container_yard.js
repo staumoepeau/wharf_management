@@ -12,7 +12,7 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
 
 
     page.main.append(frappe.render_template('container_yard_main'));
-    
+
     page.set_secondary_action(__("Express"), function() {
         if (state == "Close") {
             state = "Open"
@@ -22,9 +22,8 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         //    alert(state)
         toggle_leftMenu(state);
     }).addClass("btn-success");
-
-
-
+    
+    
     page.set_primary_action(__("Inspection"), function() {
         if (state == "Close") {
             state = "Open"
@@ -33,6 +32,8 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         }
         toggle_rightMenu(state);
     });
+
+        
 
     let bay_field = page.add_field({
         label: 'Bay',
@@ -55,14 +56,10 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
             console.log(booking_ref)
        }        
    });
-   
-   
 };
 
 
-var show_yard_details = function(page,bay) {
-
-    $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
+var show_yard_details = function(page, bay) {
 
     frappe.call({
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_items",
@@ -73,6 +70,7 @@ var show_yard_details = function(page,bay) {
             page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', { items: r.message || [] }))
         }
     });
+//    $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
 }
 
 

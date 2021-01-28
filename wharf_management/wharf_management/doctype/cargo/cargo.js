@@ -87,6 +87,26 @@ frappe.ui.form.on('Cargo', {
                 frm.doc.inspection_status == "Closed"
             )) {
             //frm.page.set_primary_action(__('Payment'), function() {
+            frm.add_custom_button(__('Quotation'), function() {
+                //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
+
+                frappe.route_options = {
+                    "payment_type": "Quotation",
+                    "customer": frm.doc.consignee,
+                    "reference_doctype": "Cargo"
+                }
+                frappe.set_route("Form", "Cargo Quotation", "New Cargo Quotation 1");
+
+            }).addClass("btn-primary");
+        }
+
+        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
+                frm.doc.status != "Paid" &&
+                frm.doc.payment_status != "Closed" &&
+                frm.doc.yard_status == "Closed" &&
+                frm.doc.inspection_status == "Closed"
+            )) {
+            //frm.page.set_primary_action(__('Payment'), function() {
             frm.add_custom_button(__('Payment'), function() {
                 //frm.page.add_action_icon(__("fa fa-money fa-2x text-success"), function() {
 
@@ -99,6 +119,7 @@ frappe.ui.form.on('Cargo', {
 
             }).addClass("btn-success");
         }
+
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.status == "Paid" &&

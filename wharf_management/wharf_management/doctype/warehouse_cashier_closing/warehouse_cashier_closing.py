@@ -133,7 +133,7 @@ class WarehouseCashierClosing(Document):
 
 @frappe.whitelist()
 def get_transactions_list(posting_date):
-        return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
+    return frappe.db.sql("""SELECT name, posting_date, consignee, total_amount
         FROM `tabWarehouse Fee Payment`
         WHERE status = "Paid" 
         AND docstatus = 1
@@ -148,7 +148,7 @@ def get_fees_summary(posting_date):
         FROM `tabWharf Fee Item`, `tabWharf Fees`, `tabWarehouse Fee Payment`
         WHERE `tabWharf Fee Item`.`item` = `tabWharf Fees`.`name`
         AND `tabWharf Fee Item`.`docstatus` = 1
-        AND `tabWharf Fee Item`.`parent` = `tabWarehouse Fee Payment` .`name`
+        AND `tabWharf Fee Item`.`parent` = `tabWarehouse Fee Payment`.`name`
         AND DATE(`tabWarehouse Fee Payment`.`posting_date`) = %s
         AND `tabWharf Fee Item`.`parenttype` = "Warehouse Fee Payment"
         GROUP BY `tabWharf Fees`.`wharf_fee_category`""", (posting_date), as_dict=1)

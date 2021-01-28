@@ -179,7 +179,7 @@ def get_transactions_list(posting_date, cashier):
 def get_transactions(posting_date):
     return frappe.db.sql("""SELECT name 
     FROM `tabWharf Payment Entry` 
-    AND docstatus = 1
+    WHERE docstatus = 1
     AND reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
     AND posting_date = %s""", (posting_date), as_list=True)
  
