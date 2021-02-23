@@ -275,6 +275,7 @@
    "label": "Storage Rate"
   },
   {
+   "collapsible": 1,
    "fieldname": "cargo_information",
    "fieldtype": "Section Break",
    "label": "VESSEL DETAILS"
@@ -1133,7 +1134,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-07 13:55:12.601191",
+ "modified": "2021-02-24 09:59:45.385856",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

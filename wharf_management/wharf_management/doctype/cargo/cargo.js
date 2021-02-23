@@ -22,16 +22,17 @@ frappe.ui.form.on('Cargo', {
             'container_no', 'pat_code', 'volume', 'mark', 'container_type', 'yard_slot', 'temperature', 'commodity_code', 'chasis_no', 'qty'
         ], is_allowed);
 
-        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
-            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
-            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
-        ], is_allowed);
+//        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
+//            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
+//            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
+//        ], frappe.user_roles.includes("System Manager", "Cargo Operation Manager", "Cargo Operation Cashier","Operation Manifest User"));
 
 
-        frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section', 'volume', 'container_type'], is_allowed);
+//      frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section', 'volume', 'container_type'], is_allowed);
 
         frm.toggle_display(['cargo_ref', 'cargo_information'],
-            frappe.user_roles.includes("System Manager"));
+            frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager") ||
+            frappe.user_roles.includes("Cargo Operation Cashier") || frappe.user_roles.includes("Operation Manifest User"));
 
         //  frappe.user_roles.includes("System Manager", "Cargo Operation Manager", "Operation Manifest User"));
         //frappe.has_common(frappe.user_roles, ['System Manager', 'Cargo Operation Manager', 'Operation Manifest User', 'Wharf Operation Manager']))
@@ -489,7 +490,7 @@ frappe.ui.form.on('Cargo', {
                     frappe.throw(__("Item Count is required"));
                 }
                 console.log(values);
-                let counter = values.item_count + frm.doc.break_bulk_item_count;
+                var counter = values.item_count + frm.doc.break_bulk_item_count;
                 console.log(counter)
                 if (frm.doc.qty < counter) {
                     frappe.msgprint(
@@ -551,7 +552,7 @@ frappe.ui.form.on('Cargo', {
                     frappe.throw(__("Item Count is required"));
                 }
                 console.log(values);
-                let counter = values.item_count + frm.doc.security_item_count;
+                var counter = values.item_count + frm.doc.security_item_count;
                 console.log(counter)
                 if (frm.doc.qty < counter) {
                     frappe.msgprint(
@@ -687,7 +688,6 @@ frappe.ui.form.on('Cargo', {
 
         if (frm.doc.manifest_check == "Confirm") {
             if (frm.doc.work_type == "Loading") {
-
                 if (cargo_type_a.includes(frm.doc.cargo_type)) {
                     frappe.call({
                         "method": "frappe.client.get",
@@ -741,11 +741,11 @@ frappe.ui.form.on('Cargo', {
                     });
                 }
                 if (frm.doc.last_work == "Stock"){
-                    let etadate = frm.doc.final_eta
-                    let postingdate = frm.doc.final_etd
+                    var etadate = frm.doc.final_eta
+                    var postingdate = frm.doc.final_etd
                 } else {
-                    let etadate = frm.doc.gate1_date
-                    let postingdate = frm.doc.etd_date
+                    var etadate = frm.doc.gate1_date
+                    var postingdate = frm.doc.etd_date
                 }
                 console.log(etadate, postingdate)
                 frappe.call({

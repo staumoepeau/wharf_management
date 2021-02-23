@@ -125,7 +125,7 @@ def get_storage_fees(docname):
                 CASE 
                 WHEN Sum(docB.volume) < Sum(docB.net_weight)
                     THEN Sum(docB.net_weight * docB.charged_storage_days * docB.storage_fee_price) ELSE Sum(docB.volume * docB.charged_storage_days * docB.storage_fee_price) END
-        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN (docB.storage_fee_price * docB.charged_storage_days)
+        WHEN docB.cargo_type IN ("Container","Flatrack", "Vehicles") THEN Sum(docB.storage_fee_price * docB.charged_storage_days)
         WHEN docB.cargo_type IN ("Tank Tainers") THEN Sum(docB.litre/1000) 
         END AS total
         from `tabCargo References` as docB, `tabWharf Fees` as docA

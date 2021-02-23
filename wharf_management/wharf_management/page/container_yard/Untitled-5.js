@@ -1,40 +1,7 @@
-frappe.provide("wharf_management.container_yard");
-var bayvalue = "";
-var state = "Close";
-var booking_ref = "";
 
-frappe.pages['container_yard'].on_page_load = function(wrapper) {
-        page = frappe.ui.make_app_page({
-        parent: wrapper,
-        title: 'Container Yard',
-        single_column: true
-    });
-
-    const me = this;
-//    page.main.append(frappe.render_template('container_yard_main'));
-    
     page.main.append(frappe.render_template('container_yard_main'));
 
-    var counter = 0;
-    me.page.add_field({
-        label: 'Bay',
-        fieldtype: 'Link',
-        fieldname: 'bay',
-        options: "Yard Bay",
-        onchange: function() {          
-            if (this.value) {
-                
-//                $("#container-yard-main").load(location.href + " #container-yard-main");
-                clear_page_content(page);
-                show_yard_details(page, this.value);          
-                bayvalue = this.value;
-            }
-            console.log(counter);
-        } 
-        
-    });
-
-    me.page.set_secondary_action(__("Express"), function() {
+    page.set_secondary_action(__("Express"), function() {
         if (state == "Close") {
             state = "Open"
         } else if (state == "Open") {
@@ -45,7 +12,7 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
     }).addClass("btn-success");
     
     
-    me.page.set_primary_action(__("Inspection"), function() {
+    page.set_primary_action(__("Inspection"), function() {
         if (state == "Close") {
             state = "Open"
         } else if (state == "Open") {
@@ -56,16 +23,16 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
 
         
 
-//    let bay_field = page.add_field({
-//        label: 'Bay',
-//        fieldtype: 'Link',
-//        fieldname: 'bay',
-//        options: "Yard Bay",
-//        change() {          
-//            show_yard_details(page, bay_field.get_value());
-//            bayvalue = bay_field.get_value();        
-//        }       
-//    });
+    let bay_field = page.add_field({
+        label: 'Bay',
+        fieldtype: 'Link',
+        fieldname: 'bay',
+        options: "Yard Bay",
+        change() {          
+            show_yard_details(page, bay_field.get_value());
+            bayvalue = bay_field.get_value();        
+        }       
+    });
 
     let booking_ref_field = page.add_field({
         label: 'Booking Ref',
@@ -79,14 +46,8 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
    });
 };
 
-var clear_page_content = function(page) {
-
-//   $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
-    page.wrapper.find('#page-content-wrapper').load(location.href + " #page-content-wrapper");
-}
 
 var show_yard_details = function(page, bay) {
-//    $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
 
     frappe.call({
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_items",
@@ -97,6 +58,7 @@ var show_yard_details = function(page, bay) {
             page.wrapper.find('#page-content-wrapper').append(frappe.render_template('container_yard_content', { items: r.message || [] }))
         }
     });
+//    $("#page-content-wrapper").load(location.href + " #page-content-wrapper");
 }
 
 
