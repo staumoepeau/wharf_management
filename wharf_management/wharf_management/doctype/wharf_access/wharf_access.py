@@ -97,6 +97,8 @@ class WharfAccess(Document):
                         "main_gate_start" : val.main_gate_start,
                         "main_gate_ends" : val.main_gate_ends,
                         "gate1_start": val.gate1_start,
+                        "agents" : val.agents,
+                        "work_type" : val.work_type,
                         "gate1_ends" : val.gate1_ends,
                         "driver_start" : val.driver_start,
                         "driver_ends" : val.driver_ends,

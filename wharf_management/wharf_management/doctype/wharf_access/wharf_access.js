@@ -124,20 +124,24 @@ frappe.ui.form.on("Cargo Pickup", {
             enable_button_state(frm)
         }
 
+        if (!d.security_check){
+            disable_button_state(frm)
+            frappe.throw(__('Please Make sure that there is a WARRANT NUMBER'))
+        }
 
     },
 
     security_check: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
 
-        if (d.security_check === d.warrant_number) {
-
-            enable_button_state(frm)
-        }
-
-        if (d.security_check != d.warrant_number) {
-            disable_button_state(frm)
-            frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
+        if (d.security_check){
+            if (d.security_check === d.warrant_number) {
+                enable_button_state(frm)
+            }
+            if (d.security_check != d.warrant_number) {
+                disable_button_state(frm)
+                frappe.throw(__('Please Make sure that is the correct WARRANT NUMBER'))
+            }
         }
 
     },
