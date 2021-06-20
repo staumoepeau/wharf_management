@@ -22,13 +22,13 @@ frappe.ui.form.on('Cargo', {
             'container_no', 'pat_code', 'volume', 'mark', 'container_type', 'yard_slot', 'temperature', 'commodity_code', 'chasis_no', 'qty'
         ], is_allowed);
 
-//        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
-//            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
-//            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
-//        ], frappe.user_roles.includes("System Manager", "Cargo Operation Manager", "Cargo Operation Cashier","Operation Manifest User"));
+        //        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
+        //            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
+        //            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
+        //        ], frappe.user_roles.includes("System Manager", "Cargo Operation Manager", "Cargo Operation Cashier","Operation Manifest User"));
 
 
-//      frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section', 'volume', 'container_type'], is_allowed);
+        //      frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section', 'volume', 'container_type'], is_allowed);
 
         frm.toggle_display(['cargo_ref', 'cargo_information'],
             frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager") ||
@@ -96,7 +96,7 @@ frappe.ui.form.on('Cargo', {
                     "customer": frm.doc.consignee,
                     "reference_doctype": "Cargo"
                 }
-                frappe.set_route("Form", "Cargo Quotation", "New Cargo Quotation 1");
+                frappe.set_route("Form", "Cargo Quotation", "new-cargo-quotation-1");
 
             }).addClass("btn-primary");
         }
@@ -116,7 +116,7 @@ frappe.ui.form.on('Cargo', {
                     "customer": frm.doc.consignee,
                     "reference_doctype": "Cargo"
                 }
-                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
+                frappe.set_route("Form", "Wharf Payment Entry", "new-wharf-payment-entry-1");
 
             }).addClass("btn-success");
         }
@@ -138,7 +138,7 @@ frappe.ui.form.on('Cargo', {
                     "reference_doctype": "Overdue Storage",
 
                 }
-                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
+                frappe.set_route("Form", "Wharf Payment Entry", "new-wharf-payment-entry-1");
                 //            }).addClass("btn-success");
             }).addClass("btn-primary");
         }
@@ -169,7 +169,7 @@ frappe.ui.form.on('Cargo', {
                     "work_type": frm.doc.work_type,
                     "mydoctype": "CARGO"
                 }
-                frappe.set_route("Form", "Gate1", "New Gate1 1");
+                frappe.set_route("Form", "Gate1", "new-gate1-1");
 
                 //                frm.events.check_overdue_storage(frm);
 
@@ -195,7 +195,7 @@ frappe.ui.form.on('Cargo', {
                     "container_no": frm.doc.container_no,
                     "mydoctype": "CARGO"
                 }
-                frappe.set_route("Form", "Gate1", "New Gate1 1");
+                frappe.set_route("Form", "Gate1", "new-gate1-1");
             }).addClass("btn-default");
         }
 
@@ -215,7 +215,7 @@ frappe.ui.form.on('Cargo', {
                     "container_no": frm.doc.container_no,
                     "mydoctype": "CARGO"
                 }
-                frappe.set_route("Form", "Gate2", "New Gate2 1");
+                frappe.set_route("Form", "Gate2", "new-gate2-1");
             }).addClass("btn-default");
         }
 
@@ -238,7 +238,7 @@ frappe.ui.form.on('Cargo', {
                     "container_no": frm.doc.container_no,
                     "mydoctype": "CARGO"
                 }
-                frappe.set_route("Form", "Gate2", "New Gate2 1");
+                frappe.set_route("Form", "Gate2", "new-gate2-1");
             }).addClass("btn-info");
         }
 
@@ -369,7 +369,7 @@ frappe.ui.form.on('Cargo', {
                         "work_type": frm.doc.work_type,
                         "mydoctype": "CARGO"
                     }
-                    frappe.set_route("Form", "Gate1", "New Gate1 1");
+                    frappe.set_route("Form", "Gate1", "new-gate1-1");
                 }
             }
         });
@@ -682,7 +682,7 @@ frappe.ui.form.on('Cargo', {
         }
 
     },
-    
+
 
     manifest_check: function(frm) {
 
@@ -740,7 +740,7 @@ frappe.ui.form.on('Cargo', {
                         }
                     });
                 }
-                if (frm.doc.last_work == "Stock"){
+                if (frm.doc.last_work == "Stock") {
                     var etadate = frm.doc.final_eta
                     var postingdate = frm.doc.final_etd
                 } else {

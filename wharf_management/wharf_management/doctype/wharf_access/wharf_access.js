@@ -40,7 +40,7 @@ frappe.ui.form.on('Wharf Access', {
                     "license_plate": frm.doc.license_plate,
                     "access_ref": frm.doc.name
                 }
-                frappe.set_route("Form", "Wharf Access", "New Wharf Access 1");
+                frappe.set_route("Form", "Wharf Access", "new-wharf-access-1");
                 //            }).addClass("btn-success");
             }).addClass("btn-primary");
         }

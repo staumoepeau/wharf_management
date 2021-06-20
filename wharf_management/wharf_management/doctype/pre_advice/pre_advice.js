@@ -157,7 +157,7 @@ frappe.ui.form.on('Pre Advice', {
                                                 "mark": frm.doc.mark,
                                                 "work_information": frm.doc.work_information
                                             };
-                                            frappe.set_route("Form", "Inspection", "New Inspection 1");
+                                            frappe.set_route("Form", "Inspection", "new-inspection-1");
                                         }
                                         if ((data.message["container_content"] == "FULL") && (data.message["paid_status"] == "Unpaid")) {
                                             frappe.throw("Please check this Container for UNPAID Fees.")
@@ -185,7 +185,7 @@ frappe.ui.form.on('Pre Advice', {
                                     "mark": frm.doc.mark,
                                     "work_information": frm.doc.work_information
                                 };
-                                frappe.set_route("Form", "Inspection", "New Inspection 1");
+                                frappe.set_route("Form", "Inspection", "new-inspection-1");
                             }
                         }
                     })
@@ -210,7 +210,7 @@ frappe.ui.form.on('Pre Advice', {
                     "mark": frm.doc.mark,
                     "work_information": frm.doc.work_information
                 };
-                frappe.set_route("Form", "Inspection", "New Inspection 1");
+                frappe.set_route("Form", "Inspection", "new-inspection-1");
                 //                }
 
             }).addClass("btn-primary");

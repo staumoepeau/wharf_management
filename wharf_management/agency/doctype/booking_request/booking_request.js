@@ -66,7 +66,7 @@ frappe.ui.form.on('Booking Request', {
                     "reference_doctype": "Booking Request"
                 }
 
-                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
+                frappe.set_route("Form", "Wharf Payment Entry", "new-wharf-payment-entry-1");
             }).addClass("btn-success");
         }
         var Current_User = user
@@ -89,7 +89,7 @@ frappe.ui.form.on('Booking Request', {
                     "agent": frm.doc.agents,
                     "agent_user": frm.doc.user
                 }
-                frappe.set_route("Form", "Security Check", "New Security Check 1");
+                frappe.set_route("Form", "Security Check", "new-security-check-1");
             }).addClass("btn-primary");
         }
         if ((frm.doc.status == "Paid") && (frappe.user.has_role("Pilot Operation Manager"))) {
@@ -101,7 +101,7 @@ frappe.ui.form.on('Booking Request', {
                     "agent": frm.doc.agents,
                     "agent_user": frm.doc.user
                 }
-                frappe.set_route("Form", "Port Master", "New Port Master 1");
+                frappe.set_route("Form", "Port Master", "new-port-master-1");
             }).addClass("btn-primary");
         }
 
