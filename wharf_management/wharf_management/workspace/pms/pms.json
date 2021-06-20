@@ -2,7 +2,7 @@
  "category": "Modules",
  "charts": [],
  "creation": "2021-06-21 09:46:42.038644",
- "developer_mode_only": 0,
+ "developer_mode_only": 1,
  "disable_user_customization": 1,
  "docstatus": 0,
  "doctype": "Workspace",
@@ -103,23 +103,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Reports",
-   "link_type": "Page",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Cargo Movement Report",
-   "link_to": "Cargo Movement",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Security",
    "link_type": "DocType",
    "onboard": 0,
@@ -151,14 +134,107 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Warehouse",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cargo Warehouse",
+   "link_to": "Cargo Warehouse",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Inspection",
+   "link_to": "Warehouse Inspection",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Devaning Request",
+   "link_to": "Devaning Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fee Payment",
+   "link_to": "Warehouse Fee Payment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Closing Voucher",
+   "link_to": "Warehouse Cashier Closing",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Export",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Export",
+   "link_to": "Export",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Booking Export",
+   "link_to": "Export Booking",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2021-06-21 09:58:36.470662",
+ "modified": "2021-06-21 11:18:12.159447",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "PMS",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 1,
- "shortcuts": []
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Cargo Movement",
+   "link_to": "Cargo Movement",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Warehouse Movement",
+   "link_to": "Cargo Warehouse Movement",
+   "type": "Report"
+  }
+ ],
+ "shortcuts_label": "Reports"
 }
