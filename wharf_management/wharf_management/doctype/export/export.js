@@ -45,7 +45,7 @@ frappe.ui.form.on('Export', {
                     "customer": frm.doc.customer,
                     "reference_doctype": "Export"
                 }
-                frappe.set_route("Form", "Wharf Payment Entry", "New Wharf Payment Entry 1");
+                frappe.set_route("Form", "Wharf Payment Entry", "new-wharf-payment-entry-1");
             }).addClass("btn-success");
         }
 
