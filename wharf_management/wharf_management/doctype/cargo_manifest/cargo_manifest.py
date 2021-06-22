@@ -7,8 +7,6 @@ import frappe, json
 from frappe.utils import cstr, flt, fmt_money, formatdate
 from frappe import msgprint, _, scrub
 from frappe.model.document import Document
-from erpnext.controllers.accounts_controller import AccountsController
-from erpnext.accounts.party import get_party_account
 
 
 class CargoManifest(Document):

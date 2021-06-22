@@ -22,14 +22,6 @@ frappe.ui.form.on('Cargo', {
             'container_no', 'pat_code', 'volume', 'mark', 'container_type', 'yard_slot', 'temperature', 'commodity_code', 'chasis_no', 'qty'
         ], is_allowed);
 
-        //        frm.toggle_display(['booking_ref', 'eta_date', 'etd_date', 'cargo_work_type_section', 'custom_warrant', 'hazaempty_detailsrdous_goods',
-        //            'consignee_details', 'seal_2', 'ports_details', 'stock_reconciliation_section', 'empty_details', 'status_section', 'hazardous_goods',
-        //            'net_weight', 'litre', 'cargo_status', 'manifest_section', 'cargo_delivery_details'
-        //        ], frappe.user_roles.includes("System Manager", "Cargo Operation Manager", "Cargo Operation Cashier","Operation Manifest User"));
-
-
-        //      frm.toggle_display(['handling_fee', 'wharfage_fee', 'status_section', 'volume', 'container_type'], is_allowed);
-
         frm.toggle_display(['cargo_ref', 'cargo_information'],
             frappe.user_roles.includes("System Manager") || frappe.user_roles.includes("Cargo Operation Manager") ||
             frappe.user_roles.includes("Cargo Operation Cashier") || frappe.user_roles.includes("Operation Manifest User"));
@@ -69,17 +61,17 @@ frappe.ui.form.on('Cargo', {
             frm.enable_save();
         }
 
-        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
-
-            frm.page.sidebar.hide(); // this removes the sidebar
-            $(".timeline").hide()
-            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
-        }
-        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Manager")) {
-            frm.page.sidebar.show(); // this removes the sidebar
-            $(".timeline").show()
-            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
-        }
+        //        if (frappe.user_roles.includes('Wharf Security Officer', 'Wharf Security Officer Main Gate', 'Wharf Security Supervisor')) {
+        //
+        //            frm.page.sidebar.hide(); // this removes the sidebar
+        //            $(".timeline").hide()
+        //            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        //        }
+        //        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Manager")) {
+        //            frm.page.sidebar.show(); // this removes the sidebar
+        //            $(".timeline").show()
+        //            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+        //        }
 
         if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation Cashier") &&
                 frm.doc.status != "Paid" &&
@@ -315,9 +307,7 @@ frappe.ui.form.on('Cargo', {
                     fieldname: 'waive_overdue_storage',
                     fieldtype: 'Select',
                     default: 'YES',
-                    options: ['YES',
-                        'NO'
-                    ],
+                    options: ['YES', 'NO'],
                     reqd: 1
                 },
 
@@ -382,9 +372,7 @@ frappe.ui.form.on('Cargo', {
                     fieldname: 'custom_inspection_request',
                     fieldtype: 'Select',
                     default: 'YES',
-                    options: ['YES',
-                        'NO'
-                    ],
+                    options: ['YES', 'NO'],
                     reqd: 1
                 },
 
