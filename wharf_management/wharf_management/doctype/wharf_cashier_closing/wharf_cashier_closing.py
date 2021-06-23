@@ -37,41 +37,41 @@ class WharfCashierClosing(Document):
 def get_voucher_total(posting_date, cashier):
     if cashier:
         return frappe.db.sql("""SELECT SUM(amount) as amount
-        FROM `tabPayment Method`
-        WHERE docstatus = 1
-        AND parenttype = "Wharf Payment Entry"
-        AND mode_of_payment = 'Gov Voucher'
-        AND posting_date = %s """, (posting_date))
+            FROM `tabPayment Method`
+            WHERE docstatus = 1
+            AND parenttype = "Wharf Payment Entry"
+            AND mode_of_payment = 'Gov Voucher'
+            AND posting_date = %s """, (posting_date))
     
     if not cashier:
         return frappe.db.sql("""SELECT SUM(amount) as amount
-        FROM `tabPayment Method`
-        WHERE docstatus = 1
-        AND parenttype = "Wharf Payment Entry"
-        AND mode_of_payment = 'Gov Voucher'
-        AND owner = %s
-        AND posting_date = %s """, (cashier, posting_date))
+            FROM `tabPayment Method`
+            WHERE docstatus = 1
+            AND parenttype = "Wharf Payment Entry"
+            AND mode_of_payment = 'Gov Voucher'
+            AND owner = %s
+            AND posting_date = %s """, (cashier, posting_date))
     
 
 @frappe.whitelist()
 def get_gov_voucher(posting_date, cashier):
     if cashier:
         return frappe.db.sql("""SELECT gov_ministry, po_number, receipt_no, amount
-        FROM `tabPayment Method`
-        WHERE docstatus = 1
-        AND parenttype = "Wharf Payment Entry"
-        AND mode_of_payment = 'Gov Voucher'
-        AND posting_date = %s """, (posting_date), as_dict=1)
+            FROM `tabPayment Method`
+            WHERE docstatus = 1
+            AND parenttype = "Wharf Payment Entry"
+            AND mode_of_payment = 'Gov Voucher'
+            AND posting_date = %s """, (posting_date), as_dict=1)
     
 
     if not cashier:
         return frappe.db.sql("""SELECT gov_ministry, po_number, receipt_no, amount
-        FROM `tabPayment Method`
-        WHERE docstatus = 1
-        AND parenttype = "Wharf Payment Entry"
-        AND mode_of_payment = 'Gov Voucher'
-        AND owner = %s
-        AND posting_date = %s """, (cashier, posting_date), as_dict=1)
+            FROM `tabPayment Method`
+            WHERE docstatus = 1
+            AND parenttype = "Wharf Payment Entry"
+            AND mode_of_payment = 'Gov Voucher'
+            AND owner = %s
+            AND posting_date = %s """, (cashier, posting_date), as_dict=1)
     
 
 @frappe.whitelist()
@@ -145,21 +145,20 @@ def get_cheques(posting_date, cashier):
             AND docA.owner = %s
             AND docB.posting_date = %s """, (cashier, posting_date), as_dict=1)
         
-@frappe.whitelist()
-def get_cheques_total(posting_date, cashier):
+@frappe.whitelist(allow_guest=True)
+def get_cheques_total(doctype, posting_date, cashier):
     if not cashier:
-        totalcheques = frappe.db.sql("""SELECT SUM(docA.amount) as amount
+        return dict(frappe.db.sql("""SELECT SUM(docA.amount) as amount
             FROM `tabPayment Method` docA, `tabWharf Payment Entry` docB
             WHERE docA.docstatus = 1
             AND docA.parent = docB.name
             AND docA.parenttype = "Wharf Payment Entry"
             AND docA.mode_of_payment = "Cheque"
             AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
-            AND docB.posting_date = %s """, (posting_date))
-    return totalcheques
+            AND docB.posting_date = %s """, posting_date))
 
     if cashier:
-        totalcheques = frappe.db.sql("""SELECT SUM(docA.amount) as amount
+        return dict(frappe.db.sql("""SELECT SUM(docA.amount) as amount
             FROM `tabPayment Method` docA, `tabWharf Payment Entry` docB
             WHERE docA.docstatus = 1
             AND docA.parent = docB.name
@@ -167,8 +166,8 @@ def get_cheques_total(posting_date, cashier):
             AND docA.mode_of_payment = "Cheque"
             AND docB.reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
             AND docA.owner = %s
-            AND docB.posting_date = %s """, (cashier, posting_date))
-    return totalcheques
+            AND docB.posting_date = %s """, cashier, posting_date))
+
 
 @frappe.whitelist()
 def get_transactions_list(posting_date, cashier):
@@ -194,7 +193,7 @@ def get_transactions(posting_date):
     FROM `tabWharf Payment Entry` 
     WHERE docstatus = 1
     AND reference_doctype IN ("Cargo", "Export", "Fees", "Overdue Storage")
-    AND posting_date = %s""", (posting_date), as_list=True)
+    AND posting_date = %s""", (posting_date), as_dict=True)
  
 
 @frappe.whitelist()

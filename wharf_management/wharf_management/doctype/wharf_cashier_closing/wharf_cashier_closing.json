@@ -23,9 +23,10 @@
   "updates",
   "cheque_details",
   "section_break_14",
+  "get_total",
   "data_1",
   "data_15",
-  "total_cheques",
+  "totalcheques",
   "gov_voucher_section",
   "gov_voucher",
   "section_break_22",
@@ -169,12 +170,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "total_cheques",
-   "fieldtype": "Currency",
-   "label": "Total Cheques",
-   "read_only": 1
-  },
-  {
    "fieldname": "data_1",
    "fieldtype": "Column Break"
   },
@@ -249,12 +244,22 @@
    "fieldtype": "Table",
    "label": "Fees Summary",
    "options": "Fees Summary"
+  },
+  {
+   "fieldname": "get_total",
+   "fieldtype": "Button",
+   "label": "Get Total"
+  },
+  {
+   "fieldname": "totalcheques",
+   "fieldtype": "Data",
+   "label": "Total Cheques"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-12-03 18:42:29.788000",
+ "modified": "2021-06-23 14:50:54.156087",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Cashier Closing",

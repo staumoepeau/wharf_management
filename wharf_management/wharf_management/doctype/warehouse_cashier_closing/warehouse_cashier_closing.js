@@ -26,21 +26,72 @@ frappe.ui.form.on('Warehouse Cashier Closing', {
 
 
     updates: function(frm) {
-        return frappe.call({
-            method: "updates_list",
-            doc: frm.doc,
-            callback: function(data) {
-                frm.refresh_fields();
-                console.log(data.message);
-            }
-        });
+        get_cheques_list(frm);
+        get_mode_payment(frm);
+
 
     },
 
 });
 
-var get_fees_summary = function(frm) {
+function get_cheques_list(frm) {
+    if (frm.doc.all_cashier == 1) {
+        var cashier = ""
+    } else {
+        frm.doc.all_cashier == 0
+        cashier = frm.doc.user
+    }
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_cheques",
+        args: {
+            "posting_date": frm.doc.posting_date,
+            "cashier": cashier
+        },
+        callback: function(data) {
+            console.log(data.message);
+            $.each(data.message, function(i, item) {
+                var item_row = frm.add_child("cheque_details")
+                item_row.name_on_the_cheque = item.name_on_the_cheque,
+                    item_row.bank = item.bank,
+                    item_row.cheque_no = item.cheque_no,
+                    item_row.amount = item.amount
+            });
+            frm.refresh()
+        }
+    });
+}
 
+function get_mode_payment(frm) {
+    if (frm.doc.all_cashier == 1) {
+        var cashier = ""
+    } else {
+        frm.doc.all_cashier == 0
+        cashier = frm.doc.user
+    }
+    frappe.call({
+        method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_mode_of_payment",
+        args: {
+            "posting_date": frm.doc.posting_date,
+            "cashier": cashier
+        },
+        callback: function(r) {
+            console.log(r.message);
+            let gtotal = 0;
+            $.each(r.message, function(i, item) {
+                var item_row = frm.add_child("payment_reconciliation")
+                item_row.mode_of_payment = item.mode_of_payment,
+                    item_row.expected_amount = item.total
+                gtotal += flt(item.total)
+
+            });
+
+            frm.set_value("grand_total", gtotal);
+            frm.refresh();
+        }
+    });
+}
+
+function get_fees_summary(frm) {
     frappe.call({
         method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_fees_summary",
         args: {
@@ -61,13 +112,9 @@ var get_fees_summary = function(frm) {
         }
 
     });
-
-    //        frm.save()
-    //        frm.refresh()
-
 }
 
-var get_transactions_list = function(frm) {
+function get_transactions_list(frm) {
     if (frm.doc.all_cashier == 1) {
         var cashier = ""
     } else {
@@ -98,10 +145,6 @@ var get_transactions_list = function(frm) {
         }
 
     });
-
-    //        frm.save()
-    //        frm.refresh()
-
 }
 
 frappe.ui.form.on('Cash Denomination Table', {
