@@ -200,8 +200,9 @@ class Inspection(Document):
     # Ceare Cargo Item for Res-Stowing,
     def create_cargo(self):
 
+        
         get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type)
-
+        
     def check_inward_cargo(self):
 
         inward_cargo = frappe.db.sql("""Select name from `tabCargo` where booking_ref=%s and container_no=%s and status='INWARD' """, (self.booking_ref, self.container_no))
