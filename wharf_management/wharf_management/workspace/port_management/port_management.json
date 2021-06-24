@@ -13,8 +13,26 @@
  "is_default": 0,
  "is_standard": 1,
  "label": "Port Management",
- "links": [],
- "modified": "2021-06-21 09:42:24.603995",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cargo",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cargo",
+   "link_to": "Cargo",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2021-06-25 17:00:54.592260",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",

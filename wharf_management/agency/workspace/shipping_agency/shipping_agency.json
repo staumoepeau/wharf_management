@@ -14,7 +14,7 @@
  "is_standard": 1,
  "label": "Shipping Agency",
  "links": [],
- "modified": "2021-06-21 09:44:13.397098",
+ "modified": "2021-06-25 17:03:28.788554",
  "modified_by": "Administrator",
  "module": "Agency",
  "name": "Shipping Agency",
@@ -45,6 +45,12 @@
    "label": "Booking Export",
    "link_to": "Export Booking",
    "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Cargo Movement",
+   "link_to": "Cargo Movement",
+   "type": "Report"
   }
  ]
 }
