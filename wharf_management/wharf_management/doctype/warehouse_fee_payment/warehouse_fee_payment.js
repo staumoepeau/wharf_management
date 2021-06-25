@@ -238,7 +238,6 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         }
                     },
                     callback: function(data) {
-                        //fs_days = data.message["grace_days"];
                         console.log(data.message["grace_days"])
                         frappe.run_serially([
                             () => {
@@ -260,8 +259,6 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         }
                     },
                     callback: function(data) {
-
-                        fs_days = data.message["grace_days"];
                         console.log(data.message["grace_days"])
                         frappe.run_serially([
                             () => {
@@ -284,30 +281,33 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                     callback: function(r) {
                         //                        console.log(r.message)
                         frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
-                        console.log(d.storage_days - d.free_storage_days)
+                        //                        console.log(d.storage_days - d.free_storage_days)
                         let sdays = flt(d.storage_days - d.free_storage_days);
-                        //                        console.log(sdays)
-                        if (sdays > 0) {
+                        if (sdays) {
+                            if (sdays > 0) {
 
-                            frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
+                                frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
 
-                            if (cargo_b.includes(d.cargo_type)) {
-                                if (d.net_weight > d.volume) {
-                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
+                                if (cargo_b.includes(d.cargo_type)) {
+                                    if (d.net_weight > d.volume) {
+                                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
+                                    }
+                                    if (d.net_weight < d.volume) {
+                                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
+                                    }
                                 }
-                                if (d.net_weight < d.volume) {
-                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
+                                if (d.cargo_type == "Vehicles") {
+                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                                 }
+                                //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                             }
-                            if (d.cargo_type == "Vehicles") {
-                                frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                            if (sdays <= 0) {
+                                //                        console.log(sdays)
+                                frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
+                                frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
                             }
-                            //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-                        }
-                        if (sdays <= 0) {
-                            //                        console.log(sdays)
-                            frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
-                            frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
+                        } else {
+                            msgprint("Please Check Storage Fees")
                         }
                     }
                 })

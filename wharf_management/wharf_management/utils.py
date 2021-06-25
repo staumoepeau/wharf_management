@@ -116,7 +116,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
     last_work_type, third_work_type, movement, payment, gate, yard_status, delivery_code = "", "", "", "", "", "", ""
-    container_content, custom_warrant, custom_code, inspection_status, yard_date, final_status = "", "", "", "", ""
+    container_content, custom_warrant, custom_code, inspection_status, yard_date, final_status = "", "", "", "", "", ""
     
 
     if doctype == "Pre Advice":
