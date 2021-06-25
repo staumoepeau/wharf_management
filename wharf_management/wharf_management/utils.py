@@ -127,7 +127,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         ['booking_ref','pat_code','net_weight', 'cargo_type','last_port','qty','container_no','voyage_no','bol','work_type',\
         'secondary_work_type','pol','agents','commodity_code', 'vessel','pod','temperature', 'container_type','mark','final_dest_port',\
         'volume', 'container_size','consignee','container_content', 'stowage','hazardous','hazardous_code', 'status','seal_1','seal_2',\
-        'eta_date','cargo_description','etd_date', 'chasis_no', 'yard_slot','inspection_status','yard_status','final_status', 'third_work_type'])
+        'eta_date','cargo_description','etd_date', 'chasis_no', 'yard_slot','inspection_status','yard_status','final_status','third_work_type'])
     
     if doctype == "Cargo":
         booking_ref,pat_code,net_weight,cargo_type,last_port,qty,container_no,voyage_no,custom_code, bol,work_type,\

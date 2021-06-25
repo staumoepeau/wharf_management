@@ -109,12 +109,14 @@ class Inspection(Document):
             stock_container_number=None
 
             export_container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
-            stock_container_number = frappe.db.sql("""Select name from `tabCargo` where work_type = 'Discharged' and additional_work = 'Stock' and container_no=%s """, (self.container_no))
+            stock_container_number = frappe.db.sql("""Select name from `tabCargo` where work_type = 'Discharged' and status = 'Stock' and additional_work = 'Stock' and container_no=%s """, (self.container_no))
             
             if export_container_number:
+#                frappe.msgprint(_("Export {0}").format(export_container_number))
                 self.check_export()
 
             if stock_container_number:
+#                frappe.msgprint(_("Export {0}").format(stock_container_number))
                 val = frappe.db.get_value("Cargo", {"work_type": 'Discharged', "additional_work": 'Stock', "container_no": self.container_no}, ["booking_ref","eta_date","etd_date"], as_dict=True)
                 self.check_container_stock(val.eta_date, val.etd_date)
             
