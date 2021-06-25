@@ -17,6 +17,7 @@ class EnquireCargoFees(Document):
         currency = frappe.get_value('Company',  "Ports Authority Tonga",  "default_currency")
         cargo_ref = self.cargo_ref
         eta_date_cargo = frappe.db.get_value("Cargo", cargo_ref, "eta_date")
+#        frappe.msgprint(_("ETA {0}").format(eta_date_cargo))
         storage_days = get_storage_days(eta_date_cargo, today())
         
         if cargo_ref or cargo_ref != " ":
