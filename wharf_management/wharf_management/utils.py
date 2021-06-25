@@ -116,7 +116,7 @@ def get_create_cargo_devan(doctype, cargo_ref, final_work_type, secondary_work_t
 def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, cargo_type):
 
     last_work_type, third_work_type, movement, payment, gate, yard_status, delivery_code = "", "", "", "", "", "", ""
-    custom_warrant, custom_code, inspection_status, yard_date, final_status = "", "", "", "", ""
+    container_content, custom_warrant, custom_code, inspection_status, yard_date, final_status = "", "", "", "", ""
     
 
     if doctype == "Pre Advice":
@@ -147,7 +147,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = None
        final_status = final_work_type
        third_work_type = None
-       concontent = container_content
+       container_content = container_content
        last_work_type = None      
 
     if final_work_type == "Discharged" and secondary_work_type == "Re-stowing":
@@ -160,7 +160,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = None
        final_status = final_work_type
        third_work_type = None
-       concontent = container_content
+       container_content = container_content
        last_work_type = None
     
     if final_work_type == "Discharged" and secondary_work_type == "Transhipment":
@@ -173,7 +173,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = now()
        final_status = final_work_type
        third_work_type = None
-       concontent = container_content
+       container_content = container_content
        last_work_type = None  
     
     if final_work_type == "Discharged" and cargo_type == "Split Ports":
@@ -186,7 +186,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = now()
        final_status = final_work_type
        third_work_type = None
-       concontent = container_content
+       container_content = container_content
        last_work_type = None
     
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
@@ -200,7 +200,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        final_work_type == "Discharged"
        yard_date = None
        third_work_type = None
-       concontent = container_content
+       container_content = container_content
        last_work_type = None
             
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
@@ -214,7 +214,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = None
        final_work_type = "Discharged"
        third_work_type = None
-       concontent = None
+       container_content = None
        last_work_type = None
 
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Stock" and cargo_type != "Container":
@@ -227,7 +227,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = None
        final_work_type = "Devanning"
        third_work_type = third_work_type
-       concontent = None
+       container_content = None
        last_work_type = None
     
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Stock" and cargo_type == "Container":
@@ -239,7 +239,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        yard_date = None
        final_work_type = "Devanning"
        third_work_type = third_work_type
-       concontent = "FULL"
+       container_content = "FULL"
        movement = "Devanning"
        last_work_type = None
 
@@ -272,7 +272,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
             "volume" : volume,
             "container_size" : container_size,
             "consignee" : consignee,
-            "container_content" : concontent,
+            "container_content" : container_content,
             "stowage" : stowage,
             "hazardous" : hazardous,            
             "hazardous_code" : hazardous_code,

@@ -274,6 +274,7 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                 })
             }
 
+
             frappe.call({
                     method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_days",
                     args: {
