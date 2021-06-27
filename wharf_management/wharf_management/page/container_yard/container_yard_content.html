@@ -22,9 +22,14 @@
 
                           {% if item.status == "Paid" && item.cargo_type == "Container" && item.container_content == "FULL" %}
                            <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/green_contanier.svg" height="50" width="115" id="{{ item.yard_slot }}"/>
+                            <img class="card-img-top" src="/files/paid_contanier.svg"  height="50" width="115" id="{{ item.yard_slot }}"/>
+
                               <div class="card-img-overlay">
-                                <p class="container_no"  style="color:red;">{{ item.container_no}}</p>
+                                <p class="container_no"  style="color:red;">
+<!-------                                  {% var container_number = item.container_no; var part_1 = container_number.slice(0,6); var part_2 = container_number.slice(6,12); %}
+                                {{ part_1 }}<br>
+                              {{ part_2 }}</p>   -------->                         
+                                  {{ item.container_no }}
                                 <p class="yard_slot"  style="color:red;" >{{ item.yard_slot }}</p>
                               </div>
                             </div>

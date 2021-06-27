@@ -189,7 +189,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        container_content = container_content
        last_work_type = None
     
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type == "Container":
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and third_work_type == "Loading" and cargo_type == "Container":
        secondary_work_type = "Devanning"
        movement = "Devanning"
        inspection_status = "Closed"
@@ -203,7 +203,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        container_content = container_content
        last_work_type = None
             
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Loading" and cargo_type != "Container":
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and third_work_type == "Loading" and cargo_type != "Container":
        secondary_work_type = None
        movement = "Inspection"
        inspection_status = "Closed"
@@ -217,7 +217,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        container_content = None
        last_work_type = None
 
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Stock" and cargo_type != "Container":
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and third_work_type == "Stock" and cargo_type != "Container":
        movement = "Inspection"
        inspection_status = "Closed"
        yard_status = "Open"
@@ -230,7 +230,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        container_content = None
        last_work_type = None
     
-    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and val.third_work_type == "Stock" and cargo_type == "Container":
+    if final_work_type == "Discharged" and secondary_work_type == "Devanning" and third_work_type == "Stock" and cargo_type == "Container":
        inspection_status = "Closed"
        yard_status = "Open"
        final_status = "Discharged"

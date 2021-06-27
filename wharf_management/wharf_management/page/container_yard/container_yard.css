@@ -70,15 +70,15 @@ body.full-width .container {
         font-size: 11px
     }
     p.container_no {
-        padding-left: 15px;
+        padding-left: 10px;
         padding-bottom: 0px;
-        font-size: 11px;
+        font-size: 9px;
         margin: 0px;
     }
     p.yard_slot {
-        padding-left: 15px;
+        padding-left: 10px;
         padding-bottom: 0px;
-        font-size: 11px;
+        font-size: 9px;
         margin: 0px;
     }
     p.container_size {
@@ -100,19 +100,19 @@ body.full-width .container {
     .express p.container_no {
         padding-left: 8px;
         padding-bottom: 0px;
-        font-size: 10px;
+        font-size: 9px;
         margin: 0px;
     }
     .express p.yard_slot {
         padding-left: 8px;
         padding-bottom: 0px;
-        font-size: 10px;
+        font-size: 9px;
         margin: 0px;
     }
     .express p.container_size {
         padding-left: 8px;
         padding-bottom: 0px;
-        font-size: 10px
+        font-size: 9px
     }
 }
 

@@ -32,13 +32,20 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-25 17:00:54.592260",
+ "modified": "2021-06-28 18:27:12.476203",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 1,
- "shortcuts": [],
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Yard",
+   "link_to": "container_yard",
+   "type": "Page"
+  }
+ ],
  "shortcuts_label": ""
 }

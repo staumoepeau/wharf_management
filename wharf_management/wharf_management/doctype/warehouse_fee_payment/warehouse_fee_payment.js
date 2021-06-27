@@ -81,28 +81,34 @@ var set_posting_date_time = function(frm) {
 }
 
 var get_storage_fee = function(frm) {
+    var nettotal = 0;
     frappe.call({
         method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_fees",
         args: {
             "docname": frm.doc.name,
         },
         callback: function(r) {
+            console.log(r.message)
             if (r.message) {
 
                 $.each(r.message, function(i, item) {
+
                     var item_row = frm.add_child("wharf_fee_item")
-                    console.log(item)
+
                     item_row.item = item.item_code,
                         item_row.description = item.description,
                         item_row.price = item.price,
                         item_row.qty = item.qty,
                         item_row.total = item.total
+                    nettotal += item.total
                     frm.refresh()
                         //                    get_net_total_fee(frm)
                         //                    frm.refresh()
                         //                    frm.save()
                         //                    frm.refresh()
                 });
+                frm.set_value("net_total", nettotal);
+                frm.set_value("total_amount", nettotal);
 
             }
         }
@@ -147,7 +153,7 @@ frappe.ui.form.on("Wharf Fee Item", {
 
         var total = 0;
         frm.doc.wharf_fee_item.forEach(function(d) { total += d.total; });
-
+        console.log(total)
         frm.set_value("net_total", total);
         frm.set_value("total_amount", total);
         frm.refresh();
