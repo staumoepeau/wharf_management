@@ -70,7 +70,8 @@ frappe.ui.form.on('Booking Request', {
             }).addClass("btn-success");
         }
         var Current_User = user
-        if ((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) {
+
+        if (((Current_User == frm.doc.owner) && (frappe.user.has_role("Agent User"))) || frappe.user.has_role("System Manager")) {
             frm.add_custom_button(__('Amend ETA'), function() {
                 frappe.route_options = {
                     "booking_ref": frm.doc.name

@@ -26,7 +26,7 @@
   "get_total",
   "data_1",
   "data_15",
-  "totalcheques",
+  "total_cheques",
   "gov_voucher_section",
   "gov_voucher",
   "section_break_22",
@@ -251,15 +251,15 @@
    "label": "Get Total"
   },
   {
-   "fieldname": "totalcheques",
-   "fieldtype": "Data",
+   "fieldname": "total_cheques",
+   "fieldtype": "Currency",
    "label": "Total Cheques"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-23 14:50:54.156087",
+ "modified": "2021-06-28 13:14:19.123845",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Cashier Closing",

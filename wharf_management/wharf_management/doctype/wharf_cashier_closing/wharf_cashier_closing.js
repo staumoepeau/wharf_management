@@ -85,7 +85,7 @@ function get_cheques_list(frm) {
                     item_row.amount = item.amount
                 total_cheques += flt(item.amount)
             });
-            frm.set_value('totalcheques', total_cheques)
+            frm.set_value('total_cheques', total_cheques)
             refresh_fields(frm);
         }
     });
@@ -184,7 +184,7 @@ function refresh_fields(frm) {
     frm.refresh_field("payment_reconciliation");
     frm.refresh_field("cheque_details");
     frm.refresh_field("grand_total");
-    frm.refresh_field("totalcheques");
+    frm.refresh_field("total_cheques");
 }
 
 frappe.ui.form.on('Cheque Details', {
@@ -192,8 +192,8 @@ frappe.ui.form.on('Cheque Details', {
     cheque_details_remove: function(frm, cdt, cdn) {
         var t_cheques = 0;
         frm.doc.cheque_details.forEach(function(d) { t_cheques += d.amount; });
-        frm.doc.totalcheques = t_cheques;
-        refresh_field("totalcheques");
+        frm.doc.total_cheques = t_cheques;
+        refresh_field("total_cheques");
     },
 })
 
