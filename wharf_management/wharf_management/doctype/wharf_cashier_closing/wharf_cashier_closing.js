@@ -156,8 +156,12 @@ function get_cashier(cashier, frm) {
 }
 
 function get_transactions_list(frm) {
-
-    //        console.log(cashier)
+    if (frm.doc.all_cashier == 1) {
+        var cashier = ""
+    } else {
+        frm.doc.all_cashier == 0
+        cashier = frm.doc.user
+    }
     frappe.call({
         method: "wharf_management.wharf_management.doctype.wharf_cashier_closing.wharf_cashier_closing.get_transactions_list",
         args: {
