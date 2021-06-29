@@ -152,6 +152,15 @@ frappe.ui.form.on('Wharf Payment Entry', {
 
     set_posting_time: function(frm) {
         set_posting_date_time(frm)
+    },
+
+    delivery_code: function(frm) {
+
+        if (frm.doc.delivery_code == 'MTY') {
+            frm.set_df_property("custom_warrant", "hidden", 1);
+        } else {
+            frm.set_df_property("custom_warrant", "hidden", 0);
+        }
     }
 
 });
@@ -383,7 +392,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports']],
+                    ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports', 'Stock']],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
                 ]
             }

@@ -13,11 +13,14 @@ body.full-width .container {
     width: 100%;
 }
 
+@media (max-width: 575.98px) {
+    ...
+}
 
-/* Define minimum font size */
 
-@media screen and (max-width: 720px) {
-    /* smartphones breakpoint */
+/* Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) and (max-width: 767.98px) {
     html {
         font-size: 8px
     }
@@ -40,32 +43,90 @@ body.full-width .container {
     }
 }
 
-@media screen and (min-width: 720px) and (max-width: 1024px) {
-    /* tablets */
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) and (max-width: 991.98px) {
     html {
-        font-size: 10px
+        font-size: 9px
     }
     p.container_no {
         padding-left: 30px;
         padding-bottom: 0px;
-        font-size: 10px;
+        font-size: 9px;
         margin: 0px;
     }
     p.yard_slot {
         padding-left: 30px;
         padding-bottom: 0px;
-        font-size: 10px;
+        font-size: 9px;
         margin: 0px;
     }
     p.container_size {
         padding-left: 15px;
         padding-bottom: 0px;
-        font-size: 10px
+        font-size: 9px
     }
 }
 
-@media screen and (min-width: 1024px) {
-    /* laptops */
+
+/* Large devices (desktops, 992px and up)  */
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    html {
+        font-size: 11px
+    }
+    p.container_no {
+        padding-left: 10px;
+        padding-bottom: 0px;
+        font-size: 9px;
+        margin: 0px;
+    }
+    p.yard_slot {
+        padding-left: 10px;
+        padding-bottom: 0px;
+        font-size: 9px;
+        margin: 0px;
+    }
+    p.container_size {
+        padding-left: 15px;
+        padding-bottom: 0px;
+        font-size: 11px
+    }
+    .inspection p.container_no {
+        padding-left: 8px;
+        padding-bottom: 15px;
+        font-size: 9px;
+        margin: 0px;
+    }
+    .inspection p.container_size {
+        padding-left: 8px;
+        padding-bottom: 15px;
+        font-size: 9px
+    }
+    .express p.container_no {
+        padding-left: 8px;
+        padding-bottom: 0px;
+        font-size: 9px;
+        margin: 0px;
+    }
+    .express p.yard_slot {
+        padding-left: 8px;
+        padding-bottom: 0px;
+        font-size: 9px;
+        margin: 0px;
+    }
+    .express p.container_size {
+        padding-left: 8px;
+        padding-bottom: 0px;
+        font-size: 9px
+    }
+}
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {
     html {
         font-size: 11px
     }

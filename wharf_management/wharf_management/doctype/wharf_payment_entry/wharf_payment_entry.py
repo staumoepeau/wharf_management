@@ -17,7 +17,8 @@ class WharfPaymentEntry(Document):
 
 
         if self.reference_doctype == "Cargo":
-            self.check_warrant_number()
+            if not self.delivery_code == 'MTY':
+                self.check_warrant_number()
             self.check_duplicate_warrant_number()
             self.update_cargo_table()
 

@@ -922,7 +922,7 @@
    "collapsible": 1,
    "fieldname": "stock_reconciliation_section",
    "fieldtype": "Section Break",
-   "label": "Stock Reconciliation"
+   "label": "STOCK RECONCILIATION"
   },
   {
    "default": "0",
@@ -1006,7 +1006,7 @@
    "collapsible": 1,
    "fieldname": "cargo_header",
    "fieldtype": "Section Break",
-   "label": "Cargo Information"
+   "label": "CARGO INFORMATION"
   },
   {
    "allow_on_submit": 1,
@@ -1134,7 +1134,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-24 09:59:45.385856",
+ "modified": "2021-06-29 16:15:47.020240",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Cargo",

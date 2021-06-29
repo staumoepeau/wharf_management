@@ -11,7 +11,6 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
     });
 
     const me = this;
-//    page.main.append(frappe.render_template('container_yard_main'));
     
     page.main.append(frappe.render_template('container_yard_main'));
 
@@ -34,15 +33,15 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         
     });
 
-    me.page.set_secondary_action(__("Express"), function() {
-        if (state == "Close") {
-            state = "Open"
-        } else if (state == "Open") {
-            state = "Close"
-        }
+//    me.page.set_secondary_action(__("Express"), function() {
+//        if (state == "Close") {
+//            state = "Open"
+//        } else if (state == "Open") {
+//            state = "Close"
+//        }
         //    alert(state)
-        toggle_leftMenu(state);
-    }).addClass("btn-success");
+//        toggle_leftMenu(state);
+//    }).addClass("btn-success");
     
     
     me.page.set_primary_action(__("Inspection"), function() {
