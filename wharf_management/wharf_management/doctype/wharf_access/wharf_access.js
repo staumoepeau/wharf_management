@@ -9,7 +9,7 @@ frappe.ui.form.on('Wharf Access', {
     },
 
     setup: function(frm) {
-        if (frm.doc.docstatus != 1){
+        if (frm.doc.docstatus != 1) {
             if (!frm.doc.time) {
                 frm.set_value("check_in_out_time", frappe.datetime.now_datetime());
             }
@@ -65,6 +65,7 @@ frappe.ui.form.on('Wharf Access', {
 
 $.extend(wharf_management.wharf_access, {
 
+
     setup_cargo_pickup: function(frm) {
         frm.fields_dict['cargo_pickup'].grid.get_field("pickup_cargo_ref").get_query = function(doc, cdt, cdn) {
             return {
@@ -93,7 +94,7 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', '=', ['Custom Inspection']],
+                    ['Cargo', 'status', 'in', ['Custom Inspection']],
                 ]
             }
         }
@@ -124,7 +125,7 @@ frappe.ui.form.on("Cargo Pickup", {
             enable_button_state(frm)
         }
 
-        if (!d.security_check){
+        if (!d.security_check) {
             disable_button_state(frm)
             frappe.throw(__('Please Make sure that there is a WARRANT NUMBER'))
         }
@@ -134,7 +135,7 @@ frappe.ui.form.on("Cargo Pickup", {
     security_check: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
 
-        if (d.security_check){
+        if (d.security_check) {
             if (d.security_check === d.warrant_number) {
                 enable_button_state(frm)
             }
