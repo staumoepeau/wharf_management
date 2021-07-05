@@ -23,10 +23,10 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
         options: "Yard Bay",
         onchange: function() {
             bay_id = bay_field.get_value();
-            if (bay_id) {
-                //                get_html_template(page);
-                show_yard_details(page, bay_id);
-            }
+            //            if (bay_id) {
+            //                get_html_template(page);
+            show_yard_details(page, bay_id);
+            //            }
         }
     });
 

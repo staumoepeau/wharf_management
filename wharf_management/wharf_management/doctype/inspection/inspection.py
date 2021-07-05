@@ -62,8 +62,6 @@ class Inspection(Document):
             self.create_cargo()
             self.create_transhipment_cargo()
         
-       
-
         elif self.final_work_type == "Discharged" and self.secondary_work_type == "Re-stowing" and not self.third_work_type:
             self.create_cargo()
             self.update_restow_status()
@@ -103,10 +101,14 @@ class Inspection(Document):
             
             if export_container_number:
                 self.check_export()
+            
+            if not export_container_number:
+                 msgprint(_("This is a FULL Container and there is no Export Booking for it").format(self.last_port),
+                    raise_exception=1)
 
         elif self.final_work_type == "Loading" and not self.secondary_work_type and not self.third_work_type and not self.work_information and self.container_content == "EMPTY":
             export_container_number = None
-            stock_container_number=None
+            stock_container_number = None
 
             export_container_number = frappe.db.sql("""Select name from `tabExport` where container_no=%s""", (self.container_no))
             stock_container_number = frappe.db.sql("""Select name from `tabCargo` where work_type = 'Discharged' and status = 'Stock' and additional_work = 'Stock' and container_no=%s """, (self.container_no))
@@ -120,6 +122,9 @@ class Inspection(Document):
                 val = frappe.db.get_value("Cargo", {"work_type": 'Discharged', "additional_work": 'Stock', "container_no": self.container_no}, ["booking_ref","eta_date","etd_date"], as_dict=True)
                 self.check_container_stock(val.eta_date, val.etd_date)
             
+            if not stock_container_number and not export_container_number:
+                msgprint(_("Please Check Why this EMPTY Container is Loading without any Export Booking").format(self.last_port),
+                    raise_exception=1)
     
     def check_container_stock(self, eta, etd):
         

@@ -1,37 +1,15 @@
-// Copyright (c) 2017, Sione Taumoepeau and contributors
+// Copyright (c) 2021, Sione Taumoepeau and contributors
 // For license information, please see license.txt
-frappe.provide("wharf_management.warehouse_fee_payment");
+frappe.provide("wharf_management.warehouse_quote");
 
-frappe.ui.form.on('Warehouse Fee Payment', {
-
-    on_submit: function(frm) {
-
-        //        frappe.set_route("List", "Cargo Warehouse")
-        //       frm.reload_doc()
-    },
-
+frappe.ui.form.on('Warehouse Quote', {
     refresh: function(frm) {
 
-        if (frm.doc.discount == "YES") {
-            frm.set_df_property("who_authorized_discount", "reqd", 1);
-        } else if (frm.doc.discount == "NO" || frm.doc.discount == "") {
-            frm.set_df_property("who_authorized_discount", "reqd", 0);
-        }
-
-        if (frm.doc.docstatus == 0) {
-            if (!frm.doc.posting_date) {
-                frm.set_value('posting_date', frappe.datetime.nowdate());
-            }
-            if (!frm.doc.posting_time) {
-                frm.set_value('posting_time', frappe.datetime.now_time());
-            }
-            set_posting_date_time(frm)
-        }
-
     },
+
     onload: function(frm) {
 
-        wharf_management.warehouse_fee_payment.setup_cargo_queries(frm);
+        wharf_management.warehouse_quote.setup_cargo_queries(frm);
 
     },
 
@@ -66,9 +44,7 @@ frappe.ui.form.on('Warehouse Fee Payment', {
     set_posting_time: function(frm) {
         set_posting_date_time(frm)
     }
-
 });
-
 
 var set_posting_date_time = function(frm) {
     if (frm.doc.docstatus == 0 && frm.doc.set_posting_time) {
@@ -205,26 +181,6 @@ frappe.ui.form.on("Wharf Fee Item", {
 
 });
 
-frappe.ui.form.on("Payment Method", {
-    mode_of_payment: function(frm, cdt, cdn) {
-        var d = frappe.get_doc(cdt, cdn);
-        const row = locals[cdt][cdn];
-
-        frm.fields_dict["payment_method"].grid.toggle_reqd("name_on_the_cheque", row.mode_of_payment == "Cheque")
-        frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_no", row.mode_of_payment == "Cheque")
-        frm.fields_dict["payment_method"].grid.toggle_reqd("account_no", row.mode_of_payment == "Cheque")
-        frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_date", row.mode_of_payment == "Cheque")
-        frm.fields_dict["payment_method"].grid.toggle_reqd("bank", row.mode_of_payment == "Cheque")
-
-    },
-    amount: function(frm, cdt, cdn) {
-        var d = locals[cdt][cdn];
-        frappe.model.set_value(d.doctype, d.name, "total_amount", d.amount);
-        var total_amount = 0;
-        frm.doc.payment_method.forEach(function(i) { total_amount += i.amount; });
-        frm.set_value("paid_amount", total_amount);
-    }
-});
 
 frappe.ui.form.on("Cargo Warehouse Table", {
     cargo_warehouse: function(frm, cdt, cdn) {
@@ -232,7 +188,7 @@ frappe.ui.form.on("Cargo Warehouse Table", {
 
         if (d.cargo_warehouse) {
             var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
-            var j = 1;
+            var j = 5;
             for (var i = 0; i < j; i++) {
                 if (cargo_b.includes(d.cargo_type)) {
                     frappe.call({
@@ -264,14 +220,14 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         },
                         callback: function(data) {
                             console.log(data.message["grace_days"])
-                            frappe.model.set_value(d.doctype, d.name, "free_storage_days", data.message["grace_days"]);
+                            frappe.model.set_value(d.doctype, d.name, "free_storage_days", fs_days);
                             frappe.model.set_value(d.doctype, d.name, "storage_fee_price", data.message["fee_amount"]);
                             frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);
                         }
                     })
                 }
             }
-            var j = 3;
+            var j = 7;
             for (var i = 0; i < j; i++) {
                 frappe.call({
                     method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_days",
@@ -282,9 +238,8 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                     callback: function(r) {
                         //                        console.log(r.message)
                         frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
-                        //console.log(d.storage_days - d.free_storage_days)
-                        let sdays = flt(r.message - d.free_storage_days);
-
+                        //                        console.log(d.storage_days - d.free_storage_days)
+                        let sdays = flt(d.storage_days - d.free_storage_days);
                         if (sdays) {
                             if (sdays > 0) {
 
@@ -297,13 +252,13 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                                     if (d.net_weight < d.volume) {
                                         frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
                                     }
-                                } else if (d.cargo_type == "Vehicles") {
+                                }
+                                if (d.cargo_type == "Vehicles") {
                                     frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                                 }
-                                //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                             }
                             if (sdays <= 0) {
-                                //                        console.log(sdays)
+
                                 frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
                                 frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
                             }

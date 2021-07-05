@@ -16,7 +16,7 @@ frappe.ui.form.on('Enquire Cargo Fees', {
             frm.set_value("check", 1)
         });
 
-        frm.page.add_action_icon(__("fa fa-print text-success"), function() {
+        frm.page.add_action_icon(__("printer"), function() {
 
             //        frm.add_custom_button(__("Print"), function() {
             var w = window.open("/printview?doctype=Enquire%20Cargo%20Fees&name=" + cur_frm.doc.name + "&trigger_print=1&format=Enquire%20Cargo%20Fees&no_letterhead=0&_lang=en");
@@ -48,15 +48,15 @@ frappe.ui.form.on('Enquire Cargo Fees', {
         });
 
 
-        if (frappe.user.has_role("System Manager")) {
-            frm.page.sidebar.show(); // this removes the sidebar
-            $(".timeline").show()
-            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
-        } else {
-            frm.page.sidebar.hide(); // this removes the sidebar
-            $(".timeline").hide()
-            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
-        }
+        //        if (frappe.user.has_role("System Manager")) {
+        //            frm.page.sidebar.show(); // this removes the sidebar
+        //            $(".timeline").show()
+        //            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+        //        } else {
+        //            frm.page.sidebar.hide(); // this removes the sidebar
+        //            $(".timeline").hide()
+        //            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        //        }
 
     },
     today_date: function(frm) {

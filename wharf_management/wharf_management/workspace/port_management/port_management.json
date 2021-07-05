@@ -1,5 +1,5 @@
 {
- "cards_label": "Reports",
+ "cards_label": "Cargo & Settings",
  "category": "Modules",
  "charts": [],
  "creation": "2020-07-26 00:16:45.337613",
@@ -27,7 +27,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Cargo",
-   "link_type": "DocType",
+   "link_type": "Page",
    "onboard": 0,
    "type": "Card Break"
   },
@@ -45,15 +45,6 @@
    "is_query_report": 0,
    "label": "Pre Advice",
    "link_to": "Pre Advice",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Cargo",
-   "link_to": "Cargo",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -114,7 +105,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Cargo Stock Reconciliaition",
-   "link_to": "Cargo Reconciliation",
+   "link_to": "Cargo Stock Reconciliation",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -167,6 +158,15 @@
    "is_query_report": 0,
    "label": "Cargo Warehouse",
    "link_to": "Cargo Warehouse",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Quote",
+   "link_to": "Warehouse Quote",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -232,9 +232,79 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wharf Fees",
+   "link_to": "Wharf Fees",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wharf Fee Category",
+   "link_to": "Wharf Fee Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Yard Settings",
+   "link_to": "Yard Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Holiday List",
+   "link_to": "Holiday",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "System Settings",
+   "link_to": "System Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Setup",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Agency Setup",
+   "link_to": "Shipping Agency",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2021-06-30 13:23:39.770137",
+ "modified": "2021-07-04 23:43:02.261933",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -250,16 +320,10 @@
   },
   {
    "doc_view": "",
-   "label": "Cargo Movement",
-   "link_to": "Cargo Movement",
-   "type": "Report"
-  },
-  {
-   "doc_view": "",
    "label": "Warehouse Movement",
    "link_to": "Cargo Warehouse Movement",
    "type": "Report"
   }
  ],
- "shortcuts_label": ""
+ "shortcuts_label": "Cargo Shortcuts"
 }
