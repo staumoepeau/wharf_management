@@ -682,106 +682,108 @@ frappe.ui.form.on('Cargo', {
 
         if (frm.doc.manifest_check == "Confirm") {
             if (frm.doc.work_type == "Loading") {
-                if (cargo_type_a.includes(frm.doc.cargo_type)) {
-                    frappe.call({
-                        "method": "frappe.client.get",
-                        args: {
-                            doctype: "Wharf Fees",
-                            filters: {
-                                wharf_fee_category: "Storage Fee",
-                                cargo_type: frm.doc.cargo_type,
-                                container_size: frm.doc.container_size,
-                                container_content: frm.doc.container_content
-                            }
-                        },
-                        callback: function(data) {
-                            //                            console.log(data)
-                            frm.set_value("free_days", data.message["grace_days"]);
-                            frm.set_value("storage_rate", data.message["fee_amount"]);
-                        }
-                    })
-                }
-                if (cargo_type_b.includes(frm.doc.cargo_type)) {
-                    frappe.call({
-                        "method": "frappe.client.get",
-                        args: {
-                            doctype: "Wharf Fees",
-                            filters: {
-                                wharf_fee_category: "Storage Fee",
-                                cargo_type: frm.doc.cargo_type,
-                            }
-                        },
-                        callback: function(data) {
-                            console.log(data)
-                            frm.set_value("free_days", data.message["grace_days"]);
-                            frm.set_value("storage_rate", data.message["fee_amount"]);
-                        }
-                    })
-                }
-                if (frm.doc.cargo_type == "Vehicles") {
-                    frappe.call({
-                        "method": "frappe.client.get",
-                        args: {
-                            doctype: "Wharf Fees",
-                            filters: {
-                                wharf_fee_category: "Storage Fee",
-                                cargo_type: frm.doc.cargo_type,
-                            }
-                        },
-                        callback: function(data) {
-                            frm.set_value("free_days", data.message["grace_days"]);
-                            frm.set_value("storage_rate", data.message["fee_amount"]);
-                        }
-                    });
-                }
-                if (frm.doc.last_work == "Stock") {
-                    var etadate = frm.doc.final_eta
-                    var postingdate = frm.doc.final_etd
-                } else {
-                    var etadate = frm.doc.gate1_date
-                    var postingdate = frm.doc.etd_date
-                }
-                console.log(etadate, postingdate)
-                frappe.call({
-                    method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
-                    args: {
-                        "eta_date": etadate,
-                        "posting_date": postingdate,
-                    },
-                    callback: function(r) {
-                        console.log(etadate, postingdate)
-                        frm.set_value("storage_days", r.message);
-
-                        let sdays = flt(frm.doc.storage_days - frm.doc.free_days);
-                        if (sdays > 0) {
-
-                            frm.set_value("charge_days", sdays);
-
-                            if (cargo_type_a.includes(frm.doc.cargo_type)) {
-                                frm.set_value("storage_fee", sdays * frm.doc.storage_rate);
-                            }
-                            if (cargo_type_b.includes(frm.doc.cargo_type)) {
-                                if (frm.doc.net_weight > frm.doc.volume) {
-                                    frm.set_value("storage_fee", sdays * frm.doc.net_weight * frm.doc.storage_rate);
+                var j = 2;
+                for (var i = 0; i < j; i++) {
+                    if (cargo_type_a.includes(frm.doc.cargo_type)) {
+                        frappe.call({
+                            "method": "frappe.client.get",
+                            args: {
+                                doctype: "Wharf Fees",
+                                filters: {
+                                    wharf_fee_category: "Storage Fee",
+                                    cargo_type: frm.doc.cargo_type,
+                                    container_size: frm.doc.container_size,
+                                    container_content: frm.doc.container_content
                                 }
-                                if (frm.doc.net_weight < frm.doc.volume) {
-                                    frm.set_value("storage_fee", sdays * frm.doc.volume * frm.doc.storage_rate);
+                            },
+                            callback: function(data) {
+                                //                            console.log(data)
+                                frm.set_value("free_days", data.message["grace_days"]);
+                                frm.set_value("storage_rate", data.message["fee_amount"]);
+                            }
+                        })
+                    } else if (cargo_type_b.includes(frm.doc.cargo_type)) {
+                        frappe.call({
+                            "method": "frappe.client.get",
+                            args: {
+                                doctype: "Wharf Fees",
+                                filters: {
+                                    wharf_fee_category: "Storage Fee",
+                                    cargo_type: frm.doc.cargo_type,
                                 }
-
+                            },
+                            callback: function(data) {
+                                console.log(data)
+                                frm.set_value("free_days", data.message["grace_days"]);
+                                frm.set_value("storage_rate", data.message["fee_amount"]);
                             }
-                            if (frm.doc.cargo_type == "Vehicles") {
-                                frm.set_value("storage_fee", sdays * frm.doc.storage_rate);
+                        })
+                    } else if (frm.doc.cargo_type == "Vehicles") {
+                        frappe.call({
+                            "method": "frappe.client.get",
+                            args: {
+                                doctype: "Wharf Fees",
+                                filters: {
+                                    wharf_fee_category: "Storage Fee",
+                                    cargo_type: frm.doc.cargo_type,
+                                }
+                            },
+                            callback: function(data) {
+                                frm.set_value("free_days", data.message["grace_days"]);
+                                frm.set_value("storage_rate", data.message["fee_amount"]);
                             }
-
-                            //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
-                        }
-                        if (sdays <= 0) {
-                            console.log(sdays)
-                            frm.set_value("charge_days", 0);
-                            frm.set_value("storage_fee", 0 * frm.doc.storage_rate);
-                        }
+                        });
                     }
-                })
+                    if (frm.doc.last_work == "Stock") {
+                        var etadate = frm.doc.final_eta
+                        var postingdate = frm.doc.final_etd
+                    } else {
+                        var etadate = frm.doc.gate1_date
+                        var postingdate = frm.doc.etd_date
+                    }
+                    console.log(etadate, postingdate)
+                }
+                var j = 5;
+                for (var i = 0; i < j; i++) {
+                    frappe.call({
+                        method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
+                        args: {
+                            "eta_date": etadate,
+                            "posting_date": postingdate,
+                        },
+                        callback: function(r) {
+                            console.log(etadate, postingdate)
+                            frm.set_value("storage_days", r.message);
+
+                            let sdays = flt(frm.doc.storage_days - frm.doc.free_days);
+                            if (sdays > 0) {
+
+                                frm.set_value("charge_days", sdays);
+
+                                if (cargo_type_a.includes(frm.doc.cargo_type)) {
+                                    frm.set_value("storage_fee", sdays * frm.doc.storage_rate);
+                                }
+                                if (cargo_type_b.includes(frm.doc.cargo_type)) {
+                                    if (frm.doc.net_weight > frm.doc.volume) {
+                                        frm.set_value("storage_fee", sdays * frm.doc.net_weight * frm.doc.storage_rate);
+                                    }
+                                    if (frm.doc.net_weight < frm.doc.volume) {
+                                        frm.set_value("storage_fee", sdays * frm.doc.volume * frm.doc.storage_rate);
+                                    }
+
+                                }
+                                if (frm.doc.cargo_type == "Vehicles") {
+                                    frm.set_value("storage_fee", sdays * frm.doc.storage_rate);
+                                }
+                            }
+                            if (sdays <= 0) {
+                                console.log(sdays)
+                                frm.set_value("charge_days", 0);
+                                frm.set_value("storage_fee", 0 * frm.doc.storage_rate);
+                            }
+                        }
+                    })
+                }
             }
         }
         if (!frm.doc.manifest_check || frm.doc.manifest_check == "") {
