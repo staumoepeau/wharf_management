@@ -32,6 +32,12 @@ frappe.ui.form.on('Cargo', {
         frm.toggle_display(['break_bulk_items'], frm.doc.qty > 1);
         frm.toggle_display(['last_port'], frm.doc.cargo_type === "Split Ports");
 
+        if (frappe.user_roles.includes("System Manager")) {
+            frm.set_df_property("overdue_storage_status", "read_only", 0);
+        } else {
+            frm.set_df_property("overdue_storage_status", "read_only", 1);
+        }
+
     },
 
     cargo_type: function(frm) {

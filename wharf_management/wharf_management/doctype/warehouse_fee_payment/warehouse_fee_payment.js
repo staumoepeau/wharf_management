@@ -232,7 +232,7 @@ frappe.ui.form.on("Cargo Warehouse Table", {
 
         if (d.cargo_warehouse) {
             var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
-            var j = 1;
+            var j = 2;
             for (var i = 0; i < j; i++) {
                 if (cargo_b.includes(d.cargo_type)) {
                     frappe.call({
@@ -271,7 +271,7 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                     })
                 }
             }
-            var j = 3;
+            var j = 5;
             for (var i = 0; i < j; i++) {
                 frappe.call({
                     method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_days",
@@ -284,32 +284,33 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
                         //console.log(d.storage_days - d.free_storage_days)
                         let sdays = flt(r.message - d.free_storage_days);
+                        console.log(sdays)
+                            //                        if (sdays) {
+                        if (sdays > 0) {
 
-                        if (sdays) {
-                            if (sdays > 0) {
+                            frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
 
-                                frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);
-
-                                if (cargo_b.includes(d.cargo_type)) {
-                                    if (d.net_weight > d.volume) {
-                                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
-                                    }
-                                    if (d.net_weight < d.volume) {
-                                        frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
-                                    }
-                                } else if (d.cargo_type == "Vehicles") {
-                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                            if (cargo_b.includes(d.cargo_type)) {
+                                if (d.net_weight > d.volume) {
+                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.net_weight * d.storage_fee_price);
                                 }
-                                //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
+                                if (d.net_weight < d.volume) {
+                                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.volume * d.storage_fee_price);
+                                }
+                            } else if (d.cargo_type == "Vehicles") {
+                                frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                             }
-                            if (sdays <= 0) {
-                                //                        console.log(sdays)
-                                frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
-                                frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
-                            }
-                        } else {
-                            msgprint("Please Check Storage Fees")
+                            //                    frappe.model.set_value(d.doctype, d.name, "storage_fee", sdays * d.storage_fee_price);
                         }
+                        if (sdays <= 0) {
+                            //                        console.log(sdays)
+                            frappe.model.set_value(d.doctype, d.name, "charged_storage_days", 0);
+                            frappe.model.set_value(d.doctype, d.name, "storage_fee", 0 * d.storage_fee_price);
+                        }
+                        //                       } 
+                        //                       else {
+                        //                    msgprint("Please Check Storage Fees")
+                        //                       }
                     }
                 })
             }
