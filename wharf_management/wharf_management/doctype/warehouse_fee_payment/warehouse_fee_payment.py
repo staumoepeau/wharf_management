@@ -33,7 +33,7 @@ class WarehouseFeePayment(Document):
         check_duplicate = frappe.db.sql("""Select custom_warrant from `tabWarehouse Fee Payment` where custom_warrant=%s having count(custom_warrant) > 1""", (self.custom_warrant))
 
         if check_duplicate:
-            frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(check_duplicate))
+            frappe.throw(_("Sorry You are duplicating this Warrant No : {0} ").format(self.custom_warrant))
 
     def update_payment_status(self):
              frappe.db.sql("""Update `tabCargo Warehouse` INNER JOIN `tabCargo Warehouse Table` ON
