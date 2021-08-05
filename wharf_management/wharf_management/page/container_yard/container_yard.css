@@ -9,14 +9,6 @@ html {
     box-sizing: inherit;
 }
 
-body.full-width .container {
-    width: 100%;
-}
-
-@media (max-width: 575.98px) {
-    ...
-}
-
 
 /* Small devices (landscape phones, 576px and up) */
 

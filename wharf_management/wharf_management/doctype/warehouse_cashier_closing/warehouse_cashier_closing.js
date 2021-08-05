@@ -35,6 +35,7 @@ frappe.ui.form.on('Warehouse Cashier Closing', {
 });
 
 function get_cheques_list(frm) {
+//    alert("Cheques")
     if (frm.doc.all_cashier == 1) {
         var cashier = ""
     } else {
@@ -48,7 +49,7 @@ function get_cheques_list(frm) {
             "cashier": cashier
         },
         callback: function(data) {
-            console.log(data.message);
+            console.log(data);
             $.each(data.message, function(i, item) {
                 var item_row = frm.add_child("cheque_details")
                 item_row.name_on_the_cheque = item.name_on_the_cheque,
@@ -62,12 +63,15 @@ function get_cheques_list(frm) {
 }
 
 function get_mode_payment(frm) {
+    let cashier = ''
+    
     if (frm.doc.all_cashier == 1) {
-        var cashier = ""
+        cashier = ""
     } else {
         frm.doc.all_cashier == 0
         cashier = frm.doc.user
     }
+    
     frappe.call({
         method: "wharf_management.wharf_management.doctype.warehouse_cashier_closing.warehouse_cashier_closing.get_mode_of_payment",
         args: {
@@ -75,7 +79,7 @@ function get_mode_payment(frm) {
             "cashier": cashier
         },
         callback: function(r) {
-            console.log(r.message);
+            console.log(r);
             let gtotal = 0;
             $.each(r.message, function(i, item) {
                 var item_row = frm.add_child("payment_reconciliation")
@@ -84,7 +88,7 @@ function get_mode_payment(frm) {
                 gtotal += flt(item.total)
 
             });
-
+//            alert("Total ",gtotal)
             frm.set_value("grand_total", gtotal);
             frm.refresh();
         }

@@ -41,7 +41,7 @@ def get_cheques(posting_date, cashier):
 @frappe.whitelist()
 def get_mode_of_payment(posting_date, cashier):
 
-    if cashier:
+    if not cashier:
         return frappe.db.sql("""SELECT mode_of_payment, SUM(amount) as total
             FROM `tabPayment Method`
             WHERE docstatus = 1
@@ -49,7 +49,7 @@ def get_mode_of_payment(posting_date, cashier):
             AND posting_date = %s
             GROUP BY mode_of_payment """, (posting_date), as_dict=1)
     
-    if not cashier:
+    if cashier:
         return frappe.db.sql("""SELECT mode_of_payment, SUM(amount) as total
             FROM `tabPayment Method`
             WHERE docstatus = 1

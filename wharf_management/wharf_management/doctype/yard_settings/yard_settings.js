@@ -15,7 +15,13 @@ frappe.ui.form.on('Yard Settings', {
     yard_slot_number: function(frm) {
 
         get_yard_slot(frm);
+    },
+
+    yard_row: function(frm) {
+
+        get_yard_slot(frm);
     }
+
 
 });
 
@@ -31,19 +37,19 @@ var get_yard_slot = function(frm) {
 
     //    console.log(frm.doc.yard_section.concat(frm.doc.yard_slot_number))
 
-    if (frm.doc.yard_row == 1) {
+    if (frm.doc.yard_row == 01) {
         var yardsub = "1"
     }
-    if (frm.doc.yard_row == 2) {
+    else if (frm.doc.yard_row == 02) {
         var yardsub = "2"
     }
-    if (frm.doc.yard_row == 3) {
+    else if (frm.doc.yard_row == 03) {
         var yardsub = "3"
     }
-    if (frm.doc.yard_row == 4) {
+    else if (frm.doc.yard_row == 04) {
         var yardsub = "4"
     }
-    if (frm.doc.yard_row == 5) {
+    else if (frm.doc.yard_row == 05) {
         var yardsub = "5"
     }
 
