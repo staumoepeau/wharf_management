@@ -178,7 +178,7 @@ class Inspection(Document):
         work_information='Re-stowing', status='Booked' WHERE name=%s""", (self.cargo_ref))
 
     def loading_restowing(self):
-        frappe.db.sql("""UPDATE `tabCargo` SET last_work="Loading", last_work_date=%s WHERE cargo_ref=%s""", (now(), self.cargo_ref))
+        frappe.db.sql("""UPDATE `tabCargo` SET work_type = 'Re-stowing', secondary_work_type = '', last_work="Loading", last_work_date=%s WHERE cargo_ref=%s""", (now(), self.cargo_ref))
 
 
     def update_inspection_status(self):

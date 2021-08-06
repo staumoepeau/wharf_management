@@ -119,7 +119,8 @@ frappe.ui.form.on('Pre Advice', {
             frm.doc.inspection_status != "Closed" &&
             frm.doc.docstatus == 1
         ) {
-            frm.add_custom_button(__('Inspection'), function() {
+            frm.page.set_primary_action(__("Inspection"), function() {
+//            frm.add_custom_button(__('I'), function() {
 
                 if ((frm.doc.work_type === "Loanding") && (frm.doc.container_content === "FULL")) {
                     frappe.call({
@@ -213,7 +214,7 @@ frappe.ui.form.on('Pre Advice', {
                 frappe.set_route("Form", "Inspection", "new-inspection-1");
                 //                }
 
-            }).addClass("btn-primary");
+            });
         }
 
         //        if ((frappe.user.has_role("System Manager") || frappe.user.has_role("Yard Operation User") &&
