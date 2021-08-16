@@ -256,3 +256,45 @@ var Drop = function(e, ref) {
 
 //--------------------------------------------------------------------------------------------------------------------------
 //$('[data-toggle="tooltip"]').tooltip({ html: true });
+
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev, ref) {
+    ev.dataTransfer.setData('Text/html', ev.target.id);
+    objeto = ref.id;
+    yard_id = ev.target.id;
+
+//    alert(yard_id)
+    if (!yard_id == 'Inspection') {
+        frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
+    }
+}
+
+
+function drop(ev, target) {
+    ev.preventDefault();
+
+    console.log(objeto, ev.target.id)
+
+    var data = ev.dataTransfer.getData('Text/html');
+    destino = ev.target.id;
+    alert(destino)
+    frappe.db.set_value('Cargo', objeto, 'yard_slot', destino);
+    frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
+
+    if (yard_id == "Inspection") {
+        frappe.db.set_value('Cargo', objeto, { 'status': 'Yard', 'yard_status': 'Closed' });
+        frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
+    }
+
+//    update_yard_slot();
+}
+
+function update_yard_slot() {
+
+    frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
+    frappe.ui.toolbar.clear_cache();
+}

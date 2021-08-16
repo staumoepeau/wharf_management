@@ -92,8 +92,8 @@ html {
         margin: 0px;
     }
     .inspection p.container_size {
-        padding-left: 8px;
-        padding-bottom: 15px;
+        padding-left: 12px;
+        padding-bottom: 22px;
         font-size: 9px
     }
     .express p.container_no {
@@ -140,8 +140,8 @@ html {
         font-size: 11px
     }
     .inspection p.container_no {
-        padding-left: 8px;
-        padding-bottom: 15px;
+        padding-left: 12px;
+        padding-bottom: 22px;
         font-size: 9px;
         margin: 0px;
     }
@@ -235,12 +235,12 @@ h1 {
 }
 
 #right-sidebar-wrapper {
-    padding: 10px;
+    padding: 0px;
     position: fixed;
     right: 170px;
     width: 0;
     height: 100%;
-    margin-right: -150px;
+    margin-right: -160px;
     overflow-y: auto;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -306,10 +306,10 @@ h1 {
     }
     #page-content-wrapper {
         padding: 10px;
-        position: relative;
+        position: absolute;
     }
     #wrapper.toggled-right #page-content-wrapper {
-        position: relative;
+        position: absolute;
         margin-right: 0;
     }
 }

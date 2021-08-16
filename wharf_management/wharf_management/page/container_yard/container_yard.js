@@ -22,9 +22,9 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
     }).addClass("btn-success");
 
     page.set_secondary_action(__(""), function() {
-
-        show_yard_details(page, bayid)
-        $('.container_yard_content').load(document.URL + ' .container_yard_content');
+        refresh_page(page, bayid)
+//        show_yard_details(page, bayid)
+//        $('.container_yard_content').load(document.URL + ' .container_yard_content')
     }, "refresh")
 
 
@@ -35,10 +35,9 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
             state = "Close"
         }
         //   alert(state)
-        toggle_rightMenu(state);
-        get_inspection(page);
         
-
+        get_inspection(page);
+        toggle_rightMenu(state);
     });
 
     let bid = '';
@@ -71,6 +70,15 @@ frappe.pages['container_yard'].on_page_load = function(wrapper) {
 
 };
 
+let refresh_page = function(page, bayid){
+
+    show_yard_details(page, bayid)
+    get_inspection(page)
+    $('.container_yard_content').load(document.URL + ' .container_yard_content');
+    $('.container_yard_rightbar').load(document.URL + ' .container_yard_rightbar');
+    
+};
+
 
 let show_yard_details = function(page, bay) {
     frappe.call({
@@ -88,14 +96,13 @@ let show_yard_details = function(page, bay) {
     });
 };
 
-var get_inspection = function(page) {
+let get_inspection = function(page) {
+    page.main.find('#right-sidebar-wrapper').html('');
     frappe.call({
         method: "wharf_management.wharf_management.page.container_yard.container_yard.get_inspection_items",
         callback: function(y) {
-
-            page.main.find('#right-sidebar-wrapper').html(frappe.render_template('container_yard_rightbar', {
-                    inspection_items: y.message || []
-                }))
+            console.log(y)
+            $(frappe.render_template('container_yard_rightbar', {inspection_items: y.message || []})).appendTo('#right-sidebar-wrapper');
                 //            console.log(y.message)
         }
     });
@@ -114,48 +121,6 @@ var get_inspection = function(page) {
 };
 
 
-
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev, ref) {
-    ev.dataTransfer.setData('Text/html', ev.target.id);
-    objeto = ref.id;
-
-    yard_id = ev.target.id;
-    alert(yard_id)
-    if (!yard_id == 'Inspection') {
-        frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
-    }
-}
-
-
-function drop(ev, target) {
-    ev.preventDefault();
-
-    console.log(objeto, ev.target.id)
-
-    var data = ev.dataTransfer.getData('Text/html');
-    destino = ev.target.id;
-
-    frappe.db.set_value('Cargo', objeto, 'yard_slot', destino);
-
-    if (yard_id == "Inspection") {
-        frappe.db.set_value('Cargo', objeto, { 'status': 'Yard', 'yard_status': 'Closed' });
-    }
-
-    update_yard_slot();
-}
-
-function update_yard_slot() {
-
-    frappe.db.set_value('Yard Settings', destino, 'occupy', 1);
-    frappe.ui.toolbar.clear_cache();
-}
-
-
 function toggle_leftMenu(state) {
     if (state == "Close") {
         leftcloseNav()
@@ -168,12 +133,13 @@ function toggle_rightMenu(state) {
     if (state == "Close") {
         document.getElementById("right-sidebar-wrapper").style.width = "0px";
         document.getElementById("page-content-wrapper").style.paddingRight = "0px";
-        document.getElementById("page-content-wrapper").style.marginRight = "0px";
+//        document.getElementById("page-content-wrapper").style.marginRight = "0px";
 
     } else if (state == "Open") {
 //        alert("Open")
         document.getElementById("right-sidebar-wrapper").style.width = "120px";
-        document.getElementById("page-content-wrapper").style.marginRight = "120px";
+        document.getElementById("page-content-wrapper").style.paddingRight = "80px";
+//        document.getElementById("page-content-wrapper").style.marginRight = "0px";
     }
 }
 
@@ -200,51 +166,27 @@ function leftopenNav() {
 }
 
 
-var cargo_ref, yard_id, status;
-
-function update_onDragStart(cargo_ref) {
-
-    frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'status', function(r) {
-        status = r.status
-        if (status != 'Inspection' || status != 'Express') {
-            frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'yard_slot', function(r) {
-                yard_id = r.yard_slot,
-                    frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
-            });
-        }
-
-    });
-
-}
+let cargo_ref, yard_id, status;
 
 
 function DragStart(e, ref) {
 
-    e.dataTransfer.setData('text/html', this.innerHTML);
+//    e.dataTransfer.setData('text/html', this.innerHTML);
     e.dataTransfer.setData('Text/html', e.target.id);
-    //    yard_id = e.target.id
-    cargo_ref = ref.id
+    yard_id = ref.id
+    cargo_ref = e.target.id
 
-    frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'status', function(r) {
-        status = r.status
-        if (status != 'Inspection') {
-            frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'yard_slot', function(r) {
-                yard_id = r.yard_slot,
-                    frappe.db.set_value('Yard Settings', yard_id, 'occupy', 0);
-            });
-        }
-        //        alert(status, ref.id, yard_id);
-        //        console.log(status, ref.id, yard_id);
-    });
+    console.log(yard_id, cargo_ref)
+
 
 }
 
-function DragOver(e) {
-    if (e.preventDefault) {
-        e.preventDefault();
-    }
+function DragOver(e, ref) {
+    
+    e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-    return false;
+//    yard_id = ref.id
+//    return yard_id;
 }
 
 function DragEnter(e) {
@@ -259,40 +201,43 @@ function DragLeave(e) {
     }
 }
 
-function allowDrop(e) {
+function allowDrop(e, ref) {
     if (e.preventDefault) {
         e.preventDefault();
     }
 }
 
 function Drop(e, ref) {
-    //    if (e.preventDefault) {
-    //        e.preventDefault();
-    //    }
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
     /*  Gettting IDs 
      *  dragstart, drag, dragenter, dragleave, dragover, drop, dragend
      */
 
     var drop_cargo_ref = e.dataTransfer.getData("Text/html");
     new_yard = ref.id;
+//    yardid = DragEnter(e)
 
-    //    console.log(new_yard, drop_cargo_ref, drop_cargo_ref.id)
+    console.log(yard_id, new_yard, drop_cargo_ref)
 
-    Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
+    frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'status', function(r) {
+        status = r.status
+       console.log(status)
+        if (status != 'Inspection') {
+            frappe.db.get_value('Cargo', { 'name': cargo_ref }, 'yard_slot', function(r) {
+                yard_id = r.yard_slot,
+                    frappe.db.set_value('Yard Settings', yard_id, {'occupy': 0});
+            });
+        }
+    });
 
-    //return false;
-}
-
-function DragEnd(e) {
-
-}
-
-function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
-
-    console.log(status, cargo_ref, new_yard, drop_cargo_ref)
+//    Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref)
     if (status == "Inspection") {
-        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
-        frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+        frappe.db.set_value('Cargo', cargo_ref, { 'yard_slot':new_yard, 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+        frappe.db.set_value('Yard Settings', new_yard, {'occupy': 1});
+        
+
     }
     //    if (status == "Express") {
     //        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
@@ -301,16 +246,39 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
     //} 
     else if (yard_id != "Inspection") {
         frappe.db.set_value('Cargo', drop_cargo_ref, 'yard_slot', new_yard);
+        frappe.db.set_value('Yard Settings', new_yard, {'occupy': 1});
+        
+
     }
-    //    console.log(yard_id, new_yard, status, cargo_ref, drop_cargo_ref)
-    frappe.db.set_value('Yard Settings', new_yard, 'occupy', 1);
+//    alert(bay_id)
+}
+
+function DragEnd(e) {
+
+}
+
+//function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
+
+//    console.log(status, cargo_ref, new_yard, drop_cargo_ref)
+//    if (status == "Inspection") {
+//        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
+//        frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+//    }
+    //    if (status == "Express") {
+    //        frappe.db.set_value('Cargo', cargo_ref, 'yard_slot', new_yard);
+    //        frappe.db.set_value('Cargo', cargo_ref, { 'status': 'Yard', 'yard_status': 'Closed', 'yard_date': frappe.datetime.now_datetime() });
+
+    //} 
+//    else if (yard_id != "Inspection") {
+//        frappe.db.set_value('Cargo', drop_cargo_ref, 'yard_slot', new_yard);
+//    }
+//        console.log(yard_id, new_yard, status, cargo_ref, drop_cargo_ref)
+//    frappe.db.set_value('Yard Settings', new_yard, 'occupy', 1);
 
     //	frappe.ui.toolbar.clear_cache();
     //	show_yard_details(page, bayid)
     //	$('.container_yard_content').load(document.URL +  ' .container_yard_content');
-
-
-}
+//}
 
 
 //-------------------------------------------------------------------------------------------------------------
@@ -358,6 +326,6 @@ function Update_dropZone(status, cargo_ref, new_yard, drop_cargo_ref) {
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-$(document).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip();
-});
+//$(document).ready(function() {
+//    $('[data-toggle="tooltip"]').tooltip();
+//});

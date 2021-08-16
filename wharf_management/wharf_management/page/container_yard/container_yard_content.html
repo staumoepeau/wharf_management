@@ -178,7 +178,7 @@
                         {% endif %}
 
                         {% else %}
-                         <div id="{{ item.yard_slot }}" class="empty" ondrop="Drop(event, this)" ondragenter="DragEnter(event)" ondragover="allowDrop(event)">
+                         <div id="{{ item.yard_slot }}" class="empty" ondrop="Drop(event, this)" ondragenter="DragEnter(event)" ondragover="DragOver(event, this)">
                           <img class="card-img-top" src="/files/empty_contanier.svg" height="55" width="115"/>
                           <div class="card-img-overlay">
                               <p class="yard_slot" >{{ item.yard_slot }}</p>
