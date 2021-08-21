@@ -41,7 +41,7 @@ def get_items(bay):
     items = frappe.db.sql("""SELECT DISTINCT `tabYard Settings`.name, `tabCargo`.status, `tabCargo`.container_content,`tabYard Settings`.yard_slot, `tabYard Settings`.yard_section, `tabCargo`.cargo_type,
         `tabYard Settings`.yard_sub_section, `tabCargo`.name as cargo_ref, `tabCargo`.container_no, `tabCargo`.container_size, `tabCargo`.hazardous, `tabCargo`.chasis_no, `tabCargo`.cargo_condition
         FROM `tabYard Settings` 
-        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles") WHERE `tabYard Settings`.yard_section=%s 
+        LEFT JOIN `tabCargo` ON `tabYard Settings`.yard_slot = `tabCargo`.yard_slot WHERE `tabYard Settings`.yard_section=%s 
         ORDER BY `tabYard Settings`.yard_slot""",(bay) , as_dict=True)
     return items
 
@@ -74,7 +74,7 @@ def get_bay_row_items(bay_row):
 def get_inspection_items():
 
     inspection_items = frappe.db.sql("""SELECT name, status, container_no, container_size, cargo_type, chasis_no, mark, container_content, cargo_condition
-        FROM `tabCargo` WHERE status = 'Inspection' AND `tabCargo`.cargo_type NOT IN ("Vehicles","Heavy Vehicles")""", as_dict=True)
+        FROM `tabCargo` WHERE status = 'Inspection'""", as_dict=True)
     return inspection_items
 
 
@@ -91,11 +91,13 @@ def get_express_items():
 
 
 @frappe.whitelist()
-def update_yard(ref):
+def update_yard(ref, occupy):
     
 #    yard = frappe.db.get_value("Cargo", {"name": ref}, ["yard_slot"])
-    
-    frappe.db.sql("""UPDATE `tabYard Settings` SET occupy=0 WHERE yard_slot=%s""", (ref))
+    if occupy == 0:
+        frappe.db.sql("""UPDATE `tabYard Settings` SET occupy=0 WHERE yard_slot=%s""", (ref))
+    if occupy == 1:
+        frappe.db.sql("""UPDATE `tabYard Settings` SET occupy=1 WHERE yard_slot=%s""", (ref))
 
 #    msgprint(_("Old Yard Slot").format(ref),
 #                    raise_exception=1)

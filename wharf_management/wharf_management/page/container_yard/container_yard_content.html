@@ -21,7 +21,7 @@
                         {% if item.cargo_ref %}
 
                           {% if item.status == "Paid" && item.cargo_type == "Container" && item.container_content == "FULL" %}
-                           <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                           <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                             <img class="card-img-top" src="/files/paid_contanier.svg"  height="50" width="115" id="{{ item.yard_slot }}"/>
 
                               <div class="card-img-overlay">
@@ -37,7 +37,7 @@
                             {% endif %}
 
                         {% if item.status == "Custom Inspection" && item.cargo_type == "Container" && item.container_content == "FULL" %}
-                         <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                         <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                             <img class="card-img-top" src="/files/orange_contanier.svg"  height="50" width="115" id="{{ item.yard_slot }}"/>
                             <div class="card-img-overlay">
 
@@ -51,12 +51,12 @@
 
                         {% if item.status == "Yard" && item.hazardous != "Yes" && item.cargo_type == "Container" && item.container_content == "FULL" %}
 
-                         <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                         <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                             <img class="card-img-top" src="/files/blue_contanier.svg" height="50" width="115" id="{{ item.yard_slot }}"/>
                             <div class="card-img-overlay">
 
-                              <p class="container_no">{{ item.container_no}}</p>
-                              <p class="yard_slot" >{{ item.yard_slot }}</p>
+                              <p class="container_no" style="color:white;">{{ item.container_no}}</p>
+                              <p class="yard_slot" style="color:white;">{{ item.yard_slot }}</p>
 
 
                             </div>
@@ -66,8 +66,8 @@
 
                           {% if (item.status == "Yard" || item.status == "Stock") && item.hazardous != "Yes" && item.cargo_type == "Container" && item.container_content == "EMPTY" %}
 
-                             <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/pink_contanier.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                             <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/pink_contanier.svg"  id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
 
                                 <p class="container_no">{{ item.container_no}}</p>
@@ -80,7 +80,7 @@
                             {% endif %}
 
                         {% if item.status == "Yard" && item.hazardous == "Yes" && item.cargo_type == "Container" && item.container_content == "FULL" %}
-                         <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                         <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                               <img class="card-img-top" src="/files/red_contanier.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay" >
 
@@ -95,7 +95,7 @@
 
 
                             {% if item.status == "Yard" && item.hazardous == "Yes" && item.cargo_type == "Container" && item.container_content == "FULL" %}
-                             <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                             <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                                   <img class="card-img-top" src="/files/red_contanier.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
                                   <div class="card-img-overlay">
 
@@ -108,7 +108,7 @@
                               {% endif %}
 
                             {% if item.status == "Yard" && item.cargo_type == "Break Bulk" %}
-                             <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                             <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                                   <img class="card-img-top" src="/files/blue_break_bulk.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
                                   <div class="card-img-overlay">
 
@@ -119,7 +119,7 @@
                             </div>
                               {% endif %}
                               {% if item.status == "Paid" && item.cargo_type == "Break Bulk" %}
-                               <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                               <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                                     <img class="card-img-top" src="/files/green_break_bulk.svg"  height="55" width="125" id="{{ item.yard_slot }}"/>
                                     <div class="card-img-overlay">
 
@@ -132,8 +132,8 @@
 
                         {% if item.status == "Yard" && item.cargo_type == "Flatrack" %}
 
-                             <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/blue_flatrack.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                             <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/blue_flatrack.svg"  id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
 
                                 <p class="container_no">{{ item.container_no}}</p>
@@ -145,8 +145,8 @@
                         {% endif %}
                         {% if item.status == "Yard" && item.cargo_type == "Tank Tainers" %}
 
-                            <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/red_tank_tainer.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                            <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/red_tank_tainer.svg"  id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
                                 <p class="container_no">{{ item.container_no}}</p>
                                 <p class="yard_slot" >{{ item.yard_slot }}</p>
@@ -155,8 +155,8 @@
                         {% endif %}
                         {% if item.status == "Paid" && item.cargo_type == "Tank Tainers" %}
 
-                            <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/green_tank_tainer.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                            <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/green_tank_tainer.svg"  id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
                                 <p class="container_no">{{ item.container_no}}</p>
                                 <p class="yard_slot" >{{ item.yard_slot }}</p>
@@ -165,8 +165,8 @@
                         {% endif %}
                         {% if item.status == "Paid" && item.cargo_type == "Flatrack" %}
 
-                            <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
-                              <img class="card-img-top" src="/files/green_flatrack.svg" height="55" width="115" id="{{ item.yard_slot }}"/>
+                            <div class="{{ item.status}}" id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                              <img class="card-img-top" src="/files/green_flatrack.svg"  id="{{ item.yard_slot }}"/>
                               <div class="card-img-overlay">
 
                                 <p class="container_no">{{ item.container_no}}</p>
@@ -177,9 +177,60 @@
                             </div>
                         {% endif %}
 
+                        {% if item.status == "Yard" && item.cargo_type == "Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/blue_vehicle.svg"  id="{{ item.vehicle_yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+                                    </div>
+                                </div>
+                        {% endif %}
+
+                        {% if item.status == "Paid" && item.cargo_type == "Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/green_vehicle.svg"  id="{{ item.vehicle_yard_slot }}" />
+                                    <div class="card-img-overlay">
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+                                    </div>
+                                </div>
+                         {% endif %}
+
+                         {% if item.status == "Yard" && item.cargo_type == "Heavy Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/blue_hvehicle.svg"  id="{{ item.vehicle_yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+
+                                    </div>
+                                </div>
+                        {% endif %}
+
+                        {% if item.status == "Paid" && item.cargo_type == "Heavy Vehicles" %}
+
+                                <div id="{{ item.cargo_ref }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
+                                    <img class="card-img-top" src="/files/green_hvehicle.svg"  id="{{ item.vehicle_yard_slot }}" />
+                                    <div class="card-img-overlay">
+
+                                        <p class="container_no">{{ item.chasis_no}}</p>
+                                        <p class="yard_slot">{{ item.yard_slot }}</p>
+
+                                    </div>
+                                </div>
+                        {% endif %}
+                        
                         {% else %}
-                         <div id="{{ item.yard_slot }}" class="empty" ondrop="Drop(event, this)" ondragenter="DragEnter(event)" ondragover="DragOver(event, this)">
-                          <img class="card-img-top" src="/files/empty_contanier.svg" height="55" width="115"/>
+                         <div class="EMPTY" id="{{ item.yard_slot }}" class="empty" ondrop="Drop(event, this)" ondragenter="DragEnter(event)" ondragover="DragOver(event, this)">
+                          <img class="card-img-top" src="/files/empty_contanier.svg"/>
                           <div class="card-img-overlay">
                               <p class="yard_slot" >{{ item.yard_slot }}</p>
                           </div>
