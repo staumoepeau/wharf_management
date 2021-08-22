@@ -290,7 +290,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                     }
                 })
             }
-
+            frm.refresh_fields()
             if (d.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
@@ -316,6 +316,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
             }
             //           }
         }
+        frm.refresh_fields()
         var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
         if (cargo_b.includes(d.cargo_type)) {
             frappe.call({
@@ -360,6 +361,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 })
                 //            }
         }
+        frm.refresh_fields()
         if (d.cargo_type == "Vehicles") {
             frappe.call({
                     "method": "frappe.client.get",
@@ -404,8 +406,7 @@ frappe.ui.form.on("Cargo References", "reference_doctype", function(frm, cdt, cd
                 })
                 //           }
         }
-
-
+        frm.refresh_fields()
         frappe.call({
             method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
             args: {
