@@ -5,16 +5,18 @@ frappe.ui.form.on('Inspection', {
 
     refresh: function(frm) {
         if (frappe.user_roles.includes('Yard Inspection User', 'Yard Operation User')) {
+            frappe.ui.toolbar.toggle_full_width()
+        }
 
-            frm.page.sidebar.hide(); // this removes the sidebar
-            $(".timeline").hide()
-            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
-        }
-        if (frappe.user.has_role('System Manager', 'Yard Operation Supervisor')) {
-            frm.page.sidebar.show(); // this removes the sidebar
-            $(".timeline").show()
-            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
-        }
+//            frm.page.sidebar.hide(); // this removes the sidebar
+//            $(".timeline").hide()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+//        }
+//        if (frappe.user.has_role('System Manager', 'Yard Operation Supervisor')) {
+//            frm.page.sidebar.show(); // this removes the sidebar
+//            $(".timeline").show()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+//       }
 
     },
 

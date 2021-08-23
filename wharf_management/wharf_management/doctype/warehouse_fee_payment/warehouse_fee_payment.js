@@ -102,14 +102,11 @@ var get_storage_fee = function(frm) {
                         item_row.total = item.total
                     nettotal += item.total
                     frm.refresh()
-                        //                    get_net_total_fee(frm)
-                        //                    frm.refresh()
-                        //                    frm.save()
-                        //                    frm.refresh()
+
                 });
                 frm.set_value("net_total", nettotal);
                 frm.set_value("total_amount", nettotal);
-
+                frm.refresh_fields()
             }
         }
     });
@@ -215,7 +212,7 @@ frappe.ui.form.on("Payment Method", {
         frm.fields_dict["payment_method"].grid.toggle_reqd("account_no", row.mode_of_payment == "Cheque")
         frm.fields_dict["payment_method"].grid.toggle_reqd("cheque_date", row.mode_of_payment == "Cheque")
         frm.fields_dict["payment_method"].grid.toggle_reqd("bank", row.mode_of_payment == "Cheque")
-
+        frm.refresh_fields()
     },
     amount: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn];
@@ -223,6 +220,7 @@ frappe.ui.form.on("Payment Method", {
         var total_amount = 0;
         frm.doc.payment_method.forEach(function(i) { total_amount += i.amount; });
         frm.set_value("paid_amount", total_amount);
+        frm.refresh_fields()
     }
 });
 
@@ -232,8 +230,8 @@ frappe.ui.form.on("Cargo Warehouse Table", {
 
         if (d.cargo_warehouse) {
             var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
-            var j = 2;
-            for (var i = 0; i < j; i++) {
+//            var j = 2;
+//            for (var i = 0; i < j; i++) {
                 if (cargo_b.includes(d.cargo_type)) {
                     frappe.call({
                         "method": "frappe.client.get",
@@ -270,9 +268,10 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         }
                     })
                 }
-            }
-            var j = 5;
-            for (var i = 0; i < j; i++) {
+//            }
+            frm.refresh_fields()
+//            var j = 5;
+//            for (var i = 0; i < j; i++) {
                 frappe.call({
                     method: "wharf_management.wharf_management.doctype.warehouse_fee_payment.warehouse_fee_payment.get_storage_days",
                     args: {
@@ -313,7 +312,8 @@ frappe.ui.form.on("Cargo Warehouse Table", {
                         //                       }
                     }
                 })
-            }
+                frm.refresh_fields()
+//            }
         } else if (!d.cargo_warehouse) {
             msgprint("Please select a Cargo")
         }

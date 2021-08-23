@@ -10,15 +10,15 @@ frappe.listview_settings['Export Booking'] = {
 
     refresh: function(frm) {
 
-        if (frappe.user.has_role("System Manager", "Operation Manifest User")) {
-            frm.page.sidebar.show(); // this removes the sidebar
-            $(".timeline").show()
-            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
-        } else {
+//        if (frappe.user.has_role("System Manager", "Operation Manifest User")) {
+//            frm.page.sidebar.show(); // this removes the sidebar
+//            $(".timeline").show()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+//        } else {
 
-            frm.page.sidebar.hide(); // this removes the sidebar
-            $(".timeline").hide()
-            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10");
-        }
+//            frm.page.sidebar.hide(); // this removes the sidebar
+//            $(".timeline").hide()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10");
+//        }
     }
 }

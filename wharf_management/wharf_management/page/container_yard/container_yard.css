@@ -285,8 +285,9 @@ html {
 	}
     .card-img-overlay-inspection{
 	    position: absolute;
-	    top: auto;
-	    right: 0;
+        max-width:100%;
+	    width: auto;
+        height: auto;
 	    bottom: 5px;
 	    left: 0;
 	    padding: 0.5rem;
@@ -308,7 +309,7 @@ html {
         max-width:100%;
 	    border-top-left-radius: calc(0.25rem - 1px);
 	    border-top-right-radius: calc(0.25rem - 1px);
-	    padding-bottom: 0px;
+	    padding-bottom: 5px;
 	}
     #right-sidebar-wrapper {
         padding: 0px;
@@ -510,5 +511,8 @@ h1 {
 }
 
 .dragging {
+    max-width:100%;
+    width: auto;
+    height: auto;
     border: 1px dashed rgba(240, 7, 7, 0.952);
 }

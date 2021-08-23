@@ -41,6 +41,27 @@ class WarehouseFeePayment(Document):
         set `tabCargo Warehouse`.payment_status='Closed', `tabCargo Warehouse`.status='Paid', `tabCargo Warehouse`.warrant_no=%s, vehicle_licenses_plate=%s, driver_information=%s
         where `tabCargo Warehouse Table`.parent=%s""", (self.custom_warrant, self.vehicle_licenses_plate, self.driver_information, self.name))
 
+@frappe.whitelist()    
+def get_fees(doctype, ref, cargo_type, eta_date, posting_date):
+    storage_days = get_storage_days(eta_date, posting_date)
+    item_code, price, grace_days = frappe.db.get_value("Wharf Fees", {"wharf_fee_category" : "Storage Fee", "cargo_type": cargo_type}, ["item_code", "price", "grace_days"])
+    charged_storage_days = storage_days - grace_days
+    storage_fee = charged_storage_days * price
+    cargolist = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"]
+
+        if cargo_type in cargolist:
+            self.append("cargo_warehouse_table", {
+                "free_storage_days": grace_days,
+                "storage_fee_price" : price,
+                "storage_days" : storage_days,
+                "charged_storage_days" : charged_storage_days,
+                "storage_fee" : storage_fee,
+                "item_code" : item_code
+            })
+
+
+
+
 @frappe.whitelist()
 def get_storage_days(eta_date, posting_date):
     working_days = get_holidays(eta_date, posting_date)

@@ -1,0 +1,29 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Voyage",
+   "width": "Full"
+  },
+  {
+   "chart": "Cargo",
+   "width": "Full"
+  },
+  {
+   "chart": "Vessel",
+   "width": "Half"
+  }
+ ],
+ "creation": "2020-12-08 09:30:46.523839",
+ "dashboard_name": "Voyage",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2021-08-22 08:35:39.175910",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Voyage",
+ "owner": "Administrator"
+}

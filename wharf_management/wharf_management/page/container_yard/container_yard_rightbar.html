@@ -1,10 +1,11 @@
 
 <div class="row">
         {% for yard in inspection_items %}
-        <div class="col-sm-12">
+        <div class="col-sm-10">
             {% if yard.cargo_type == "Container" && yard.container_content == "FULL" %}
             <div class="Inspection" id="{{ yard.name }}" ondrop="Drop(event, this)" draggable="true" ondragstart="DragStart(event, this)">
                 <img class="card-img-top-inspection" src="/files/yellow_contanier.svg"/>
+                
                 <div class="card-img-overlay-inspection">
 
                     <p class="container_no-inspection" style="color:red;">{{ yard.container_no}}</p>

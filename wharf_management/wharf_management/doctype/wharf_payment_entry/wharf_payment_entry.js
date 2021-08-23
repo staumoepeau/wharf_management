@@ -175,8 +175,6 @@ var set_posting_date_time = function(frm) {
     }
 }
 
-
-
 var get_net_total_fee = function(frm) {
     var doc = frm.doc;
 
@@ -224,6 +222,7 @@ var get_fees_booking = function(frm) {
                 });
 
             }
+            frm.refresh_fields()
         }
     });
 }
@@ -245,11 +244,10 @@ var get_berthed_fees = function(frm) {
                         item_row.price = item.berthed_fee,
                         item_row.qty = 1,
                         item_row.total = (item.berthed_fee * 1),
-
                         get_net_total_fee(frm)
                     frm.save()
                 });
-
+                frm.refresh_fields()
             }
         }
     });
@@ -276,7 +274,7 @@ var get_storage_fee = function(frm) {
                         item_row.total = item.total
 
                 });
-
+                frm.refresh_fields()
             }
         }
     });
@@ -298,10 +296,11 @@ var get_wharfage_fee_overdue = function(frm) {
                         item_row.qty = 0,
                         item_row.total = 0
                         //                    }
-                    frm.refresh()
+//                    frm.refresh()
                     get_net_total_fee(frm)
-                    frm.save()
+//                    frm.save()
                 });
+                frm.refresh_fields()
             }
         }
     });
@@ -323,10 +322,11 @@ var get_wharfage_fee = function(frm) {
                         item_row.qty = item.qty,
                         item_row.total = item.total
                         //                    }
-                    frm.refresh()
+//                    frm.refresh()
                     get_net_total_fee(frm)
-                    frm.save()
+//                    frm.save()
                 });
+                frm.refresh_fields()
             }
         }
     });
@@ -354,7 +354,7 @@ var get_export_storage_fee = function(frm) {
                         item_row.total = item.total
 
                 });
-
+                frm.refresh_fields()
             }
         }
     });
@@ -380,6 +380,7 @@ var get_export_wharfage_fee = function(frm) {
                     get_net_total_fee(frm)
                     frm.save()
                 });
+                frm.refresh_fields()
             }
         }
     });
@@ -518,6 +519,7 @@ frappe.ui.form.on("Payment Method", {
             //            frappe.meta.get_docfield(this.doctype, "name_on_the_cheque", this.frm.doc.name).reqd
             //            frappe.model.set_df_property(d.doctype, d.name, 'name_on_the_cheque', 'reqd', 1);
             //        }
+        frm.refresh_fields()
 
     },
     amount: function(frm, cdt, cdn) {
@@ -542,12 +544,12 @@ frappe.ui.form.on("Booking Request References", "booking_reference_doctype", fun
         },
         callback: function(data) {
             //            console.log(data)
-
             frappe.model.set_value(d.doctype, d.name, "grt_fee", data.message["fee_amount"]);
             //            frappe.model.set_value(d.doctype, d.name, "item_code", data.message["name"]);
 
         }
     })
+    frm.refresh_fields()
 
 });
 
@@ -563,8 +565,8 @@ frappe.ui.form.on("Cargo References", {
         }
 
         if (d.reference_doctype) {
-            var j = 5;
-            for (var i = 0; i < j; i++) {
+//            var j = 5;
+//            for (var i = 0; i < j; i++) {
                 if (cargo_a.includes(d.cargo_type)) {
                     frappe.call({
                             "method": "frappe.client.get",
@@ -648,9 +650,10 @@ frappe.ui.form.on("Cargo References", {
                         })
                     }
                 }
-            }
-            var j = 6;
-            for (var i = 0; i < j; i++) {
+//            }
+            frm.refresh_fields()
+//            var j = 6;
+//            for (var i = 0; i < j; i++) {
                 var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
                 if (cargo_b.includes(d.cargo_type)) {
                     frappe.call({
@@ -694,9 +697,10 @@ frappe.ui.form.on("Cargo References", {
                         }
                     })
                 }
-            }
-            var j = 7;
-            for (var i = 0; i < j; i++) {
+                frm.refresh_fields()
+//            }
+//            var j = 7;
+//            for (var i = 0; i < j; i++) {
                 if (d.cargo_type == "Vehicles") {
                     frappe.call({
                         "method": "frappe.client.get",
@@ -785,7 +789,8 @@ frappe.ui.form.on("Cargo References", {
                         }
                     }
                 })
-            }
+                frm.refresh_fields()   
+//            }
         } else if (!d.reference_doctype) {
             frappe.msgprint("Please select a Cargo")
         }
@@ -856,7 +861,7 @@ frappe.ui.form.on("Export Cargo Reference", "export_reference_doctype", function
                     }
                 })
             }
-
+            frm.refresh_fields()
             if (d.cargo_type == "Split Ports") {
                 frappe.call({
                     "method": "frappe.client.get",
@@ -881,6 +886,7 @@ frappe.ui.form.on("Export Cargo Reference", "export_reference_doctype", function
                 })
             }
         }
+        frm.refresh_fields()
         var cargo_b = ["Heavy Vehicles", "Break Bulk", "Loose Cargo"];
         if (cargo_b.includes(d.cargo_type)) {
             frappe.call({
@@ -919,6 +925,7 @@ frappe.ui.form.on("Export Cargo Reference", "export_reference_doctype", function
                 }
             })
         }
+        frm.refresh_fields()
         if (d.cargo_type == "Vehicles") {
             frappe.call({
                 "method": "frappe.client.get",
@@ -957,7 +964,7 @@ frappe.ui.form.on("Export Cargo Reference", "export_reference_doctype", function
                 }
             })
         }
-
+        frm.refresh_fields()
         frappe.call({
             method: "wharf_management.wharf_management.doctype.wharf_payment_entry.wharf_payment_entry.get_storage_days",
             args: {
@@ -967,12 +974,8 @@ frappe.ui.form.on("Export Cargo Reference", "export_reference_doctype", function
             callback: function(r) {
                 frappe.model.set_value(d.doctype, d.name, "storage_days", r.message);
                 let sdays = flt(d.storage_days - d.free_storage_days);
-
-
-                alert(sdays)
-
+//                alert(sdays)
                 if (sdays > 0) {
-
                     //                if (d.free_storage_days < d.storage_days) {
                     //                    var sdays = flt(d.storage_days - d.free_storage_days);
                     frappe.model.set_value(d.doctype, d.name, "charged_storage_days", sdays);

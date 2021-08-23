@@ -19,14 +19,15 @@ frappe.listview_settings['Booking Request'] = {
         }
     },
     refresh: function(frm) {
-        if (frappe.user.has_role("System Manager") || frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Yard Operation User")) {
-            frm.page.sidebar.show(); // this removes the sidebar
-            $(".timeline").show()
-            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
-        } else {
-            frm.page.sidebar.hide(); // this removes the sidebar
-            $(".timeline").hide()
-            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
+        if (frappe.user.has_role("Agents") || frappe.user.has_role("Wharf Operation User") || frappe.user.has_role("Yard Operation User")) {
+//            frm.page.sidebar.show(); // this removes the sidebar
+//            $(".timeline").show()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").addClass("col-md-10");
+ //       frappe.ui.toolbar.toggle_full_width()
+//        } else {
+//            frm.page.sidebar.hide(); // this removes the sidebar
+//            $(".timeline").hide()
+//            frm.page.wrapper.find(".layout-main-section-wrapper").removeClass("col-md-10"); // this removes class "col-md-10" from content block, which sets width to 83%
         }
     }
 

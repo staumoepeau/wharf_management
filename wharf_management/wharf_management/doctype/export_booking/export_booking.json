@@ -116,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-14 17:17:59.872261",
+ "modified": "2021-08-22 09:29:49.728763",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Export Booking",
@@ -212,6 +212,5 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "agents",
- "track_changes": 1,
- "track_seen": 1
+ "track_changes": 1
 }
