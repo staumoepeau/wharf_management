@@ -49,6 +49,8 @@ def get_bbulks_summary_list(booking_ref):
 	sum(net_weight) as weight, sum(volume) as volume, sum(handling_fee) as handling_fee, 
 	sum(storage_fee) as storage_fee, sum(wharfage_fee) as wharfage_fee 
 	FROM `tabCargo` 
-	WHERE cargo_type in ("Break Bulk","Loose Cargo","Vehicles","Heavy Vehicles") 
-	AND booking_ref = %s 
-	AND manifest_check="Confirm" group by cargo_type, work_type and docstatus = 1""", (booking_ref), as_dict=1)
+	WHERE booking_ref = %s
+	AND cargo_type in ("Break Bulk","Loose Cargo","Vehicles","Heavy Vehicles") 
+	AND docstatus = 1
+	AND manifest_check="Confirm" 
+	GROUP BY cargo_type, work_type""", (booking_ref), as_dict=1)
