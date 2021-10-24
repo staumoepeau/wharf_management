@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "field:yard_slot",
  "creation": "2019-11-15 06:13:18.339345",
  "doctype": "DocType",
@@ -68,18 +69,18 @@
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Yard Sub Section",
-   "read_only": 1
+   "label": "Yard Sub Section"
   },
   {
    "allow_in_quick_entry": 1,
    "fieldname": "yard_slot_number",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Yard Slot Number",
+   "options": "\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12",
    "reqd": 1
   },
   {
@@ -93,21 +94,15 @@
    "options": "\n01\n02\n03\n04\n05"
   },
   {
-   "depends_on": "eval:doc.yard_section != 'V'",
    "fieldname": "yard_height",
    "fieldtype": "Select",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
    "label": "Yard Height",
-   "mandatory_depends_on": "eval:doc.yard_section != 'V'",
-   "options": "\n1\n2\n3\n4\n5\n6"
+   "options": "\n01\n02\n03\n04\n05"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-15 00:03:13.881669",
+ "modified": "2021-10-24 18:54:35.702214",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Yard Settings",
