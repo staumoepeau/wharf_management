@@ -205,13 +205,10 @@ class Inspection(Document):
         gate1_status="Closed", gate2_status="Closed", final_status="Discharged", status="Transfer" where name=%s""", (self.cargo_ref))
 
     # Ceare Cargo Item for Res-Stowing,
-    def create_cargo(self):
-
-        
+    def create_cargo(self):        
         get_create_cargo("Pre Advice", self.cargo_ref, self.final_work_type, self.secondary_work_type, self.cargo_type)
         
     def check_inward_cargo(self):
-
         inward_cargo = frappe.db.sql("""Select name from `tabCargo` where booking_ref=%s and container_no=%s and status='INWARD' """, (self.booking_ref, self.container_no))
 
         if inward_cargo:
@@ -560,7 +557,7 @@ class Inspection(Document):
         get_create_cargo("Pre Advice", self.cargo_ref, "Loading", "Export", self.cargo_type)
 #                msgprint(_("Check 3"), raise_exception=1)
 #                frappe.db.sql("""Update `tabPre Advice` set main_gate_start=%s, gate1_start=%s, driver_start=%s where container_no=%s""", (val.main_gate_start, val.gate1_start, val.driver_ends, self.container_no ))
-        frappe.db.sql("""Update `tabCargo` set gate1_status=%s, gate1_date=%s, gate2_status=%s, gate2_date=%s where container_no=%s and cargo_ref=%s """, (val.export_gate1_status, val.export_gate1_date, val.main_gate_status, val.main_gate_date, self.container_no, self.cargo_ref ))
+        frappe.db.sql("""Update `tabCargo` set status = "Outbound", gate1_status=%s, gate1_date=%s, gate2_status=%s, gate2_date=%s where container_no=%s and cargo_ref=%s """, (val.export_gate1_status, val.export_gate1_date, val.main_gate_status, val.main_gate_date, self.container_no, self.cargo_ref ))
         frappe.db.sql("""Delete from `tabExport` where container_no=%s""", self.container_no)
         self.moveto_preadvise_history()
         frappe.db.delete('Pre Advice', {'name': self.cargo_ref })

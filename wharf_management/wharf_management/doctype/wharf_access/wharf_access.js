@@ -72,7 +72,7 @@ $.extend(wharf_management.wharf_access, {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
                     ['Cargo', 'status', 'in', ['Paid', 'Gate1']],
-                    ['Cargo', 'security_item_count_status', '=', ['Open']],
+                    ['Cargo', 'security_item_count_status', '=', 'Open'],
                 ]
             }
         }
@@ -82,9 +82,9 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Paid']],
-                    ['Cargo', 'security_item_count_status', '=', ['Open']],
-                    ['Cargo', 'overdue_storage_status', '=', ['Clear']],
+                    ['Cargo', 'status', '=', 'Paid'],
+                    ['Cargo', 'security_item_count_status', '=', 'Open'],
+                    ['Cargo', 'overdue_storage_status', '=', 'Clear'],
                 ]
             }
         }
@@ -94,7 +94,7 @@ $.extend(wharf_management.wharf_access, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Custom Inspection']],
+                    ['Cargo', 'status', '=', 'Custom Inspection'],
                 ]
             }
         }

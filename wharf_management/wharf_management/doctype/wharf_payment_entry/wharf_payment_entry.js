@@ -28,6 +28,18 @@ frappe.ui.form.on('Wharf Payment Entry', {
             }
             set_posting_date_time(frm)
         }
+        if (frm.doc.reference_doctype == "Export") {
+            if (frm.doc.in_or_out == "OUT"){
+                frm.set_df_property('delivery_code', 'hidden', 0);
+                frm.set_df_property('delivery_information', 'hidden', 0);
+                frm.set_df_property('custom_warrant', 'hidden', 1);
+            }
+            if (frm.doc.in_or_out == "IN"){
+            //    frm.set_df_property('delivery_code', 'hidden', 0);
+            //    frm.set_df_property('delivery_information', 'hidden', 0);
+                frm.set_df_property('custom_warrant', 'hidden', 0);
+            }
+        }
     },
 
     before_submit: function(frm) {
@@ -82,9 +94,15 @@ frappe.ui.form.on('Wharf Payment Entry', {
         }
         if (frm.doc.reference_doctype == "Export") {
             wharf_management.wharf_payment_entry.setup_export_booking_queries(frm);
-            frm.set_df_property('delivery_code', 'hidden', 1);
-            frm.set_df_property('delivery_information', 'hidden', 1);
-            frm.set_df_property('custom_warrant', 'hidden', 0);
+            if (frm.doc.in_or_out == "OUT"){
+                frm.set_df_property('delivery_code', 'hidden', 0);
+                frm.set_df_property('delivery_information', 'hidden', 0);
+            }
+            if (frm.doc.in_or_out == "IN"){
+                frm.set_df_property('delivery_code', 'hidden', 0);
+                frm.set_df_property('delivery_information', 'hidden', 0);
+                frm.set_df_property('custom_warrant', 'hidden', 0);
+            }
         }
 
         if (!frappe.user.has_role("Cargo Operation Manager")) {
@@ -404,7 +422,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
-                    ['Cargo', 'status', 'in', ['Paid']],
+                    ['Cargo', 'status', '=', 'Paid'],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
                     ['Cargo', 'storage_overdue', '=', 1],
                 ]
@@ -427,7 +445,7 @@ $.extend(wharf_management.wharf_payment_entry, {
             return {
                 filters: [
                     ['Export', 'docstatus', '=', 1],
-                    ['Export', 'status', 'in', ['Yard']],
+                    ['Export', 'status', '=', 'Yard'],
                     ['Export', 'customer', '=', frm.doc.customer],
                 ]
             }

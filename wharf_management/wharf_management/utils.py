@@ -120,21 +120,21 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
     
 
     if doctype == "Pre Advice":
-        booking_ref, pat_code, net_weight, cargo_type, last_port, qty, container_no, voyage_no, bol,work_type,secondary_work_type,\
+        booking_ref, pat_code, net_weight, last_port, qty, container_no, voyage_no, bol,work_type,secondary_work_type,\
         pol,agents,commodity_code,vessel,pod,temperature, container_type,mark, final_dest_port,volume, container_size,consignee,\
         container_content,stowage,hazardous,hazardous_code, status, seal_1,seal_2,eta_date,cargo_description,etd_date, chasis_no,\
         yard_slot,inspection_status,yard_status, final_status, third_work_type = frappe.db.get_value(doctype, {'name': cargo_ref},\
-        ['booking_ref','pat_code','net_weight', 'cargo_type','last_port','qty','container_no','voyage_no','bol','work_type',\
+        ['booking_ref','pat_code','net_weight','last_port','qty','container_no','voyage_no','bol','work_type',\
         'secondary_work_type','pol','agents','commodity_code', 'vessel','pod','temperature', 'container_type','mark','final_dest_port',\
         'volume', 'container_size','consignee','container_content', 'stowage','hazardous','hazardous_code', 'status','seal_1','seal_2',\
         'eta_date','cargo_description','etd_date', 'chasis_no', 'yard_slot','inspection_status','yard_status','final_status','third_work_type'])
     
     if doctype == "Cargo":
-        booking_ref,pat_code,net_weight,cargo_type,last_port,qty,container_no,voyage_no,custom_code, bol,work_type,\
+        booking_ref,pat_code,net_weight,last_port,qty,container_no,voyage_no,custom_code, bol,work_type,\
         secondary_work_type, pol,agents,commodity_code,vessel,pod,temperature, mark,container_type,final_dest_port,\
         volume,custom_warrant, container_size,consignee,container_content,stowage,hazardous,hazardous_code, status,\
         seal_1,seal_2,eta_date,cargo_description, etd_date,delivery_code, chasis_no,yard_slot,inspection_status,yard_status,\
-        final_status = frappe.db.get_value(doctype, {'name': cargo_ref}, ['booking_ref','pat_code','net_weight','cargo_type',\
+        final_status = frappe.db.get_value(doctype, {'name': cargo_ref}, ['booking_ref','pat_code','net_weight',\
         'last_port','qty','container_no','voyage_no','custom_code', 'bol','work_type','secondary_work_type','pol','agents',\
         'commodity_code','vessel','pod','temperature', 'mark','container_type','final_dest_port','volume','custom_warrant',\
         'container_size','consignee','container_content','stowage','hazardous','hazardous_code', 'status','seal_1','seal_2',\
@@ -337,6 +337,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         third_work_type = third_work_type
         container_content = None
         last_work_type = None
+
     if final_work_type == "Discharged" and secondary_work_type == "Devanning" and third_work_type == "Loading" and cargo_type != "Container":
        secondary_work_type = None
        movement = "Inspection"
@@ -389,6 +390,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
        concontent = "FULL"
        movement = "Devanning"
        last_work_type = None
+
     doc = frappe.new_doc("Cargo")
     doc.update({
             "docstatus" : 1,

@@ -51,6 +51,8 @@
   "change_amount",
   "outstanding_amount",
   "data_35",
+  "in_or_out",
+  "column_break_47",
   "delivery_code",
   "column_break_37",
   "delivery_information",
@@ -266,8 +268,7 @@
    "fetch_from": "delivery_code.delivery_information",
    "fieldname": "delivery_information",
    "fieldtype": "Data",
-   "label": "Delivery Information",
-   "read_only": 1
+   "label": "Delivery Information"
   },
   {
    "depends_on": "eval:doc.reference_doctype == \"Cargo\" || doc.reference_doctype == \"Overdue Storage\"",
@@ -393,12 +394,22 @@
    "fieldtype": "Data",
    "label": "Reason for Discount",
    "mandatory_depends_on": "eval:doc.discount==\"YES\""
+  },
+  {
+   "fieldname": "in_or_out",
+   "fieldtype": "Select",
+   "label": "IN/OUT",
+   "options": "\nIN\nOUT"
+  },
+  {
+   "fieldname": "column_break_47",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-05 11:28:26.690113",
+ "modified": "2021-10-29 10:17:43.228026",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Wharf Payment Entry",

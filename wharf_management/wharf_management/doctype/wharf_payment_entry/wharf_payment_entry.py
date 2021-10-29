@@ -19,7 +19,7 @@ class WharfPaymentEntry(Document):
         if self.reference_doctype == "Cargo":
             if not self.delivery_code == 'MTY':
                 self.check_warrant_number()
-            self.check_duplicate_warrant_number()
+                self.check_duplicate_warrant_number()
             self.update_cargo_table()
 
         if self.reference_doctype == "Overdue Storage":
@@ -29,8 +29,9 @@ class WharfPaymentEntry(Document):
             self.update_booking_request()
         
         if self.reference_doctype == "Export":
-            self.check_warrant_number()
-            self.check_duplicate_warrant_number()
+            if not self.delivery_code == 'MTY':
+                self.check_warrant_number()
+                self.check_duplicate_warrant_number()
             self.update_export()
 
     def update_export(self):

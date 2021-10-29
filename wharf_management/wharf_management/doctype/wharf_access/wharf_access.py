@@ -84,7 +84,7 @@ class WharfAccess(Document):
 
             for e in export_table:
                 val = frappe.db.get_value("Export", {"name": e.cargo_ref}, ["name", "yard_slot","container_no",
-                "main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start",
+                "main_gate_start","main_gate_ends","gate1_start","gate1_ends","driver_start","agents","cargo_type",
                 "container_type","container_size","pat_code","container_content","driver_ends","seal_1", "status"], as_dict=True)
 
                 update_main_gate_status(val.name, self.license_plate, self.customer_full_name)
@@ -98,6 +98,7 @@ class WharfAccess(Document):
                         "main_gate_ends" : val.main_gate_ends,
                         "gate1_start": val.gate1_start,
                         "agents" : val.agents,
+                        "cargo_type" : val.cargo_type,
                         "work_type" : val.work_type,
                         "gate1_ends" : val.gate1_ends,
                         "driver_start" : val.driver_start,
