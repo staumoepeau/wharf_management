@@ -302,18 +302,9 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Schedule",
-   "link_to": "Schedule",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
   }
  ],
- "modified": "2021-12-17 12:20:04.853584",
+ "modified": "2021-12-17 12:36:59.251749",
  "modified_by": "Administrator",
  "module": "Wharf Management",
  "name": "Port Management",
@@ -332,6 +323,12 @@
    "label": "Warehouse Movement",
    "link_to": "Cargo Warehouse Movement",
    "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Vessel Schedule",
+   "link_to": "Schedule",
+   "type": "DocType"
   }
  ],
  "shortcuts_label": "Cargo Shortcuts"
