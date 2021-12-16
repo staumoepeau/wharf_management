@@ -161,7 +161,7 @@ def get_create_cargo(doctype, cargo_ref, final_work_type, secondary_work_type, c
         yard_date = now()
         final_status = final_work_type
         last_work_type = None
-        container_content = contcontainer_contentainer_content 
+        container_content = container_content 
 
     if final_work_type == "Loading" and secondary_work_type == "Transhipment":
         secondary_work_type = "Transhipment"

@@ -1,0 +1,294 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "allow_import": 1,
+ "autoname": "naming_series:",
+ "creation": "2021-12-17 11:57:06.054855",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_2",
+  "compnay",
+  "title",
+  "column_break_4",
+  "status",
+  "section_break_13",
+  "user",
+  "agents",
+  "column_break_16",
+  "vessel_information_section",
+  "vessel",
+  "vessel_type",
+  "column_break_9",
+  "voyage_no",
+  "grt",
+  "column_break_6",
+  "eta_date",
+  "column_break_18",
+  "etd_date",
+  "column_break_eta",
+  "final_eta",
+  "final_etd",
+  "section_break_22",
+  "old_eta_values",
+  "old_eta",
+  "old_eta_ii",
+  "column_break_71",
+  "old_etd",
+  "old_etd_ii"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SCH.YY.MM.######",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "compnay",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Booked\nDelay\nPending",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "User",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "agents",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Agency",
+   "options": "Shipping Agency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vessel_information_section",
+   "fieldtype": "Section Break",
+   "label": "Vessel Information"
+  },
+  {
+   "fieldname": "vessel",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Vessel",
+   "options": "Vessels",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "vessel.vessel_type",
+   "fieldname": "vessel_type",
+   "fieldtype": "Link",
+   "label": "Vessel Type",
+   "options": "Vessel Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Voyage No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "eta_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "ETA",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "final_eta",
+   "fieldtype": "Datetime",
+   "label": "Final ETA",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_eta",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "etd_date",
+   "fieldtype": "Datetime",
+   "label": "ETD",
+   "reqd": 1
+  },
+  {
+   "fieldname": "final_etd",
+   "fieldtype": "Datetime",
+   "label": "Final ETD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "old_eta_values",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Old ETA Values"
+  },
+  {
+   "fieldname": "old_eta",
+   "fieldtype": "Datetime",
+   "label": "Old ETA"
+  },
+  {
+   "fieldname": "old_eta_ii",
+   "fieldtype": "Datetime",
+   "label": "Old ETA II"
+  },
+  {
+   "fieldname": "column_break_71",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "old_etd",
+   "fieldtype": "Datetime",
+   "label": "Old ETD"
+  },
+  {
+   "fieldname": "old_etd_ii",
+   "fieldtype": "Datetime",
+   "label": "Old ETD II"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "vessel.vessel_gross_tonnage",
+   "fieldname": "grt",
+   "fieldtype": "Read Only",
+   "label": "GRT",
+   "read_only": 1
+  }
+ ],
+ "hide_toolbar": 1,
+ "links": [],
+ "modified": "2021-12-17 12:18:39.736957",
+ "modified_by": "Administrator",
+ "module": "Wharf Management",
+ "name": "Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent User",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Cargo Operation Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "route": "route",
+ "search_fields": "agents, voyage_no",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1,
+ "track_seen": 1
+}
