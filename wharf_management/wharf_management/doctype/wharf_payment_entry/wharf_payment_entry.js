@@ -404,27 +404,42 @@ var get_export_wharfage_fee = function(frm) {
     });
 }
 
+
+
 $.extend(wharf_management.wharf_payment_entry, {
 
     setup_cargo_queries: function(frm) {
         frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
+            var receipt_document_list = [];
+            if(!doc.__islocal) receipt_document_list.push(doc.name);
+            $.each(doc.cargo_references_table, function(_idx, val) {
+				if (val.reference_doctype) receipt_document_list.push(val.reference_doctype);
+			});
+               
             return {
-                filters: [
+               filters: [
                     ['Cargo', 'docstatus', '=', 1],
                     ['Cargo', 'status', 'in', ['Yard', 'Inspection Delivered', 'Split Ports', 'Stock']],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
-                ]
+                    ['Cargo', 'name', 'not in', receipt_document_list],
+               ]
             }
         }
     },
     setup_cargo_overdue_queries: function(frm) {
         frm.fields_dict['cargo_references_table'].grid.get_field("reference_doctype").get_query = function(doc, cdt, cdn) {
+            var receipt_document_list = [];
+            if(!doc.__islocal) receipt_document_list.push(doc.name);
+            $.each(doc.cargo_references_table, function(_idx, val) {
+				if (val.reference_doctype) receipt_document_list.push(val.reference_doctype);
+			});
             return {
                 filters: [
                     ['Cargo', 'docstatus', '=', 1],
                     ['Cargo', 'status', '=', 'Paid'],
                     ['Cargo', 'consignee', '=', frm.doc.customer],
                     ['Cargo', 'storage_overdue', '=', 1],
+                    ['Cargo', 'name', 'not in', receipt_document_list],
                 ]
             }
         }
@@ -453,6 +468,21 @@ $.extend(wharf_management.wharf_payment_entry, {
     }
 
 });
+
+//frappe.ui.form.on("Cargo References",{
+//	cargo_references_table_add:  function(frm){      
+//		frm.fields_dict['cargo_references_table'].grid.get_field('reference_doctype').get_query = function(doc) {
+//			var receipt_document_list = [];
+//
+//			if(!doc.__islocal) receipt_document_list.push(doc.name);
+//			$.each(doc.cargo_references_table, function(_idx, val) {
+//				if (val.reference_doctype) receipt_document_list.push(val.reference_doctype);
+//			});
+//			return { filters: [['Cargo References', 'name', 'not in', receipt_document_list]] };
+//		};	
+//		}
+//});
+
 
 frappe.ui.form.on("Wharf Fee Item", {
     qty: function(frm, cdt, cdn) {
